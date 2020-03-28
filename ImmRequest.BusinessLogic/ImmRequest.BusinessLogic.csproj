@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImmRequest.BusinessLogic.Interfaces\ImmRequest.BusinessLogic.Interfaces.csproj" />
+    <ProjectReference Include="..\ImmRequest.DataAccess.Interfaces\ImmRequest.DataAccess.Interfaces.csproj" />
+    <ProjectReference Include="..\ImmRequest.Domain.Interfaces\ImmRequest.Domain.Interfaces.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
