@@ -2,7 +2,8 @@
 
 namespace ImmRequest.Domain.Interfaces
 {
-    public class Class1
+    public interface IIdentifiable
     {
+        long Id { get; set; }
     }
 }
