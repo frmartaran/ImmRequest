@@ -1,9 +1,0 @@
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\bin\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.deps.json
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\bin\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.dll
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\bin\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.pdb
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\obj\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.csprojAssemblyReference.cache
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\obj\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.csproj.CoreCompileInputs.cache
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\obj\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.AssemblyInfoInputs.cache
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\obj\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.AssemblyInfo.cs
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\obj\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.dll
-C:\Users\Usuario\Desktop\DA2 2.0\ImmRequest.Domain.Interfaces\obj\Debug\netstandard2.0\ImmRequest.Domain.Interfaces.pdb
