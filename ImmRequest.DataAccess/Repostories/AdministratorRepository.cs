@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain.UserManagement;
 
@@ -7,6 +8,11 @@ namespace ImmRequest.DataAccess.Repositories
 {
     public class AdministratorRepository : IRepository<Administrator>
     {
+        private ImmDbContext Context { get; set; }
+        public AdministratorRepository(ImmDbContext context)
+        {
+            Context = context;
+        }
         public void Delete(long id)
         {
             throw new NotImplementedException();
