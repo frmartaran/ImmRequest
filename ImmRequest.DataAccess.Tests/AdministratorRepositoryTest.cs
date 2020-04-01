@@ -3,10 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ImmRequest.DataAccess.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class AdministratorRepositoryTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void InsertTest()
         {
         }
     }
