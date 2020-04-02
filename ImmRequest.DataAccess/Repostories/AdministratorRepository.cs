@@ -36,7 +36,8 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return Context.Administrators
+                .Any(a => a.Id == id);
         }
 
         public Administrator Get(long id)
