@@ -9,23 +9,47 @@ namespace ImmRequest.DataAccess.Tests
     [TestClass]
     public class AdministratorRepositoryTest
     {
+        Administrator administrator;
+        AdministratorRepository repository;
+        ImmDbContext context;
 
-        [TestMethod]
-        public void InsertTest()
+        [TestInitialize]
+        public void SetUp()
         {
-            var context = ContextFactory.GetMemoryContext("InsertTest");
-            var repository = new AdministratorRepository(context);
-
-            var administrator = new Administrator
+            administrator = new Administrator
             {
                 UserName = "Julie",
                 PassWord = "1234"
             };
+        }
 
+        private void CreateRepostory(string name)
+        {
+            context = ContextFactory.GetMemoryContext(name);
+            repository = new AdministratorRepository(context);
+        }
+
+
+        [TestMethod]
+        public void InsertTest()
+        {
+            CreateRepostory("InsertTest");
             repository.Insert(administrator);
             var amountOfAdministrators = context.Administrators.Count();
             Assert.AreEqual(1, amountOfAdministrators);
 
+        }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            CreateRepostory("GetTest");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            var administratorInDb = repository.Get(administrator.Id);
+            Assert.IsNotNull(administratorInDb);
+            Assert.AreEqual(administrator.UserName, administratorInDb.UserName);
         }
     }
 }
