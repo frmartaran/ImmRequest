@@ -35,6 +35,12 @@ namespace ImmRequest.DataAccess.Tests
             };
         }
 
+        [TestCleanup]
+        public void TearDown()
+        {
+            context.Dispose();
+        }
+
         private void CreateRepository(string name)
         {
             context = ContextFactory.GetMemoryContext(name);
@@ -68,6 +74,23 @@ namespace ImmRequest.DataAccess.Tests
 
             var sessionInDb = repository.Get(1);
             Assert.IsNotNull(sessionInDb);
+
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            CreateRepository("DeleteTest");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            session.AdministratorId = administrator.Id;
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            repository.Delete(session.Id);
+            var sessionCount = context.Sessions.Count();
+            Assert.AreEqual(0, sessionCount);
 
         }
     }

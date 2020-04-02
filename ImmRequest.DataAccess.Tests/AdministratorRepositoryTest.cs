@@ -24,6 +24,12 @@ namespace ImmRequest.DataAccess.Tests
             };
         }
 
+        [TestCleanup]
+        public void CleanUp()
+        {
+            context.Dispose();
+        }
+
         private void CreateRepostory(string name)
         {
             context = ContextFactory.GetMemoryContext(name);
