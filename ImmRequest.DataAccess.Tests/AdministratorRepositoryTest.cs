@@ -88,5 +88,13 @@ namespace ImmRequest.DataAccess.Tests
             CreateRepostory("DeleteNotFound");
             repository.Delete(administrator.Id);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFound()
+        {
+            CreateRepostory("UpdateNotFound");
+            repository.Update(administrator);
+        }
     }
 }
