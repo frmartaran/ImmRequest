@@ -63,11 +63,21 @@ namespace ImmRequest.DataAccess.Repositories
 
         public Administrator Update(Administrator objectToUpdate)
         {
-            var administratorToModify = Get(objectToUpdate.Id);
-            administratorToModify.UserName = objectToUpdate.UserName;
-            administratorToModify.PassWord = objectToUpdate.PassWord;
-            Save();
-            return administratorToModify;
+            try
+            {
+                var administratorToModify = Get(objectToUpdate.Id);
+                administratorToModify.UserName = objectToUpdate.UserName;
+                administratorToModify.PassWord = objectToUpdate.PassWord;
+                Save();
+                return administratorToModify;
+            }
+            catch (NullReferenceException)
+            {
+                var exceptionMessage = string.Format(DataAccessResource.Exception_NotFound_Action,
+                    "Update");
+                throw new DatabaseNotFoundException(exceptionMessage);
+            }
+
         }
     }
 }
