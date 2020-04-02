@@ -64,7 +64,12 @@ namespace ImmRequest.DataAccess.Repostories
 
         public Session Update(Session objectToUpdate)
         {
-            throw new NotImplementedException();
+            var sessionToModify = Get(objectToUpdate.Id);
+            sessionToModify.AdministratorInSession = objectToUpdate.AdministratorInSession;
+            sessionToModify.AdministratorId = objectToUpdate.Id;
+            sessionToModify.Token = objectToUpdate.Token;
+            Save();
+            return sessionToModify;
         }
     }
 }
