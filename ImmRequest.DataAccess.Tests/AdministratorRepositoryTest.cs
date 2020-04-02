@@ -1,5 +1,6 @@
 using System.Linq;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -67,7 +68,8 @@ namespace ImmRequest.DataAccess.Tests
         }
 
         [TestMethod]
-        public void UpdateTest(){
+        public void UpdateTest()
+        {
             CreateRepostory("UpdateTest");
             context.Administrators.Add(administrator);
             context.SaveChanges();
@@ -77,6 +79,14 @@ namespace ImmRequest.DataAccess.Tests
 
             var updatedAdministrator = context.Administrators.FirstOrDefault();
             Assert.AreEqual("Juliette", updatedAdministrator.UserName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void DeleteNonExistantAdministrator()
+        {
+            CreateRepostory("DeleteNotFound");
+            repository.Delete(administrator.Id);
         }
     }
 }
