@@ -65,5 +65,18 @@ namespace ImmRequest.DataAccess.Tests
             Assert.IsNull(deletedAdministrator);
             Assert.AreEqual(0, administratorCount);
         }
+
+        [TestMethod]
+        public void UpdateTest(){
+            CreateRepostory("UpdateTest");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            administrator.UserName = "Juliette";
+            repository.Update(administrator);
+
+            var updatedAdministrator = context.Administrators.FirstOrDefault();
+            Assert.AreEqual("Juliette", updatedAdministrator.UserName);
+        }
     }
 }
