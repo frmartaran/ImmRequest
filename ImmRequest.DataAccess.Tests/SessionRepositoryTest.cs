@@ -154,5 +154,29 @@ namespace ImmRequest.DataAccess.Tests
             Assert.AreEqual(2, allSessions.Count);
 
         }
+
+        [TestMethod]
+        public void Exists()
+        {
+            CreateRepository("Exists");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            session.AdministratorId = administrator.Id;
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var exists = repository.Exists(session.Id);
+            Assert.IsTrue(exists);
+        }
+
+        [TestMethod]
+        public void DoesNotExists()
+        {
+            CreateRepository("Exists");
+
+            var exists = repository.Exists(session.Id);
+            Assert.IsFalse(exists);
+        }
     }
 }
