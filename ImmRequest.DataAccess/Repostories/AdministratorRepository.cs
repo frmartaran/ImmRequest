@@ -47,7 +47,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public ICollection<Administrator> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.Administrators.ToList();
         }
 
         public void Insert(Administrator objectToAdd)

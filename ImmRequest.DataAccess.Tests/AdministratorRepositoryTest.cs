@@ -111,7 +111,7 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             var allAdministrators = repository.GetAll();
-            Assert.AreEqual(2, allAdministrators);
+            Assert.AreEqual(2, allAdministrators.Count);
 
         }
     }
