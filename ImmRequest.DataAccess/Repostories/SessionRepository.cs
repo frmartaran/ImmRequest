@@ -1,8 +1,10 @@
 ﻿using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain.UserManagement;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.DataAccess.Repostories
@@ -27,7 +29,9 @@ namespace ImmRequest.DataAccess.Repostories
 
         public Session Get(long id)
         {
-            throw new NotImplementedException();
+            return Context.Sessions
+                .Include(s => s.AdministratorInSession)
+                .FirstOrDefault(s => s.Id == id);
         }
 
         public ICollection<Session> GetAll()
