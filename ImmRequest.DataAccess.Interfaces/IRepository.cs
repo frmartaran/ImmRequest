@@ -6,7 +6,7 @@ namespace ImmRequest.DataAccess.Interfaces
     public interface IRepository<T>
     where T: class
     {
-        void Insert(T id);
+        void Insert(T objectToAdd);
 
         T Update(T objectToUpdate);
 

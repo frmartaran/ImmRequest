@@ -33,14 +33,15 @@ namespace ImmRequest.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public void Insert(Administrator id)
+        public void Insert(Administrator objectToAdd)
         {
-            throw new NotImplementedException();
+            Context.Administrators.Add(objectToAdd);
+            Save();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            Context.SaveChanges();
         }
 
         public Administrator Update(Administrator objectToUpdate)
