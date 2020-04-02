@@ -1,5 +1,7 @@
 ﻿using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Resources;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,9 +21,17 @@ namespace ImmRequest.DataAccess.Repostories
         }
         public void Delete(long id)
         {
-            var sessionToDelete = Get(id);
-            Context.Sessions.Remove(sessionToDelete);
-            Save();
+            try
+            {
+                var sessionToDelete = Get(id);
+                Context.Sessions.Remove(sessionToDelete);
+                Save();
+            }
+            catch (ArgumentNullException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Delete");
+                throw new DatabaseNotFoundException(message);
+            }
         }
 
         public bool Exists(long id)
