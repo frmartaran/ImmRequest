@@ -64,12 +64,20 @@ namespace ImmRequest.DataAccess.Repostories
 
         public Session Update(Session objectToUpdate)
         {
-            var sessionToModify = Get(objectToUpdate.Id);
-            sessionToModify.AdministratorInSession = objectToUpdate.AdministratorInSession;
-            sessionToModify.AdministratorId = objectToUpdate.Id;
-            sessionToModify.Token = objectToUpdate.Token;
-            Save();
-            return sessionToModify;
+            try
+            {
+                var sessionToModify = Get(objectToUpdate.Id);
+                sessionToModify.AdministratorInSession = objectToUpdate.AdministratorInSession;
+                sessionToModify.AdministratorId = objectToUpdate.Id;
+                sessionToModify.Token = objectToUpdate.Token;
+                Save();
+                return sessionToModify;
+            }
+            catch (NullReferenceException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Update");
+                throw new DatabaseNotFoundException(message);
+            }
         }
     }
 }

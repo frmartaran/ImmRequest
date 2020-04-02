@@ -2,6 +2,7 @@
 using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repostories;
 using ImmRequest.Domain.UserManagement;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -128,6 +129,30 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("UpdateNotFoundTest");
             repository.Update(session);
+        }
+
+        [TestMethod]
+        public void GetAll()
+        {
+            CreateRepository("GetAll");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            session.AdministratorId = administrator.Id;
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var session2 = new Session
+            {
+                AdministratorInSession = administrator,
+                Token = Guid.NewGuid()
+            };
+            context.Sessions.Add(session2);
+            context.SaveChanges();
+
+            var allSessions = repository.GetAll();
+            Assert.AreEqual(2, allSessions.Count);
+
         }
     }
 }
