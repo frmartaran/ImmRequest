@@ -1,4 +1,5 @@
 ﻿using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repostories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
@@ -92,6 +93,14 @@ namespace ImmRequest.DataAccess.Tests
             var sessionCount = context.Sessions.Count();
             Assert.AreEqual(0, sessionCount);
 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void DeleteNotFound()
+        {
+            CreateRepository("DeleteNotFound");
+            repository.Delete(1);
         }
     }
 }
