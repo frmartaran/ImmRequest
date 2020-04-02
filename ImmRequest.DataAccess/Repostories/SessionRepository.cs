@@ -19,7 +19,9 @@ namespace ImmRequest.DataAccess.Repostories
         }
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            var sessionToDelete = Get(id);
+            Context.Sessions.Remove(sessionToDelete);
+            Save();
         }
 
         public bool Exists(long id)
