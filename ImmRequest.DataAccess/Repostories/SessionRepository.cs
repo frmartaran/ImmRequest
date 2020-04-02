@@ -37,12 +37,13 @@ namespace ImmRequest.DataAccess.Repostories
 
         public void Insert(Session objectToAdd)
         {
-            throw new NotImplementedException();
+            Context.Sessions.Add(objectToAdd);
+            Save();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            Context.SaveChanges();
         }
 
         public Session Update(Session objectToUpdate)
