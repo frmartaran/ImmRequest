@@ -83,7 +83,7 @@ namespace ImmRequest.DataAccess.Tests
 
         [TestMethod]
         [ExpectedException(typeof(DatabaseNotFoundException))]
-        public void DeleteNonExistantAdministrator()
+        public void DeleteNonExistantAdministratorTest()
         {
             CreateRepostory("DeleteNotFound");
             repository.Delete(administrator.Id);
@@ -91,10 +91,28 @@ namespace ImmRequest.DataAccess.Tests
 
         [TestMethod]
         [ExpectedException(typeof(DatabaseNotFoundException))]
-        public void UpdateNotFound()
+        public void UpdateNotFoundTest()
         {
             CreateRepostory("UpdateNotFound");
             repository.Update(administrator);
+        }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            CreateRepostory("GetAllTest");
+            var otherAdministrator = new Administrator
+            {
+                UserName = "Francisco",
+                PassWord = "6543210"
+            };
+            context.Administrators.Add(otherAdministrator);
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            var allAdministrators = repository.GetAll();
+            Assert.AreEqual(2, allAdministrators);
+
         }
     }
 }
