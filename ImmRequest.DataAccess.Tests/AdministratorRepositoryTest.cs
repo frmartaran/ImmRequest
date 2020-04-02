@@ -114,5 +114,24 @@ namespace ImmRequest.DataAccess.Tests
             Assert.AreEqual(2, allAdministrators.Count);
 
         }
+
+        [TestMethod]
+        public void ExistsTest()
+        {
+            CreateRepostory("Exists");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            var exists = repository.Exists(administrator.Id);
+            Assert.IsTrue(exists);
+        }
+
+        [TestMethod]
+        public void DoesNotExistsTest()
+        {
+            CreateRepostory("Does not Exist");
+            var exists = repository.Exists(1);
+            Assert.IsFalse(exists);
+        }
     }
 }
