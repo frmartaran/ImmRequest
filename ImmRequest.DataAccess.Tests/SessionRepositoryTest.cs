@@ -173,7 +173,7 @@ namespace ImmRequest.DataAccess.Tests
         [TestMethod]
         public void DoesNotExists()
         {
-            CreateRepository("Exists");
+            CreateRepository("DoesNotExists");
 
             var exists = repository.Exists(session.Id);
             Assert.IsFalse(exists);

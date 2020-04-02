@@ -36,7 +36,7 @@ namespace ImmRequest.DataAccess.Repostories
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return Context.Sessions.Any(s => s.Id == id);
         }
 
         public Session Get(long id)
