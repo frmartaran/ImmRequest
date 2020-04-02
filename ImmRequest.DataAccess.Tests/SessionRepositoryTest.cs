@@ -102,5 +102,24 @@ namespace ImmRequest.DataAccess.Tests
             CreateRepository("DeleteNotFound");
             repository.Delete(1);
         }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            CreateRepository("UpdateTest");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            session.AdministratorId = administrator.Id;
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var newToken = Guid.NewGuid();
+            session.Token = newToken;
+
+            repository.Update(session);
+            var sessionInDb = context.Sessions.FirstOrDefault();
+            Assert.AreEqual(newToken, sessionInDb.Token);
+        }
     }
 }
