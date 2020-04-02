@@ -54,5 +54,21 @@ namespace ImmRequest.DataAccess.Tests
             var sessionCount = context.Sessions.Count();
             Assert.AreEqual(1, sessionCount);
         }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            CreateRepository("GetTest");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            session.AdministratorId = administrator.Id;
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var sessionInDb = repository.Get(1);
+            Assert.IsNotNull(sessionInDb);
+
+        }
     }
 }
