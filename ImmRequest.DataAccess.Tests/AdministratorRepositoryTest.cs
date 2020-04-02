@@ -51,5 +51,19 @@ namespace ImmRequest.DataAccess.Tests
             Assert.IsNotNull(administratorInDb);
             Assert.AreEqual(administrator.UserName, administratorInDb.UserName);
         }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            CreateRepostory("DeleteTest");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            repository.Delete(administrator.Id);
+            var deletedAdministrator = context.Administrators.FirstOrDefault();
+            var administratorCount = context.Administrators.Count();
+            Assert.IsNull(deletedAdministrator);
+            Assert.AreEqual(0, administratorCount);
+        }
     }
 }
