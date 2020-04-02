@@ -27,11 +27,7 @@ namespace ImmRequest.DataAccess.Context
 
         public virtual DbSet<TopicType> TopicTypes { get; set; }
 
-        public virtual DbSet<NumberField> NumberFields { get; set; }
-
-        public virtual DbSet<TextField> TextFields { get; set; }
-
-        public virtual DbSet<DateTimeField> DateTimeFields { get; set; }
+        public virtual DbSet<BaseField> Fields { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

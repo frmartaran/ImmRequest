@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ImmRequest.Domain.Fields;
 using ImmRequest.Domain.Interfaces;
 
 namespace ImmRequest.Domain
@@ -10,6 +11,7 @@ namespace ImmRequest.Domain
         public long ParentTopicId { get; set; }
         public Topic ParentTopic { get; set; }
         public string Name { get; set; }
-        public List<ICustomField> Fields { get; set; }
+        public List<BaseField> AllFields { get; set; }
+        public long RequestId { get; set; }
     }
 }
