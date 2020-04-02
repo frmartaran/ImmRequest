@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Exceptions;
@@ -138,6 +139,24 @@ namespace ImmRequest.DataAccess.Tests
             CreateRepostory("Does not Exist");
             var exists = repository.Exists(1);
             Assert.IsFalse(exists);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RepeatedUsername()
+        {
+            CreateRepostory("RepeatedUsername");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            var otherAdministrator = new Administrator
+            {
+                UserName = "Julie",
+                PassWord = "852"
+            };
+
+            repository.Insert(otherAdministrator);
+
         }
     }
 }
