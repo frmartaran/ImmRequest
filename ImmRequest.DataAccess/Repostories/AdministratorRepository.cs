@@ -50,7 +50,11 @@ namespace ImmRequest.DataAccess.Repositories
 
         public Administrator Update(Administrator objectToUpdate)
         {
-            throw new NotImplementedException();
+            var administratorToModify = Get(objectToUpdate.Id);
+            administratorToModify.UserName = objectToUpdate.UserName;
+            administratorToModify.PassWord = objectToUpdate.PassWord;
+            Save();
+            return administratorToModify;
         }
     }
 }
