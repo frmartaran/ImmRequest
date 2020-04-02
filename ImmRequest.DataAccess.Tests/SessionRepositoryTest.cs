@@ -121,5 +121,13 @@ namespace ImmRequest.DataAccess.Tests
             var sessionInDb = context.Sessions.FirstOrDefault();
             Assert.AreEqual(newToken, sessionInDb.Token);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFound()
+        {
+            CreateRepository("UpdateNotFoundTest");
+            repository.Update(session);
+        }
     }
 }
