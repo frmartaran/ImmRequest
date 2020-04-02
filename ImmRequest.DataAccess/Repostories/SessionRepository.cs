@@ -48,7 +48,9 @@ namespace ImmRequest.DataAccess.Repostories
 
         public ICollection<Session> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.Sessions
+                .Include(s => s.AdministratorInSession)
+                .ToList();
         }
 
         public void Insert(Session objectToAdd)
