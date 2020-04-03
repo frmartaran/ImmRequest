@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 
@@ -7,6 +8,11 @@ namespace ImmRequest.DataAccess.Repositories
 {
     public class CitizenRequestRepository : IRepository<CitizenRequest>
     {
+        private ImmDbContext Context { get; set; }
+        public CitizenRequestRepository(ImmDbContext context)
+        {
+            Context = context;
+        }
         public void Delete(long id)
         {
             throw new NotImplementedException();
