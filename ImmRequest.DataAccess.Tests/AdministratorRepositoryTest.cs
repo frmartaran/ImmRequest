@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Exceptions;
