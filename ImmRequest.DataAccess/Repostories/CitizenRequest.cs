@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImmRequest.DataAccess.Repositories
 {
@@ -25,7 +27,9 @@ namespace ImmRequest.DataAccess.Repositories
 
         public CitizenRequest Get(long id)
         {
-            throw new NotImplementedException();
+            return Context.CitizenRequests
+                .Include(cr => cr.Area)
+                .FirstOrDefault(cr => cr.Id == id);
         }
 
         public ICollection<CitizenRequest> GetAll()
