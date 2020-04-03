@@ -35,12 +35,13 @@ namespace ImmRequest.DataAccess.Repositories
 
         public void Insert(CitizenRequest objectToAdd)
         {
-            throw new NotImplementedException();
+            Context.CitizenRequests.Add(objectToAdd);
+            Save();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+           Context.SaveChanges();
         }
 
         public CitizenRequest Update(CitizenRequest objectToUpdate)
