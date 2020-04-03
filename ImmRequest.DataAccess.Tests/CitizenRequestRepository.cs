@@ -52,5 +52,16 @@ namespace ImmRequest.DataAccess.Tests
             var requestInDb = context.CitizenRequests.FirstOrDefault();
             Assert.IsNotNull(requestInDb);
         }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            CreateRepository("GetTest");
+            context.CitizenRequests.Add(request);
+            context.SaveChanges();
+
+            var requestInDb = repository.Get(1);
+            Assert.IsNotNull(requestInDb);
+        }
     }
 }
