@@ -102,5 +102,13 @@ namespace ImmRequest.DataAccess.Tests
             var requestInDb = context.CitizenRequests.FirstOrDefault();
             Assert.AreEqual("Julie", requestInDb.CitizenName);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFound()
+        {
+            CreateRepository("UpdateNotFound");
+            repository.Update(request);
+        }
     }
 }

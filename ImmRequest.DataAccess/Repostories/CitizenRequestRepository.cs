@@ -65,19 +65,27 @@ namespace ImmRequest.DataAccess.Repositories
 
         public CitizenRequest Update(CitizenRequest objectToUpdate)
         {
-            var requestToModify = Get(objectToUpdate.Id);
-            requestToModify.Description = objectToUpdate.Description;
-            requestToModify.CitizenName = objectToUpdate.CitizenName;
-            requestToModify.Email = objectToUpdate.Email;
-            requestToModify.Phone = objectToUpdate.Phone;
-            requestToModify.RequestNumber = objectToUpdate.RequestNumber;
-            requestToModify.Status = objectToUpdate.Status;
-            requestToModify.Area = objectToUpdate.Area;
-            requestToModify.Topic = objectToUpdate.Topic;
-            requestToModify.TopicType = objectToUpdate.TopicType;
-            requestToModify.Values = objectToUpdate.Values;
-            Save();
-            return requestToModify;
+            try
+            {
+                var requestToModify = Get(objectToUpdate.Id);
+                requestToModify.Description = objectToUpdate.Description;
+                requestToModify.CitizenName = objectToUpdate.CitizenName;
+                requestToModify.Email = objectToUpdate.Email;
+                requestToModify.Phone = objectToUpdate.Phone;
+                requestToModify.RequestNumber = objectToUpdate.RequestNumber;
+                requestToModify.Status = objectToUpdate.Status;
+                requestToModify.Area = objectToUpdate.Area;
+                requestToModify.Topic = objectToUpdate.Topic;
+                requestToModify.TopicType = objectToUpdate.TopicType;
+                requestToModify.Values = objectToUpdate.Values;
+                Save();
+                return requestToModify;
+            }
+            catch (NullReferenceException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Update");
+                throw new DatabaseNotFoundException(message);
+            }
         }
     }
 }
