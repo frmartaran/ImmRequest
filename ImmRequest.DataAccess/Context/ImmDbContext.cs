@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
+using ImmRequest.Domain.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -51,6 +52,43 @@ namespace ImmRequest.DataAccess.Context
                 .HasOne(cr => cr.TopicType)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<TopicType>()
+                .Property<bool>("IsDeleted");
+            builder.Entity<TopicType>()
+                .HasQueryFilter(ty => !ty.IsDeleted);
+
+            builder.Entity<BaseField>()
+                .Property<bool>("IsDeleted");
+            builder.Entity<BaseField>()
+                .HasQueryFilter(ty => !ty.IsDeleted);
+        }
+
+        public override int SaveChanges()
+        {
+            SoftDelete();
+            return base.SaveChanges();
+        }
+
+        private void SoftDelete()
+        {
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                if (typeof(ISoftDelete).IsAssignableFrom(entry.Entity.GetType()))
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entry.CurrentValues["IsDeleted"] = false;
+                            break;
+                        case EntityState.Deleted:
+                            entry.CurrentValues["IsDeleted"] = true;
+                            entry.CurrentValues["DeletedDate"] = DateTime.Now;
+                            entry.State = EntityState.Modified;
+                            break;
+                    }
+                }
+            }
         }
     }
 }
