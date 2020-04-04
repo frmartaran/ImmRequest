@@ -17,7 +17,9 @@ namespace ImmRequest.DataAccess.Repositories
         }
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            var toDelete = Get(id);
+            Context.CitizenRequests.Remove(toDelete);
+            Save();
         }
 
         public bool Exists(long id)
@@ -29,6 +31,9 @@ namespace ImmRequest.DataAccess.Repositories
         {
             return Context.CitizenRequests
                 .Include(cr => cr.Area)
+                .Include(cr => cr.Topic)
+                .Include(cr => cr.TopicType)
+                .Include(cr => cr.Values)
                 .FirstOrDefault(cr => cr.Id == id);
         }
 
