@@ -49,7 +49,12 @@ namespace ImmRequest.DataAccess.Repositories
 
         public ICollection<CitizenRequest> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.CitizenRequests
+                .Include(cr => cr.Area)
+                .Include(cr => cr.Topic)
+                .Include(cr => cr.TopicType)
+                .Include(cr => cr.Values)
+                .ToList();
         }
 
         public void Insert(CitizenRequest objectToAdd)
