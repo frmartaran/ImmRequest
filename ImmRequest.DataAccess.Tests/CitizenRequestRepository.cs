@@ -88,5 +88,19 @@ namespace ImmRequest.DataAccess.Tests
             CreateRepository("DeleteNotFound");
             repository.Delete(1);
         }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            CreateRepository("UpdateTest");
+            context.CitizenRequests.Add(request);
+            context.SaveChanges();
+
+            request.CitizenName = "Julie";
+            repository.Update(request);
+
+            var requestInDb = context.CitizenRequests.FirstOrDefault();
+            Assert.AreEqual("Julie", requestInDb.CitizenName);
+        }
     }
 }
