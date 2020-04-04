@@ -34,7 +34,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return Context.CitizenRequests.Any(cr => cr.Id == id);
         }
 
         public CitizenRequest Get(long id)
