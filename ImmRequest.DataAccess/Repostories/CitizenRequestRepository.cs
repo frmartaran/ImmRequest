@@ -65,7 +65,19 @@ namespace ImmRequest.DataAccess.Repositories
 
         public CitizenRequest Update(CitizenRequest objectToUpdate)
         {
-            throw new NotImplementedException();
+            var requestToModify = Get(objectToUpdate.Id);
+            requestToModify.Description = objectToUpdate.Description;
+            requestToModify.CitizenName = objectToUpdate.CitizenName;
+            requestToModify.Email = objectToUpdate.Email;
+            requestToModify.Phone = objectToUpdate.Phone;
+            requestToModify.RequestNumber = objectToUpdate.RequestNumber;
+            requestToModify.Status = objectToUpdate.Status;
+            requestToModify.Area = objectToUpdate.Area;
+            requestToModify.Topic = objectToUpdate.Topic;
+            requestToModify.TopicType = objectToUpdate.TopicType;
+            requestToModify.Values = objectToUpdate.Values;
+            Save();
+            return requestToModify;
         }
     }
 }
