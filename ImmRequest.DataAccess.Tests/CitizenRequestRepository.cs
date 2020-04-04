@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Repositories;
@@ -28,6 +29,9 @@ namespace ImmRequest.DataAccess.Tests
                 RequestNumber = 1,
                 Status = RequestStatus.Created,
                 Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType(),
+                Values = new List<RequestFieldValues>()
             };
         }
 
@@ -62,6 +66,18 @@ namespace ImmRequest.DataAccess.Tests
 
             var requestInDb = repository.Get(1);
             Assert.IsNotNull(requestInDb);
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            CreateRepository("DeleteTest");
+            context.CitizenRequests.Add(request);
+            context.SaveChanges();
+
+            repository.Delete(1);
+            var requestInDb = context.CitizenRequests.FirstOrDefault();
+            Assert.IsNull(requestInDb);
         }
     }
 }
