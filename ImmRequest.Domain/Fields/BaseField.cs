@@ -4,13 +4,18 @@ using ImmRequest.Domain.Interfaces;
 
 namespace ImmRequest.Domain.Fields
 {
-    public abstract class BaseField : ICustomField, IIdentifiable
+    public abstract class BaseField : ICustomField, IIdentifiable, ISoftDelete
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public long ParentTypeId { get; set; }
         public TopicType ParentType { get; set; }
-        public long RequestId { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime DeletedDate { get; set; }
         public abstract void SetRange(List<string> values);
+
+        public abstract void Validate(string value);
+
+        public abstract T ValueToDataType<T>(string value) where T : class;
     }
 }

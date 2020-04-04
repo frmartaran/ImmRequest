@@ -10,5 +10,9 @@ namespace ImmRequest.Domain.Interfaces
         long ParentTypeId { get; set; }
 
         void SetRange(List<string> values);
+
+        T ValueToDataType<T>(string value) where T : class;
+
+        void Validate(string value);
     }
 }

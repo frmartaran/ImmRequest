@@ -11,5 +11,15 @@ namespace ImmRequest.Domain.Fields
         {
             throw new NotImplementedException();
         }
+
+        public override void Validate(string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override T ValueToDataType<T>(string value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

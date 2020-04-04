@@ -4,14 +4,16 @@ using ImmRequest.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImmRequest.DataAccess.Migrations
 {
     [DbContext(typeof(ImmDbContext))]
-    partial class ImmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200404004809_AddSoftDeleteAndValuesToRequest")]
+    partial class AddSoftDeleteAndValuesToRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,8 +146,8 @@ namespace ImmRequest.DataAccess.Migrations
                     b.Property<long>("AreaId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("RequestId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

@@ -8,7 +8,6 @@ namespace ImmRequest.Domain
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public List<Topic> Topics { get; set; }
-        public long RequestId { get; set; }
+        public ICollection<Topic> Topics { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace ImmRequest.Domain
         public long Id { get; set; }
         public long AreaId { get; set; }
         public Area Area { get; set; }
-        public List<TopicType> Types { get; set; }
-        public long RequestId { get; set; }
+        public string Name { get; set; }
+        public ICollection<TopicType> Types { get; set; }
     }
 }

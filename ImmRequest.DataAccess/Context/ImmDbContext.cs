@@ -37,6 +37,20 @@ namespace ImmRequest.DataAccess.Context
                             v => JsonConvert.SerializeObject(v),
                             v => JsonConvert.DeserializeObject<List<string>>(v));
 
+            builder.Entity<CitizenRequest>()
+                .HasOne(cr => cr.Area)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<CitizenRequest>()
+                .HasOne(cr => cr.Topic)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<CitizenRequest>()
+                .HasOne(cr => cr.TopicType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
