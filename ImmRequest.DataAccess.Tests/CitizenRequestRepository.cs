@@ -110,5 +110,33 @@ namespace ImmRequest.DataAccess.Tests
             CreateRepository("UpdateNotFound");
             repository.Update(request);
         }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            CreateRepository("GetAllTest");
+            context.CitizenRequests.Add(request);
+            context.SaveChanges();
+
+            var request2 = new CitizenRequest
+            {
+                Description = "A Request",
+                CitizenName = "최 영재",
+                Email = "example2@gmail.com",
+                Phone = "099123453",
+                RequestNumber = 1,
+                Status = RequestStatus.OnRevision,
+                Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType(),
+                Values = new List<RequestFieldValues>()
+            };
+
+            context.CitizenRequests.Add(request2);
+            context.SaveChanges();
+
+            var allRequest = repository.GetAll();
+            Assert.AreEqual(2, allRequest.Count);
+        }
     }
 }
