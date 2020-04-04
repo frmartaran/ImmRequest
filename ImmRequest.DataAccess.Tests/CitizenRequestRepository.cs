@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
@@ -78,6 +79,14 @@ namespace ImmRequest.DataAccess.Tests
             repository.Delete(1);
             var requestInDb = context.CitizenRequests.FirstOrDefault();
             Assert.IsNull(requestInDb);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void DeleteNotFound()
+        {
+            CreateRepository("DeleteNotFound");
+            repository.Delete(1);
         }
     }
 }
