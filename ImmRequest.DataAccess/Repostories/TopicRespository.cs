@@ -70,12 +70,20 @@ namespace ImmRequest.DataAccess.Repositories
 
         public Topic Update(Topic objectToUpdate)
         {
-            var topicToUpdate = Get(objectToUpdate.Id);
-            topicToUpdate.Name = objectToUpdate.Name;
-            topicToUpdate.Types = objectToUpdate.Types;
-            topicToUpdate.Area = objectToUpdate.Area;
-            Save();
-            return topicToUpdate;
+            try
+            {
+                var topicToUpdate = Get(objectToUpdate.Id);
+                topicToUpdate.Name = objectToUpdate.Name;
+                topicToUpdate.Types = objectToUpdate.Types;
+                topicToUpdate.Area = objectToUpdate.Area;
+                Save();
+                return topicToUpdate;
+            }
+            catch (NullReferenceException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Update");
+                throw new DatabaseNotFoundException(message);
+            }
         }
     }
 }
