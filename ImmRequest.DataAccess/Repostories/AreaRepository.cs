@@ -18,7 +18,9 @@ namespace ImmRequest.DataAccess.Repositories
         }
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            var areaToDelete = Get(id);
+            Context.Areas.Remove(areaToDelete);
+            Save();
         }
 
         public bool Exists(long id)
