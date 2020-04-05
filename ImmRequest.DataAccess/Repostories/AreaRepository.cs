@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImmRequest.DataAccess.Repositories
 {
@@ -26,7 +28,11 @@ namespace ImmRequest.DataAccess.Repositories
 
         public Area Get(long id)
         {
-            throw new NotImplementedException();
+            return Context.Areas
+                .Include(a => a.Topics)
+                    .ThenInclude(t => t.Types)
+                    .ThenInclude(ty => ty.AllFields)
+                .FirstOrDefault(a => a.Id == id);
         }
 
         public ICollection<Area> GetAll()
