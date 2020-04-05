@@ -36,7 +36,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return Context.Areas.Any(a => a.Id == id);
         }
 
         public Area Get(long id)
