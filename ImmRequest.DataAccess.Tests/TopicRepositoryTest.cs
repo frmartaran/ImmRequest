@@ -89,5 +89,25 @@ namespace ImmRequest.DataAccess.Tests
             var allTopics = repository.GetAll();
             Assert.AreEqual(2, allTopics.Count);
         }
+
+        [TestMethod]
+        public void ExistsTest()
+        {
+            CreateRepository("Topic Exists Test");
+            context.Topics.Add(topic);
+            context.SaveChanges();
+
+            var exists = repository.Exists(1);
+            Assert.IsTrue(exists);
+        }
+        
+        [TestMethod]
+        public void DoesNotExistsTest()
+        {
+            CreateRepository("Topic Does Not Exists Test");
+
+            var exists = repository.Exists(1);
+            Assert.IsFalse(exists);
+        }
     }
 }
