@@ -37,7 +37,8 @@ namespace ImmRequest.DataAccess.Repositories
 
         public void Insert(Topic objectToAdd)
         {
-            throw new NotImplementedException();
+            Context.Topics.Add(objectToAdd);
+            Save();
         }
 
         public void Save()
