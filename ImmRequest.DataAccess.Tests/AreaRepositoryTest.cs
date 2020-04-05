@@ -133,5 +133,25 @@ namespace ImmRequest.DataAccess.Tests
             repository.Update(area);
         }
 
+        [TestMethod]
+        public void ExistsTest()
+        {
+            CreateRepository("ExistsTest");
+            context.Areas.Add(area);
+            context.SaveChanges();
+
+            var exists = repository.Exists(1);
+            Assert.IsTrue(exists);
+        }
+
+        [TestMethod]
+        public void DoesNotExistsTest()
+        {
+            CreateRepository("DoesNotExistsTest");
+
+            var exists = repository.Exists(1);
+            Assert.IsFalse(exists);
+        }
+
     }
 }
