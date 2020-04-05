@@ -89,6 +89,17 @@ namespace ImmRequest.DataAccess.Tests
             Assert.AreEqual(2, allAreas.Count);
         }
 
-        
+        [TestMethod]
+        public void DeleteTest()
+        {
+            CreateRepository("DeleteTest");
+            context.Areas.Add(area);
+            context.SaveChanges();
+
+            repository.Delete(1);
+            var areaInDb = context.Areas.FirstOrDefault();
+            Assert.IsNull(areaInDb);
+
+        }
     }
 }
