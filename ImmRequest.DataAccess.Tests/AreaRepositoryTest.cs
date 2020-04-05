@@ -68,5 +68,25 @@ namespace ImmRequest.DataAccess.Tests
             var areaInDb = repository.Get(1);
             Assert.IsNotNull(areaInDb);
         }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            CreateRepository("GetAllTest");
+            context.Areas.Add(area);
+            context.SaveChanges();
+
+            var area2 = new Area
+            {
+                Name = "Area 2 Test",
+                Topics = new List<Topic>()
+            };
+
+            context.Areas.Add(area2);
+            context.SaveChanges();
+
+            var allAreas = repository.GetAll();
+            Assert.AreEqual(2, allAreas.Count);
+        }
     }
 }
