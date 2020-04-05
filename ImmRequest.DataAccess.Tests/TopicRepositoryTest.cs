@@ -21,7 +21,8 @@ namespace ImmRequest.DataAccess.Tests
             topic = new Topic
             {
                 Name = "Topic Test",
-                Types = new List<TopicType>()
+                Types = new List<TopicType>(),
+                Area = new Area()
             };
         }
 
@@ -61,7 +62,7 @@ namespace ImmRequest.DataAccess.Tests
         [TestMethod]
         public void GetTest()
         {
-            CreateRepository("GetTest");
+            CreateRepository("Get Test");
             context.Topics.Add(topic);
             context.SaveChanges();
 
