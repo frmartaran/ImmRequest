@@ -145,5 +145,13 @@ namespace ImmRequest.DataAccess.Tests
             var topicInDb = context.Topics.FirstOrDefault();
             Assert.AreEqual(topic.Name, topicInDb.Name);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFound()
+        {
+            CreateRepository("Topic Update Not Found Test");
+            repository.Update(topic);
+        }
     }
 }
