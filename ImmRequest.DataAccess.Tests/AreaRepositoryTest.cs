@@ -46,5 +46,16 @@ namespace ImmRequest.DataAccess.Tests
             var areaInDb = context.Areas.FirstOrDefault();
             Assert.IsNotNull(areaInDb);
         }
+
+        [TestMethod]
+        public void SaveTest()
+        {
+            CreateRepository("SaveTest");
+            context.Areas.Add(area);
+            repository.Save();
+
+            var areaInDb = context.Areas.FirstOrDefault();
+            Assert.IsNotNull(areaInDb);
+        }
     }
 }

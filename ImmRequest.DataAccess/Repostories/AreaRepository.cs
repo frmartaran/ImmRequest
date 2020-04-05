@@ -36,12 +36,13 @@ namespace ImmRequest.DataAccess.Repositories
 
         public void Insert(Area objectToAdd)
         {
-            throw new NotImplementedException();
+            Context.Areas.Add(objectToAdd);
+            Save();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            Context.SaveChanges();
         }
 
         public Area Update(Area objectToUpdate)
