@@ -131,5 +131,19 @@ namespace ImmRequest.DataAccess.Tests
             CreateRepository("Topic Delete Not Found");
             repository.Delete(1);
         }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            CreateRepository("Topic Update Test");
+            context.Topics.Add(topic);
+            context.SaveChanges();
+
+            topic.Name = "Another Name";
+            repository.Update(topic);
+
+            var topicInDb = context.Topics.FirstOrDefault();
+            Assert.AreEqual(topic.Name, topicInDb.Name);
+        }
     }
 }
