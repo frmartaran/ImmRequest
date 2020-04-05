@@ -111,5 +111,19 @@ namespace ImmRequest.DataAccess.Tests
             repository.Delete(1);
         }
 
+        [TestMethod]
+        public void UpdateTest()
+        {
+            CreateRepository("UpdateTest");
+            context.Areas.Add(area);
+            context.SaveChanges();
+
+            area.Name = "Another Area Name";
+            repository.Update(area);
+
+            var areaInDb = context.Areas.FirstOrDefault();
+            Assert.AreEqual(area.Name, areaInDb.Name);
+        }
+
     }
 }
