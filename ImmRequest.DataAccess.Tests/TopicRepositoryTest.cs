@@ -57,5 +57,16 @@ namespace ImmRequest.DataAccess.Tests
             var topicInDb = context.Topics.FirstOrDefault();
             Assert.IsNotNull(topicInDb);
         }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            CreateRepository("GetTest");
+            context.Topics.Add(topic);
+            context.SaveChanges();
+
+            var topicInDb = repository.Get(1);
+            Assert.IsNotNull(topicInDb);
+        }
     }
 }
