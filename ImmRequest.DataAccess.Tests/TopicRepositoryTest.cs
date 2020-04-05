@@ -100,7 +100,7 @@ namespace ImmRequest.DataAccess.Tests
             var exists = repository.Exists(1);
             Assert.IsTrue(exists);
         }
-        
+
         [TestMethod]
         public void DoesNotExistsTest()
         {
@@ -108,6 +108,19 @@ namespace ImmRequest.DataAccess.Tests
 
             var exists = repository.Exists(1);
             Assert.IsFalse(exists);
+        }
+
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            CreateRepository("Topic Delete Test");
+            context.Topics.Add(topic);
+            context.SaveChanges();
+
+            repository.Delete(1);
+            var topicInDb = context.Topics.FirstOrDefault();
+            Assert.IsNull(topicInDb);
         }
     }
 }
