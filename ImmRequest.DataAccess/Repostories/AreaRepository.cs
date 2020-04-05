@@ -70,7 +70,11 @@ namespace ImmRequest.DataAccess.Repositories
 
         public Area Update(Area objectToUpdate)
         {
-            throw new NotImplementedException();
+            var areaToUpdate = Get(objectToUpdate.Id);
+            areaToUpdate.Name = objectToUpdate.Name;
+            areaToUpdate.Topics = objectToUpdate.Topics;
+            Save();
+            return areaToUpdate;
         }
     }
 }
