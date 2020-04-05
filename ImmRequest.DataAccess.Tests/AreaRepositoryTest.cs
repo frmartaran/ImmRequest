@@ -125,5 +125,13 @@ namespace ImmRequest.DataAccess.Tests
             Assert.AreEqual(area.Name, areaInDb.Name);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFoundTest()
+        {
+            CreateRepository("UpdateNotFound");
+            repository.Update(area);
+        }
+
     }
 }
