@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -121,6 +122,14 @@ namespace ImmRequest.DataAccess.Tests
             repository.Delete(1);
             var topicInDb = context.Topics.FirstOrDefault();
             Assert.IsNull(topicInDb);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void DeleteNotFound()
+        {
+            CreateRepository("Topic Delete Not Found");
+            repository.Delete(1);
         }
     }
 }
