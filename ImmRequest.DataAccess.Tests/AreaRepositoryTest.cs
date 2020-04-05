@@ -88,5 +88,7 @@ namespace ImmRequest.DataAccess.Tests
             var allAreas = repository.GetAll();
             Assert.AreEqual(2, allAreas.Count);
         }
+
+        
     }
 }

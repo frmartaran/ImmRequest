@@ -37,7 +37,11 @@ namespace ImmRequest.DataAccess.Repositories
 
         public ICollection<Area> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.Areas
+                .Include(a => a.Topics)
+                    .ThenInclude(t => t.Types)
+                    .ThenInclude(ty => ty.AllFields)
+                    .ToList();
         }
 
         public void Insert(Area objectToAdd)
