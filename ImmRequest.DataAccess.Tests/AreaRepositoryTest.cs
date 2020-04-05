@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -103,6 +104,7 @@ namespace ImmRequest.DataAccess.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
         public void DeleteNotFound()
         {
             CreateRepository("DeleteNotFound");
