@@ -101,5 +101,13 @@ namespace ImmRequest.DataAccess.Tests
             Assert.IsNull(areaInDb);
 
         }
+
+        [TestMethod]
+        public void DeleteNotFound()
+        {
+            CreateRepository("DeleteNotFound");
+            repository.Delete(1);
+        }
+
     }
 }
