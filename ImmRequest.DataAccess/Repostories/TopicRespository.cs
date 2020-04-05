@@ -19,7 +19,9 @@ namespace ImmRequest.DataAccess.Repositories
         }
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            var toDelete = Get(id);
+            Context.Topics.Remove(toDelete);
+            Save();
         }
 
         public bool Exists(long id)
