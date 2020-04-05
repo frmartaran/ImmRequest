@@ -70,11 +70,19 @@ namespace ImmRequest.DataAccess.Repositories
 
         public Area Update(Area objectToUpdate)
         {
-            var areaToUpdate = Get(objectToUpdate.Id);
-            areaToUpdate.Name = objectToUpdate.Name;
-            areaToUpdate.Topics = objectToUpdate.Topics;
-            Save();
-            return areaToUpdate;
+            try
+            {
+                var areaToUpdate = Get(objectToUpdate.Id);
+                areaToUpdate.Name = objectToUpdate.Name;
+                areaToUpdate.Topics = objectToUpdate.Topics;
+                Save();
+                return areaToUpdate;
+            }
+            catch (NullReferenceException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Update");
+                throw new DatabaseNotFoundException(message);
+            }
         }
     }
 }
