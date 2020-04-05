@@ -24,7 +24,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return Context.Topics.Any(t => t.Id == id);
         }
 
         public Topic Get(long id)
