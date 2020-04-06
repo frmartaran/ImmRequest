@@ -51,6 +51,16 @@ namespace ImmRequest.DataAccess.Tests
             Assert.IsNotNull(typeInDb);
         }
 
+        [TestMethod]
+        public void InsertTest()
+        {
+            CreateRepository("Type Insert Test");
+            repository.Insert(type);
+
+            var typeInDb = context.TopicTypes.FirstOrDefault();
+            Assert.IsNotNull(typeInDb);
+        }
+
 
     }
 }
