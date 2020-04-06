@@ -61,6 +61,17 @@ namespace ImmRequest.DataAccess.Tests
             Assert.IsNotNull(typeInDb);
         }
 
+        [TestMethod]
+        public void GetTest()
+        {
+            CreateRepository("Type Get Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            var typeInDb = repository.Get(1);
+            Assert.IsNotNull(typeInDb);
+        }
+
 
     }
 }
