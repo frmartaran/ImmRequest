@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
@@ -155,6 +156,14 @@ namespace ImmRequest.DataAccess.Tests
             repository.Delete(1);
             var numberFieldInDb = context.Fields.FirstOrDefault();
             Assert.IsNull(numberFieldInDb);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void DeleteNotFound()
+        {
+            CreateRespostory("Field Delete Not Found");
+            repository.Delete(1);
         }
     }
 }
