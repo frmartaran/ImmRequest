@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
@@ -125,6 +126,14 @@ namespace ImmRequest.DataAccess.Tests
             repository.Delete(1);
             var typeInDb = context.TopicTypes.FirstOrDefault();
             Assert.IsNull(typeInDb);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void DeleteNotFoundTest()
+        {
+            CreateRepository("Type Delete Not Found");
+            repository.Delete(1);
         }
 
 
