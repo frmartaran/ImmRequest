@@ -67,12 +67,21 @@ namespace ImmRequest.DataAccess.Repositories
 
         public TopicType Update(TopicType objectToUpdate)
         {
-            var typeToModify = Get(objectToUpdate.Id);
-            typeToModify.Name = objectToUpdate.Name;
-            typeToModify.ParentTopic = objectToUpdate.ParentTopic;
-            typeToModify.AllFields = objectToUpdate.AllFields;
-            Save();
-            return typeToModify;
+            try
+            {
+                var typeToModify = Get(objectToUpdate.Id);
+                typeToModify.Name = objectToUpdate.Name;
+                typeToModify.ParentTopic = objectToUpdate.ParentTopic;
+                typeToModify.AllFields = objectToUpdate.AllFields;
+                Save();
+                return typeToModify;
+            }
+            catch (NullReferenceException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Update");
+                throw new DatabaseNotFoundException(message);
+            }
+
         }
     }
 }
