@@ -202,5 +202,13 @@ namespace ImmRequest.DataAccess.Tests
             Assert.AreEqual(0, textFieldInDb.RangeValues.Count);
             Assert.AreEqual(newDate, datesFieldInDb.End);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFound()
+        {
+            CreateRespostory("Fields Update Not Found");
+            repository.Update(numberField);
+        }
     }
 }
