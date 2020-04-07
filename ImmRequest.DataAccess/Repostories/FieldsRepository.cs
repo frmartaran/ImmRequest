@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain.Fields;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImmRequest.DataAccess.Repositories
 {
@@ -25,10 +28,12 @@ namespace ImmRequest.DataAccess.Repositories
 
         public BaseField Get(long id)
         {
-            throw new NotImplementedException();
+            return Context.Fields
+                .Include(f => f.ParentType)
+                .FirstOrDefault(f => f.Id == id);
         }
 
-        public System.Collections.Generic.ICollection<BaseField> GetAll()
+        public ICollection<BaseField> GetAll()
         {
             throw new NotImplementedException();
         }
