@@ -24,7 +24,8 @@ namespace ImmRequest.DataAccess.Tests
             type = new TopicType
             {
                 Name = "Some Type",
-                AllFields = new List<BaseField>()
+                AllFields = new List<BaseField>(),
+                ParentTopic = new Topic()
             };
         }
 

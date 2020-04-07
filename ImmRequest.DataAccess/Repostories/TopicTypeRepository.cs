@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImmRequest.DataAccess.Repositories
 {
@@ -26,7 +28,10 @@ namespace ImmRequest.DataAccess.Repositories
 
         public TopicType Get(long id)
         {
-            throw new NotImplementedException();
+            return Context.TopicTypes
+                .Include(ty => ty.ParentTopic)
+                .Include(ty => ty.AllFields)
+                .FirstOrDefault(ty => ty.Id == id);
         }
 
         public ICollection<TopicType> GetAll()
