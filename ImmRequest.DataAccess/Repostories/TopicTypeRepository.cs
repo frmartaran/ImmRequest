@@ -67,7 +67,12 @@ namespace ImmRequest.DataAccess.Repositories
 
         public TopicType Update(TopicType objectToUpdate)
         {
-            throw new NotImplementedException();
+            var typeToModify = Get(objectToUpdate.Id);
+            typeToModify.Name = objectToUpdate.Name;
+            typeToModify.ParentTopic = objectToUpdate.ParentTopic;
+            typeToModify.AllFields = objectToUpdate.AllFields;
+            Save();
+            return typeToModify;
         }
     }
 }
