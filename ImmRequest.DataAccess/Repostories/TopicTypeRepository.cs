@@ -36,7 +36,10 @@ namespace ImmRequest.DataAccess.Repositories
 
         public ICollection<TopicType> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.TopicTypes
+                .Include(ty => ty.ParentTopic)
+                .Include(ty => ty.AllFields)
+                .ToList();
         }
 
         public void Insert(TopicType objectToAdd)
