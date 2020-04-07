@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Resources;
 using ImmRequest.Domain.Fields;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,9 +20,18 @@ namespace ImmRequest.DataAccess.Repositories
         }
         public void Delete(long id)
         {
-            var fieldToDelete = Get(1);
-            Context.Fields.Remove(fieldToDelete);
-            Save();
+            try
+            {
+                var fieldToDelete = Get(1);
+                Context.Fields.Remove(fieldToDelete);
+                Save();
+
+            }
+            catch (ArgumentNullException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Delete");
+                throw new DatabaseNotFoundException(message);
+            }
         }
 
         public bool Exists(long id)
