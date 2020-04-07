@@ -165,5 +165,42 @@ namespace ImmRequest.DataAccess.Tests
             CreateRespostory("Field Delete Not Found");
             repository.Delete(1);
         }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            CreateRespostory("Field Update Test");
+            context.Fields.Add(numberField);
+            context.Fields.Add(textField);
+            context.Fields.Add(dateTimeField);
+            context.SaveChanges();
+
+            var newDate = new DateTime();
+            numberField.RangeEnd = 25;
+            textField.RangeValues = new List<string>();
+            dateTimeField.End = newDate;
+
+            repository.Update(numberField);
+            repository.Update(textField);
+            repository.Update(dateTimeField);
+
+            var fields = context.Fields.ToList();
+            var numberFieldInDb = fields
+                .OfType<NumberField>()
+                .Cast<NumberField>()
+                .FirstOrDefault();
+            var textFieldInDb = fields
+                .OfType<TextField>()
+                .Cast<TextField>()
+                .FirstOrDefault();
+            var datesFieldInDb = fields
+                .OfType<DateTimeField>()
+                .Cast<DateTimeField>()
+                .FirstOrDefault();
+
+            Assert.AreEqual(25, numberFieldInDb.RangeEnd);
+            Assert.AreEqual(0, textFieldInDb.RangeValues.Count);
+            Assert.AreEqual(newDate, datesFieldInDb.End);
+        }
     }
 }
