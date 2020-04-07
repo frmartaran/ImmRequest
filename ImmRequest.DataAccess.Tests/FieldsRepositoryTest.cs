@@ -66,5 +66,22 @@ namespace ImmRequest.DataAccess.Tests
             var fieldInDb = context.Fields.FirstOrDefault();
             Assert.IsNotNull(fieldInDb);
         }
+
+        [TestMethod]
+        public void InsertTest()
+        {
+            CreateRespostory("Fields Insert Test");
+            repository.Insert(numberField);
+            repository.Insert(textField);
+            repository.Insert(dateTimeField);
+
+            var numberFieldInDb = context.Fields.OfType<NumberField>().FirstOrDefault();
+            var datesFieldInDb = context.Fields.OfType<DateTimeField>().FirstOrDefault();
+            var textFieldInDb = context.Fields.OfType<TextField>().FirstOrDefault();
+
+            Assert.IsNotNull(numberFieldInDb);
+            Assert.IsNotNull(datesFieldInDb);
+            Assert.IsNotNull(textField);
+        }
     }
 }

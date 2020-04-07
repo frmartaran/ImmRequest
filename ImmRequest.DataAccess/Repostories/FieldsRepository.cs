@@ -40,7 +40,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public void Save()
         {
-            throw new NotImplementedException();
+            Context.SaveChanges();
         }
 
         public BaseField Update(BaseField objectToUpdate)
