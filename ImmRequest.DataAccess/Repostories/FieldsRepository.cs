@@ -66,10 +66,19 @@ namespace ImmRequest.DataAccess.Repositories
 
         public BaseField Update(BaseField objectToUpdate)
         {
-            var fieldToModify = Get(objectToUpdate.Id);
-            fieldToModify.UpdateValues(objectToUpdate);
-            Save();
-            return fieldToModify;
+            try
+            {
+                var fieldToModify = Get(objectToUpdate.Id);
+                fieldToModify.UpdateValues(objectToUpdate);
+                Save();
+                return fieldToModify;
+
+            }
+            catch (NullReferenceException)
+            {
+                var message = string.Format(DataAccessResource.Exception_NotFound_Action, "Update");
+                throw new DatabaseNotFoundException(message);
+            }
         }
     }
 }
