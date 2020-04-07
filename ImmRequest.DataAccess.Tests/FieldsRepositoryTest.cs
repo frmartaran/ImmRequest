@@ -124,5 +124,25 @@ namespace ImmRequest.DataAccess.Tests
             var allFields = repository.GetAll();
             Assert.AreEqual(3, allFields.Count);
         }
+
+        [TestMethod]
+        public void ExistTest()
+        {
+            CreateRespostory("Field Exists Test");
+            context.Fields.Add(numberField);
+            context.SaveChanges();
+
+            var exists = repository.Exists(1);
+            Assert.IsTrue(exists);
+        }
+
+        [TestMethod]
+        public void DoesNotExistTest()
+        {
+            CreateRespostory("Field Does Not Exists Test");
+
+            var exists = repository.Exists(1);
+            Assert.IsTrue(exists);
+        }
     }
 }
