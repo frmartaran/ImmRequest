@@ -94,6 +94,27 @@ namespace ImmRequest.DataAccess.Tests
 
         }
 
+        [TestMethod]
+        public void ExistsTest()
+        {
+            CreateRepository("Type Exist Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            var exists = repository.Exists(1);
+            Assert.IsTrue(exists);
+        }
+
+        
+        [TestMethod]
+        public void DoesNotExistsTest()
+        {
+            CreateRepository("Type Does Not Exist Test");
+
+            var exists = repository.Exists(1);
+            Assert.IsFalse(exists);
+        }
+
 
     }
 }
