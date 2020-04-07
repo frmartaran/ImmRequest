@@ -14,5 +14,6 @@ namespace ImmRequest.Domain.Interfaces
         T ValueToDataType<T>(string value) where T : class;
 
         void Validate(string value);
+
     }
 }

@@ -13,6 +13,14 @@ namespace ImmRequest.Domain.Fields
             throw new NotImplementedException();
         }
 
+        public override void UpdateValues(BaseField valuesToUpdate)
+        {
+            var modifiedField = valuesToUpdate as NumberField;
+            RangeStart = modifiedField.RangeStart;
+            RangeEnd = modifiedField.RangeEnd;
+            base.UpdateValues(valuesToUpdate);
+        }
+
         public override void Validate(string value)
         {
             throw new NotImplementedException();

@@ -66,7 +66,10 @@ namespace ImmRequest.DataAccess.Repositories
 
         public BaseField Update(BaseField objectToUpdate)
         {
-            throw new NotImplementedException();
+            var fieldToModify = Get(objectToUpdate.Id);
+            fieldToModify.UpdateValues(objectToUpdate);
+            Save();
+            return fieldToModify;
         }
     }
 }

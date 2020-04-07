@@ -13,6 +13,14 @@ namespace ImmRequest.Domain.Fields
             throw new NotImplementedException();
         }
 
+        public override void UpdateValues(BaseField valuesToUpdate)
+        {
+            var modifiedField = valuesToUpdate as DateTimeField;
+            Start = modifiedField.Start;
+            End = modifiedField.End;
+            base.UpdateValues(valuesToUpdate);
+        }
+
         public override void Validate(string value)
         {
             throw new NotImplementedException();

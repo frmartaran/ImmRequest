@@ -17,5 +17,11 @@ namespace ImmRequest.Domain.Fields
         public abstract void Validate(string value);
 
         public abstract T ValueToDataType<T>(string value) where T : class;
+
+        public virtual void UpdateValues(BaseField valuesToUpdate)
+        {
+            Name = valuesToUpdate.Name;
+            ParentType = valuesToUpdate.ParentType;
+        }
     }
 }
