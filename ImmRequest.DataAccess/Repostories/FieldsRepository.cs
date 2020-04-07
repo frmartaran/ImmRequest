@@ -35,7 +35,8 @@ namespace ImmRequest.DataAccess.Repositories
 
         public void Insert(BaseField objectToAdd)
         {
-            throw new NotImplementedException();
+            Context.Fields.Add(objectToAdd);
+            Save();
         }
 
         public void Save()
