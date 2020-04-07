@@ -23,7 +23,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return Context.TopicTypes.Any(ty => ty.Id == id);
         }
 
         public TopicType Get(long id)
