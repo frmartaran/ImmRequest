@@ -144,5 +144,17 @@ namespace ImmRequest.DataAccess.Tests
             var exists = repository.Exists(1);
             Assert.IsFalse(exists);
         }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            CreateRespostory("Fields Delete Test");
+            context.Fields.Add(numberField);
+            context.SaveChanges();
+
+            repository.Delete(1);
+            var numberFieldInDb = context.Fields.FirstOrDefault();
+            Assert.IsNull(numberFieldInDb);
+        }
     }
 }
