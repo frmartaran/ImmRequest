@@ -73,6 +73,27 @@ namespace ImmRequest.DataAccess.Tests
             Assert.IsNotNull(typeInDb);
         }
 
+        [TestMethod]
+        public void GetAllTest()
+        {
+            CreateRepository("Type Get All Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            var type2 = new TopicType
+            {
+                Name = "Some Type 2",
+                AllFields = new List<BaseField>(),
+                ParentTopic = new Topic()
+            };
+            context.TopicTypes.Add(type2);
+            context.SaveChanges();
+
+            var allTypes = repository.GetAll();
+            Assert.AreEqual(2, allTypes.Count);
+
+        }
+
 
     }
 }
