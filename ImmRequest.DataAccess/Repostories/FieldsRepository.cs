@@ -35,7 +35,9 @@ namespace ImmRequest.DataAccess.Repositories
 
         public ICollection<BaseField> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.Fields
+                .Include(f => f.ParentType)
+                .ToList();
         }
 
         public void Insert(BaseField objectToAdd)
