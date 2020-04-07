@@ -136,6 +136,20 @@ namespace ImmRequest.DataAccess.Tests
             repository.Delete(1);
         }
 
+        [TestMethod]
+        public void UpdateTest()
+        {
+            CreateRepository("Type Update Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            type.Name = "Another Name";
+            repository.Update(type);
+
+            var typeInDb = context.TopicTypes.FirstOrDefault();
+            Assert.AreEqual("Another Name", typeInDb.Name);
+        }
+
 
     }
 }
