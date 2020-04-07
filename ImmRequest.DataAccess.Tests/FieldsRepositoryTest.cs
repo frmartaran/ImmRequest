@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
@@ -53,6 +54,17 @@ namespace ImmRequest.DataAccess.Tests
         {
             context = ContextFactory.GetMemoryContext(name);
             repository = new FieldsRepository(context);
+        }
+
+        [TestMethod]
+        public void SaveTest()
+        {
+            CreateRespostory("Fields Save Test");
+            context.Fields.Add(numberField);
+            repository.Save();
+
+            var fieldInDb = context.Fields.FirstOrDefault();
+            Assert.IsNotNull(fieldInDb);
         }
     }
 }
