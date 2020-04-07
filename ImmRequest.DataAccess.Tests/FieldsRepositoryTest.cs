@@ -142,7 +142,7 @@ namespace ImmRequest.DataAccess.Tests
             CreateRespostory("Field Does Not Exists Test");
 
             var exists = repository.Exists(1);
-            Assert.IsTrue(exists);
+            Assert.IsFalse(exists);
         }
     }
 }

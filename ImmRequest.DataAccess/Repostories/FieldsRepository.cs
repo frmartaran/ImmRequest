@@ -23,7 +23,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return Context.Fields.Any(f => f.Id == id);
         }
 
         public BaseField Get(long id)
