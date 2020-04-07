@@ -150,6 +150,14 @@ namespace ImmRequest.DataAccess.Tests
             Assert.AreEqual("Another Name", typeInDb.Name);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFoundTest()
+        {
+            CreateRepository("Type Update Not Found Test");
+            repository.Update(type);
+        }
+
 
     }
 }
