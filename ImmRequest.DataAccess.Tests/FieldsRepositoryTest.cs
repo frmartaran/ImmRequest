@@ -92,5 +92,23 @@ namespace ImmRequest.DataAccess.Tests
             Assert.IsNotNull(datesFieldInDb);
             Assert.IsNotNull(textField);
         }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            CreateRespostory("Fields Get Test");
+            context.Fields.Add(numberField);
+            context.Fields.Add(textField);
+            context.Fields.Add(dateTimeField);
+            context.SaveChanges();
+
+            var numberFieldInDb = repository.Get(1);
+            var textFieldInDb = repository.Get(2);
+            var datesFieldInDb = repository.Get(3);
+
+            Assert.IsNotNull(numberFieldInDb);
+            Assert.IsNotNull(datesFieldInDb);
+            Assert.IsNotNull(textField);
+        }
     }
 }
