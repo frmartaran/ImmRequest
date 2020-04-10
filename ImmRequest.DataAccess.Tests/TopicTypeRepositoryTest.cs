@@ -102,7 +102,7 @@ namespace ImmRequest.DataAccess.Tests
             context.TopicTypes.Add(type);
             context.SaveChanges();
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(type);
             Assert.IsTrue(exists);
         }
 
@@ -112,7 +112,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("Type Does Not Exist Test");
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(type);
             Assert.IsFalse(exists);
         }
 

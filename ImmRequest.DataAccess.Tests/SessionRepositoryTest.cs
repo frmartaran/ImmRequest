@@ -166,7 +166,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Sessions.Add(session);
             context.SaveChanges();
 
-            var exists = repository.Exists(session.Id);
+            var exists = repository.Exists(session);
             Assert.IsTrue(exists);
         }
 
@@ -175,7 +175,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("DoesNotExists");
 
-            var exists = repository.Exists(session.Id);
+            var exists = repository.Exists(session);
             Assert.IsFalse(exists);
         }
     }

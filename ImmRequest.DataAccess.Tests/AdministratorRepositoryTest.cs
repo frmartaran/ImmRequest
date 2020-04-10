@@ -128,7 +128,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Administrators.Add(administrator);
             context.SaveChanges();
 
-            var exists = repository.Exists(administrator.Id);
+            var exists = repository.Exists(administrator);
             Assert.IsTrue(exists);
         }
 
@@ -136,7 +136,7 @@ namespace ImmRequest.DataAccess.Tests
         public void DoesNotExistsTest()
         {
             CreateRepostory("Does not Exist");
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(administrator);
             Assert.IsFalse(exists);
         }
     }

@@ -146,7 +146,7 @@ namespace ImmRequest.DataAccess.Tests
             context.CitizenRequests.Add(request);
             context.SaveChanges();
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(request);
             Assert.IsTrue(exists);
         }
 
@@ -155,7 +155,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("DoesNotExists");
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(request);
             Assert.IsFalse(exists);
         }
     }

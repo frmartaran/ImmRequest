@@ -36,7 +36,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(BaseField field)
         {
-            return Context.Fields.Any(f => f.Id == field);
+            return Context.Fields.Any(f => f.Id == field.Id);
         }
 
         public BaseField Get(long id)

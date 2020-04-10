@@ -133,7 +133,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Fields.Add(numberField);
             context.SaveChanges();
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(numberField);
             Assert.IsTrue(exists);
         }
 
@@ -142,7 +142,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRespostory("Field Does Not Exists Test");
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(numberField);
             Assert.IsFalse(exists);
         }
 

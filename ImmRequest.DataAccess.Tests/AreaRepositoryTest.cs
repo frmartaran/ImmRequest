@@ -140,7 +140,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Areas.Add(area);
             context.SaveChanges();
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(area);
             Assert.IsTrue(exists);
         }
 
@@ -149,7 +149,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("DoesNotExistsTest");
 
-            var exists = repository.Exists(1);
+            var exists = repository.Exists(area);
             Assert.IsFalse(exists);
         }
 
