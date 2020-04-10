@@ -25,7 +25,7 @@ namespace ImmRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
-        public void IsValidAdminWithUniqueEmail()
+        public void IsValidMockTest()
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
             mockRepository.Setup(m => m.Exists(It.IsAny<Administrator>()))
@@ -38,7 +38,7 @@ namespace ImmRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
-        public void IsNotValidAdminWithRepeatedEmail()
+        public void IsNotValidAdminWithRepeatedEmailMockTest()
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
             mockRepository.Setup(m => m.Exists(It.IsAny<Administrator>()))
@@ -51,7 +51,7 @@ namespace ImmRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
-        public void IsValidAdminWithUniqueEmailUsingContext()
+        public void IsValid()
         {
             var context = ContextFactory.GetMemoryContext("Unique Email");
             var repository = new AdministratorRepository(context);
@@ -69,7 +69,7 @@ namespace ImmRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
-        public void IsNotValidWithRepeatedEmailUsingContext()
+        public void IsNotValidAdminWithRepeatedEmail()
         {
             var context = ContextFactory.GetMemoryContext("Repeated Email");
             var repository = new AdministratorRepository(context);
@@ -83,6 +83,17 @@ namespace ImmRequest.BusinessLogic.Tests
             };
 
             var isValid = validator.IsValid(newAdmin);
+            Assert.IsFalse(isValid);
+        }
+
+        [TestMethod]
+        public void IsNotValidWithoutUserNameMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>().Object;
+            var validator = new AdministratorValidator(mockRepository);
+            administrator.UserName = "";
+
+            var isValid = validator.IsValid(administrator);
             Assert.IsFalse(isValid);
         }
 
