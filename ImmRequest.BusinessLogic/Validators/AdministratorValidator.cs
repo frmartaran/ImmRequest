@@ -21,26 +21,31 @@ namespace ImmRequest.BusinessLogic
         }
         public bool IsValid(Administrator objectToValidate)
         {
-            if (string.IsNullOrEmpty(objectToValidate.UserName))
-            {
-                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty, 
-                    UserName_PropertyName);
-                throw new ValidationException(errorMessage);
-            }
+            ValidateUsername(objectToValidate);
+            ValidateEmail(objectToValidate);
+            ValidatePassword(objectToValidate);
 
-            if (string.IsNullOrEmpty(objectToValidate.Email))
-            {
-                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty, 
-                    Email_PropertyName);
-                throw new ValidationException(errorMessage);
-            }
+            return true;
+        }
 
+        private static void ValidatePassword(Administrator objectToValidate)
+        {
             if (string.IsNullOrEmpty(objectToValidate.PassWord))
             {
                 var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
                     Password_PropertyName);
                 throw new ValidationException(errorMessage);
             }
+        }
+
+        private void ValidateEmail(Administrator objectToValidate)
+        {
+            ValidateEmailsIsNotEmpty(objectToValidate);
+            ValidateEmailIsUnique(objectToValidate);
+        }
+
+        private void ValidateEmailIsUnique(Administrator objectToValidate)
+        {
             var adminWithEmailExits = Repository.Exists(objectToValidate);
             if (adminWithEmailExits)
             {
@@ -48,8 +53,26 @@ namespace ImmRequest.BusinessLogic
                     Email_PropertyName);
                 throw new ValidationException(errorMessage);
             }
+        }
 
-            return true;
+        private static void ValidateEmailsIsNotEmpty(Administrator objectToValidate)
+        {
+            if (string.IsNullOrEmpty(objectToValidate.Email))
+            {
+                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
+                    Email_PropertyName);
+                throw new ValidationException(errorMessage);
+            }
+        }
+
+        private static void ValidateUsername(Administrator objectToValidate)
+        {
+            if (string.IsNullOrEmpty(objectToValidate.UserName))
+            {
+                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
+                    UserName_PropertyName);
+                throw new ValidationException(errorMessage);
+            }
         }
     }
 }
