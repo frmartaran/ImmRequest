@@ -1,25 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.Domain.Interfaces", "ImmRequest.Domain.Interfaces\ImmRequest.Domain.Interfaces.csproj", "{3779665A-01DC-4778-9615-DC894AB6BB4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.Domain.Interfaces", "ImmRequest.Domain.Interfaces\ImmRequest.Domain.Interfaces.csproj", "{3779665A-01DC-4778-9615-DC894AB6BB4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.Domain", "ImmRequest.Domain\ImmRequest.Domain.csproj", "{6A3AA412-F826-4A2C-A4EB-DF0543A3A8AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.Domain", "ImmRequest.Domain\ImmRequest.Domain.csproj", "{6A3AA412-F826-4A2C-A4EB-DF0543A3A8AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.DataAccess.Interfaces", "ImmRequest.DataAccess.Interfaces\ImmRequest.DataAccess.Interfaces.csproj", "{62221FC3-92F5-41F6-A9CA-1540CB9B458D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.DataAccess.Interfaces", "ImmRequest.DataAccess.Interfaces\ImmRequest.DataAccess.Interfaces.csproj", "{62221FC3-92F5-41F6-A9CA-1540CB9B458D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.DataAccess", "ImmRequest.DataAccess\ImmRequest.DataAccess.csproj", "{52821C99-4287-4A1C-A8C2-20A52AECA197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.DataAccess", "ImmRequest.DataAccess\ImmRequest.DataAccess.csproj", "{52821C99-4287-4A1C-A8C2-20A52AECA197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.DataAccess.Tests", "ImmRequest.DataAccess.Tests\ImmRequest.DataAccess.Tests.csproj", "{10B0EFDC-0DDA-4F00-A255-267917F9231F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.DataAccess.Tests", "ImmRequest.DataAccess.Tests\ImmRequest.DataAccess.Tests.csproj", "{10B0EFDC-0DDA-4F00-A255-267917F9231F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.BusinessLogic.Interfaces", "ImmRequest.BusinessLogic.Interfaces\ImmRequest.BusinessLogic.Interfaces.csproj", "{31BB0076-E521-4386-997D-ACA5CEC1C874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.BusinessLogic.Interfaces", "ImmRequest.BusinessLogic.Interfaces\ImmRequest.BusinessLogic.Interfaces.csproj", "{31BB0076-E521-4386-997D-ACA5CEC1C874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.BusinessLogic", "ImmRequest.BusinessLogic\ImmRequest.BusinessLogic.csproj", "{1DE665E7-1817-4246-A65D-925B656CE0B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.BusinessLogic", "ImmRequest.BusinessLogic\ImmRequest.BusinessLogic.csproj", "{1DE665E7-1817-4246-A65D-925B656CE0B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.WebApi", "ImmRequest.WebApi\ImmRequest.WebApi.csproj", "{442FCFD0-F796-4043-BC31-056B27D97767}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.WebApi", "ImmRequest.WebApi\ImmRequest.WebApi.csproj", "{442FCFD0-F796-4043-BC31-056B27D97767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.WebApi.Tests", "ImmRequest.WebApi.Tests\ImmRequest.WebApi.Tests.csproj", "{D8108467-6401-4E38-8683-F6CD6F5B5981}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.WebApi.Tests", "ImmRequest.WebApi.Tests\ImmRequest.WebApi.Tests.csproj", "{D8108467-6401-4E38-8683-F6CD6F5B5981}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.BusinessLogic.Tests", "ImmRequest.BusinessLogic.Tests\ImmRequest.BusinessLogic.Tests.csproj", "{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,9 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3779665A-01DC-4778-9615-DC894AB6BB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -142,5 +141,23 @@ Global
 		{D8108467-6401-4E38-8683-F6CD6F5B5981}.Release|x64.Build.0 = Release|Any CPU
 		{D8108467-6401-4E38-8683-F6CD6F5B5981}.Release|x86.ActiveCfg = Release|Any CPU
 		{D8108467-6401-4E38-8683-F6CD6F5B5981}.Release|x86.Build.0 = Release|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Debug|x64.Build.0 = Debug|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Debug|x86.Build.0 = Debug|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Release|x64.ActiveCfg = Release|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Release|x64.Build.0 = Release|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Release|x86.ActiveCfg = Release|Any CPU
+		{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5A68E13-1A08-4253-8E1A-3A6951EEE7DF}
 	EndGlobalSection
 EndGlobal
