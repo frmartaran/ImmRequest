@@ -1,9 +1,11 @@
+using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 using System.Collections.Generic;
 
 namespace ImmRequest.BusinessLogic.Tests
@@ -38,6 +40,8 @@ namespace ImmRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+
         public void IsNotValidAdminWithRepeatedEmailMockTest()
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
@@ -46,7 +50,6 @@ namespace ImmRequest.BusinessLogic.Tests
             var validator = new AdministratorValidator(mockRepository.Object);
             var isValid = validator.IsValid(administrator);
 
-            Assert.IsFalse(isValid);
             mockRepository.VerifyAll();
         }
 
@@ -69,6 +72,8 @@ namespace ImmRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+
         public void IsNotValidAdminWithRepeatedEmail()
         {
             var context = ContextFactory.GetMemoryContext("Repeated Email");
@@ -83,10 +88,10 @@ namespace ImmRequest.BusinessLogic.Tests
             };
 
             var isValid = validator.IsValid(newAdmin);
-            Assert.IsFalse(isValid);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
         public void IsNotValidWithoutUserNameMockTest()
         {
             var mockRepository = new Mock<IRepository<Administrator>>().Object;
@@ -94,7 +99,6 @@ namespace ImmRequest.BusinessLogic.Tests
             administrator.UserName = "";
 
             var isValid = validator.IsValid(administrator);
-            Assert.IsFalse(isValid);
         }
 
     }
