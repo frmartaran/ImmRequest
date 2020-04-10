@@ -87,7 +87,7 @@ namespace ImmRequest.BusinessLogic.Tests
                 PassWord = "1234"
             };
 
-            var isValid = validator.IsValid(newAdmin);
+            validator.IsValid(newAdmin);
         }
 
         [TestMethod]
@@ -98,7 +98,18 @@ namespace ImmRequest.BusinessLogic.Tests
             var validator = new AdministratorValidator(mockRepository);
             administrator.UserName = "";
 
-            var isValid = validator.IsValid(administrator);
+            validator.IsValid(administrator);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsNotValidWithEmptyEmail()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>().Object;
+            var validator = new AdministratorValidator(mockRepository);
+            administrator.Email = "";
+
+            validator.IsValid(administrator);
         }
 
     }
