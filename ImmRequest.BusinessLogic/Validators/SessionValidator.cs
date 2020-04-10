@@ -14,6 +14,7 @@ namespace ImmRequest.BusinessLogic.Validators
         private IRepository<Session> Repository { get; set; }
 
         private const string Token_PropertyName = "Token";
+        private const string Admin_PropertyName = "Administrator";
 
         public SessionValidator(IRepository<Session> repository)
         {
@@ -25,6 +26,13 @@ namespace ImmRequest.BusinessLogic.Validators
             {
                 var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty, 
                     Token_PropertyName);
+                throw new ValidationException(errorMessage);
+            }
+
+            if (objectToValidate.AdministratorInSession == null)
+            {
+                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
+                    Admin_PropertyName);
                 throw new ValidationException(errorMessage);
             }
             return true;
