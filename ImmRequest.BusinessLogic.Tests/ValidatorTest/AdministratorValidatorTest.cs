@@ -8,7 +8,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 
-namespace ImmRequest.BusinessLogic.Tests
+namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
     [TestClass]
     public class AdministratorValidatorTest
