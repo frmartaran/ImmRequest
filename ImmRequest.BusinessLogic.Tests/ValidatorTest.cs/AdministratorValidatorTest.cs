@@ -1,5 +1,8 @@
+using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System.Collections.Generic;
 
 namespace ImmRequest.BusinessLogic.Tests
 {
@@ -14,13 +17,19 @@ namespace ImmRequest.BusinessLogic.Tests
             administrator = new Administrator
             {
                 UserName = "왕 잭슨",
-                Password = "Aite Aite",
+                PassWord = "Aite Aite",
+                Email = "jackson@wang.com"
             };
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void IsValidAdmin()
         {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.GetAll()).Returns(new List<Administrator>());
+
+
+            mockRepository.VerifyAll();
         }
     }
 }

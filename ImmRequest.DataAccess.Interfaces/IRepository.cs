@@ -16,7 +16,7 @@ namespace ImmRequest.DataAccess.Interfaces
 
         void Delete(long id);
 
-        bool Exists(long id);
+        bool Exists(T objectToFind);
         
         void Save();
 

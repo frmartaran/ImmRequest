@@ -33,9 +33,9 @@ namespace ImmRequest.DataAccess.Repositories
             }
         }
 
-        public bool Exists(long id)
+        public bool Exists(TopicType type)
         {
-            return Context.TopicTypes.Any(ty => ty.Id == id);
+            return Context.TopicTypes.Any(ty => ty.Id == type.Id);
         }
 
         public TopicType Get(long id)

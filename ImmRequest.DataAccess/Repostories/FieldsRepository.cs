@@ -34,9 +34,9 @@ namespace ImmRequest.DataAccess.Repositories
             }
         }
 
-        public bool Exists(long id)
+        public bool Exists(BaseField field)
         {
-            return Context.Fields.Any(f => f.Id == id);
+            return Context.Fields.Any(f => f.Id == field);
         }
 
         public BaseField Get(long id)

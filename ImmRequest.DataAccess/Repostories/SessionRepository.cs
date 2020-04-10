@@ -34,9 +34,10 @@ namespace ImmRequest.DataAccess.Repostories
             }
         }
 
-        public bool Exists(long id)
+        public bool Exists(Session session)
         {
-            return Context.Sessions.Any(s => s.Id == id);
+            return Context.Sessions
+                .Any(s => s.AdministratorId == session.AdministratorId);
         }
 
         public Session Get(long id)

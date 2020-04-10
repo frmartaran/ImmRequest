@@ -34,10 +34,10 @@ namespace ImmRequest.DataAccess.Repositories
             }
         }
 
-        public bool Exists(long id)
+        public bool Exists(Administrator administrator)
         {
             return Context.Administrators
-                .Any(a => a.Id == id);
+                .Any(a => a.Email == administrator.Email);
         }
 
         public Administrator Get(long id)

@@ -32,9 +32,9 @@ namespace ImmRequest.DataAccess.Repositories
             }
         }
 
-        public bool Exists(long id)
+        public bool Exists(CitizenRequest request)
         {
-            return Context.CitizenRequests.Any(cr => cr.Id == id);
+            return Context.CitizenRequests.Any(cr => cr.RequestNumber == request.RequestNumber);
         }
 
         public CitizenRequest Get(long id)
