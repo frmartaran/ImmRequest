@@ -32,6 +32,8 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void IsValidMockTest()
         {
             var mockRepository = new Mock<IRepository<Session>>();
+            mockRepository.Setup(r => r.Exists(It.IsAny<Session>()))
+                .Returns(false);
             var validator = new SessionValidator(mockRepository.Object);
             var isValid = validator.IsValid(session);
             Assert.IsTrue(isValid);
@@ -67,6 +69,37 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             session.AdministratorInSession = null;
             validator.IsValid(session);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+
+        public void IsNotValidIfAnotherSessionAlreadyExistsMock()
+        {
+            var mockRepository = new Mock<IRepository<Session>>();
+            mockRepository.Setup(r => r.Exists(It.IsAny<Session>()))
+                .Returns(true);
+            var validator = new SessionValidator(mockRepository.Object);
+            validator.IsValid(session);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsNotValidIfAnotherSessionAlreadyExists()
+        {
+            var context = ContextFactory.GetMemoryContext("Session is not Valid");
+            var repository = new SessionRepository(context);
+            repository.Insert(session);
+            var validator = new SessionValidator(repository);
+            var newSession = new Session
+            {
+                AdministratorId = session.AdministratorId,
+                AdministratorInSession = session.AdministratorInSession,
+                Token = Guid.NewGuid()
+            };
+            validator.IsValid(newSession);
+        }
+
 
 
     }
