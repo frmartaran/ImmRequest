@@ -57,5 +57,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             session.Token = new Guid();
             validator.IsValid(session);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsNotValidWithtoutAnAdmin()
+        {
+            var mockRepository = new Mock<IRepository<Session>>();
+            var validator = new SessionValidator(mockRepository.Object);
+            session.AdministratorInSession = null;
+            validator.IsValid(session);
+        }
+
+
     }
 }
