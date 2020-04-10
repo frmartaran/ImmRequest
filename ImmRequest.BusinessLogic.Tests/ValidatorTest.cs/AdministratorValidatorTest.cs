@@ -112,5 +112,16 @@ namespace ImmRequest.BusinessLogic.Tests
             validator.IsValid(administrator);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsNotValidWithEmptyPassword()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>().Object;
+            var validator = new AdministratorValidator(mockRepository);
+            administrator.PassWord = "";
+
+            validator.IsValid(administrator);
+        }
+
     }
 }
