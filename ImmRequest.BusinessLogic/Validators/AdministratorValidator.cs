@@ -15,7 +15,8 @@ namespace ImmRequest.BusinessLogic
         }
         public bool IsValid(Administrator objectToValidate)
         {
-            throw new NotImplementedException();
+            var adminWithEmailExits = Repository.Exists(objectToValidate);
+            return !adminWithEmailExits;
         }
     }
 }

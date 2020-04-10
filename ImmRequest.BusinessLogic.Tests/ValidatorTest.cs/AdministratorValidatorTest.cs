@@ -26,7 +26,8 @@ namespace ImmRequest.BusinessLogic.Tests
         public void IsValidAdmin()
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.GetAll()).Returns(new List<Administrator>());
+            mockRepository.Setup(m => m.Exists(It.IsAny<Administrator>()))
+                .Returns(false);
             var validator = new AdministratorValidator(mockRepository.Object);
             var isValid = validator.IsValid(administrator);
 
