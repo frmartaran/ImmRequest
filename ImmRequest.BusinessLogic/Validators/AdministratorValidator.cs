@@ -27,6 +27,13 @@ namespace ImmRequest.BusinessLogic
                     UserName_PropertyName);
                 throw new ValidationException(errorMessage);
             }
+
+            if (string.IsNullOrEmpty(objectToValidate.Email))
+            {
+                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty, 
+                    Email_PropertyName);
+                throw new ValidationException(errorMessage);
+            }
             var adminWithEmailExits = Repository.Exists(objectToValidate);
             if (adminWithEmailExits)
             {
