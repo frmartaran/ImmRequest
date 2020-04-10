@@ -27,8 +27,10 @@ namespace ImmRequest.BusinessLogic.Tests
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
             mockRepository.Setup(m => m.GetAll()).Returns(new List<Administrator>());
+            var validator = new AdministratorValidator(mockRepository.Object);
+            var isValid = validator.IsValid(administrator);
 
-
+            Assert.IsTrue(isValid);
             mockRepository.VerifyAll();
         }
     }
