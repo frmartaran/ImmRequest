@@ -61,6 +61,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are alredy logged in. Try logging out before trying to sign in again..
+        /// </summary>
+        public static string ValidationError_AlreadyInSession {
+            get {
+                return ResourceManager.GetString("ValidationError_AlreadyInSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Must have a value. .
         /// </summary>
         public static string ValidationError_IsEmpty {

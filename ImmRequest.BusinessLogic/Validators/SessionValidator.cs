@@ -35,6 +35,13 @@ namespace ImmRequest.BusinessLogic.Validators
                     Admin_PropertyName);
                 throw new ValidationException(errorMessage);
             }
+
+            var alreadyInSession = Repository.Exists(objectToValidate);
+            if (alreadyInSession)
+            {
+                var errorMessage = BusinessResource.ValidationError_AlreadyInSession;
+                throw new ValidationException(errorMessage);
+            }
             return true;
         }
     }
