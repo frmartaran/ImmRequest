@@ -22,27 +22,45 @@ namespace ImmRequest.BusinessLogic.Validators
         }
         public bool IsValid(Session objectToValidate)
         {
-            if (Guid.Empty == objectToValidate.Token)
-            {
-                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty, 
-                    Token_PropertyName);
-                throw new ValidationException(errorMessage);
-            }
+            ValidateToken(objectToValidate);
+            ValidateAdministratorLoggedIn(objectToValidate);
+            return true;
+        }
 
-            if (objectToValidate.AdministratorInSession == null)
-            {
-                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
-                    Admin_PropertyName);
-                throw new ValidationException(errorMessage);
-            }
+        private void ValidateAdministratorLoggedIn(Session objectToValidate)
+        {
+            ValidateAdministratorNotEmpty(objectToValidate);
+            ValidateIfSessionAlreadyExists(objectToValidate);
+        }
 
+        private void ValidateIfSessionAlreadyExists(Session objectToValidate)
+        {
             var alreadyInSession = Repository.Exists(objectToValidate);
             if (alreadyInSession)
             {
                 var errorMessage = BusinessResource.ValidationError_AlreadyInSession;
                 throw new ValidationException(errorMessage);
             }
-            return true;
+        }
+
+        private static void ValidateAdministratorNotEmpty(Session objectToValidate)
+        {
+            if (objectToValidate.AdministratorInSession == null)
+            {
+                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
+                    Admin_PropertyName);
+                throw new ValidationException(errorMessage);
+            }
+        }
+
+        private static void ValidateToken(Session objectToValidate)
+        {
+            if (Guid.Empty == objectToValidate.Token)
+            {
+                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
+                    Token_PropertyName);
+                throw new ValidationException(errorMessage);
+            }
         }
     }
 }
