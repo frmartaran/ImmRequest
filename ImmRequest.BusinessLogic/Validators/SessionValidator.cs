@@ -17,7 +17,7 @@ namespace ImmRequest.BusinessLogic.Validators
         }
         public bool IsValid(Session objectToValidate)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
