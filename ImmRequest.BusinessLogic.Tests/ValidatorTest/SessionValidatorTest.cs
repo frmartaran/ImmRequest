@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Validators;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repostories;
@@ -45,6 +46,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
             var isValid = validator.IsValid(session);
             Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsNotValidWithOutToken()
+        {
+            var mockRepository = new Mock<IRepository<Session>>();
+            var validator = new SessionValidator(mockRepository.Object);
+            session.Token = new Guid();
+            validator.IsValid(session);
         }
     }
 }
