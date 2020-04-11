@@ -31,7 +31,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            Repository.Delete(id);
         }
 
         public Session Get(long Id)
