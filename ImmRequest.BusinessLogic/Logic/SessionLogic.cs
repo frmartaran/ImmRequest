@@ -32,7 +32,8 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public Session Get(long Id)
         {
-            throw new NotImplementedException();
+            var session = Repository.Get(Id);
+            return session;
         }
 
         public ICollection<Session> GetAll()
