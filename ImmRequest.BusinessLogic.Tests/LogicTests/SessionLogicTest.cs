@@ -293,7 +293,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
 
         [TestMethod]
-        [ExpectedException(typeof(DatabaseNotFoundException))]
+        [ExpectedException(typeof(BusinessLogicException))]
         public void UpdateNotFoundTest()
         {
             var logic = GetLogicWithMemoryDb("Update Not Found Test");
@@ -302,7 +302,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DatabaseNotFoundException))]
+        [ExpectedException(typeof(BusinessLogicException))]
         public void UpdateNotFoundMockTest()
         {
             var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
