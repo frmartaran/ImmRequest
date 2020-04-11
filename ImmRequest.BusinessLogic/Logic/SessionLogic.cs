@@ -1,7 +1,9 @@
 ﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Helpers;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain.UserManagement;
 using System;
 using System.Collections.Generic;
@@ -31,24 +33,22 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Delete(long id)
         {
-            Repository.Delete(id);
+            try
+            {
+                Repository.Delete(id);
+            }
+            catch (DatabaseNotFoundException exception)
+            {
+                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Delete,
+                    Entity_Name);
+            }
         }
 
         public Session Get(long Id)
         {
             var session = Repository.Get(Id);
-            WarnIfNotFound(session, BusinessResource.Action_Get);
+            LogicHelpers.WarnIfNotFound(session, BusinessResource.Action_Get, Entity_Name);
             return session;
-        }
-
-        private void WarnIfNotFound(Session session, string action)
-        {
-            if (session == null)
-            {
-                var message = string.Format(BusinessResource.LogicAction_NotFound,
-                    action, Entity_Name);
-                throw new BusinessLogicException(message);
-            }
         }
 
         public ICollection<Session> GetAll()
@@ -60,5 +60,6 @@ namespace ImmRequest.BusinessLogic.Logic
         {
             throw new NotImplementedException();
         }
+
     }
 }

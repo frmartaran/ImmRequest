@@ -1,4 +1,5 @@
 ﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Helpers;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
@@ -15,7 +16,7 @@ namespace ImmRequest.BusinessLogic.Logic
         private IRepository<Administrator> Repository { get; set; }
         private IValidator<Administrator> Validator { get; set; }
 
-        private const string Entity_Name = "an Administrator";
+        private const string Entity_Name = "Administrator";
 
         public AdministratorLogic(IRepository<Administrator> repository,
             IValidator<Administrator> validator)
@@ -39,34 +40,22 @@ namespace ImmRequest.BusinessLogic.Logic
             }
             catch (DatabaseNotFoundException exception)
             {
-                WarnIfNotFound(exception, BusinessResource.Action_Delete);
+                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Delete, 
+                    Entity_Name);
                 return;
             }
         }
 
-        private void WarnIfNotFound(DatabaseNotFoundException exception, string action)
-        {
-            var message = string.Format(BusinessResource.LogicAction_NotFound,
-                                action, Entity_Name);
-            throw new BusinessLogicException(message, exception);
-        }
+        
 
         public Administrator Get(long Id)
         {
             var administrator = Repository.Get(Id);
-            WarnIfNotFound(administrator, BusinessResource.Action_Get);
+            LogicHelpers.WarnIfNotFound<Administrator>(administrator, 
+                BusinessResource.Action_Get, Entity_Name);
             return administrator;
         }
 
-        private void WarnIfNotFound(Administrator administrator, string action)
-        {
-            if (administrator == null)
-            {
-                var message = string.Format(BusinessResource.LogicAction_NotFound,
-                    action, Entity_Name);
-                throw new BusinessLogicException(message);
-            }
-        }
 
         public ICollection<Administrator> GetAll()
         {
@@ -85,7 +74,8 @@ namespace ImmRequest.BusinessLogic.Logic
             }
             catch (DatabaseNotFoundException exception)
             {
-                WarnIfNotFound(exception, BusinessResource.Action_Update);
+                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Update,
+                    Entity_Name);
             }
         }
     }
