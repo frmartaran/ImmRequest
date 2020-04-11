@@ -53,7 +53,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public ICollection<Session> GetAll()
         {
-            throw new NotImplementedException();
+            return Repository.GetAll();
         }
 
         public void Update(Session objectToUpdate)
