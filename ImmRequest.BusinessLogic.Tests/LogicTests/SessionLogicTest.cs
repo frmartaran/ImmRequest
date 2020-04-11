@@ -7,6 +7,7 @@ using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repostories;
 using ImmRequest.Domain.UserManagement;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -173,6 +174,30 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var allSessions = logic.GetAll();
             Assert.AreEqual(1, allSessions.Count);
             mockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void DeleteMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Delete(It.IsAny<long>()));
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRepository.Object, mockValidator);
+            logic.Delete(1);
+            mockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var logic = GetLogicWithMemoryDb("Delete Test");
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            logic.Delete(1);
+
+            var sessionInDb = context.Sessions.FirstOrDefault();
+            Assert.IsNull(sessionInDb);
         }
     }
 }
