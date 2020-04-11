@@ -19,7 +19,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
     [TestClass]
     public class SessionLogicTest
     {
-        Session session;
+        private Session session;
+        private ImmDbContext context;
 
         [TestInitialize]
         public void SetUp()
@@ -29,6 +30,22 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AdministratorInSession = new Administrator(),
                 Token = Guid.NewGuid()
             };
+        }
+
+        [TestCleanup]
+        public void TearDown()
+        {
+            if(context != null)
+                context.Dispose();
+        }
+
+        private SessionLogic GetLogicWithMemoryDb(string name)
+        {
+            context = ContextFactory.GetMemoryContext(name);
+            var repository = new SessionRepository(context);
+            var validator = new SessionValidator(repository);
+            var logic = new SessionLogic(repository, validator);
+            return logic;
         }
 
         [TestMethod]
@@ -50,10 +67,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         [TestMethod]
         public void CreateValidSessionTest()
         {
-            var context = ContextFactory.GetMemoryContext("Valid Session");
-            var repository = new SessionRepository(context);
-            var validator = new SessionValidator(repository);
-            var logic = new SessionLogic(repository, validator);
+            var logic = GetLogicWithMemoryDb("ValidSession");
             logic.Create(session);
 
             var sessionCreated = context.Sessions.FirstOrDefault();
@@ -82,12 +96,34 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         public void CreateInvalidSessionTest()
         {
-            var context = ContextFactory.GetMemoryContext("Valid Session");
-            var repository = new SessionRepository(context);
-            var validator = new SessionValidator(repository);
-            var logic = new SessionLogic(repository, validator);
+            var logic = GetLogicWithMemoryDb("Invalid Session");
             session.Token = Guid.Empty;
             logic.Create(session);
+        }
+
+        [TestMethod]
+        public void GetSessionMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(session);
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRepository.Object, mockValidator);
+            var sessionInDb = logic.Get(1);
+            Assert.IsNotNull(sessionInDb);
+            mockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetSessionTest()
+        {
+            var logic = GetLogicWithMemoryDb("Get Session");
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var sessionInDb = logic.Get(1);
+            Assert.IsNotNull(sessionInDb);
+
         }
     }
 }
