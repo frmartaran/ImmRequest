@@ -207,5 +207,34 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockRepository.VerifyAll();
         }
 
+        [TestMethod]
+        public void GetAllMockTest()
+        {
+            var allAdministrator = new List<Administrator> { administrator };
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(allAdministrator);
+            var mockValidator = new Mock<IValidator<Administrator>>().Object;
+
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
+            var administrators = logic.GetAll();
+
+            mockRepository.VerifyAll();
+            Assert.AreEqual(1, administrators.Count);
+        }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Get Admin");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            repository.Insert(administrator);
+            var logic = new AdministratorLogic(repository, validator);
+            var administrators = logic.GetAll();
+
+            Assert.AreEqual(1, administrators.Count);
+        }
+
     }
 }
