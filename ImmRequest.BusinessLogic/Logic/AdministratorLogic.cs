@@ -15,8 +15,7 @@ namespace ImmRequest.BusinessLogic.Logic
         private IRepository<Administrator> Repository { get; set; }
         private IValidator<Administrator> Validator { get; set; }
 
-        private const string Entity_Name = "Administrator";
-        private const string Delete_Action = "Deleting";
+        private const string Entity_Name = "an Administrator";
 
         public AdministratorLogic(IRepository<Administrator> repository,
             IValidator<Administrator> validator)
@@ -41,14 +40,21 @@ namespace ImmRequest.BusinessLogic.Logic
             catch (DatabaseNotFoundException exception)
             {
                 var message = string.Format(BusinessResource.LogicAction_NotFound, 
-                    Delete_Action, Entity_Name);
+                    BusinessResource.Action_Delete, Entity_Name);
                 throw new BusinessLogicException(message, exception);
             }
         }
 
         public Administrator Get(long Id)
         {
-            return Repository.Get(Id);
+            var administrator = Repository.Get(Id);
+            if(administrator == null)
+            {
+                var message = string.Format(BusinessResource.LogicAction_NotFound,
+                    BusinessResource.Action_Get, Entity_Name);
+                throw new BusinessLogicException(message);
+            }
+            return administrator;
         }
 
         public ICollection<Administrator> GetAll()
