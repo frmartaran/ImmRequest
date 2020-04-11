@@ -3,6 +3,7 @@ using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -122,6 +123,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
         public void DeleteAdministratorNotFoundTest()
         {
             var context = ContextFactory.GetMemoryContext("Delete Admin");
@@ -132,6 +134,20 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             logic.Delete(administrator.Id);
 
             var adminInDb = context.Administrators.FirstOrDefault();
+        }
+
+        [TestMethod]
+        public void DeleteAdministratorNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Delete(It.IsAny<long>()))
+                .Throws(new DatabaseNotFoundException(""));
+            var mockValidator = new Mock<IValidator<Administrator>>().Object;
+
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
+            logic.Delete(administrator.Id);
+
+            mockRepository.VerifyAll();
         }
 
     }
