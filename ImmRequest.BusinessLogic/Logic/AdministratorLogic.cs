@@ -48,7 +48,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public Administrator Get(long Id)
         {
-            throw new NotImplementedException();
+            return Repository.Get(Id);
         }
 
         public ICollection<Administrator> GetAll()
