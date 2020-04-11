@@ -174,9 +174,37 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var validator = new AdministratorValidator(repository);
             repository.Insert(administrator);
             var logic = new AdministratorLogic(repository, validator);
-            var admin  = logic.Get(administrator.Id);
+            var admin = logic.Get(administrator.Id);
 
             Assert.IsNotNull(admin);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void GetAdministratorNotFound()
+        {
+            var context = ContextFactory.GetMemoryContext("Get Admin");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            var logic = new AdministratorLogic(repository, validator);
+            var admin = logic.Get(administrator.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void GetAdministratorNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns<Administrator>(null);
+            var mockValidator = new Mock<IValidator<Administrator>>().Object;
+
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
+            var admin = logic.Get(1);
+
+            mockRepository.VerifyAll();
         }
 
     }
