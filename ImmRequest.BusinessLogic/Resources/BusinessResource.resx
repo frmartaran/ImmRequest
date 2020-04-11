@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LogicAction_NotFound" xml:space="preserve">
+    <value>There has been an Error while {0} {1}. Please make sure that the {1} exists</value>
+  </data>
   <data name="ValidationError_AlreadyInSession" xml:space="preserve">
     <value>You are alredy logged in. Try logging out before trying to sign in again.</value>
   </data>

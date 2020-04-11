@@ -61,6 +61,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There has been an Error while {0} {1}. Please make sure that the {1} exists.
+        /// </summary>
+        public static string LogicAction_NotFound {
+            get {
+                return ResourceManager.GetString("LogicAction_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are alredy logged in. Try logging out before trying to sign in again..
         /// </summary>
         public static string ValidationError_AlreadyInSession {

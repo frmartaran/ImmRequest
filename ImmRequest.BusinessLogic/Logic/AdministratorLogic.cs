@@ -1,5 +1,8 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain.UserManagement;
 using System;
 using System.Collections.Generic;
@@ -12,7 +15,10 @@ namespace ImmRequest.BusinessLogic.Logic
         private IRepository<Administrator> Repository { get; set; }
         private IValidator<Administrator> Validator { get; set; }
 
-        public AdministratorLogic(IRepository<Administrator> repository, 
+        private const string Entity_Name = "Administrator";
+        private const string Delete_Action = "Deleting";
+
+        public AdministratorLogic(IRepository<Administrator> repository,
             IValidator<Administrator> validator)
         {
             Repository = repository;
@@ -28,7 +34,16 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Delete(long id)
         {
-            Repository.Delete(id);
+            try
+            {
+                Repository.Delete(id);
+            }
+            catch (DatabaseNotFoundException exception)
+            {
+                var message = string.Format(BusinessResource.LogicAction_NotFound, 
+                    Delete_Action, Entity_Name);
+                throw new BusinessLogicException(message, exception);
+            }
         }
 
         public Administrator Get(long Id)

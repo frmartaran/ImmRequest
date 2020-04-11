@@ -133,10 +133,12 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var logic = new AdministratorLogic(repository, validator);
             logic.Delete(administrator.Id);
 
-            var adminInDb = context.Administrators.FirstOrDefault();
+            context.Administrators.FirstOrDefault();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
         public void DeleteAdministratorNotFoundMockTest()
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
