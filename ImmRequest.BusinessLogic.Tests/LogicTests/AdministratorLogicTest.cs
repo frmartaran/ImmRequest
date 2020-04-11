@@ -302,5 +302,34 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockValidator.VerifyAll();
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void UpdateInvalidAdministratorTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Update Invalid");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            administrator.PassWord = "";
+            var logic = new AdministratorLogic(repository, validator);
+            logic.Update(administrator);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void UpdateInvalidAdministratorMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mockValidator = new Mock<IValidator<Administrator>>();
+            mockValidator.Setup(m => m.IsValid(It.IsAny<Administrator>()))
+                .Throws(new ValidationException(""));
+
+            administrator.UserName = "";
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator.Object);
+            logic.Update(administrator);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
     }
 }
