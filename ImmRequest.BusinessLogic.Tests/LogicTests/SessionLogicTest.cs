@@ -148,5 +148,31 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             logic.Get(1);
 
         }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            var logic = GetLogicWithMemoryDb("Get All Test");
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var allSessions = logic.GetAll();
+
+            Assert.AreEqual(1, allSessions.Count);
+        }
+
+        [TestMethod]
+        public void GetAllMockTest()
+        {
+            var sessions = new List<Session> { session };
+            var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(sessions);
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRepository.Object, mockValidator);
+            var allSessions = logic.GetAll();
+            Assert.AreEqual(1, allSessions.Count);
+            mockRepository.VerifyAll();
+        }
     }
 }
