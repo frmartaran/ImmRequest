@@ -125,7 +125,10 @@ namespace ImmRequest.DataAccess.Tests
         public void ExistsTest()
         {
             CreateRepostory("Exists");
-            context.Administrators.Add(administrator);
+            var administrator2 = new Administrator {
+                Email = administrator.Email
+            };
+            context.Administrators.Add(administrator2);
             context.SaveChanges();
 
             var exists = repository.Exists(administrator);
