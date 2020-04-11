@@ -8,6 +8,7 @@ using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.DataAccess.Repostories;
 using ImmRequest.Domain.UserManagement;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -222,6 +223,72 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var logic = new SessionLogic(mockRepository.Object, mockValidator);
             logic.Delete(1);
             mockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var logic = GetLogicWithMemoryDb("Update Test");
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var newToken = Guid.NewGuid();
+            session.Token = newToken;
+
+            logic.Update(session);
+            var sessionInDb = context.Sessions.FirstOrDefault();
+            Assert.AreEqual(newToken, sessionInDb.Token);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void InvalidUpdateTest()
+        {
+            var logic = GetLogicWithMemoryDb("Update Not Valid Test");
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var newToken = Guid.Empty;
+            session.Token = newToken;
+
+            logic.Update(session);
+        }
+
+        [TestMethod]
+        public void UpdateMockTest()
+        {
+            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
+                .Returns(session);
+            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
+                .Returns(true);
+
+            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
+            logic.Update(session);
+
+            mockRespository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+
+        public void InvalidUpdateMockTest()
+        {
+            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
+                .Returns(session);
+            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
+                .Throws(new ValidationException(""));
+
+            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
+            logic.Update(session);
+
+            mockRespository.VerifyAll();
+            mockValidator.VerifyAll();
         }
 
     }
