@@ -291,5 +291,33 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockValidator.VerifyAll();
         }
 
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFoundTest()
+        {
+            var logic = GetLogicWithMemoryDb("Update Not Found Test");
+            logic.Update(session);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DatabaseNotFoundException))]
+        public void UpdateNotFoundMockTest()
+        {
+            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
+                .Throws(new DatabaseNotFoundException(""));
+            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
+                .Returns(true);
+
+            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
+            logic.Update(session);
+
+            mockRespository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
     }
 }
