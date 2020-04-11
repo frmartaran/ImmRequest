@@ -226,7 +226,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         [TestMethod]
         public void GetAllTest()
         {
-            var context = ContextFactory.GetMemoryContext("Get Admin");
+            var context = ContextFactory.GetMemoryContext("Get All Admin");
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
             repository.Insert(administrator);

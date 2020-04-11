@@ -70,7 +70,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public ICollection<Administrator> GetAll()
         {
-            throw new NotImplementedException();
+            return Repository.GetAll();
         }
 
         public void Update(Administrator objectToUpdate)
