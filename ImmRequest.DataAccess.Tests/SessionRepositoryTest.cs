@@ -161,9 +161,13 @@ namespace ImmRequest.DataAccess.Tests
             CreateRepository("Exists");
             context.Administrators.Add(administrator);
             context.SaveChanges();
+            var otherSession = new Session();
 
+            otherSession.AdministratorId = administrator.Id;
             session.AdministratorId = administrator.Id;
             context.Sessions.Add(session);
+            context.Sessions.Add(otherSession);
+
             context.SaveChanges();
 
             var exists = repository.Exists(session);

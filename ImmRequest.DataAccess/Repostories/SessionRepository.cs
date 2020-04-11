@@ -37,6 +37,7 @@ namespace ImmRequest.DataAccess.Repostories
         public bool Exists(Session session)
         {
             return Context.Sessions
+                .Where(s => s.Id != session.Id)
                 .Any(s => s.AdministratorId == session.AdministratorId);
         }
 

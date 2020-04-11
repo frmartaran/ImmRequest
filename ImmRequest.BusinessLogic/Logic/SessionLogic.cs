@@ -58,7 +58,10 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Update(Session objectToUpdate)
         {
-            throw new NotImplementedException();
+            if (Validator.IsValid(objectToUpdate))
+            {
+                Repository.Update(objectToUpdate);
+            }
         }
 
     }
