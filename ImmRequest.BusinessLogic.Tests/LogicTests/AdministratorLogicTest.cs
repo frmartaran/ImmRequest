@@ -193,7 +193,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         [TestMethod]
         [ExpectedException(typeof(BusinessLogicException))]
-
         public void GetAdministratorNotFoundMockTest()
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
@@ -240,7 +239,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void UpdateMockTest()
         {
             var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Update(It.IsAny<Administrator>()));
+            mockRepository.Setup(m => m.Update(It.IsAny<Administrator>()))
+                .Returns(administrator);
             var mockValidator = new Mock<IValidator<Administrator>>();
             mockValidator.Setup(m => m.IsValid(It.IsAny<Administrator>()))
                 .Returns(true);
@@ -267,6 +267,39 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var adminInDb = context.Administrators.FirstOrDefault();
             Assert.AreEqual("852", adminInDb.PassWord);
 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void UpdateNotFoundTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Update NotFound");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            administrator.PassWord = "852";
+            var logic = new AdministratorLogic(repository, validator);
+            logic.Update(administrator);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void UpdateNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Update(It.IsAny<Administrator>()))
+                .Throws(new DatabaseNotFoundException(""));
+            var mockValidator = new Mock<IValidator<Administrator>>();
+            mockValidator.Setup(m => m.IsValid(It.IsAny<Administrator>()))
+                .Returns(true);
+
+            administrator.UserName = "Julie";
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator.Object);
+            logic.Update(administrator);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
         }
 
     }
