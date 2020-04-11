@@ -1,6 +1,6 @@
 using System.Linq;
 using ImmRequest.DataAccess.Context;
-using ImmRequest.DataAccess.Exceptions;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

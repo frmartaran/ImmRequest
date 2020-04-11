@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ImmRequest.DataAccess.Exceptions
+namespace ImmRequest.DataAccess.Interfaces.Exceptions
 {
     public class DatabaseNotFoundException : Exception
     {

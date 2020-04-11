@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using ImmRequest.DataAccess.Context;
-using ImmRequest.DataAccess.Exceptions;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.DataAccess.Resources;
 using ImmRequest.Domain.UserManagement;
 

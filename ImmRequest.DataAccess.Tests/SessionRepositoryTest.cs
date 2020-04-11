@@ -1,5 +1,5 @@
 ﻿using ImmRequest.DataAccess.Context;
-using ImmRequest.DataAccess.Exceptions;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.DataAccess.Repostories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.EntityFrameworkCore.Query.Internal;
