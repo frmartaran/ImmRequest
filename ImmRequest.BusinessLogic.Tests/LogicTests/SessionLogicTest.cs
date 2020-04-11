@@ -35,7 +35,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         [TestCleanup]
         public void TearDown()
         {
-            if(context != null)
+            if (context != null)
                 context.Dispose();
         }
 
@@ -123,6 +123,32 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
             var sessionInDb = logic.Get(1);
             Assert.IsNotNull(sessionInDb);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void GetNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns<Session>(null);
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRepository.Object, mockValidator);
+            var sessionInDb = logic.Get(1);
+            Assert.IsNotNull(sessionInDb);
+            mockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void GetNotFoundTest()
+        {
+            var logic = GetLogicWithMemoryDb("Get not founc Session");
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var sessionInDb = logic.Get(1);
 
         }
     }
