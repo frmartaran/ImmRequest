@@ -5,6 +5,7 @@ using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.DataAccess.Repostories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -199,5 +200,29 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var sessionInDb = context.Sessions.FirstOrDefault();
             Assert.IsNull(sessionInDb);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void DeleteIfNotFoundTest()
+        {
+            var logic = GetLogicWithMemoryDb("Delete not found Test");
+            logic.Delete(1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void DeleteIfNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Delete(It.IsAny<long>()))
+                .Throws(new DatabaseNotFoundException(""));
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRepository.Object, mockValidator);
+            logic.Delete(1);
+            mockRepository.VerifyAll();
+        }
+
     }
 }
