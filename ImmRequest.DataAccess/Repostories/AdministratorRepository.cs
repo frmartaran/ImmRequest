@@ -37,6 +37,7 @@ namespace ImmRequest.DataAccess.Repositories
         public bool Exists(Administrator administrator)
         {
             return Context.Administrators
+                .Where(a => a.Id != administrator.Id)
                 .Any(a => a.Email == administrator.Email);
         }
 
