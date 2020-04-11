@@ -48,13 +48,18 @@ namespace ImmRequest.BusinessLogic.Logic
         public Administrator Get(long Id)
         {
             var administrator = Repository.Get(Id);
-            if(administrator == null)
+            WarnIfNotFound(administrator);
+            return administrator;
+        }
+
+        private void WarnIfNotFound(Administrator administrator)
+        {
+            if (administrator == null)
             {
                 var message = string.Format(BusinessResource.LogicAction_NotFound,
                     BusinessResource.Action_Get, Entity_Name);
                 throw new BusinessLogicException(message);
             }
-            return administrator;
         }
 
         public ICollection<Administrator> GetAll()
