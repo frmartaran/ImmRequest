@@ -94,5 +94,32 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         }
 
+        [TestMethod]
+        public void DeleteAdministratorMock()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Delete(It.IsAny<int>()));
+            var mockValidator = new Mock<IValidator<Administrator>>().Object;
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
+            logic.Delete(administrator.Id);
+            mockRepository.VerifyAll();
+
+        }
+
+        [TestMethod]
+        public void DeleteAdministrator()
+        {
+            var context = ContextFactory.GetMemoryContext("Delete Admin");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            repository.Insert(administrator);
+
+            var logic = new AdministratorLogic(repository, validator);
+            logic.Delete(administrator.Id);
+
+            var adminInDb = context.Administrators.FirstOrDefault();
+            Assert.IsNotNull(adminInDb);
+        }
+
     }
 }

@@ -8,8 +8,8 @@ namespace ImmRequest.BusinessLogic.Interfaces
     {
         void Create(T objectToCreate);
         void Update(T objectToUpdate);
-        void Delete(int id);
-        T Get(int Id);
+        void Delete(long id);
+        T Get(long Id);
         ICollection<T> GetAll();
 
     }

@@ -26,12 +26,12 @@ namespace ImmRequest.BusinessLogic.Logic
             }
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Administrator Get(int Id)
+        public Administrator Get(long Id)
         {
             throw new NotImplementedException();
         }
