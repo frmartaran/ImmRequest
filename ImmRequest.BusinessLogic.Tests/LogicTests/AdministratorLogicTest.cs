@@ -133,7 +133,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var logic = new AdministratorLogic(repository, validator);
             logic.Delete(administrator.Id);
 
-            context.Administrators.FirstOrDefault();
         }
 
         [TestMethod]
@@ -150,6 +149,34 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             logic.Delete(administrator.Id);
 
             mockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAdministratorMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(administrator);
+            var mockValidator = new Mock<IValidator<Administrator>>().Object;
+
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
+            var admin = logic.Get(1);
+
+            Assert.IsNotNull(admin);
+            mockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAdministratorTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Get Admin");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            repository.Insert(administrator);
+            var logic = new AdministratorLogic(repository, validator);
+            var admin  = logic.Get(administrator.Id);
+
+            Assert.IsNotNull(admin);
         }
 
     }
