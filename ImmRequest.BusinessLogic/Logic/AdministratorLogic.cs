@@ -75,9 +75,17 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Update(Administrator objectToUpdate)
         {
-            if (Validator.IsValid(objectToUpdate))
+            try
             {
-                Repository.Update(objectToUpdate);
+                if (Validator.IsValid(objectToUpdate))
+                {
+                    Repository.Update(objectToUpdate);
+                }
+
+            }
+            catch (DatabaseNotFoundException exception)
+            {
+                WarnIfNotFound(exception, BusinessResource.Action_Update);
             }
         }
     }
