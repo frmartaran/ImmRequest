@@ -145,10 +145,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetNotFoundTest()
         {
             var logic = GetLogicWithMemoryDb("Get not founc Session");
-            context.Sessions.Add(session);
-            context.SaveChanges();
-
-            var sessionInDb = logic.Get(1);
+            logic.Get(1);
 
         }
     }
