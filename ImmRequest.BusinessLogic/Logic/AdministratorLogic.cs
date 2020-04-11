@@ -39,25 +39,31 @@ namespace ImmRequest.BusinessLogic.Logic
             }
             catch (DatabaseNotFoundException exception)
             {
-                var message = string.Format(BusinessResource.LogicAction_NotFound, 
-                    BusinessResource.Action_Delete, Entity_Name);
-                throw new BusinessLogicException(message, exception);
+                WarnIfNotFound(exception, BusinessResource.Action_Delete);
+                return;
             }
+        }
+
+        private void WarnIfNotFound(DatabaseNotFoundException exception, string action)
+        {
+            var message = string.Format(BusinessResource.LogicAction_NotFound,
+                                action, Entity_Name);
+            throw new BusinessLogicException(message, exception);
         }
 
         public Administrator Get(long Id)
         {
             var administrator = Repository.Get(Id);
-            WarnIfNotFound(administrator);
+            WarnIfNotFound(administrator, BusinessResource.Action_Get);
             return administrator;
         }
 
-        private void WarnIfNotFound(Administrator administrator)
+        private void WarnIfNotFound(Administrator administrator, string action)
         {
             if (administrator == null)
             {
                 var message = string.Format(BusinessResource.LogicAction_NotFound,
-                    BusinessResource.Action_Get, Entity_Name);
+                    action, Entity_Name);
                 throw new BusinessLogicException(message);
             }
         }
