@@ -236,5 +236,38 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             Assert.AreEqual(1, administrators.Count);
         }
 
+        [TestMethod]
+        public void UpdateMockTest()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Update(It.IsAny<Administrator>()));
+            var mockValidator = new Mock<IValidator<Administrator>>();
+            mockValidator.Setup(m => m.IsValid(It.IsAny<Administrator>()))
+                .Returns(true);
+
+            administrator.UserName = "Julie";
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator.Object);
+            logic.Update(administrator);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Update Admin");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            repository.Insert(administrator);
+            administrator.PassWord = "852";
+            var logic = new AdministratorLogic(repository, validator);
+            logic.Update(administrator);
+
+            var adminInDb = context.Administrators.FirstOrDefault();
+            Assert.AreEqual("852", adminInDb.PassWord);
+
+        }
+
     }
 }
