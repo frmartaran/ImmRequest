@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
+using ImmRequest.Domain.Exceptions;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -71,11 +72,19 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void DateTimeFieldIsInvalid()
+        [ExpectedException(typeof(ValidationException))]
+        public void DateTimeFieldNotInRange()
         {
             var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 5));
-            var isValid = dateTimeRange.Validate(dateToValidate);
-            Assert.IsFalse(isValid);
+            dateTimeRange.Validate(dateToValidate);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void DateTimeFieldIsInvalid()
+        {
+            var dateToValidate = "invalid";
+            dateTimeRange.Validate(dateToValidate);
         }
 
         [TestMethod]
