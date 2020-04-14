@@ -1,11 +1,11 @@
-﻿using ImmRequest.BusinessLogic.Validators;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -92,9 +92,12 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 {
                     requestFieldValue
                 }
-            };
+            };            
+        }
 
-            context = ContextFactory.GetMemoryContext("Citizen request validator");
+        private void CreateContextFor(string contextName)
+        {
+            context = ContextFactory.GetMemoryContext(contextName);
 
             AreaRepository = new AreaRepository(context);
             TopicRepository = new TopicRepository(context);
@@ -107,15 +110,10 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             AreaRepository.Insert(area);
         }
 
-        [TestCleanup]
-        public void CleanUp()
-        {
-            context.Dispose();
-        }
-
         [TestMethod]
         public void FieldExists()
         {
+            CreateContextFor("FieldExists");
             var exists = FieldExists(1);
             Assert.IsTrue(exists);
         }
@@ -123,6 +121,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void FieldDoesntExist()
         {
+            CreateContextFor("FieldDoesntExist");
             var exists = FieldExists(2);
             Assert.IsFalse(exists);
         }
@@ -130,6 +129,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void BaseFieldsAreValid()
         {
+            CreateContextFor("BaseFieldsAreValid");
             var isValid = AreBaseFieldValuesValid(citizenRequest.Values);
             Assert.IsTrue(isValid);
         }
@@ -138,6 +138,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(ValidationException))]
         public void BaseFieldsAreInvalid()
         {
+            CreateContextFor("BaseFieldsAreInvalid");
             requestFieldValue.Value = "Panaderia";
             AreBaseFieldValuesValid(citizenRequest.Values);
         }
@@ -145,6 +146,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void EmailIsValid()
         {
+            CreateContextFor("EmailIsValid");
             var email = "a@a.com";
             var isValid = IsEmailValid(email);
             Assert.IsTrue(isValid);
@@ -153,6 +155,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(ValidationException))]
         public void EmailIsInvalid()
         {
+            CreateContextFor("EmailIsInvalid");
             var email = "invalid";
             IsEmailValid(email);
         }
@@ -160,6 +163,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void PhoneIsValid()
         {
+            CreateContextFor("PhoneIsValid");
             var phone = "222222";
             var isValid = IsPhoneValid(phone);
             Assert.IsTrue(isValid);
@@ -168,6 +172,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(ValidationException))]
         public void PhoneIsInvalid()
         {
+            CreateContextFor("PhoneIsInvalid");
             var phone = "invalid";
             IsPhoneValid(phone);
         }
