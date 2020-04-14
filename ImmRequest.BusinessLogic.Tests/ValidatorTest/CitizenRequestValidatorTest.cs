@@ -4,9 +4,8 @@ using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -17,10 +16,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         public CitizenRequest citizenRequest;
 
+        public TextField additionalTextValues;
+
+        public TopicType topicType;
+
+        public Topic topic;
+
+        public Area area;
+
+        public RequestFieldValues requestFieldValue;
+
         [TestInitialize]
         public void Setup()
         {
-            var additionalTextValues = new TextField
+            additionalTextValues = new TextField
             {
                 Id = 1,
                 Name = "AdditionalTextValues",
@@ -30,7 +39,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 },
                 ParentTypeId = 1
             };
-            var topicType = new TopicType
+            topicType = new TopicType
             {
                 Id = 1,
                 AllFields = new List<BaseField>
@@ -40,7 +49,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 Name = "Renovacion",
                 ParentTopicId = 1
             };
-            var topic = new Topic
+            topic = new Topic
             {
                 Id = 1,
                 Name = "TramitesLegales",
@@ -50,7 +59,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 },
                 AreaId = 1
             };
-            var area = new Area
+            area = new Area
             {
                 Id = 1,
                 Name = "Area1",
@@ -59,12 +68,12 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                     topic
                 }
             };
-            var requestFieldValue = new RequestFieldValues
+            requestFieldValue = new RequestFieldValues
             {
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "11111"
+                Value = "Credencial"
             };
 
             citizenRequest = new CitizenRequest
@@ -102,6 +111,21 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void CleanUp()
         {
             context.Dispose();
+        }
+
+        [TestMethod]
+        public void BaseFieldsAreValid()
+        {
+            var isValid = AreBaseFieldValuesValid(citizenRequest.Values);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void BaseFieldsAreInvalid()
+        {
+            requestFieldValue.Value = "Panaderia";
+            AreBaseFieldValuesValid(citizenRequest.Values);
         }
     }
 }
