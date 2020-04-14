@@ -1,11 +1,12 @@
-﻿using ImmRequest.BusinessLogic.Extensions;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Extensions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using ImmRequest.BusinessLogic.Resources;
 
 namespace ImmRequest.BusinessLogic.Validators
 {
@@ -34,9 +35,15 @@ namespace ImmRequest.BusinessLogic.Validators
             throw new NotImplementedException();
         }
 
-        protected void IsBaseFieldValid()
+        protected bool AreBaseFieldValuesValid(ICollection<RequestFieldValues> requestFields)
         {
+            return false;
+        }
 
+        protected bool FieldExists(long fieldId)
+        {
+            var field = FieldsRepository.Get(fieldId);
+            return field != null;
         }
     }
 }
