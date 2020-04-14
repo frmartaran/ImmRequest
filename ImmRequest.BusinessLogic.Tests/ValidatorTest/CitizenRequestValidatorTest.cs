@@ -143,7 +143,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void EnailIsValid()
+        public void EmailIsValid()
         {
             var email = "a@a.com";
             var isValid = IsEmailValid(email);
@@ -151,10 +151,25 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
-        public void EnailIsInvalid()
+        public void EmailIsInvalid()
         {
             var email = "invalid";
             IsEmailValid(email);
+        }
+
+        [TestMethod]
+        public void PhoneIsValid()
+        {
+            var phone = "222222";
+            var isValid = IsPhoneValid(phone);
+            Assert.IsTrue(isValid);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void PhoneIsInvalid()
+        {
+            var phone = "invalid";
+            IsPhoneValid(phone);
         }
     }
 }
