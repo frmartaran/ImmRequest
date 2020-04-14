@@ -126,5 +126,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var exists = FieldExists(2);
             Assert.IsFalse(exists);
         }
+
+        [TestMethod]
+        public void BaseFieldsAreValid()
+        {
+            var isValid = AreBaseFieldValuesValid(citizenRequest.Values);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void BaseFieldsAreInvalid()
+        {
+            requestFieldValue.Value = "Panaderia";
+            AreBaseFieldValuesValid(citizenRequest.Values);
+        }
     }
 }
