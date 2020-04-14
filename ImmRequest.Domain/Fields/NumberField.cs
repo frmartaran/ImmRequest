@@ -21,7 +21,7 @@ namespace ImmRequest.Domain.Fields
             base.UpdateValues(valuesToUpdate);
         }
 
-        public override void Validate(string value)
+        public override bool Validate(string value)
         {
             throw new NotImplementedException();
         }
