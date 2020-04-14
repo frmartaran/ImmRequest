@@ -7,6 +7,7 @@ using ImmRequest.Domain.Fields;
 using System;
 using System.Collections.Generic;
 using ImmRequest.BusinessLogic.Resources;
+using System.Net.Mail;
 
 namespace ImmRequest.BusinessLogic.Validators
 {
@@ -54,7 +55,8 @@ namespace ImmRequest.BusinessLogic.Validators
                 }
                 else
                 {
-                    throw new ValidationException(BusinessResource.ValidationError_FieldDoesntExists);
+                    var errorMessage = string.Format(BusinessResource.ValidationError_FieldDoesntExists, requestField.FieldId);
+                    throw new ValidationException(errorMessage);
                 }
             }
             return true;
@@ -64,6 +66,19 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             var field = FieldsRepository.Get(fieldId);
             return field != null;
+        }
+
+        protected bool IsEmailValid(string email)
+        {
+            try
+            {
+                var mailAddress = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
+            }
         }
     }
 }
