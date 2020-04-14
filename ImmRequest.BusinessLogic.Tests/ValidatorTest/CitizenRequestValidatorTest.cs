@@ -176,5 +176,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var phone = "invalid";
             IsPhoneValid(phone);
         }
+
+        [TestMethod]
+        public void AreaIsValid()
+        {
+            CreateContextFor("AreaIsValid");
+            var isValid = IsAreaValid(citizenRequest.AreaId);
+            Assert.IsTrue(isValid);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void AreaIsInvalid()
+        {
+            CreateContextFor("AreaIsInvalid");
+            IsAreaValid(150);
+        }
     }
 }
