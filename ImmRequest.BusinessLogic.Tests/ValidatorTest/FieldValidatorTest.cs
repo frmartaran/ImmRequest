@@ -71,11 +71,19 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void DateTimeFieldFromDifferentTimeZoneIsValid()
+        public void DateTimeFieldIsInvalid()
         {
-            var dateToValidate = JsonConvert.SerializeObject(new DateTime);
+            var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 5));
             var isValid = dateTimeRange.Validate(dateToValidate);
             Assert.IsFalse(isValid);
+        }
+
+        [TestMethod]
+        public void DateTimeFieldFromDifferentTimeZoneIsValid()
+        {
+            var dateToValidate = JsonConvert.SerializeObject(DateTime.SpecifyKind(new DateTime(2020, 4, 4, 2, 0, 0), DateTimeKind.Utc));
+            var isValid = dateTimeRange.Validate(dateToValidate);
+            Assert.IsTrue(isValid);
         }
     }
 }
