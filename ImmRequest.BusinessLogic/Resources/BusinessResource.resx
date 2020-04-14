@@ -132,6 +132,9 @@
   <data name="ValidationError_AlreadyInSession" xml:space="preserve">
     <value>You are alredy logged in. Try logging out before trying to sign in again.</value>
   </data>
+  <data name="ValidationError_FieldDoesntExists" xml:space="preserve">
+    <value>Field in request doesnt exist.</value>
+  </data>
   <data name="ValidationError_IsEmpty" xml:space="preserve">
     <value>{0} Must have a value. </value>
   </data>

@@ -114,18 +114,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void BaseFieldsAreValid()
+        public void FieldExists()
         {
-            var isValid = AreBaseFieldValuesValid(citizenRequest.Values);
-            Assert.IsTrue(isValid);
+            var exists = FieldExists(1);
+            Assert.IsTrue(exists);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-        public void BaseFieldsAreInvalid()
+        public void FieldDoesntExist()
         {
-            requestFieldValue.Value = "Panaderia";
-            AreBaseFieldValuesValid(citizenRequest.Values);
+            var exists = FieldExists(2);
+            Assert.IsFalse(exists);
         }
     }
 }

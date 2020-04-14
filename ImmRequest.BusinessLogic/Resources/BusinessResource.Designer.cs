@@ -106,6 +106,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field in request doesnt exist..
+        /// </summary>
+        public static string ValidationError_FieldDoesntExists {
+            get {
+                return ResourceManager.GetString("ValidationError_FieldDoesntExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Must have a value. .
         /// </summary>
         public static string ValidationError_IsEmpty {
