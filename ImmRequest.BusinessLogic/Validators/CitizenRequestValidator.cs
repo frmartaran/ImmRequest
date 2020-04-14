@@ -37,7 +37,27 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool AreBaseFieldValuesValid(ICollection<RequestFieldValues> requestFields)
         {
-            return false;
+            foreach(var requestField in requestFields)
+            {
+                if (FieldExists(requestField.FieldId))
+                {
+                    var field = FieldsRepository.Get(requestField.FieldId);
+                    bool isValid;
+                    try
+                    {
+                        isValid = field.Validate(requestField.Value);
+                    }
+                    catch(Exception ex)
+                    {
+                        throw new ValidationException(ex.ToString());
+                    }
+                }
+                else
+                {
+                    throw new ValidationException(BusinessResource.ValidationError_FieldDoesntExists);
+                }
+            }
+            return true;
         }
 
         protected bool FieldExists(long fieldId)
