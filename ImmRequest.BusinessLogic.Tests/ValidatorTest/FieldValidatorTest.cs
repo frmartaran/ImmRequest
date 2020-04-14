@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -58,6 +59,22 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             var textToValidate = "Contribucion";
             var isValid = textRange.Validate(textToValidate);
+            Assert.IsFalse(isValid);
+        }
+
+        [TestMethod]
+        public void DateTimeFieldIsValid()
+        {
+            var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 2));
+            var isValid = dateTimeRange.Validate(dateToValidate);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        public void DateTimeFieldFromDifferentTimeZoneIsValid()
+        {
+            var dateToValidate = JsonConvert.SerializeObject(new DateTime);
+            var isValid = dateTimeRange.Validate(dateToValidate);
             Assert.IsFalse(isValid);
         }
     }
