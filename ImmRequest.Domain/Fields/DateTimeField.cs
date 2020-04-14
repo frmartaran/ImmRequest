@@ -30,9 +30,9 @@ namespace ImmRequest.Domain.Fields
             {
                 dateTimeValue = JsonConvert.DeserializeObject<DateTime>(value).ToUniversalTime();
             }
-            catch (Exception)
+            catch (JsonReaderException ex)
             {
-                throw new ValidationException(DomainResource.DateTimeDeserializeException);
+                throw ex;
             }
             var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
             if (!isValid)
