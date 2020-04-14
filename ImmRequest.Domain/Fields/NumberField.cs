@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using ImmRequest.Domain.Interfaces;
+using ImmRequest.Domain.Exceptions;
+using ImmRequest.Domain.Resources;
 
 namespace ImmRequest.Domain.Fields
 {
@@ -23,7 +24,19 @@ namespace ImmRequest.Domain.Fields
 
         public override bool Validate(string value)
         {
-            throw new NotImplementedException();
+            int numberValue;
+            try
+            {
+                numberValue = Convert.ToInt32(value);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            var isValid = numberValue >= RangeStart && numberValue <= RangeEnd;
+            if (!isValid)
+                throw new ValidationException(DomainResource.NumberFieldNotInRangeException);
+            return true;
         }
 
         public override T ValueToDataType<T>(string value)
