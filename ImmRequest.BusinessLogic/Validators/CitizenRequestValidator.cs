@@ -80,5 +80,18 @@ namespace ImmRequest.BusinessLogic.Validators
                 throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
             }
         }
+
+        protected bool IsPhoneValid(string phone)
+        {
+            try
+            {
+                Convert.ToInt32(phone);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
+            }
+        }
     }
 }

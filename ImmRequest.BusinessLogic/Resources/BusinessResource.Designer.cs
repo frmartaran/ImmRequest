@@ -140,5 +140,14 @@ namespace ImmRequest.BusinessLogic.Resources {
                 return ResourceManager.GetString("ValidationError_MustBeUnique", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone is invalid..
+        /// </summary>
+        public static string ValidationError_PhoneIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_PhoneIsInvalid", resourceCulture);
+            }
+        }
     }
 }
