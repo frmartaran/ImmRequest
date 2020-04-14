@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace ImmRequest.Domain.Interfaces
@@ -13,7 +12,7 @@ namespace ImmRequest.Domain.Interfaces
 
         T ValueToDataType<T>(string value) where T : class;
 
-        void Validate(string value);
+        bool Validate(string value);
 
     }
 }

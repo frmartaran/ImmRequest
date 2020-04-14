@@ -21,7 +21,7 @@ namespace ImmRequest.Domain.Fields
 
         public override bool Validate(string value)
         {
-            throw new NotImplementedException();
+            return RangeValues.Contains(value);
         }
 
         public override T ValueToDataType<T>(string value)
