@@ -57,7 +57,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
-        public void TextFieldIsInvalid()
+        public void TextFieldNotInRange()
         {
             var textToValidate = "Contribucion";
             textRange.Validate(textToValidate);
@@ -93,6 +93,38 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var dateToValidate = JsonConvert.SerializeObject(DateTime.SpecifyKind(new DateTime(2020, 4, 4, 2, 0, 0), DateTimeKind.Utc));
             var isValid = dateTimeRange.Validate(dateToValidate);
             Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        public void NumberFieldIsValid()
+        {
+            var numberToValidate = "3";
+            var isValid = numberRange.Validate(numberToValidate);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void NumberFieldNotInRange()
+        {
+            var numberToValidate = "13";
+            numberRange.Validate(numberToValidate);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(OverflowException))]
+        public void NumberFieldIsTooLarge()
+        {
+            var textToValidate = "5000000000000";
+            textRange.Validate(textToValidate);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FormatException))]
+        public void NumberFieldIsInvalid()
+        {
+            var textToValidate = "invalid";
+            textRange.Validate(textToValidate);
         }
     }
 }
