@@ -2,6 +2,7 @@ using ImmRequest.Domain.Exceptions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using ImmRequest.Domain.Resources;
 
 namespace ImmRequest.Domain.Fields
 {
@@ -24,15 +25,21 @@ namespace ImmRequest.Domain.Fields
 
         public override bool Validate(string value)
         {
+            DateTime dateTimeValue;
             try
             {
-                var dateTimeValue = JsonConvert.DeserializeObject<DateTime>(value).ToUniversalTime();
-                return dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
+                dateTimeValue = JsonConvert.DeserializeObject<DateTime>(value).ToUniversalTime();
             }
-            catch(Exception ex)
+            catch (Exception)
             {
-                throw new ValidationException(ex.ToString());
-            }            
+                throw new ValidationException(DomainResource.DateTimeDeserializeException);
+            }
+            var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
+            if (!isValid)
+            {
+                throw new ValidationException(DomainResource.DateTimeNotInRangeException);
+            }
+            return true;           
         }
 
         public override T ValueToDataType<T>(string value)
