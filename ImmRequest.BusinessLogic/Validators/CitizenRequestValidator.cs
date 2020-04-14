@@ -93,5 +93,23 @@ namespace ImmRequest.BusinessLogic.Validators
                 throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
             }
         }
+
+        protected bool IsAreaValid(long areaId)
+        {
+            var area = AreaRepository.Get(areaId);
+            if (area == null)
+                throw new ValidationException(BusinessResource.ValidationError_AreaIsInvalid);
+            return true;
+        }
+
+        protected bool IsTopicValid(long areaId, long topicId)
+        {
+            return false;
+        }
+
+        protected bool IsTopicTypeValid(long areaId, long topicId, long topicTypeId)
+        {
+            return false;
+        }
     }
 }

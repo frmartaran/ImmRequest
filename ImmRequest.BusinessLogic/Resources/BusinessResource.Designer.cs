@@ -106,7 +106,16 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email is invalid..
+        ///   Looks up a localized string similar to Area in request is invalid.
+        /// </summary>
+        public static string ValidationError_AreaIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_AreaIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email in request is invalid..
         /// </summary>
         public static string ValidationError_EmailIsInvalid {
             get {
@@ -142,11 +151,29 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phone is invalid..
+        ///   Looks up a localized string similar to Phone in request is invalid..
         /// </summary>
         public static string ValidationError_PhoneIsInvalid {
             get {
                 return ResourceManager.GetString("ValidationError_PhoneIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic in request is invalid..
+        /// </summary>
+        public static string ValidationError_TopicIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_TopicIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic type in request is invalid..
+        /// </summary>
+        public static string ValidationError_TopicTypeIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_TopicTypeIsInvalid", resourceCulture);
             }
         }
     }
