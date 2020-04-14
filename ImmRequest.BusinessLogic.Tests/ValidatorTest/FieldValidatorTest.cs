@@ -115,16 +115,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(OverflowException))]
         public void NumberFieldIsTooLarge()
         {
-            var textToValidate = "5000000000000";
-            textRange.Validate(textToValidate);
+            var numberToValidate = "5000000000000";
+            numberRange.Validate(numberToValidate);
         }
 
         [TestMethod]
         [ExpectedException(typeof(FormatException))]
         public void NumberFieldIsInvalid()
         {
-            var textToValidate = "invalid";
-            textRange.Validate(textToValidate);
+            var numberToValidate = "invalid";
+            numberRange.Validate(numberToValidate);
         }
     }
 }
