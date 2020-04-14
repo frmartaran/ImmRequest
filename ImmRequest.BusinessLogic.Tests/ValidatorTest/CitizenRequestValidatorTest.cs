@@ -141,5 +141,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             requestFieldValue.Value = "Panaderia";
             AreBaseFieldValuesValid(citizenRequest.Values);
         }
+
+        [TestMethod]
+        public void EnailIsValid()
+        {
+            var email = "a@a.com";
+            var isValid = IsEmailValid(email);
+            Assert.IsTrue(isValid);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void EnailIsInvalid()
+        {
+            var email = "invalid";
+            IsEmailValid(email);
+        }
     }
 }
