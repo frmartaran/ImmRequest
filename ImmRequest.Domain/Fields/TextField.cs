@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using ImmRequest.Domain.Interfaces;
+using ImmRequest.Domain.Exceptions;
+using ImmRequest.Domain.Resources;
 
 namespace ImmRequest.Domain.Fields
 {
@@ -21,7 +22,9 @@ namespace ImmRequest.Domain.Fields
 
         public override bool Validate(string value)
         {
-            return RangeValues.Contains(value);
+            if (!RangeValues.Contains(value))
+                throw new ValidationException(DomainResource.TextFieldNotInRangeException);
+            return true;
         }
 
         public override T ValueToDataType<T>(string value)
