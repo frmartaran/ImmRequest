@@ -56,11 +56,11 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
         public void TextFieldIsInvalid()
         {
             var textToValidate = "Contribucion";
-            var isValid = textRange.Validate(textToValidate);
-            Assert.IsFalse(isValid);
+            textRange.Validate(textToValidate);
         }
 
         [TestMethod]
@@ -80,7 +80,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
+        [ExpectedException(typeof(JsonReaderException))]
         public void DateTimeFieldIsInvalid()
         {
             var dateToValidate = "invalid";

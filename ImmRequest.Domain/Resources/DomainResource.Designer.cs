@@ -61,20 +61,29 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DateTime deserialization failed..
-        /// </summary>
-        internal static string DateTimeDeserializeException {
-            get {
-                return ResourceManager.GetString("DateTimeDeserializeException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to DateTime added is not in field range..
         /// </summary>
         internal static string DateTimeNotInRangeException {
             get {
                 return ResourceManager.GetString("DateTimeNotInRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number added is not in field range.
+        /// </summary>
+        internal static string NumberFieldNotInRangeException {
+            get {
+                return ResourceManager.GetString("NumberFieldNotInRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text added is not in field range..
+        /// </summary>
+        internal static string TextFieldNotInRangeException {
+            get {
+                return ResourceManager.GetString("TextFieldNotInRangeException", resourceCulture);
             }
         }
     }

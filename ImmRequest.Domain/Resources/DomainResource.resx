@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DateTimeDeserializeException" xml:space="preserve">
-    <value>DateTime deserialization failed.</value>
-  </data>
   <data name="DateTimeNotInRangeException" xml:space="preserve">
     <value>DateTime added is not in field range.</value>
+  </data>
+  <data name="NumberFieldNotInRangeException" xml:space="preserve">
+    <value>Number added is not in field range</value>
+  </data>
+  <data name="TextFieldNotInRangeException" xml:space="preserve">
+    <value>Text added is not in field range.</value>
   </data>
 </root>
