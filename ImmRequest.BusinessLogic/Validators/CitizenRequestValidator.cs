@@ -33,7 +33,13 @@ namespace ImmRequest.BusinessLogic.Validators
 
         public bool IsValid(CitizenRequest objectToValidate)
         {
-            throw new NotImplementedException();
+            IsEmailValid(objectToValidate.Email);
+            IsPhoneValid(objectToValidate.Phone);
+            IsAreaValid(objectToValidate.AreaId);
+            IsTopicValid(objectToValidate.AreaId, objectToValidate.TopicId);
+            IsTopicTypeValid(objectToValidate.AreaId, objectToValidate.TopicId, objectToValidate.TopicTypeId);
+            AreBaseFieldValuesValid(objectToValidate.Values);
+            return true;
         }
 
         protected bool AreBaseFieldValuesValid(ICollection<RequestFieldValues> requestFields)
