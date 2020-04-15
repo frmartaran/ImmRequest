@@ -112,7 +112,10 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool IsTopicTypeValid(long areaId, long topicId, long topicTypeId)
         {
-            return false;
+            var topicType = TopicTypeRepository.Get(topicTypeId);
+            if (topicType == null || topicType.ParentTopicId != topicId || topicType.ParentTopic.AreaId != areaId)
+                throw new ValidationException(BusinessResource.ValidationError_TopicTypeIsInvalid);
+            return true;
         }
     }
 }
