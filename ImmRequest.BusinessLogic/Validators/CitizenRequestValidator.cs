@@ -104,7 +104,10 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool IsTopicValid(long areaId, long topicId)
         {
-            return false;
+            var topic = TopicRepository.Get(topicId);
+            if(topic == null || topic.AreaId != areaId)
+                throw new ValidationException(BusinessResource.ValidationError_TopicIsInvalid);
+            return true;
         }
 
         protected bool IsTopicTypeValid(long areaId, long topicId, long topicTypeId)
