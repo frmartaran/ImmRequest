@@ -191,5 +191,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             CreateContextFor("AreaIsInvalid");
             IsAreaValid(150);
         }
+
+        [TestMethod]
+        public void TopicIsValid()
+        {
+            CreateContextFor("TopicIsValid");
+            var isValid = IsTopicValid(citizenRequest.AreaId, citizenRequest.TopicId);
+            Assert.IsTrue(isValid);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void TopicIsInvalid()
+        {
+            CreateContextFor("TopicIsInvalid");
+            IsTopicValid(citizenRequest.AreaId, 150);
+        }
     }
 }
