@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace ImmRequest.WebApi.Filters
 {
     public class AuthorizationFilter : Attribute, IActionFilter
     {
+        private const string Authorization_Header = "Authorization";
         public void OnActionExecuted(ActionExecutedContext context)
         {
             throw new NotImplementedException();
@@ -15,7 +17,16 @@ namespace ImmRequest.WebApi.Filters
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            throw new NotImplementedException();
+            var token = context.HttpContext.Request.Headers[Authorization_Header];
+            if (string.IsNullOrEmpty(token))
+            {
+                context.Result = new ContentResult
+                {
+                    StatusCode = 400,
+                    Content = "Token can't be empty"
+                };
+                return;
+            }
         }
     }
 }

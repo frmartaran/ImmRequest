@@ -42,7 +42,9 @@ namespace ImmRequest.WebApi.Tests
             var filter = new AuthorizationFilter();
             filter.OnActionExecuting(executingContext);
 
-            Assert.IsInstanceOfType(executingContext.Result, typeof(BadRequestObjectResult));
+            Assert.IsInstanceOfType(executingContext.Result, typeof(ContentResult));
+            var result = executingContext.Result as ContentResult;
+            Assert.AreEqual(400, result.StatusCode);
         }
     }
 }
