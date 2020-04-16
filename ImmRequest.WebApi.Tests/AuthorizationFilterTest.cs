@@ -17,12 +17,11 @@ namespace ImmRequest.WebApi.Tests
     [TestClass]
     public class AuthorizationFilterTest
     {
-        [TestMethod]
-        public void TokenIsNullTest()
+        private static ActionExecutingContext CreateActionExecutingContextMock(string token)
         {
             var modelState = new ModelStateDictionary();
             var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers["Authorization"] = "";
+            httpContext.Request.Headers["Authorization"] = token;
 
             var actionContext = new ActionContext
             (
@@ -38,6 +37,13 @@ namespace ImmRequest.WebApi.Tests
                 new Dictionary<string, object>(),
                 Mock.Of<Controller>()
             );
+            return executingContext;
+        }
+
+        [TestMethod]
+        public void TokenIsNullTest()
+        {
+            var executingContext = CreateActionExecutingContextMock("");
 
             var filter = new AuthorizationFilter();
             filter.OnActionExecuting(executingContext);
@@ -46,5 +52,7 @@ namespace ImmRequest.WebApi.Tests
             var result = executingContext.Result as ContentResult;
             Assert.AreEqual(400, result.StatusCode);
         }
+
+        
     }
 }

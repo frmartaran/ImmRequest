@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ImmRequest.WebApi.Resources;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,11 @@ namespace ImmRequest.WebApi.Filters
             var token = context.HttpContext.Request.Headers[Authorization_Header];
             if (string.IsNullOrEmpty(token))
             {
+                var message = WebApiResource.AuthorizationFilter_TokenEmpty;
                 context.Result = new ContentResult
                 {
                     StatusCode = 400,
-                    Content = "Token can't be empty"
+                    Content = message
                 };
                 return;
             }
