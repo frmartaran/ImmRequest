@@ -319,5 +319,53 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockValidator.VerifyAll();
         }
 
+        [TestMethod]
+        public void IsValidTokenMockTest()
+        {
+            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRespository.Setup(m => m.Exists(It.IsAny<Session>()))
+                .Returns(true);
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRespository.Object, mockValidator);
+            logic.IsValidToken(session.Token);
+
+            mockRespository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void IsValidTokenTest()
+        {
+            var logic = GetLogicWithMemoryDb("Valid Token");
+            context.Sessions.Add(session);
+            context.SaveChanges();
+
+            var isValid = logic.IsValidToken(session.Token);
+            Assert.IsTrue(isValid);
+
+        }
+
+        [TestMethod]
+        public void IsInvalidTokenMockTest()
+        {
+            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRespository.Setup(m => m.Exists(It.IsAny<Session>()))
+                .Returns(false);
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRespository.Object, mockValidator);
+            logic.IsValidToken(session.Token);
+
+            mockRespository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void IsInvalidTokenTest()
+        {
+            var logic = GetLogicWithMemoryDb("Invalid Token");
+
+            var isValid = logic.IsValidToken(session.Token);
+            Assert.IsFalse(isValid);
+
+        }
+
     }
 }
