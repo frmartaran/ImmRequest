@@ -323,8 +323,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void IsValidTokenMockTest()
         {
             var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Exists(It.IsAny<Session>()))
-                .Returns(true);
+            mockRespository.Setup(m => m.GetAll())
+                .Returns(new List<Session> { session });
             var mockValidator = new Mock<IValidator<Session>>().Object;
             var logic = new SessionLogic(mockRespository.Object, mockValidator);
             logic.IsValidToken(session.Token);
@@ -348,8 +348,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void IsInvalidTokenMockTest()
         {
             var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Exists(It.IsAny<Session>()))
-                .Returns(false);
+            mockRespository.Setup(m => m.GetAll())
+                .Returns(new List<Session>());
             var mockValidator = new Mock<IValidator<Session>>().Object;
             var logic = new SessionLogic(mockRespository.Object, mockValidator);
             logic.IsValidToken(session.Token);

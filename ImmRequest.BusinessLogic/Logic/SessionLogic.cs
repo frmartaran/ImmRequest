@@ -7,6 +7,7 @@ using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain.UserManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic
@@ -73,7 +74,8 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public bool IsValidToken(Guid token)
         {
-            throw new NotImplementedException();
+            var auxSession = new Session { Token = token };
+            return Repository.GetAll().Any(s => s.Token == token);
         }
     }
 }
