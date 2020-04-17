@@ -29,6 +29,18 @@ namespace ImmRequest.WebApi.Filters
                 };
                 return;
             }
+
+            Guid tokenAsGuid;
+            var isGuid = Guid.TryParse(token, out tokenAsGuid);
+            if (!isGuid)
+            {
+                var message = WebApiResource.AuthorizationFilter_InvalidTokenFormat;
+                context.Result = new ContentResult
+                {
+                    StatusCode = 403,
+                    Content = message
+                };
+            }
         }
     }
 }

@@ -61,6 +61,15 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid token. Please provide a valid token..
+        /// </summary>
+        public static string AuthorizationFilter_InvalidTokenFormat {
+            get {
+                return ResourceManager.GetString("AuthorizationFilter_InvalidTokenFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The authorization token is empty. Please provide a valid token.
         /// </summary>
         public static string AuthorizationFilter_TokenEmpty {
