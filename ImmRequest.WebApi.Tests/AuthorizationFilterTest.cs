@@ -25,11 +25,12 @@ namespace ImmRequest.WebApi.Tests
     {
         private static ActionExecutingContext CreateActionExecutingContextMock(string token)
         {
-            var mockRepository = new Mock<IRepository<Session>>().Object;
+            var mockRepository = new Mock<IRepository<Session>>();
+            mockRepository.Setup(m => m.GetAll()).Returns(new List<Session>());
             var mockValidator = new Mock<IValidator<Session>>().Object;
             var services = new Mock<IServiceProvider>();
             services.Setup(m => m.GetService(It.IsAny<Type>()))
-                .Returns(new SessionLogic(mockRepository, mockValidator));
+                .Returns(new SessionLogic(mockRepository.Object, mockValidator));
 
             var modelState = new ModelStateDictionary();
             var httpContext = new DefaultHttpContext();

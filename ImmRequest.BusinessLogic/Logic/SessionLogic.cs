@@ -74,7 +74,6 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public bool IsValidToken(Guid token)
         {
-            var auxSession = new Session { Token = token };
             return Repository.GetAll().Any(s => s.Token == token);
         }
     }

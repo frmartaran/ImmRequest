@@ -45,7 +45,7 @@ namespace ImmRequest.WebApi.Filters
                 return;
             }
             var sessionLogic = (ISession)context.HttpContext.RequestServices.GetService(typeof(ISession));
-            if (sessionLogic.IsValidToken(tokenAsGuid))
+            if (!sessionLogic.IsValidToken(tokenAsGuid))
             {
                 var message = WebApiResource.AuthorizationFilter_InvalidTokenFormat;
                 context.Result = new ContentResult
