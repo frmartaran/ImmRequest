@@ -66,6 +66,17 @@ namespace ImmRequest.WebApi.Tests
             Assert.AreEqual(403, result.StatusCode);
         }
 
-        
+        [TestMethod]
+        public void NoSessionWithToken()
+        {
+            var token = Guid.NewGuid();
+            var executingContext = CreateActionExecutingContextMock(token.ToString());
+            var filter = new AuthorizationFilter();
+            filter.OnActionExecuting(executingContext);
+
+            Assert.IsInstanceOfType(executingContext.Result, typeof(ContentResult));
+            var result = executingContext.Result as ContentResult;
+            Assert.AreEqual(403, result.StatusCode);
+        }
     }
 }

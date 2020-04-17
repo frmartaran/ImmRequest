@@ -11,7 +11,7 @@ using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic
 {
-    public class SessionLogic : ILogic<Session>
+    public class SessionLogic : ISession
     {
         private IRepository<Session> Repository { get; set; }
         private IValidator<Session> Validator { get; set; }
@@ -71,5 +71,9 @@ namespace ImmRequest.BusinessLogic.Logic
             }
         }
 
+        public bool IsValidToken(Guid token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
