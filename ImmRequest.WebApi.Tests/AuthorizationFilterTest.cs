@@ -23,11 +23,15 @@ namespace ImmRequest.WebApi.Tests
     [TestClass]
     public class AuthorizationFilterTest
     {
-        private static ActionExecutingContext CreateActionExecutingContextMock(string token)
+
+
+        private static ActionExecutingContext CreateActionExecutingContextMock(string token, Session session)
         {
-            var mockRepository = new Mock<IRepository<Session>>();
-            mockRepository.Setup(m => m.GetAll()).Returns(new List<Session>());
             var mockValidator = new Mock<IValidator<Session>>().Object;
+
+            var mockRepository = new Mock<IRepository<Session>>();
+            mockRepository.Setup(m => m.GetAll()).Returns(new List<Session> { session });
+
             var services = new Mock<IServiceProvider>();
             services.Setup(m => m.GetService(It.IsAny<Type>()))
                 .Returns(new SessionLogic(mockRepository.Object, mockValidator));
@@ -57,7 +61,7 @@ namespace ImmRequest.WebApi.Tests
         [TestMethod]
         public void TokenIsNullTest()
         {
-            var executingContext = CreateActionExecutingContextMock("");
+            var executingContext = CreateActionExecutingContextMock("", new Session());
 
             var filter = new AuthorizationFilter();
             filter.OnActionExecuting(executingContext);
@@ -70,7 +74,7 @@ namespace ImmRequest.WebApi.Tests
         [TestMethod]
         public void TokenIsNotGuidTest()
         {
-            var executingContext = CreateActionExecutingContextMock("some token");
+            var executingContext = CreateActionExecutingContextMock("some token", new Session());
             var filter = new AuthorizationFilter();
             filter.OnActionExecuting(executingContext);
 
@@ -83,13 +87,26 @@ namespace ImmRequest.WebApi.Tests
         public void NoSessionWithToken()
         {
             var token = Guid.NewGuid();
-            var executingContext = CreateActionExecutingContextMock(token.ToString());
+            var executingContext = CreateActionExecutingContextMock(token.ToString(), new Session());
             var filter = new AuthorizationFilter();
             filter.OnActionExecuting(executingContext);
 
             Assert.IsInstanceOfType(executingContext.Result, typeof(ContentResult));
             var result = executingContext.Result as ContentResult;
             Assert.AreEqual(403, result.StatusCode);
+        }
+
+        [TestMethod]
+        public void ValidToken()
+        {
+            var token = Guid.NewGuid();
+            var sessionInDb = new Session { Token = token };
+
+            var executingContext = CreateActionExecutingContextMock(token.ToString(), sessionInDb);
+            var filter = new AuthorizationFilter();
+            filter.OnActionExecuting(executingContext);
+
+            Assert.IsNull(executingContext.Result);
         }
     }
 }
