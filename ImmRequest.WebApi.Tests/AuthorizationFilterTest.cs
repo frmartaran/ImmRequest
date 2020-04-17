@@ -11,6 +11,7 @@ using Moq;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 
 namespace ImmRequest.WebApi.Tests
 {
@@ -51,6 +52,18 @@ namespace ImmRequest.WebApi.Tests
             Assert.IsInstanceOfType(executingContext.Result, typeof(ContentResult));
             var result = executingContext.Result as ContentResult;
             Assert.AreEqual(400, result.StatusCode);
+        }
+
+        [TestMethod]
+        public void TokenIsNotGuidTest()
+        {
+            var executingContext = CreateActionExecutingContextMock("some token");
+            var filter = new AuthorizationFilter();
+            filter.OnActionExecuting(executingContext);
+
+            Assert.IsInstanceOfType(executingContext.Result, typeof(ContentResult));
+            var result = executingContext.Result as ContentResult;
+            Assert.AreEqual(403, result.StatusCode);
         }
 
         
