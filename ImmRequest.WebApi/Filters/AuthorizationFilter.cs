@@ -1,4 +1,6 @@
-﻿using ImmRequest.WebApi.Resources;
+﻿using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.Domain.UserManagement;
+using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -33,6 +35,17 @@ namespace ImmRequest.WebApi.Filters
             Guid tokenAsGuid;
             var isGuid = Guid.TryParse(token, out tokenAsGuid);
             if (!isGuid)
+            {
+                var message = WebApiResource.AuthorizationFilter_InvalidTokenFormat;
+                context.Result = new ContentResult
+                {
+                    StatusCode = 403,
+                    Content = message
+                };
+                return;
+            }
+            var sessionLogic = (ISession)context.HttpContext.RequestServices.GetService(typeof(ISession));
+            if (sessionLogic.IsValidToken(tokenAsGuid))
             {
                 var message = WebApiResource.AuthorizationFilter_InvalidTokenFormat;
                 context.Result = new ContentResult

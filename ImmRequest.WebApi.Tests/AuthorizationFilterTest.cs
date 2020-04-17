@@ -12,6 +12,11 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
+using ImmRequest.BusinessLogic.Logic;
+using Microsoft.Extensions.DependencyInjection;
+using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.Domain.UserManagement;
+using ImmRequest.BusinessLogic.Interfaces;
 
 namespace ImmRequest.WebApi.Tests
 {
@@ -20,9 +25,16 @@ namespace ImmRequest.WebApi.Tests
     {
         private static ActionExecutingContext CreateActionExecutingContextMock(string token)
         {
+            var mockRepository = new Mock<IRepository<Session>>().Object;
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var services = new Mock<IServiceProvider>();
+            services.Setup(m => m.GetService(It.IsAny<Type>()))
+                .Returns(new SessionLogic(mockRepository, mockValidator));
+
             var modelState = new ModelStateDictionary();
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers["Authorization"] = token;
+            httpContext.RequestServices = services.Object;
 
             var actionContext = new ActionContext
             (

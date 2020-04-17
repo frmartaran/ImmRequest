@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
+    <ProjectReference Include="..\ImmRequest.BusinessLogic\ImmRequest.BusinessLogic.csproj" />
     <ProjectReference Include="..\ImmRequest.Domain.Interfaces\ImmRequest.Domain.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.BusinessLogic.Interfaces\ImmRequest.BusinessLogic.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.DataAccess\ImmRequest.DataAccess.csproj" />
