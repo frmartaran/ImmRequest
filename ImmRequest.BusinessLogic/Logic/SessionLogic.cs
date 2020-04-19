@@ -47,9 +47,11 @@ namespace ImmRequest.BusinessLogic.Logic
             }
         }
 
-        public Session Get(long Id)
+        public Session Get(Guid token)
         {
-            var session = Repository.Get(Id);
+            var session = Repository.GetAll()
+                .Where(s => s.Token == token)
+                .FirstOrDefault();
             LogicHelpers.WarnIfNotFound(session, BusinessResource.Action_Get, Entity_Name);
             return session;
         }
@@ -59,9 +61,5 @@ namespace ImmRequest.BusinessLogic.Logic
             return Repository.GetAll().Any(s => s.Token == token);
         }
 
-        public Administrator FindAdministrator(string email, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

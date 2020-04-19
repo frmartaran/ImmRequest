@@ -103,11 +103,11 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetSessionMockTest()
         {
             var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
-                .Returns(session);
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<Session> { session });
             var mockValidator = new Mock<IValidator<Session>>().Object;
             var logic = new SessionLogic(mockRepository.Object, mockValidator);
-            var sessionInDb = logic.Get(1);
+            var sessionInDb = logic.Get(session.Token);
             Assert.IsNotNull(sessionInDb);
             mockRepository.VerifyAll();
         }
@@ -119,7 +119,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             context.Sessions.Add(session);
             context.SaveChanges();
 
-            var sessionInDb = logic.Get(1);
+            var sessionInDb = logic.Get(session.Token);
             Assert.IsNotNull(sessionInDb);
 
         }
@@ -129,11 +129,11 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetNotFoundMockTest()
         {
             var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
-                .Returns<Session>(null);
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<Session>());
             var mockValidator = new Mock<IValidator<Session>>().Object;
             var logic = new SessionLogic(mockRepository.Object, mockValidator);
-            var sessionInDb = logic.Get(1);
+            var sessionInDb = logic.Get(session.Token);
             Assert.IsNotNull(sessionInDb);
             mockRepository.VerifyAll();
         }
@@ -143,7 +143,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetNotFoundTest()
         {
             var logic = GetLogicWithMemoryDb("Get not founc Session");
-            logic.Get(1);
+            logic.Get(session.Token);
 
         }
 

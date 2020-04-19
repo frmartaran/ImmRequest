@@ -11,7 +11,7 @@ namespace ImmRequest.BusinessLogic.Interfaces
 
         Guid Create(Session session);
 
-        Session Get(long id);
+        Session Get(Guid token);
 
         void Delete(long id);
 
