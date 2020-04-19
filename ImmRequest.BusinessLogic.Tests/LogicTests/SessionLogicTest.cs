@@ -36,7 +36,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                     UserName = "Not by the moon",
                     PassWord = "1324"
                 },
-                Token = Guid.NewGuid()
             };
         }
 
@@ -157,31 +156,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         }
 
-        [TestMethod]
-        public void GetAllTest()
-        {
-            var logic = GetLogicWithMemoryDb("Get All Test");
-            context.Sessions.Add(session);
-            context.SaveChanges();
-
-            var allSessions = logic.GetAll();
-
-            Assert.AreEqual(1, allSessions.Count);
-        }
-
-        [TestMethod]
-        public void GetAllMockTest()
-        {
-            var sessions = new List<Session> { session };
-            var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.GetAll())
-                .Returns(sessions);
-            var mockValidator = new Mock<IValidator<Session>>().Object;
-            var logic = new SessionLogic(mockRepository.Object, mockValidator);
-            var allSessions = logic.GetAll();
-            Assert.AreEqual(1, allSessions.Count);
-            mockRepository.VerifyAll();
-        }
 
         [TestMethod]
         public void DeleteMockTest()
@@ -230,99 +204,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockRepository.VerifyAll();
         }
 
-        [TestMethod]
-        public void UpdateTest()
-        {
-            var logic = GetLogicWithMemoryDb("Update Test");
-            context.Sessions.Add(session);
-            context.SaveChanges();
-
-            var newToken = Guid.NewGuid();
-            session.Token = newToken;
-
-            logic.Update(session);
-            var sessionInDb = context.Sessions.FirstOrDefault();
-            Assert.AreEqual(newToken, sessionInDb.Token);
-
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-        public void InvalidUpdateTest()
-        {
-            var logic = GetLogicWithMemoryDb("Update Not Valid Test");
-            context.Sessions.Add(session);
-            context.SaveChanges();
-
-            var newToken = Guid.Empty;
-            session.Token = newToken;
-
-            logic.Update(session);
-        }
-
-        [TestMethod]
-        public void UpdateMockTest()
-        {
-            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
-                .Returns(session);
-            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
-            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
-                .Returns(true);
-
-            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
-            logic.Update(session);
-
-            mockRespository.VerifyAll();
-            mockValidator.VerifyAll();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-
-        public void InvalidUpdateMockTest()
-        {
-            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
-                .Returns(session);
-            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
-            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
-                .Throws(new ValidationException(""));
-
-            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
-            logic.Update(session);
-
-            mockRespository.VerifyAll();
-            mockValidator.VerifyAll();
-        }
-
-
-        [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException))]
-        public void UpdateNotFoundTest()
-        {
-            var logic = GetLogicWithMemoryDb("Update Not Found Test");
-            logic.Update(session);
-
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException))]
-        public void UpdateNotFoundMockTest()
-        {
-            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
-                .Throws(new DatabaseNotFoundException(""));
-            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
-            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
-                .Returns(true);
-
-            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
-            logic.Update(session);
-
-            mockRespository.VerifyAll();
-            mockValidator.VerifyAll();
-        }
 
         [TestMethod]
         public void IsValidTokenMockTest()

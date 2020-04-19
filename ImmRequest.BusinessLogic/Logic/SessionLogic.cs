@@ -24,12 +24,14 @@ namespace ImmRequest.BusinessLogic.Logic
             Repository = repository;
             Validator = validator;
         }
-        public void Create(Session objectToCreate)
+        public Guid Create(Session session)
         {
-            if (Validator.IsValid(objectToCreate))
+            if (Validator.IsValid(session))
             {
-                Repository.Insert(objectToCreate);
+                session.Token = Guid.NewGuid();
+                Repository.Insert(session);
             }
+            return session.Token;
         }
 
         public void Delete(long id)
@@ -50,26 +52,6 @@ namespace ImmRequest.BusinessLogic.Logic
             var session = Repository.Get(Id);
             LogicHelpers.WarnIfNotFound(session, BusinessResource.Action_Get, Entity_Name);
             return session;
-        }
-
-        public ICollection<Session> GetAll()
-        {
-            return Repository.GetAll();
-        }
-
-        public void Update(Session objectToUpdate)
-        {
-            try
-            {
-                if (Validator.IsValid(objectToUpdate))
-                {
-                    Repository.Update(objectToUpdate);
-                }
-            }
-            catch (DatabaseNotFoundException exception)
-            {
-                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Update, Entity_Name);
-            }
         }
 
         public bool IsValidToken(Guid token)

@@ -5,8 +5,15 @@ using System.Text;
 
 namespace ImmRequest.BusinessLogic.Interfaces
 {
-    public interface ISessionLogic : ILogic<Session>
+    public interface ISessionLogic
     {
         bool IsValidToken(Guid token);
+
+        Guid Create(Session session);
+
+        Session Get(long id);
+
+        void Delete(long id);
+
     }
 }
