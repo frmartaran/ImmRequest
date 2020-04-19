@@ -57,5 +57,13 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(model.Token, newSession.Token);
             Assert.AreEqual(model.Id, newSession.Id);
         }
+
+        [TestMethod]
+        public void ToModelTest()
+        {
+            var newModel = SessionModel.ToModel(session);
+            Assert.AreEqual(newModel.Token, session.Token);
+            Assert.AreEqual(newModel.AdministratorInSession.Email, session.AdministratorInSession.Email);
+        }
     }
 }
