@@ -3,6 +3,7 @@ using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Models.UserManagement;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -130,7 +131,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
 
             var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic);
-            controller.HttpContext.Request.Headers['Authorization'] = session.Token;
 
             var response = controller.Logout();
 
