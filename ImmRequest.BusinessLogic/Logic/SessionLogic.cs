@@ -24,7 +24,7 @@ namespace ImmRequest.BusinessLogic.Logic
             Repository = repository;
             Validator = validator;
         }
-        public Guid Create(Session session)
+        public Guid? Create(Session session)
         {
             if (Validator.IsValid(session))
             {
@@ -57,6 +57,11 @@ namespace ImmRequest.BusinessLogic.Logic
         public bool IsValidToken(Guid token)
         {
             return Repository.GetAll().Any(s => s.Token == token);
+        }
+
+        public Administrator FindAdministrator(string email, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

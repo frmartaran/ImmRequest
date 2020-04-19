@@ -9,7 +9,7 @@ namespace ImmRequest.BusinessLogic.Interfaces
     {
         bool IsValidToken(Guid token);
 
-        Guid Create(Session session);
+        Guid? Create(Session session);
 
         Session Get(long id);
 
