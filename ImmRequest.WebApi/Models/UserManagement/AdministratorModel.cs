@@ -33,6 +33,11 @@ namespace ImmRequest.WebApi.Models.UserManagement
 
         }
 
+        public static AdministratorModel ToEntityModel(Administrator entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public AdministratorModel ToModel(Administrator entity)
         {
             throw new NotImplementedException();

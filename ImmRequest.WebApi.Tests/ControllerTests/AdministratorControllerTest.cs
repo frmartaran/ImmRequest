@@ -40,5 +40,27 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(model.Password, admin.PassWord);
 
         }
+
+        [TestMethod]
+        public void ToDomainTestWithIdInTheModel()
+        {
+            model.Id = 2;
+            var admin = model.ToDomain();
+            Assert.AreEqual(model.Email, admin.Email);
+            Assert.AreEqual(model.Username, admin.UserName);
+            Assert.AreEqual(model.Password, admin.PassWord);
+            Assert.AreEqual(model.Id.Value, admin.Id);
+
+        }
+
+        [TestMethod]
+        public void ToModelTest()
+        {
+            var newModel = AdministratorModel.ToEntityModel(administrator);
+            Assert.AreEqual(administrator.Email, newModel.Email);
+            Assert.AreEqual(administrator.UserName, newModel.Username);
+            Assert.AreEqual(administrator.PassWord, newModel.Password);
+            Assert.AreEqual(administrator.Id, newModel.Id.Value);
+        }
     }
 }
