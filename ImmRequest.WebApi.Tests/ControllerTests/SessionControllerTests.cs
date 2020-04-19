@@ -73,10 +73,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void Login()
         {
-            var mockSessionLogic = new Mock<ISessionLogic>();
-            mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()));
+            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
+            mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()))
+                .Returns(session.Token);
 
-            var mockAdministratorLogic = new Mock<IAdministratorLogic>();
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
             mockAdministratorLogic.Setup(m => m.FindAdministratorByCredentials(
                 It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new Administrator());
@@ -100,9 +101,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void LoginWrongCredentials()
         {
             var mockSessionLogic = new Mock<ISessionLogic>();
-            mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()));
 
-            var mockAdministratorLogic = new Mock<IAdministratorLogic>();
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
             mockAdministratorLogic.Setup(m => m.FindAdministratorByCredentials(
                 It.IsAny<string>(), It.IsAny<string>()))
                 .Returns<Administrator>(null);
@@ -125,11 +125,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void LoginWithValidationErrorTest()
         {
-            var mockSessionLogic = new Mock<ISessionLogic>();
+            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
             mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()))
                 .Throws(new ValidationException(""));
 
-            var mockAdministratorLogic = new Mock<IAdministratorLogic>();
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
             mockAdministratorLogic.Setup(m => m.FindAdministratorByCredentials(
                 It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new Administrator());
@@ -152,14 +152,73 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void LogOutTest()
         {
-            var mockSessionLogic = new Mock<ISessionLogic>();
+            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
             mockSessionLogic.Setup(m => m.Get(It.IsAny<Guid>()))
                 .Returns(session);
             mockSessionLogic.Setup(m => m.Delete(It.IsAny<long>()));
 
             var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
 
-            var mockHelper = new Mock<IContextHelper>();
+            var mockHelper = new Mock<IContextHelper>(MockBehavior.Strict);
+            mockHelper.Setup(m => m.GetAuthorizationHeader(It.IsAny<HttpContext>()))
+                .Returns(session.Token);
+
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
+            var response = controller.Logout();
+
+            Assert.IsInstanceOfType(response, typeof(OkResult));
+            mockSessionLogic.VerifyAll();
+            mockHelper.VerifyAll();
+
+        }
+
+        [TestMethod]
+        public void LogOutSessionNotFoundGetCaseTest()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
+            mockSessionLogic.Setup(m => m.Get(It.IsAny<Guid>()))
+                .Throws(new BusinessLogicException(""));
+            mockSessionLogic.Setup(m => m.Delete(It.IsAny<long>()));
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
+
+            var mockHelper = new Mock<IContextHelper>(MockBehavior.Strict);
+            mockHelper.Setup(m => m.GetAuthorizationHeader(It.IsAny<HttpContext>()))
+                .Returns(session.Token);
+
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
+            var response = controller.Logout();
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockSessionLogic.VerifyAll();
+            mockHelper.VerifyAll();
+
+        }
+
+        [TestMethod]
+        public void LogOutSessionNotFoundDeleteCaseTest()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
+            mockSessionLogic.Setup(m => m.Get(It.IsAny<Guid>()))
+                .Returns(session);
+            mockSessionLogic.Setup(m => m.Delete(It.IsAny<long>()))
+                .Throws(new BusinessLogicException("")); 
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
+
+            var mockHelper = new Mock<IContextHelper>(MockBehavior.Strict);
             mockHelper.Setup(m => m.GetAuthorizationHeader(It.IsAny<HttpContext>()))
                 .Returns(session.Token);
 

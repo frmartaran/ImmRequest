@@ -49,7 +49,7 @@ namespace ImmRequest.WebApi.Controllers
         [HttpDelete]
         public ActionResult Logout()
         {
-            var isGuid = Guid.TryParse("", out var token);
+            var token = Inputs.ContextHelper.GetAuthorizationHeader(HttpContext);
             var sessionToDelete = Inputs.Logic.Get(token);
             Inputs.Logic.Delete(sessionToDelete.Id);
             return Ok();
