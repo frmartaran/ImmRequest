@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImmRequest.BusinessLogic.Interfaces
 {
-    public interface ISession : ILogic<Session>
+    public interface ISessionLogic : ILogic<Session>
     {
         bool IsValidToken(Guid token);
     }
