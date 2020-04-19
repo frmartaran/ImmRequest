@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ImmRequest.WebApi.Models.UserManagement
 {
-    public class AdministratorModel : IModel<Administrator, AdministratorModel>
+    public class AdministratorModel : Model<Administrator, AdministratorModel>
     {
         public long? Id { get; set; }
 
@@ -17,9 +18,9 @@ namespace ImmRequest.WebApi.Models.UserManagement
 
         public string Password { get; set; }
 
-        public Administrator ToDomain()
+        public override Administrator ToDomain()
         {
-            var administrator =  new Administrator
+            var administrator = new Administrator
             {
                 Email = this.Email,
                 UserName = Username,
@@ -33,14 +34,14 @@ namespace ImmRequest.WebApi.Models.UserManagement
 
         }
 
-        public static AdministratorModel ToEntityModel(Administrator entity)
+        public override AdministratorModel SetModel(Administrator entity)
         {
-            throw new NotImplementedException();
-        }
+            this.Id = entity.Id;
+            this.Username = entity.UserName;
+            this.Password = entity.PassWord;
+            this.Email = entity.Email;
 
-        public AdministratorModel ToModel(Administrator entity)
-        {
-            throw new NotImplementedException();
+            return this;
         }
     }
 }

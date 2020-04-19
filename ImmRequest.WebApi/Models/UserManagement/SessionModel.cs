@@ -21,7 +21,7 @@ namespace ImmRequest.WebApi.Models.UserManagement
             throw new NotImplementedException();
         }
 
-        public SessionModel ToModel(Session entity)
+        public SessionModel SetModel(Session entity)
         {
             throw new NotImplementedException();
         }

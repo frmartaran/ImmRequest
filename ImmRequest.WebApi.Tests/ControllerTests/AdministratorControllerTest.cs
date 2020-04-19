@@ -56,7 +56,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void ToModelTest()
         {
-            var newModel = AdministratorModel.ToEntityModel(administrator);
+            var newModel = AdministratorModel.ToModel(administrator);
             Assert.AreEqual(administrator.Email, newModel.Email);
             Assert.AreEqual(administrator.UserName, newModel.Username);
             Assert.AreEqual(administrator.PassWord, newModel.Password);

@@ -7,6 +7,6 @@ namespace ImmRequest.WebApi.Interfaces
         where M: IModel<E, M>
     {
         E ToDomain();
-        M ToModel(E entity);
+        M SetModel(E entity);
     }
 }
