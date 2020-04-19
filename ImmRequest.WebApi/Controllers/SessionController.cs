@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
 using ImmRequest.WebApi.Resources;
@@ -31,10 +32,18 @@ namespace ImmRequest.WebApi.Controllers
             if (administrator == null)
                 return BadRequest(WebApiResource.SessionController_UserNotFound);
 
-            var session = model.ToDomain();
-            session.AdministratorId = administrator.Id;
-            var token = Logic.Create(session);
-            return Ok(token);
+            try
+            {
+                var session = model.ToDomain();
+                session.AdministratorId = administrator.Id;
+                var token = Logic.Create(session);
+                return Ok(token);
+            }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
         }
     }
 }
