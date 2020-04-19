@@ -1,4 +1,5 @@
-﻿using ImmRequest.WebApi.Helpers;
+﻿using ImmRequest.WebApi.Exceptions;
+using ImmRequest.WebApi.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -21,6 +22,17 @@ namespace ImmRequest.WebApi.Tests.HelperTests
             var tokenInContext = helper.GetAuthorizationHeader(context);
             Assert.AreEqual(token, tokenInContext);
 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpContextException))]
+        public void NotGuidTokenTest()
+        {
+            var context = new DefaultHttpContext();
+            context.Request.Headers["Authorization"] = "";
+
+            var helper = new CurrentSessionInfo();
+            var tokenInContext = helper.GetAuthorizationHeader(context);
         }
     }
 }
