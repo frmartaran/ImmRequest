@@ -2,6 +2,8 @@
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Controllers;
+using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,10 +81,19 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new Administrator());
 
-            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic.Object);
+            var mockHelper = new Mock<IContextHelper>();
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic.Object,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
             var response = controller.Login(model);
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+            mockSessionLogic.VerifyAll();
+            mockAdministratorLogic.VerifyAll();
         }
 
         [TestMethod]
@@ -96,10 +107,19 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 It.IsAny<string>(), It.IsAny<string>()))
                 .Returns<Administrator>(null);
 
-            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic.Object);
+            var mockHelper = new Mock<IContextHelper>();
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic.Object,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
             var response = controller.Login(model);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockSessionLogic.VerifyAll();
+            mockAdministratorLogic.VerifyAll();
         }
 
         [TestMethod]
@@ -114,10 +134,19 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new Administrator());
 
-            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic.Object);
+            var mockHelper = new Mock<IContextHelper>();
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic.Object,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
             var response = controller.Login(model);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockSessionLogic.VerifyAll();
+            mockAdministratorLogic.VerifyAll();
         }
 
         [TestMethod]
@@ -130,11 +159,22 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
 
-            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic);
+            var mockHelper = new Mock<IContextHelper>();
+            mockHelper.Setup(m => m.GetAuthorizationHeader(It.IsAny<HttpContext>()))
+                .Returns(session.Token);
 
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
             var response = controller.Logout();
 
             Assert.IsInstanceOfType(response, typeof(OkResult));
+            mockSessionLogic.VerifyAll();
+            mockHelper.VerifyAll();
 
         }
 

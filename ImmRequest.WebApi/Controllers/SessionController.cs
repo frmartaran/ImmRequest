@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Http;
@@ -15,19 +17,17 @@ namespace ImmRequest.WebApi.Controllers
     [ApiController]
     public class SessionController : ControllerBase
     {
-        private ISessionLogic Logic { get; set; }
-        private IAdministratorLogic AdministratorLogic { get; set; }
+        private SessionControllerInputHelper Inputs { get; set; }
 
-        public SessionController(ISessionLogic logic, IAdministratorLogic administratorLogic)
+        public SessionController(SessionControllerInputHelper inputs)
         {
-            Logic = logic;
-            AdministratorLogic = administratorLogic;
+            Inputs = inputs;
         }
 
         [HttpPost]
         public ActionResult Login([FromBody] SessionModel model)
         {
-            var administrator = AdministratorLogic
+            var administrator = Inputs.AdministratorLogic
                 .FindAdministratorByCredentials(model.Email, model.Password);
             if (administrator == null)
                 return BadRequest(WebApiResource.SessionController_UserNotFound);
@@ -36,7 +36,7 @@ namespace ImmRequest.WebApi.Controllers
             {
                 var session = model.ToDomain();
                 session.AdministratorId = administrator.Id;
-                var token = Logic.Create(session);
+                var token = Inputs.Logic.Create(session);
                 return Ok(token);
             }
             catch (ValidationException exception)
@@ -50,8 +50,8 @@ namespace ImmRequest.WebApi.Controllers
         public ActionResult Logout()
         {
             var isGuid = Guid.TryParse("", out var token);
-            var sessionToDelete = Logic.Get(token);
-            Logic.Delete(sessionToDelete.Id);
+            var sessionToDelete = Inputs.Logic.Get(token);
+            Inputs.Logic.Delete(sessionToDelete.Id);
             return Ok();
         }
     }

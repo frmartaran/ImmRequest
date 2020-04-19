@@ -1,4 +1,6 @@
-﻿using ImmRequest.WebApi.Interfaces;
+﻿using ImmRequest.WebApi.Exceptions;
+using ImmRequest.WebApi.Interfaces;
+using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,9 @@ namespace ImmRequest.WebApi.Helpers
         public Guid GetAuthorizationHeader(HttpContext context)
         {
             var tokenString = context.Request.Headers[Authorization_Header];
-            Guid.TryParse(tokenString, out var token);
+            var isGuid = Guid.TryParse(tokenString, out var token);
+            if (!isGuid)
+                throw new HttpContextException(WebApiResource.AuthorizationFilter_InvalidTokenFormat);
             return token;
         }
     }
