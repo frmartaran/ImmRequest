@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.WebApi.Exceptions;
 using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
@@ -57,6 +58,10 @@ namespace ImmRequest.WebApi.Controllers
                 return Ok();
             }
             catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (HttpContextException exception)
             {
                 return BadRequest(exception.Message);
             }
