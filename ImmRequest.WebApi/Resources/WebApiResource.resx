@@ -123,4 +123,7 @@
   <data name="AuthorizationFilter_TokenEmpty" xml:space="preserve">
     <value>The authorization token is empty. Please provide a valid token</value>
   </data>
+  <data name="SessionController_UserNotFound" xml:space="preserve">
+    <value>There was an error login in. Please check your credentials.</value>
+  </data>
 </root>

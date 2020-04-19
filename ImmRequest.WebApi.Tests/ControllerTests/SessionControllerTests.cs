@@ -82,5 +82,22 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
         }
+
+        [TestMethod]
+        public void LoginWrongCredentials()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>();
+            mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()));
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>();
+            mockAdministratorLogic.Setup(m => m.FindAdministratorByCredentials(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<Administrator>(null);
+
+            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic.Object);
+            var response = controller.Login(model);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+        }
     }
 }
