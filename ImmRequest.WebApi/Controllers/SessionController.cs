@@ -25,7 +25,12 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Login([FromBody] SessionModel model)
         {
-            throw new NotImplementedException();
+            var administrator = AdministratorLogic
+                .FindAdministratorByCredentials(model.Email, model.Password);
+            var session = model.ToDomain();
+            session.AdministratorId = administrator.Id;
+            var token = Logic.Create(session);
+            return Ok(token);
         }
     }
 }
