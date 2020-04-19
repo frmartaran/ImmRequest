@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Models.UserManagement;
@@ -99,5 +100,24 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
         }
+
+        [TestMethod]
+        public void LoginWithValidationError()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>();
+            mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()))
+                .Throws(new ValidationException(""));
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>();
+            mockAdministratorLogic.Setup(m => m.FindAdministratorByCredentials(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new Administrator());
+
+            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic.Object);
+            var response = controller.Login(model);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+        }
+
     }
 }
