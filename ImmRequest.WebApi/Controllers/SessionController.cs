@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
+using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,9 @@ namespace ImmRequest.WebApi.Controllers
         {
             var administrator = AdministratorLogic
                 .FindAdministratorByCredentials(model.Email, model.Password);
+            if (administrator == null)
+                return BadRequest(WebApiResource.SessionController_UserNotFound);
+
             var session = model.ToDomain();
             session.AdministratorId = administrator.Id;
             var token = Logic.Create(session);
