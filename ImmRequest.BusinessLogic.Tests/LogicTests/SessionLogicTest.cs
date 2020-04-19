@@ -30,7 +30,12 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             session = new Session
             {
-                AdministratorInSession = new Administrator(),
+                AdministratorInSession = new Administrator
+                {
+                    Email = "notbythemoon@song.com",
+                    UserName = "Not by the moon",
+                    PassWord = "1324"
+                },
                 Token = Guid.NewGuid()
             };
         }
@@ -366,6 +371,5 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             Assert.IsFalse(isValid);
 
         }
-
     }
 }

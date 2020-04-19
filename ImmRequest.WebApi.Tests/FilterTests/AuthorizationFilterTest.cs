@@ -18,7 +18,7 @@ using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.BusinessLogic.Interfaces;
 
-namespace ImmRequest.WebApi.Tests
+namespace ImmRequest.WebApi.Tests.FilterTests
 {
     [TestClass]
     public class AuthorizationFilterTest
