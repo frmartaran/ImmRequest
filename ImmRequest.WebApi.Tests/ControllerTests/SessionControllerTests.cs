@@ -18,12 +18,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             model = new SessionModel
             {
-                AdministratorInSession = new AdministratorModel
-                {
-                    Email = "example@example.com",
-                    Password = "1234",
-                    Username = "Example"
-                },
+                Email = "example@example.com",
+                Password = "1234",
                 Token = Guid.NewGuid()
             };
 
@@ -44,7 +40,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void ToDomainTest()
         {
             var newSession = model.ToDomain();
-            Assert.AreEqual(model.AdministratorInSession.Email, newSession.AdministratorInSession.Email);
+            Assert.AreEqual(model.Email, newSession.AdministratorInSession.Email);
             Assert.AreEqual(model.Token, newSession.Token);
         }
 
@@ -53,7 +49,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             model.Id = 2;
             var newSession = model.ToDomain();
-            Assert.AreEqual(model.AdministratorInSession.Email, newSession.AdministratorInSession.Email);
+            Assert.AreEqual(model.Email, newSession.AdministratorInSession.Email);
             Assert.AreEqual(model.Token, newSession.Token);
             Assert.AreEqual(model.Id, newSession.Id);
         }
@@ -63,7 +59,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var newModel = SessionModel.ToModel(session);
             Assert.AreEqual(newModel.Token, session.Token);
-            Assert.AreEqual(newModel.AdministratorInSession.Email, session.AdministratorInSession.Email);
+            Assert.AreEqual(newModel.Email, session.AdministratorInSession.Email);
         }
     }
 }

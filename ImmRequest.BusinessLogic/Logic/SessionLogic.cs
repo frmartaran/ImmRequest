@@ -12,7 +12,7 @@ using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic
 {
-    public class SessionLogic : ISession
+    public class SessionLogic : ISessionLogic
     {
         private IRepository<Session> Repository { get; set; }
         private IValidator<Session> Validator { get; set; }

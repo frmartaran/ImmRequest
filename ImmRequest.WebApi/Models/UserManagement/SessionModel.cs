@@ -12,15 +12,19 @@ namespace ImmRequest.WebApi.Models.UserManagement
     {
         public long? Id { get; set; }
 
-        public AdministratorModel AdministratorInSession { get; set; }
-
+        public string Email { get; set; }
+        public string Password { get; set; }
         public Guid Token { get; set; }
 
         public override Session ToDomain()
         {
             var newSession = new Session
             {
-                AdministratorInSession = AdministratorInSession.ToDomain(),
+                AdministratorInSession = new Administrator
+                {
+                    Email = Email,
+                    PassWord = Password
+                },
                 Token = Token,
             };
 
@@ -33,7 +37,11 @@ namespace ImmRequest.WebApi.Models.UserManagement
 
         public override SessionModel SetModel(Session entity)
         {
-            throw new NotImplementedException();
+            this.Id = entity.Id;
+            this.Email = entity.AdministratorInSession.Email;
+            this.Password = entity.AdministratorInSession.PassWord;
+            this.Token = entity.Token;
+            return this;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ImmRequest.WebApi
         {
             services.AddControllers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddScoped<ISession, SessionLogic>();
+            services.AddScoped<ISessionLogic, SessionLogic>();
             services.AddDbContext<DbContext, ImmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
         }

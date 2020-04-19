@@ -44,7 +44,7 @@ namespace ImmRequest.WebApi.Filters
                 };
                 return;
             }
-            var sessionLogic = (ISession)context.HttpContext.RequestServices.GetService(typeof(ISession));
+            var sessionLogic = (ISessionLogic)context.HttpContext.RequestServices.GetService(typeof(ISessionLogic));
             if (!sessionLogic.IsValidToken(tokenAsGuid))
             {
                 var message = WebApiResource.AuthorizationFilter_InvalidTokenFormat;
