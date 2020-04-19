@@ -2,6 +2,7 @@
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Controllers;
+using ImmRequest.WebApi.Exceptions;
 using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
@@ -220,6 +221,32 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var mockHelper = new Mock<IContextHelper>(MockBehavior.Strict);
             mockHelper.Setup(m => m.GetAuthorizationHeader(It.IsAny<HttpContext>()))
                 .Returns(session.Token);
+
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
+            var response = controller.Logout();
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockSessionLogic.VerifyAll();
+            mockHelper.VerifyAll();
+
+        }
+
+        [TestMethod]
+        public void LogoutInvalidTokenTest()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
+
+            var mockHelper = new Mock<IContextHelper>(MockBehavior.Strict);
+            mockHelper.Setup(m => m.GetAuthorizationHeader(It.IsAny<HttpContext>()))
+                .Throws(new HttpContextException(""));
 
             var inputs = new SessionControllerInputHelper(
                 mockSessionLogic.Object,
