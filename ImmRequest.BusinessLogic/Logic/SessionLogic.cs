@@ -24,7 +24,7 @@ namespace ImmRequest.BusinessLogic.Logic
             Repository = repository;
             Validator = validator;
         }
-        public Guid? Create(Session session)
+        public Guid Create(Session session)
         {
             session.Token = Guid.NewGuid();
             if (Validator.IsValid(session))

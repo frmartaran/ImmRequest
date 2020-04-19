@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.WebApi.Models.UserManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,15 +13,17 @@ namespace ImmRequest.WebApi.Controllers
     [ApiController]
     public class SessionController : ControllerBase
     {
-        private ISession Logic { get; set; }
+        private ISessionLogic Logic { get; set; }
+        private IAdministratorLogic AdministratorLogic { get; set; }
 
-        public SessionController(ISession logic)
+        public SessionController(ISessionLogic logic, IAdministratorLogic administratorLogic)
         {
             Logic = logic;
+            AdministratorLogic = administratorLogic;
         }
 
         [HttpPost]
-        public ActionResult Login()
+        public ActionResult Login([FromBody] SessionModel model)
         {
             throw new NotImplementedException();
         }

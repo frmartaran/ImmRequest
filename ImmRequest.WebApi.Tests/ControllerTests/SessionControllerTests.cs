@@ -1,6 +1,10 @@
-﻿using ImmRequest.Domain.UserManagement;
+﻿using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.Domain.UserManagement;
+using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Models.UserManagement;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -60,6 +64,23 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var newModel = SessionModel.ToModel(session);
             Assert.AreEqual(newModel.Token, session.Token);
             Assert.AreEqual(newModel.Email, session.AdministratorInSession.Email);
+        }
+
+        [TestMethod]
+        public void Login()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>();
+            mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()));
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>();
+            mockAdministratorLogic.Setup(m => m.FindAdministratorByCredentials(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new Administrator());
+
+            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic.Object);
+            var response = controller.Login(model);
+
+            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
         }
     }
 }
