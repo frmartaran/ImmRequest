@@ -7,6 +7,7 @@ using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain.UserManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic
@@ -81,7 +82,10 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public Administrator FindAdministratorByCredentials(string email, string password)
         {
-            throw new NotImplementedException();
+            return Repository.GetAll()
+                .Where(a => a.Email == email)
+                .Where(a => a.PassWord == password)
+                .FirstOrDefault();
         }
     }
 }

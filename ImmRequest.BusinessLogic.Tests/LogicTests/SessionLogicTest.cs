@@ -98,15 +98,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockValidator.VerifyAll();
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-
-        public void CreateInvalidSessionTest()
-        {
-            var logic = GetLogicWithMemoryDb("Invalid Session");
-            session.Token = Guid.Empty;
-            logic.Create(session);
-        }
 
         [TestMethod]
         public void GetSessionMockTest()
