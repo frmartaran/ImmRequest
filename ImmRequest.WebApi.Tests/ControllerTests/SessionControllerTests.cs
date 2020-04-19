@@ -102,7 +102,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void LoginWithValidationError()
+        public void LoginWithValidationErrorTest()
         {
             var mockSessionLogic = new Mock<ISessionLogic>();
             mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()))
@@ -117,6 +117,25 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Login(model);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void LogOutTest()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>();
+            mockSessionLogic.Setup(m => m.Get(It.IsAny<Guid>()))
+                .Returns(session);
+            mockSessionLogic.Setup(m => m.Delete(It.IsAny<long>()));
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
+
+            var controller = new SessionController(mockSessionLogic.Object, mockAdministratorLogic);
+            controller.HttpContext.Request.Headers['Authorization'] = session.Token;
+
+            var response = controller.Logout();
+
+            Assert.IsInstanceOfType(response, typeof(OkResult));
+
         }
 
     }

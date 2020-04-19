@@ -45,5 +45,11 @@ namespace ImmRequest.WebApi.Controllers
             }
 
         }
+
+        [HttpDelete]
+        public ActionResult Logout()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
