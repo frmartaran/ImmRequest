@@ -8,20 +8,30 @@ using System.Threading.Tasks;
 
 namespace ImmRequest.WebApi.Models.UserManagement
 {
-    public class SessionModel : IModel<Session, SessionModel>
+    public class SessionModel : Model<Session, SessionModel>
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         public AdministratorModel AdministratorInSession { get; set; }
 
         public Guid Token { get; set; }
 
-        public Session ToDomain()
+        public override Session ToDomain()
         {
-            throw new NotImplementedException();
+            var newSession = new Session
+            {
+                AdministratorInSession = AdministratorInSession.ToDomain(),
+                Token = Token,
+            };
+
+            if (Id.HasValue)
+                newSession.Id = Id.Value;
+
+            return newSession;
+
         }
 
-        public SessionModel SetModel(Session entity)
+        public override SessionModel SetModel(Session entity)
         {
             throw new NotImplementedException();
         }
