@@ -49,10 +49,17 @@ namespace ImmRequest.WebApi.Controllers
         [HttpDelete]
         public ActionResult Logout()
         {
-            var token = Inputs.ContextHelper.GetAuthorizationHeader(HttpContext);
-            var sessionToDelete = Inputs.Logic.Get(token);
-            Inputs.Logic.Delete(sessionToDelete.Id);
-            return Ok();
+            try
+            {
+                var token = Inputs.ContextHelper.GetAuthorizationHeader(HttpContext);
+                var sessionToDelete = Inputs.Logic.Get(token);
+                Inputs.Logic.Delete(sessionToDelete.Id);
+                return Ok();
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
     }
 }

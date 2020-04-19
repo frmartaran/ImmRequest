@@ -184,7 +184,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
             mockSessionLogic.Setup(m => m.Get(It.IsAny<Guid>()))
                 .Throws(new BusinessLogicException(""));
-            mockSessionLogic.Setup(m => m.Delete(It.IsAny<long>()));
 
             var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
 
@@ -231,7 +230,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new SessionController(inputs);
             var response = controller.Logout();
 
-            Assert.IsInstanceOfType(response, typeof(OkResult));
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
             mockSessionLogic.VerifyAll();
             mockHelper.VerifyAll();
 
