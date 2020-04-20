@@ -93,10 +93,18 @@ namespace ImmRequest.WebApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(long id)
         {
-            Logic.Delete(id);
-            var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Administrator,
-                    WebApiResource.Action_Deleted);
-            return Ok(responseMessage);
+            try
+            {
+                Logic.Delete(id);
+                var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Administrator,
+                        WebApiResource.Action_Deleted);
+                return Ok(responseMessage);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
         }
 
     }
