@@ -212,5 +212,19 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
             mockLogic.VerifyAll();
         }
+
+        [TestMethod]
+        public void DeleteNotFoundTest()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Delete(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Delete(1);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockLogic.VerifyAll();
+        }
     }
 }
