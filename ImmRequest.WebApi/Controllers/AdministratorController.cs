@@ -83,6 +83,10 @@ namespace ImmRequest.WebApi.Controllers
             {
                 return BadRequest(exception.Message);
             }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
 
         }
 
