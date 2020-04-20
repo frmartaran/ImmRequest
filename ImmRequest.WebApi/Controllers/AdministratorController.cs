@@ -6,6 +6,7 @@ using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Models.UserManagement;
+using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,7 +52,11 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] AdministratorModel model)
         {
-            throw new NotImplementedException();
+            var administratorToCreate = model.ToDomain();
+            Logic.Create(administratorToCreate);
+            var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Administrator,
+                WebApiResource.Action_Created);
+            return Ok(responseMessage);
         }
 
     }

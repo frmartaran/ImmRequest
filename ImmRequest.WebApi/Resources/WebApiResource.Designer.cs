@@ -61,6 +61,15 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Created.
+        /// </summary>
+        public static string Action_Created {
+            get {
+                return ResourceManager.GetString("Action_Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid token. Please provide a valid token..
         /// </summary>
         public static string AuthorizationFilter_InvalidTokenFormat {
@@ -75,6 +84,15 @@ namespace ImmRequest.WebApi.Resources {
         public static string AuthorizationFilter_TokenEmpty {
             get {
                 return ResourceManager.GetString("AuthorizationFilter_TokenEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrator.
+        /// </summary>
+        public static string Entities_Administrator {
+            get {
+                return ResourceManager.GetString("Entities_Administrator", resourceCulture);
             }
         }
         
