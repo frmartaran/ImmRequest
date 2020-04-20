@@ -67,5 +67,11 @@ namespace ImmRequest.WebApi.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        public ActionResult Update(long id, [FromBody] AdministratorModel model)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
