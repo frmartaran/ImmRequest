@@ -134,5 +134,19 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
         }
+
+        [TestMethod]
+        public void CreateInvalidAdministrator()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Create(It.IsAny<Administrator>()))
+                .Throws(new ValidationException(""));
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Create(model);
+            var expectedAdministrator = model.ToDomain();
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+        }
     }
 }
