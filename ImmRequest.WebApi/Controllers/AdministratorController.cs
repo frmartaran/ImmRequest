@@ -52,11 +52,19 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] AdministratorModel model)
         {
-            var administratorToCreate = model.ToDomain();
-            Logic.Create(administratorToCreate);
-            var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Administrator,
-                WebApiResource.Action_Created);
-            return Ok(responseMessage);
+            try
+            {
+                var administratorToCreate = model.ToDomain();
+                Logic.Create(administratorToCreate);
+                var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Administrator,
+                    WebApiResource.Action_Created);
+                return Ok(responseMessage);
+            }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception);
+            }
+
         }
 
     }
