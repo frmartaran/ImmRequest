@@ -36,7 +36,7 @@ namespace ImmRequest.WebApi.Controllers
             }
             catch (BusinessLogicException exception)
             {
-                return BadRequest(exception);
+                return BadRequest(exception.Message);
             }
 
         }
@@ -62,7 +62,7 @@ namespace ImmRequest.WebApi.Controllers
             }
             catch (ValidationException exception)
             {
-                return BadRequest(exception);
+                return BadRequest(exception.Message);
             }
 
         }
@@ -70,12 +70,20 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(long id, [FromBody] AdministratorModel model)
         {
-            var modifiedAdministrator = model.ToDomain();
-            modifiedAdministrator.Id = id;
-            Logic.Update(modifiedAdministrator);
-            var message = string.Format("{0}: {1} {2}", WebApiResource.Entities_Administrator,
-                modifiedAdministrator.UserName, WebApiResource.Action_Updated);
-            return Ok(message);
+            try
+            {
+                var modifiedAdministrator = model.ToDomain();
+                modifiedAdministrator.Id = id;
+                Logic.Update(modifiedAdministrator);
+                var message = string.Format("{0}: {1} {2}", WebApiResource.Entities_Administrator,
+                    modifiedAdministrator.UserName, WebApiResource.Action_Updated);
+                return Ok(message);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
         }
 
     }
