@@ -70,6 +70,15 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updated.
+        /// </summary>
+        public static string Action_Updated {
+            get {
+                return ResourceManager.GetString("Action_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid token. Please provide a valid token..
         /// </summary>
         public static string AuthorizationFilter_InvalidTokenFormat {

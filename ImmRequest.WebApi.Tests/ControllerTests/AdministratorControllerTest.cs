@@ -86,6 +86,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var administratorResponse = modelResponse.ToDomain();
 
             Assert.AreEqual(administrator.Email, administratorResponse.Email);
+            mockLogic.VerifyAll();
         }
 
         [TestMethod]
@@ -99,6 +100,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Get(1);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockLogic.VerifyAll();
+
         }
 
         [TestMethod]
@@ -119,6 +122,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             Assert.AreEqual(1, administratorResponse.Count());
             Assert.AreEqual(administrator.Email, administratorResponse.First().Email);
+            mockLogic.VerifyAll();
+
 
         }
 
@@ -133,6 +138,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+            mockLogic.VerifyAll();
+
         }
 
         [TestMethod]
@@ -147,6 +154,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockLogic.VerifyAll();
+
         }
 
         [TestMethod]
@@ -156,10 +165,12 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             mockLogic.Setup(m => m.Update(It.IsAny<Administrator>()));
 
             var controller = new AdministratorController(mockLogic.Object);
-            var response = controller.Create(model);
+            var response = controller.Update(1, model);
             var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+            mockLogic.VerifyAll();
+
         }
     }
 }
