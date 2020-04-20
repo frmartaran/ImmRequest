@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Models.UserManagement;
@@ -26,9 +27,23 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(long id)
         {
-            var administrator = Logic.Get(id);
-            var model = AdministratorModel.ToModel(administrator);
-            return Ok(model);
+            try
+            {
+                var administrator = Logic.Get(id);
+                var model = AdministratorModel.ToModel(administrator);
+                return Ok(model);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception);
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            throw new NotImplementedException();
         }
 
     }

@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
@@ -98,6 +99,27 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Get(1);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.GetAll())
+                .Returns(new List<Administrator> { administrator });
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Get(1);
+
+            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+
+            var okResponse = response as OkObjectResult;
+            var modelResponse = okResponse.Value as List<AdministratorModel>;
+            var administratorResponse = AdministratorModel.ToEntity(modelResponse);
+
+            Assert.AreEqual(1, administratorResponse.Count());
+            Assert.AreEqual(administrator.Email, administratorResponse.First().Email);
+
         }
     }
 }
