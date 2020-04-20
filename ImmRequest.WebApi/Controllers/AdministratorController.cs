@@ -43,7 +43,9 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            throw new NotImplementedException();
+            var allAdministrator = Logic.GetAll();
+            var models = AdministratorModel.ToModel(allAdministrator);
+            return Ok(models);
         }
 
     }

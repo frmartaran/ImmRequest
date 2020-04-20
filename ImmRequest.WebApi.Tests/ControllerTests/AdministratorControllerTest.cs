@@ -109,12 +109,12 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 .Returns(new List<Administrator> { administrator });
 
             var controller = new AdministratorController(mockLogic.Object);
-            var response = controller.Get(1);
+            var response = controller.GetAll();
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
 
             var okResponse = response as OkObjectResult;
-            var modelResponse = okResponse.Value as List<AdministratorModel>;
+            var modelResponse = okResponse.Value as IEnumerable<AdministratorModel>;
             var administratorResponse = AdministratorModel.ToEntity(modelResponse);
 
             Assert.AreEqual(1, administratorResponse.Count());
