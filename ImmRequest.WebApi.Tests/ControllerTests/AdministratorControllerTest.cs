@@ -121,5 +121,24 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(administrator.Email, administratorResponse.First().Email);
 
         }
+
+        [TestMethod]
+        public void CreateAdministrator()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Create(It.IsAny<Administrator>()));
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Create(model);
+            var expectedAdministrator = model.ToDomain();
+
+            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+
+            var okResponse = response as OkObjectResult;
+            var modelResponse = okResponse.Value as AdministratorModel;
+            var administratorInResponse = modelResponse.ToDomain();
+
+            Assert.AreEqual(expectedAdministrator.Email, administratorInResponse.Email);
+        }
     }
 }

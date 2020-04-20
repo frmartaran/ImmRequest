@@ -48,5 +48,11 @@ namespace ImmRequest.WebApi.Controllers
             return Ok(models);
         }
 
+        [HttpPost]
+        public ActionResult Create([FromBody] AdministratorModel model)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
