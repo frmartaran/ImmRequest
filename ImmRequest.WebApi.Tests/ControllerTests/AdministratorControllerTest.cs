@@ -77,7 +77,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Get(1);
 
-            Assert.IsNotInstanceOfType(response, typeof(OkObjectResult));
+            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
 
             var okResponse = response as OkObjectResult;
             var modelResponse = okResponse.Value as AdministratorModel;
