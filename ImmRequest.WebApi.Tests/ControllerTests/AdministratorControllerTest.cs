@@ -172,5 +172,21 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             mockLogic.VerifyAll();
 
         }
+
+        [TestMethod]
+        public void UpdateNotFoundTest()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Update(It.IsAny<Administrator>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Update(1, model);
+            var expectedAdministrator = model.ToDomain();
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockLogic.VerifyAll();
+
+        }
     }
 }
