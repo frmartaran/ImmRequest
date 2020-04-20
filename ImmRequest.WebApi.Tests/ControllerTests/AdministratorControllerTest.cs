@@ -166,7 +166,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Update(1, model);
-            var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
             mockLogic.VerifyAll();
@@ -182,7 +181,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Update(1, model);
-            var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
             mockLogic.VerifyAll();
@@ -198,11 +196,23 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Update(1, model);
-            var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
             mockLogic.VerifyAll();
 
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Delete(It.IsAny<long>()));
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Delete(1);
+
+            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+            mockLogic.VerifyAll();
         }
     }
 }
