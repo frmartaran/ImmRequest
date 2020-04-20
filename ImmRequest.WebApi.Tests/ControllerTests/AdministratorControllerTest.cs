@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Models.UserManagement;
@@ -84,6 +85,19 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var administratorResponse = modelResponse.ToDomain();
 
             Assert.AreEqual(administrator.Email, administratorResponse.Email);
+        }
+
+        [TestMethod]
+        public void GetNotFoundTest()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Get(1);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
         }
     }
 }
