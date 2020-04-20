@@ -135,7 +135,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Create(model);
-            var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
             mockLogic.VerifyAll();
@@ -151,7 +150,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Create(model);
-            var expectedAdministrator = model.ToDomain();
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
             mockLogic.VerifyAll();
