@@ -29,7 +29,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            citizenRequestRepository.Delete(id);
         }
 
         public CitizenRequest Get(long Id)
