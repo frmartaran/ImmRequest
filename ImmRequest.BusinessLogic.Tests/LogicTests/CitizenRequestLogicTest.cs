@@ -168,7 +168,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         [ExpectedException(typeof(ValidationException))]
         public void CreateInvalidCitizenRequestTest()
         {
-            CreateContextFor("Valid citizen request");
+            CreateContextFor("Invalid citizen request");
 
             var validatorInput = new CitizenRequestValidatorInput
             {
@@ -249,6 +249,66 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var requestReturned = logic.GetAll()
                 .FirstOrDefault();
             Assert.AreEqual(requestReturned.Id, citizenRequest.Id);
+        }
+
+        [TestMethod]
+        public void UpdateeValidCitizenRequestMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Update(It.IsAny<CitizenRequest>()));
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<CitizenRequest>()))
+                .Returns(true);
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Update(citizenRequest);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
+        public void UpdateValidCitizenRequestTest()
+        {
+            CreateContextFor("Update valid citizen request");
+
+            var validatorInput = new CitizenRequestValidatorInput
+            {
+                AreaRepository = AreaRepository,
+                FieldRepository = FieldRepository,
+                TopicRepository = TopicRepository,
+                TopicTypeRepository = TopicTypeRepository
+            };
+            var citizenRequestRepository = new CitizenRequestRepository(context);
+            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
+            logic.Create(citizenRequest);
+            var requestCreated = logic.Get(citizenRequest.Id);
+            requestCreated.CitizenName = "Paco";
+            logic.Update(citizenRequest);
+            var citizenRequestUpdated = logic.Get(citizenRequest.Id);
+            Assert.IsNotNull(citizenRequest.CitizenName, citizenRequestUpdated.CitizenName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void UpdateInvalidCitizenRequestTest()
+        {
+            CreateContextFor("Update invalid citizen request");
+
+            var validatorInput = new CitizenRequestValidatorInput
+            {
+                AreaRepository = AreaRepository,
+                FieldRepository = FieldRepository,
+                TopicRepository = TopicRepository,
+                TopicTypeRepository = TopicTypeRepository
+            };
+            var citizenRequestRepository = new CitizenRequestRepository(context);
+            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
+            logic.Create(citizenRequest);
+            var requestCreated = logic.Get(citizenRequest.Id);
+            requestCreated.AreaId = 15;
+            logic.Update(citizenRequest);
         }
     }
 }
