@@ -218,7 +218,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(ValidationException))]
         public void TopicTypeIsInvalid()
         {
-            CreateContextFor("TopicTypeIsValid");
+            CreateContextFor("TopicTypeIsInvalid");
             IsTopicTypeValid(citizenRequest.AreaId, citizenRequest.TopicId, 150);
         }
     }
