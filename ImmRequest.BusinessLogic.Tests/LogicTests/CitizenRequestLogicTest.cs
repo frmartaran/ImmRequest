@@ -310,5 +310,39 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             requestCreated.AreaId = 15;
             logic.Update(citizenRequest);
         }
+
+        [TestMethod]
+        public void DeleteCitizenRequestMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Delete(It.IsAny<long>()));
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Delete(1);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
+        public void DeleteCitizenRequestTest()
+        {
+            CreateContextFor("Delete citizen request");
+
+            var validatorInput = new CitizenRequestValidatorInput
+            {
+                AreaRepository = AreaRepository,
+                FieldRepository = FieldRepository,
+                TopicRepository = TopicRepository,
+                TopicTypeRepository = TopicTypeRepository
+            };
+            var citizenRequestRepository = new CitizenRequestRepository(context);
+            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
+            logic.Create(citizenRequest);
+            logic.Delete(citizenRequest.Id);
+            var request = logic.Get(citizenRequest.Id);
+            Assert.IsNull(request);
+        }
     }
 }
