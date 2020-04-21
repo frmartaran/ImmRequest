@@ -23,7 +23,7 @@ namespace ImmRequest.BusinessLogic.Logic
         {
             if (citizenRequestValidator.IsValid(objectToCreate))
             {
-
+                citizenRequestRepository.Insert(objectToCreate);
             }
         }
 
