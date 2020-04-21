@@ -44,7 +44,10 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Update(CitizenRequest objectToUpdate)
         {
-            throw new NotImplementedException();
+            if (citizenRequestValidator.IsValid(objectToUpdate))
+            {
+                citizenRequestRepository.Update(objectToUpdate);
+            }
         }
     }
 }
