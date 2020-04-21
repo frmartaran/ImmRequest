@@ -188,7 +188,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetCitizenRequestMockTest()
         {
             var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Get(It.IsAny<long>()));
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(citizenRequest);
             var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
             var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
             logic.Get(1);
@@ -221,7 +222,11 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetAllCitizenRequestMockTest()
         {
             var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.GetAll());
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<CitizenRequest> 
+                {
+                    citizenRequest
+                }); ;
             var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
             var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
             logic.GetAll();
@@ -252,10 +257,11 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         }
 
         [TestMethod]
-        public void UpdateeValidCitizenRequestMockTest()
+        public void UpdateValidCitizenRequestMockTest()
         {
             var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Update(It.IsAny<CitizenRequest>()));
+            mockRepository.Setup(m => m.Update(It.IsAny<CitizenRequest>()))
+                .Returns(citizenRequest);
             var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
             mockValidator.Setup(m => m.IsValid(It.IsAny<CitizenRequest>()))
                 .Returns(true);
