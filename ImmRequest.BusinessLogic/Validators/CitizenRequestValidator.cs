@@ -19,7 +19,7 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected IRepository<TopicType> TopicTypeRepository { get; set; }
 
-        protected IRepository<BaseField> FieldsRepository { get; set; }
+        protected IRepository<BaseField> FieldRepository { get; set; }
 
         protected CitizenRequestValidator() { }
 
@@ -28,7 +28,7 @@ namespace ImmRequest.BusinessLogic.Validators
             AreaRepository = repositories.AreaRepository;
             TopicRepository = repositories.TopicRepository;
             TopicTypeRepository = repositories.TopicTypeRepository;
-            FieldsRepository = repositories.FieldRepository;
+            FieldRepository = repositories.FieldRepository;
         }
 
         public bool IsValid(CitizenRequest objectToValidate)
@@ -48,7 +48,7 @@ namespace ImmRequest.BusinessLogic.Validators
             {
                 if (FieldExists(requestField.FieldId))
                 {
-                    var field = FieldsRepository.Get(requestField.FieldId);
+                    var field = FieldRepository.Get(requestField.FieldId);
                     bool isValid;
                     try
                     {
@@ -70,7 +70,7 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool FieldExists(long fieldId)
         {
-            var field = FieldsRepository.Get(fieldId);
+            var field = FieldRepository.Get(fieldId);
             return field != null;
         }
 

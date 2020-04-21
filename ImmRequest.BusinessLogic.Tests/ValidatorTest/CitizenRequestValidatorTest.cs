@@ -102,9 +102,9 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             AreaRepository = new AreaRepository(context);
             TopicRepository = new TopicRepository(context);
             TopicTypeRepository = new TopicTypeRepository(context);
-            FieldsRepository = new FieldsRepository(context);
+            FieldRepository = new FieldsRepository(context);
 
-            FieldsRepository.Insert(additionalTextValues);
+            FieldRepository.Insert(additionalTextValues);
             TopicTypeRepository.Insert(topicType);
             TopicRepository.Insert(topic);
             AreaRepository.Insert(area);
