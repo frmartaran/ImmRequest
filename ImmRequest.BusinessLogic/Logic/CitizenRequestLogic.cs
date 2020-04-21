@@ -39,7 +39,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public ICollection<CitizenRequest> GetAll()
         {
-            throw new NotImplementedException();
+            return citizenRequestRepository.GetAll();
         }
 
         public void Update(CitizenRequest objectToUpdate)
