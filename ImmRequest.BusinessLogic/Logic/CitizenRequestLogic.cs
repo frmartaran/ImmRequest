@@ -34,7 +34,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public CitizenRequest Get(long Id)
         {
-            throw new NotImplementedException();
+            return citizenRequestRepository.Get(Id);
         }
 
         public ICollection<CitizenRequest> GetAll()
