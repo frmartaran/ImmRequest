@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Extensions;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Extensions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Validators;
@@ -181,6 +182,41 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             citizenRequest.AreaId = 15;
             logic.Create(citizenRequest);
+        }
+
+        [TestMethod]
+        public void GetCitizenRequestMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()));
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<CitizenRequest>()))
+                .Returns(true);
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Get(1);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetCitizenRequestTest()
+        {
+            CreateContextFor("Get citizen request");
+
+            var validatorInput = new CitizenRequestValidatorInput
+            {
+                AreaRepository = AreaRepository,
+                FieldRepository = FieldRepository,
+                TopicRepository = TopicRepository,
+                TopicTypeRepository = TopicTypeRepository
+            };
+            var citizenRequestRepository = new CitizenRequestRepository(context);
+            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
+            logic.Create(citizenRequest);
+            var requestReturned = logic.Get(citizenRequest.Id);
+            Assert.AreEqual(requestReturned.Id, citizenRequest.Id);
         }
     }
 }
