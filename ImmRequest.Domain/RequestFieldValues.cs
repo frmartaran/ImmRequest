@@ -8,7 +8,7 @@ namespace ImmRequest.Domain
     {
         public long Id { get; set; }
 
-        public long CitizenRequestId { get; set; }
+        public long ParentCitizenRequestId { get; set; }
 
         public CitizenRequest ParentCitizenRequest { get; set; }
 
