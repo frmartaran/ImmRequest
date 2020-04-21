@@ -7,11 +7,12 @@ using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain.UserManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic
 {
-    public class SessionLogic : ILogic<Session>
+    public class SessionLogic : ISessionLogic
     {
         private IRepository<Session> Repository { get; set; }
         private IValidator<Session> Validator { get; set; }
@@ -23,12 +24,14 @@ namespace ImmRequest.BusinessLogic.Logic
             Repository = repository;
             Validator = validator;
         }
-        public void Create(Session objectToCreate)
+        public Guid Create(Session session)
         {
-            if (Validator.IsValid(objectToCreate))
+            session.Token = Guid.NewGuid();
+            if (Validator.IsValid(session))
             {
-                Repository.Insert(objectToCreate);
+                Repository.Insert(session);
             }
+            return session.Token;
         }
 
         public void Delete(long id)
@@ -44,31 +47,18 @@ namespace ImmRequest.BusinessLogic.Logic
             }
         }
 
-        public Session Get(long Id)
+        public Session Get(Guid token)
         {
-            var session = Repository.Get(Id);
+            var session = Repository.GetAll()
+                .Where(s => s.Token == token)
+                .FirstOrDefault();
             LogicHelpers.WarnIfNotFound(session, BusinessResource.Action_Get, Entity_Name);
             return session;
         }
 
-        public ICollection<Session> GetAll()
+        public bool IsValidToken(Guid token)
         {
-            return Repository.GetAll();
-        }
-
-        public void Update(Session objectToUpdate)
-        {
-            try
-            {
-                if (Validator.IsValid(objectToUpdate))
-                {
-                    Repository.Update(objectToUpdate);
-                }
-            }
-            catch (DatabaseNotFoundException exception)
-            {
-                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Update, Entity_Name);
-            }
+            return Repository.GetAll().Any(s => s.Token == token);
         }
 
     }

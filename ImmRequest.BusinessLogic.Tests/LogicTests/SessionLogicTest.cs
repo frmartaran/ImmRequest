@@ -30,8 +30,12 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             session = new Session
             {
-                AdministratorInSession = new Administrator(),
-                Token = Guid.NewGuid()
+                AdministratorInSession = new Administrator
+                {
+                    Email = "notbythemoon@song.com",
+                    UserName = "Not by the moon",
+                    PassWord = "1324"
+                },
             };
         }
 
@@ -94,25 +98,16 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockValidator.VerifyAll();
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-
-        public void CreateInvalidSessionTest()
-        {
-            var logic = GetLogicWithMemoryDb("Invalid Session");
-            session.Token = Guid.Empty;
-            logic.Create(session);
-        }
 
         [TestMethod]
         public void GetSessionMockTest()
         {
             var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
-                .Returns(session);
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<Session> { session });
             var mockValidator = new Mock<IValidator<Session>>().Object;
             var logic = new SessionLogic(mockRepository.Object, mockValidator);
-            var sessionInDb = logic.Get(1);
+            var sessionInDb = logic.Get(session.Token);
             Assert.IsNotNull(sessionInDb);
             mockRepository.VerifyAll();
         }
@@ -124,7 +119,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             context.Sessions.Add(session);
             context.SaveChanges();
 
-            var sessionInDb = logic.Get(1);
+            var sessionInDb = logic.Get(session.Token);
             Assert.IsNotNull(sessionInDb);
 
         }
@@ -134,11 +129,11 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetNotFoundMockTest()
         {
             var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
-                .Returns<Session>(null);
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<Session>());
             var mockValidator = new Mock<IValidator<Session>>().Object;
             var logic = new SessionLogic(mockRepository.Object, mockValidator);
-            var sessionInDb = logic.Get(1);
+            var sessionInDb = logic.Get(session.Token);
             Assert.IsNotNull(sessionInDb);
             mockRepository.VerifyAll();
         }
@@ -148,35 +143,10 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void GetNotFoundTest()
         {
             var logic = GetLogicWithMemoryDb("Get not founc Session");
-            logic.Get(1);
+            logic.Get(session.Token);
 
         }
 
-        [TestMethod]
-        public void GetAllTest()
-        {
-            var logic = GetLogicWithMemoryDb("Get All Test");
-            context.Sessions.Add(session);
-            context.SaveChanges();
-
-            var allSessions = logic.GetAll();
-
-            Assert.AreEqual(1, allSessions.Count);
-        }
-
-        [TestMethod]
-        public void GetAllMockTest()
-        {
-            var sessions = new List<Session> { session };
-            var mockRepository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.GetAll())
-                .Returns(sessions);
-            var mockValidator = new Mock<IValidator<Session>>().Object;
-            var logic = new SessionLogic(mockRepository.Object, mockValidator);
-            var allSessions = logic.GetAll();
-            Assert.AreEqual(1, allSessions.Count);
-            mockRepository.VerifyAll();
-        }
 
         [TestMethod]
         public void DeleteMockTest()
@@ -225,98 +195,53 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockRepository.VerifyAll();
         }
 
+
         [TestMethod]
-        public void UpdateTest()
+        public void IsValidTokenMockTest()
         {
-            var logic = GetLogicWithMemoryDb("Update Test");
+            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
+            mockRespository.Setup(m => m.GetAll())
+                .Returns(new List<Session> { session });
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRespository.Object, mockValidator);
+            logic.IsValidToken(session.Token);
+
+            mockRespository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void IsValidTokenTest()
+        {
+            var logic = GetLogicWithMemoryDb("Valid Token");
             context.Sessions.Add(session);
             context.SaveChanges();
 
-            var newToken = Guid.NewGuid();
-            session.Token = newToken;
-
-            logic.Update(session);
-            var sessionInDb = context.Sessions.FirstOrDefault();
-            Assert.AreEqual(newToken, sessionInDb.Token);
+            var isValid = logic.IsValidToken(session.Token);
+            Assert.IsTrue(isValid);
 
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-        public void InvalidUpdateTest()
-        {
-            var logic = GetLogicWithMemoryDb("Update Not Valid Test");
-            context.Sessions.Add(session);
-            context.SaveChanges();
-
-            var newToken = Guid.Empty;
-            session.Token = newToken;
-
-            logic.Update(session);
-        }
-
-        [TestMethod]
-        public void UpdateMockTest()
+        public void IsInvalidTokenMockTest()
         {
             var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
-                .Returns(session);
-            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
-            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
-                .Returns(true);
-
-            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
-            logic.Update(session);
+            mockRespository.Setup(m => m.GetAll())
+                .Returns(new List<Session>());
+            var mockValidator = new Mock<IValidator<Session>>().Object;
+            var logic = new SessionLogic(mockRespository.Object, mockValidator);
+            logic.IsValidToken(session.Token);
 
             mockRespository.VerifyAll();
-            mockValidator.VerifyAll();
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-
-        public void InvalidUpdateMockTest()
+        public void IsInvalidTokenTest()
         {
-            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
-                .Returns(session);
-            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
-            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
-                .Throws(new ValidationException(""));
+            var logic = GetLogicWithMemoryDb("Invalid Token");
 
-            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
-            logic.Update(session);
+            var isValid = logic.IsValidToken(session.Token);
+            Assert.IsFalse(isValid);
 
-            mockRespository.VerifyAll();
-            mockValidator.VerifyAll();
-        }
-
-
-        [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException))]
-        public void UpdateNotFoundTest()
-        {
-            var logic = GetLogicWithMemoryDb("Update Not Found Test");
-            logic.Update(session);
-
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException))]
-        public void UpdateNotFoundMockTest()
-        {
-            var mockRespository = new Mock<IRepository<Session>>(MockBehavior.Strict);
-            mockRespository.Setup(m => m.Update(It.IsAny<Session>()))
-                .Throws(new DatabaseNotFoundException(""));
-            var mockValidator = new Mock<IValidator<Session>>(MockBehavior.Strict);
-            mockValidator.Setup(m => m.IsValid(It.IsAny<Session>()))
-                .Returns(true);
-
-            var logic = new SessionLogic(mockRespository.Object, mockValidator.Object);
-            logic.Update(session);
-
-            mockRespository.VerifyAll();
-            mockValidator.VerifyAll();
         }
 
     }

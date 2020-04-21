@@ -22,7 +22,6 @@ namespace ImmRequest.BusinessLogic.Validators
         }
         public bool IsValid(Session objectToValidate)
         {
-            ValidateToken(objectToValidate);
             ValidateAdministratorLoggedIn(objectToValidate);
             return true;
         }
@@ -49,16 +48,6 @@ namespace ImmRequest.BusinessLogic.Validators
             {
                 var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
                     Admin_PropertyName);
-                throw new ValidationException(errorMessage);
-            }
-        }
-
-        private static void ValidateToken(Session objectToValidate)
-        {
-            if (Guid.Empty == objectToValidate.Token)
-            {
-                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
-                    Token_PropertyName);
                 throw new ValidationException(errorMessage);
             }
         }

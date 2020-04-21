@@ -11,6 +11,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Tests.LogicTests
@@ -330,6 +331,71 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockRepository.VerifyAll();
             mockValidator.VerifyAll();
         }
+
+        [TestMethod]
+        public void FindAdministratorTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Find");
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            var logic = new AdministratorLogic(repository, validator);
+            var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
+                administrator.PassWord);
+            Assert.IsNotNull(administratorFound);
+        }
+
+        [TestMethod]
+        public void FindAdministratorMockTest()
+        {
+
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mockValidator = new Mock<IValidator<Administrator>>().Object;
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<Administrator> { administrator });
+
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
+            var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
+                administrator.PassWord);
+
+            mockRepository.VerifyAll();
+            Assert.IsNotNull(administratorFound);
+
+        }
+
+        [TestMethod]
+        public void FindAdministratorNotFoundTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Dont Find");
+            var repository = new AdministratorRepository(context);
+            var validator = new AdministratorValidator(repository);
+            var logic = new AdministratorLogic(repository, validator);
+            var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
+                administrator.PassWord);
+            Assert.IsNull(administratorFound);
+        }
+
+        [TestMethod]
+        public void FindAdministratorNotFoundMockTest()
+        {
+
+            var mockRepository = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mockValidator = new Mock<IValidator<Administrator>>().Object;
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<Administrator>());
+
+            var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
+            var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
+                administrator.PassWord);
+
+            mockRepository.VerifyAll();
+            Assert.IsNull(administratorFound);
+
+        }
+
+
 
     }
 }

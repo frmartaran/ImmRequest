@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +33,11 @@ namespace ImmRequest.WebApi
         {
             services.AddControllers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
+            services.AddScoped<IContextHelper, CurrentSessionInfo>();
+
+            services.AddScoped<ISessionLogic, SessionLogic>();
+            services.AddScoped<IAdministratorLogic, AdministratorLogic>();
             services.AddDbContext<DbContext, ImmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
         }

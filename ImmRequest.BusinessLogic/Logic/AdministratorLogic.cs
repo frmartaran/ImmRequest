@@ -7,11 +7,12 @@ using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain.UserManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic
 {
-    public class AdministratorLogic : ILogic<Administrator>
+    public class AdministratorLogic : IAdministratorLogic
     {
         private IRepository<Administrator> Repository { get; set; }
         private IValidator<Administrator> Validator { get; set; }
@@ -40,18 +41,18 @@ namespace ImmRequest.BusinessLogic.Logic
             }
             catch (DatabaseNotFoundException exception)
             {
-                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Delete, 
+                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Delete,
                     Entity_Name);
                 return;
             }
         }
 
-        
+
 
         public Administrator Get(long Id)
         {
             var administrator = Repository.Get(Id);
-            LogicHelpers.WarnIfNotFound<Administrator>(administrator, 
+            LogicHelpers.WarnIfNotFound<Administrator>(administrator,
                 BusinessResource.Action_Get, Entity_Name);
             return administrator;
         }
@@ -77,6 +78,14 @@ namespace ImmRequest.BusinessLogic.Logic
                 LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Update,
                     Entity_Name);
             }
+        }
+
+        public Administrator FindAdministratorByCredentials(string email, string password)
+        {
+            return Repository.GetAll()
+                .Where(a => a.Email == email)
+                .Where(a => a.PassWord == password)
+                .FirstOrDefault();
         }
     }
 }

@@ -52,16 +52,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
-        public void IsNotValidWithOutToken()
-        {
-            var mockRepository = new Mock<IRepository<Session>>();
-            var validator = new SessionValidator(mockRepository.Object);
-            session.Token = new Guid();
-            validator.IsValid(session);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
         public void IsNotValidWithtoutAnAdmin()
         {
             var mockRepository = new Mock<IRepository<Session>>();
