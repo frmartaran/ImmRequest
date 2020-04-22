@@ -1,21 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ImmRequest.BusinessLogic;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
+using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Repositories;
+using ImmRequest.DataAccess.Repostories;
+using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ImmRequest.WebApi
 {
@@ -43,13 +45,24 @@ namespace ImmRequest.WebApi
             });
 
             services.AddControllers();
+
+            services.AddDbContext<ImmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
             services.AddScoped<IContextHelper, CurrentSessionInfo>();
-
+            services.AddScoped<IRepository<Session>, SessionRepository>();
+            services.AddScoped<IValidator<Session>, SessionValidator>();
+            services.AddScoped<IRepository<Administrator>, AdministratorRepository>();
+            services.AddScoped<IValidator<Administrator>, AdministratorValidator>();
             services.AddScoped<ISessionLogic, SessionLogic>();
             services.AddScoped<IAdministratorLogic, AdministratorLogic>();
-            services.AddDbContext<DbContext, ImmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "ImmRequest", Version = "v1" });
+            });
 
         }
 
@@ -72,6 +85,13 @@ namespace ImmRequest.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Imm Request");
             });
         }
     }

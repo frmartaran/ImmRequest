@@ -9,12 +9,14 @@ using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
 using ImmRequest.WebApi.Resources;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("CorsPolicy")]
     [ApiController]
     public class SessionController : ControllerBase
     {
