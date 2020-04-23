@@ -34,21 +34,11 @@ namespace ImmRequest.DataAccess.Migrations
             migrationBuilder.Sql("INSERT INTO dbo.Topics (AreaId, Name) VALUES (4, 'Transporte Colectivo')");
             migrationBuilder.Sql("INSERT INTO dbo.Topics (AreaId, Name) VALUES (4, 'Otros')");
 
-
-
-
-
-
-            
-
-
-            
-            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.Sql("DELETE FROM dbo.Topics");
         }
     }
 }
