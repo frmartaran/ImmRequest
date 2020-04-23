@@ -33,12 +33,12 @@ namespace ImmRequest.WebApi
         {
             services.AddControllers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
-            services.AddScoped<IContextHelper, CurrentSessionInfo>();
-
-            services.AddScoped<ISessionLogic, SessionLogic>();
-            services.AddScoped<IAdministratorLogic, AdministratorLogic>();
             services.AddDbContext<DbContext, ImmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
+            //services.AddScoped<IContextHelper, CurrentSessionInfo>();
+
+            //services.AddScoped<ISessionLogic, SessionLogic>();
+            //services.AddScoped<IAdministratorLogic, AdministratorLogic>();
 
         }
 
