@@ -14,6 +14,14 @@ namespace ImmRequest.Domain.Fields
         public override void SetRange(List<string> values)
         {
             IsNotEmpty(values);
+
+            if (values.Count > 2)
+            {
+                var message = string.Format(DomainResource.FieldRange_TooManyValues,
+                    2, DomainResource.Field_Numeric);
+                throw new InvalidArgumentException(message);
+            }
+
             try
             {
                 var start = int.Parse(values.First());
