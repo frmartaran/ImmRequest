@@ -3,6 +3,7 @@ using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Exceptions;
+using ImmRequest.Domain.Fields;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,24 +16,39 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             HasParentTopic(objectToValidate);
             HasName(objectToValidate);
+            AreCustomFieldsValid(objectToValidate);
+            return true;
+        }
+
+        private static void AreCustomFieldsValid(TopicType objectToValidate)
+        {
             foreach (var field in objectToValidate.AllFields)
             {
-                if (string.IsNullOrEmpty(field.Name))
-                {
-                    var message = string.Format(BusinessResource.ValidationError_MustContainField,
-                        BusinessResource.Entity_TopicType, BusinessResource.Field_Name);
-                    throw new ValidationException(message);
-                }
-                try
-                {
-                    field.ValidateRangeValues();
-                }
-                catch (DomainValidationException exception)
-                {
-                    throw new ValidationException(exception.Message);
-                }
+                CustomFieldHasName(field);
+                HasValidRange(field);
             }
-            return true;
+        }
+
+        private static void HasValidRange(BaseField field)
+        {
+            try
+            {
+                field.ValidateRangeValues();
+            }
+            catch (DomainValidationException exception)
+            {
+                throw new ValidationException(exception.Message);
+            }
+        }
+
+        private static void CustomFieldHasName(BaseField field)
+        {
+            if (string.IsNullOrEmpty(field.Name))
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustContainField,
+                    BusinessResource.Entity_TopicType, BusinessResource.Field_Name);
+                throw new ValidationException(message);
+            }
         }
 
         private static void HasName(TopicType objectToValidate)
