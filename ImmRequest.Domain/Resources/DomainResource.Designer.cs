@@ -115,6 +115,15 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only {0} are expected for {1} range..
+        /// </summary>
+        internal static string FieldRange_TooManyValues {
+            get {
+                return ResourceManager.GetString("FieldRange_TooManyValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid value format for &apos;{0}&apos; Field. Please provide another value.
         /// </summary>
         internal static string NumberField_InvalidFormat {

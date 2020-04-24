@@ -16,6 +16,14 @@ namespace ImmRequest.Domain.Fields
         {
             if (values.Count == 0)
                 throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
+
+            if (values.Count > 2)
+            {
+                var message = string.Format(DomainResource.FieldRange_TooManyValues,
+                    2, DomainResource.Field_DateTime);
+                throw new InvalidArgumentException(message);
+            }
+
             try
             {
                 var start = DateTime.Parse(values.First());
@@ -30,7 +38,7 @@ namespace ImmRequest.Domain.Fields
                     DomainResource.Field_DateTime, DataType.DateTime.ToString());
                 throw new InvalidArgumentException(message);
             }
-            
+
 
 
         }
