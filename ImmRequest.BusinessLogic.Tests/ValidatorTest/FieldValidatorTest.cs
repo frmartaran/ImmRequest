@@ -120,7 +120,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FormatException))]
+        [ExpectedException(typeof(InvalidArgumentException))]
         public void NumberFieldIsInvalid()
         {
             var numberToValidate = "invalid";
@@ -143,6 +143,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void SetRangeEmptyValuesNumberFieldTest()
         {
             var values = new List<string>();
+            numberRange.SetRange(values);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+        public void SetNumberRangeWtihNonNumvericalValues()
+        {
+            var values = new List<string> { "A", "B"};
             numberRange.SetRange(values);
         }
     }

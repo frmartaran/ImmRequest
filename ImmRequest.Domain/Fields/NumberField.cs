@@ -12,14 +12,19 @@ namespace ImmRequest.Domain.Fields
         public int RangeEnd { get; set; }
         public override void SetRange(List<string> values)
         {
-            if (values.Count == 0)
-                throw new InvalidArgumentException("");
+            IsNotEmpty(values);
 
             var start = int.Parse(values.First());
             RangeStart = start;
 
             var end = int.Parse(values.Skip(1).First());
             RangeEnd = end;
+        }
+
+        private static void IsNotEmpty(List<string> values)
+        {
+            if (values.Count == 0)
+                throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
@@ -37,14 +42,20 @@ namespace ImmRequest.Domain.Fields
             {
                 numberValue = Convert.ToInt32(value);
             }
-            catch (Exception ex)
+            catch (FormatException)
             {
-                throw ex;
+                var message = string.Format(DomainResource.NumberField_InvalidFormat, Name);
+                throw new InvalidArgumentException(message);
             }
+            IsOutOfRange(numberValue);
+            return true;
+        }
+
+        private void IsOutOfRange(int numberValue)
+        {
             var isValid = numberValue >= RangeStart && numberValue <= RangeEnd;
             if (!isValid)
                 throw new DomainValidationException(DomainResource.NumberFieldNotInRangeException);
-            return true;
         }
 
         public override T ValueToDataType<T>(string value)

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using ImmRequest.BusinessLogic.Resources;
 using System.Net.Mail;
+using ImmRequest.Domain.Exceptions;
 
 namespace ImmRequest.BusinessLogic.Validators
 {
@@ -61,9 +62,14 @@ namespace ImmRequest.BusinessLogic.Validators
                     {
                         isValid = field.Validate(requestField.Value);
                     }
-                    catch (Exception ex)
+                    catch (DomainValidationException exception)
                     {
-                        throw new ValidationException(ex.Message);
+                        throw new ValidationException(exception.Message);
+                    }
+                    catch (InvalidArgumentException exception)
+                    {
+                        throw new ValidationException(exception.Message);
+
                     }
                 }
                 else

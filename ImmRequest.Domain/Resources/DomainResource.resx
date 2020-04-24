@@ -121,10 +121,13 @@
     <value>DateTime added is not in field range.</value>
   </data>
   <data name="FieldRange_EmptyValues" xml:space="preserve">
-    <value>Must Insert A Value In Range</value>
+    <value>Range values can't be empty</value>
   </data>
   <data name="NumberFieldNotInRangeException" xml:space="preserve">
     <value>Number added is not in field range</value>
+  </data>
+  <data name="NumberField_InvalidFormat" xml:space="preserve">
+    <value>Invalid Format for '{0}' Field. Please provide another value</value>
   </data>
   <data name="TextFieldNotInRangeException" xml:space="preserve">
     <value>Text added is not in field range.</value>

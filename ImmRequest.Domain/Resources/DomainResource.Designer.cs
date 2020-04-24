@@ -70,11 +70,20 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Must Insert A Value In Range.
+        ///   Looks up a localized string similar to Range values can&apos;t be empty.
         /// </summary>
         internal static string FieldRange_EmptyValues {
             get {
                 return ResourceManager.GetString("FieldRange_EmptyValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Format for &apos;{0}&apos; Field. Please provide another value.
+        /// </summary>
+        internal static string NumberField_InvalidFormat {
+            get {
+                return ResourceManager.GetString("NumberField_InvalidFormat", resourceCulture);
             }
         }
         
