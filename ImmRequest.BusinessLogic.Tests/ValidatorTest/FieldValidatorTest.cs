@@ -248,6 +248,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void NumberFieldRangeIsInverseTest()
+        {
+            numberRange.RangeStart = 7;
+            numberRange.RangeEnd = 1;
+            numberRange.ValidateRangeValues();
+        }
+
+
 
     }
 }
