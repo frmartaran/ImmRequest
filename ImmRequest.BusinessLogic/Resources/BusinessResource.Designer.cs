@@ -88,6 +88,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Area.
+        /// </summary>
+        public static string Entity_Area {
+            get {
+                return ResourceManager.GetString("Entity_Area", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Topic.
         /// </summary>
         public static string Entity_Topic {
@@ -165,6 +174,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         public static string ValidationError_IsEmpty {
             get {
                 return ResourceManager.GetString("ValidationError_IsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Must Belong to It&apos;s Parent {1}.
+        /// </summary>
+        public static string ValidationError_MustBelong {
+            get {
+                return ResourceManager.GetString("ValidationError_MustBelong", resourceCulture);
             }
         }
         

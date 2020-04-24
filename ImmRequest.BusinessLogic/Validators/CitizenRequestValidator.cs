@@ -44,7 +44,14 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool AreBaseFieldValuesValid(ICollection<RequestFieldValues> requestFields)
         {
-            foreach(var requestField in requestFields)
+            AreFieldValuesValid(requestFields);
+            return true;
+
+        }
+
+        private void AreFieldValuesValid(ICollection<RequestFieldValues> requestFields)
+        {
+            foreach (var requestField in requestFields)
             {
                 if (FieldExists(requestField.FieldId))
                 {
@@ -54,18 +61,18 @@ namespace ImmRequest.BusinessLogic.Validators
                     {
                         isValid = field.Validate(requestField.Value);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                        throw new ValidationException(ex.ToString());
+                        throw new ValidationException(ex.Message);
                     }
                 }
                 else
                 {
-                    var errorMessage = string.Format(BusinessResource.ValidationError_FieldDoesntExists, requestField.FieldId);
+                    var errorMessage = string.Format(BusinessResource.ValidationError_FieldDoesntExists,
+                        requestField.FieldId);
                     throw new ValidationException(errorMessage);
                 }
             }
-            return true;
         }
 
         protected bool FieldExists(long fieldId)
@@ -102,26 +109,63 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool IsAreaValid(long areaId)
         {
+            HasArea(areaId);
+            return true;
+        }
+
+        private void HasArea(long areaId)
+        {
             var area = AreaRepository.Get(areaId);
             if (area == null)
                 throw new ValidationException(BusinessResource.ValidationError_AreaIsInvalid);
-            return true;
         }
 
         protected bool IsTopicValid(long areaId, long topicId)
         {
             var topic = TopicRepository.Get(topicId);
-            if(topic == null || topic.AreaId != areaId)
-                throw new ValidationException(BusinessResource.ValidationError_TopicIsInvalid);
+            HasTopic(topic);
+            DoesTopicBelongsToSelectedArea(areaId, topic);
             return true;
+        }
+
+        private static void HasTopic(Topic topic)
+        {
+            if (topic == null)
+                throw new ValidationException(BusinessResource.ValidationError_TopicIsInvalid);
+        }
+
+        private static void DoesTopicBelongsToSelectedArea(long areaId, Topic topic)
+        {
+            if (topic.AreaId != areaId)
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustBelong,
+                    BusinessResource.Entity_Topic, BusinessResource.Entity_Area);
+                throw new ValidationException(message);
+            }
         }
 
         protected bool IsTopicTypeValid(long areaId, long topicId, long topicTypeId)
         {
             var topicType = TopicTypeRepository.Get(topicTypeId);
-            if (topicType == null || topicType.ParentTopicId != topicId || topicType.ParentTopic.AreaId != areaId)
-                throw new ValidationException(BusinessResource.ValidationError_TopicTypeIsInvalid);
+            HasType(topicType);
+            DoesTypeBelongToSelectedTopic(topicId, topicType);
             return true;
+        }
+
+        private static void DoesTypeBelongToSelectedTopic(long topicId, TopicType topicType)
+        {
+            if (topicType.ParentTopicId != topicId)
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustBelong,
+                   BusinessResource.Entity_TopicType, BusinessResource.Entity_Topic);
+                throw new ValidationException(message);
+            }
+        }
+
+        private static void HasType(TopicType topicType)
+        {
+            if (topicType == null)
+                throw new ValidationException(BusinessResource.ValidationError_TopicTypeIsInvalid);
         }
     }
 }
