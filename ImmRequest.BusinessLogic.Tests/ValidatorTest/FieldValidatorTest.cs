@@ -183,6 +183,22 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             dateTimeRange.SetRange(values);
         }
 
+        [TestMethod]
+        public void SetRangeValuesDateTimeField()
+        {
+            var start = new DateTime(2014, 1, 16);
+            var startToString = start.ToString();
+            var end = new DateTime(2020, 4, 20);
+            var endToString = end.ToString();
+            var values = new List<string> { startToString, endToString };
+            dateTimeRange.SetRange(values);
+
+            Assert.AreEqual(start, dateTimeRange.Start);
+            Assert.AreEqual(end, dateTimeRange.End);
+
+
+        }
+
 
     }
 }
