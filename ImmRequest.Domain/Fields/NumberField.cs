@@ -14,7 +14,6 @@ namespace ImmRequest.Domain.Fields
         public override void SetRange(List<string> values)
         {
             IsNotEmpty(values);
-
             try
             {
                 var start = int.Parse(values.First());

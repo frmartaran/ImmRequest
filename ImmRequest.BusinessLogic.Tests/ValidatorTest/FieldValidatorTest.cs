@@ -153,5 +153,13 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var values = new List<string> { "A", "B"};
             numberRange.SetRange(values);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+        public void SetRangeEmptyValuesTextFieldTest()
+        {
+            var values = new List<string>();
+            numberRange.SetRange(values);
+        }
     }
 }
