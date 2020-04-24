@@ -20,7 +20,10 @@ namespace ImmRequest.BusinessLogic.Logic
         }
         public void Create(TopicType objectToCreate)
         {
-            throw new NotImplementedException();
+            if (Validator.IsValid(objectToCreate))
+            {
+                Repository.Insert(objectToCreate);
+            }
         }
 
         public void Delete(long id)

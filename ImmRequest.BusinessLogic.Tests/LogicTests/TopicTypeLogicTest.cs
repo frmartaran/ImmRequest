@@ -59,7 +59,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         private TopicTypeLogic CreateLogicWithRepositoryAndValidator(string name)
         {
-            var context = ContextFactory.GetMemoryContext(name);
+            context = ContextFactory.GetMemoryContext(name);
             context.Areas.Add(area);
             context.Topics.Add(topic);
             context.SaveChanges();
@@ -84,13 +84,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
             mockRepository.VerifyAll();
             mockValidator.VerifyAll();
-
-            var typeInDb = context.TopicTypes.FirstOrDefault();
-            var fieldInDb = context.Fields.FirstOrDefault();
-
-            Assert.IsNotNull(typeInDb);
-            Assert.IsNotNull(fieldInDb);
-            
         }
 
         [TestMethod]
