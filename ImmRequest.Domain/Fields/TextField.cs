@@ -10,7 +10,8 @@ namespace ImmRequest.Domain.Fields
         public List<string> RangeValues { get; set; }
         public override void SetRange(List<string> values)
         {
-            throw new NotImplementedException();
+            if (values.Count == 0)
+                throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
