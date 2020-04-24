@@ -12,7 +12,8 @@ namespace ImmRequest.Domain.Fields
         public DateTime End { get; set; }
         public override void SetRange(List<string> values)
         {
-            throw new NotImplementedException();
+            if (values.Count == 0)
+                throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
@@ -39,7 +40,7 @@ namespace ImmRequest.Domain.Fields
             {
                 throw new DomainValidationException(DomainResource.DateTimeNotInRangeException);
             }
-            return true;           
+            return true;
         }
 
         public override T ValueToDataType<T>(string value)
