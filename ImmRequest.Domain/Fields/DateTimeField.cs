@@ -83,6 +83,8 @@ namespace ImmRequest.Domain.Fields
 
         public override bool ValidateRangeValues()
         {
+            if (Start.CompareTo(End) > 0)
+                throw new DomainValidationException(DomainResource.FieldRange_StartGreaterThanEnd);
             return true;
         }
     }
