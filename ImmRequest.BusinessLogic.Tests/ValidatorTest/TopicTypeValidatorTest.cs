@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Validators;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using ImmRequest.Domain.Interfaces;
@@ -46,6 +47,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var isValid = validator.IsValid(type);
 
             Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void InvalidWithoutTopic()
+        {
+            var validator = new TopicTypeValidator();
+            validator.IsValid(type);
         }
 
 
