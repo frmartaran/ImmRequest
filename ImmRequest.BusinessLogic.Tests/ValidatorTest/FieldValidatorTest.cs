@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
 using ImmRequest.Domain.Exceptions;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -208,6 +209,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var values = new List<string> { startToString, endToString };
             dateTimeRange.SetRange(values);
 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+
+        public void MoreThanTwoValuesTestDatesField()
+        {
+            var start = new DateTime(2014, 1, 16);
+            var startToString = start.ToString();
+            var end = new DateTime(2020, 4, 20);
+            var endToString = end.ToString();
+            var anotherDate = new DateTime().ToString();
+            var values = new List<string> { startToString, endToString, anotherDate };
+            dateTimeRange.SetRange(values);
         }
 
 
