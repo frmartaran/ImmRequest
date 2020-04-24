@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using ImmRequest.Domain.Resources;
 using System.Linq;
+using ImmRequest.Domain.Enums;
 
 namespace ImmRequest.Domain.Fields
 {
@@ -15,12 +16,21 @@ namespace ImmRequest.Domain.Fields
         {
             if (values.Count == 0)
                 throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
+            try
+            {
+                var start = DateTime.Parse(values.First());
+                Start = start;
 
-            var start = DateTime.Parse(values.First());
-            Start = start;
-
-            var end = DateTime.Parse(values.Skip(1).First());
-            End = end;
+                var end = DateTime.Parse(values.Skip(1).First());
+                End = end;
+            }
+            catch (FormatException)
+            {
+                var message = string.Format(DomainResource.FieldRange_InvalidFormat,
+                    DomainResource.Field_DateTime, DataType.DateTime.ToString());
+                throw new InvalidArgumentException(message);
+            }
+            
 
 
         }

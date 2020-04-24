@@ -72,9 +72,9 @@ namespace ImmRequest.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Date Field.
         /// </summary>
-        internal static string Field {
+        internal static string Field_DateTime {
             get {
-                return ResourceManager.GetString("Field", resourceCulture);
+                return ResourceManager.GetString("Field_DateTime", resourceCulture);
             }
         }
         

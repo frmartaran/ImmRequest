@@ -120,14 +120,14 @@
   <data name="DateTimeNotInRangeException" xml:space="preserve">
     <value>DateTime added is not in field range.</value>
   </data>
-  <data name="Field" xml:space="preserve">
-    <value>Date Field</value>
-  </data>
   <data name="FieldRange_EmptyValues" xml:space="preserve">
     <value>Range values can't be empty</value>
   </data>
   <data name="FieldRange_InvalidFormat" xml:space="preserve">
     <value>Invalid range values for {0} Field. Please insert only {1}s.</value>
+  </data>
+  <data name="Field_DateTime" xml:space="preserve">
+    <value>Date Field</value>
   </data>
   <data name="Field_Numeric" xml:space="preserve">
     <value>Numeric Field</value>
