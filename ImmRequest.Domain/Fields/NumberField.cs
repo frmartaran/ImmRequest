@@ -14,13 +14,7 @@ namespace ImmRequest.Domain.Fields
         public override void SetRange(List<string> values)
         {
             IsNotEmpty(values);
-
-            if (values.Count > 2)
-            {
-                var message = string.Format(DomainResource.FieldRange_TooManyValues,
-                    2, DomainResource.Field_Numeric);
-                throw new InvalidArgumentException(message);
-            }
+            HasTwoValues(values);
 
             try
             {
@@ -36,7 +30,17 @@ namespace ImmRequest.Domain.Fields
                     DomainResource.Field_Numeric, DataType.Number.ToString());
                 throw new InvalidArgumentException(message);
             }
-            
+
+        }
+
+        private static void HasTwoValues(List<string> values)
+        {
+            if (values.Count > 2)
+            {
+                var message = string.Format(DomainResource.FieldRange_TooManyValues,
+                    2, DomainResource.Field_Numeric);
+                throw new InvalidArgumentException(message);
+            }
         }
 
         private static void IsNotEmpty(List<string> values)

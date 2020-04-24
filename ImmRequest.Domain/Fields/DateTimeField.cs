@@ -14,15 +14,8 @@ namespace ImmRequest.Domain.Fields
         public DateTime End { get; set; }
         public override void SetRange(List<string> values)
         {
-            if (values.Count == 0)
-                throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
-
-            if (values.Count > 2)
-            {
-                var message = string.Format(DomainResource.FieldRange_TooManyValues,
-                    2, DomainResource.Field_DateTime);
-                throw new InvalidArgumentException(message);
-            }
+            IsNotEmpty(values);
+            HasTwoValues(values);
 
             try
             {
@@ -41,6 +34,22 @@ namespace ImmRequest.Domain.Fields
 
 
 
+        }
+
+        private static void HasTwoValues(List<string> values)
+        {
+            if (values.Count > 2)
+            {
+                var message = string.Format(DomainResource.FieldRange_TooManyValues,
+                    2, DomainResource.Field_DateTime);
+                throw new InvalidArgumentException(message);
+            }
+        }
+
+        private static void IsNotEmpty(List<string> values)
+        {
+            if (values.Count == 0)
+                throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
