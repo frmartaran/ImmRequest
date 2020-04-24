@@ -126,5 +126,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var numberToValidate = "invalid";
             numberRange.Validate(numberToValidate);
         }
+
+        [TestMethod]
+        public void SetRangeNumberFieldTest()
+        {
+            var values = new List<string> { "1", "10" };
+            numberRange.SetRange(values);
+
+            Assert.AreEqual(1, numberRange.RangeStart);
+            Assert.AreEqual(1, numberRange.RangeEnd);
+
+        }
     }
 }
