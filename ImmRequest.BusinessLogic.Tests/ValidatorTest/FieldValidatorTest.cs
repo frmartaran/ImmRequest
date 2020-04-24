@@ -134,7 +134,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             numberRange.SetRange(values);
 
             Assert.AreEqual(1, numberRange.RangeStart);
-            Assert.AreEqual(1, numberRange.RangeEnd);
+            Assert.AreEqual(10, numberRange.RangeEnd);
 
         }
     }

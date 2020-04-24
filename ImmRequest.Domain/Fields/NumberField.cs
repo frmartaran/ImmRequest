@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Resources;
 
@@ -11,7 +12,11 @@ namespace ImmRequest.Domain.Fields
         public int RangeEnd { get; set; }
         public override void SetRange(List<string> values)
         {
-            throw new NotImplementedException();
+            var start = int.Parse(values.First());
+            RangeStart = start;
+
+            var end = int.Parse(values.Skip(1).First());
+            RangeEnd = end;
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
