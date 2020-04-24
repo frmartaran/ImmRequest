@@ -16,6 +16,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         private Area area;
         private Topic topic;
         private TopicType type;
+        private NumberField field;
 
         [TestInitialize]
         public void Setup()
@@ -37,6 +38,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 ParentTopic = topic,
                 AllFields = new List<BaseField>()
             };
+
+            field = new NumberField
+            {
+                RangeStart = 1,
+                RangeEnd = 10,
+                Name = "Name"
+            };
+            type.AllFields.Add(field);
 
         }
 
@@ -67,6 +76,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var validator = new TopicTypeValidator();
             validator.IsValid(type);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+
+        public void CustomFieldWithoutAName()
+        {
+            field.Name = "";
+            var validator = new TopicTypeValidator();
+            validator.IsValid(type);
+        }
+
 
 
     }
