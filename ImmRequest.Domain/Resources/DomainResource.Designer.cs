@@ -70,6 +70,15 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Must Insert A Value In Range.
+        /// </summary>
+        internal static string FieldRange_EmptyValues {
+            get {
+                return ResourceManager.GetString("FieldRange_EmptyValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number added is not in field range.
         /// </summary>
         internal static string NumberFieldNotInRangeException {

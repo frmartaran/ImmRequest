@@ -142,7 +142,8 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(InvalidArgumentException))]
         public void SetRangeEmptyValuesNumberFieldTest()
         {
-
+            var values = new List<string>();
+            numberRange.SetRange(values);
         }
     }
 }

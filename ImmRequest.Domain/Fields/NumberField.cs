@@ -12,6 +12,9 @@ namespace ImmRequest.Domain.Fields
         public int RangeEnd { get; set; }
         public override void SetRange(List<string> values)
         {
+            if (values.Count == 0)
+                throw new InvalidArgumentException("");
+
             var start = int.Parse(values.First());
             RangeStart = start;
 

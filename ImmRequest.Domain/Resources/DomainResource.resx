@@ -120,6 +120,9 @@
   <data name="DateTimeNotInRangeException" xml:space="preserve">
     <value>DateTime added is not in field range.</value>
   </data>
+  <data name="FieldRange_EmptyValues" xml:space="preserve">
+    <value>Must Insert A Value In Range</value>
+  </data>
   <data name="NumberFieldNotInRangeException" xml:space="preserve">
     <value>Number added is not in field range</value>
   </data>
