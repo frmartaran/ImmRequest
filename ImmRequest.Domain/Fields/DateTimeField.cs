@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using ImmRequest.Domain.Resources;
+using System.Linq;
 
 namespace ImmRequest.Domain.Fields
 {
@@ -14,6 +15,14 @@ namespace ImmRequest.Domain.Fields
         {
             if (values.Count == 0)
                 throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
+
+            var start = DateTime.Parse(values.First());
+            Start = start;
+
+            var end = DateTime.Parse(values.Skip(1).First());
+            End = end;
+
+
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
