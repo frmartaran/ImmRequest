@@ -16,6 +16,10 @@ namespace ImmRequest.BusinessLogic.Validators
                 throw new ValidationException("Every type must belong to a Topic");
             }
 
+            if (string.IsNullOrEmpty(objectToValidate.Name))
+            {
+                throw new ValidationException("Must Contain a Name");
+            }
             return true;
         }
     }
