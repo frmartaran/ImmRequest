@@ -150,7 +150,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(InvalidArgumentException))]
         public void SetNumberRangeWtihNonNumvericalValues()
         {
-            var values = new List<string> { "A", "B"};
+            var values = new List<string> { "A", "B" };
             numberRange.SetRange(values);
         }
 
@@ -159,7 +159,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void SetRangeEmptyValuesTextFieldTest()
         {
             var values = new List<string>();
-            numberRange.SetRange(values);
+            textRange.SetRange(values);
+        }
+
+        [TestMethod]
+        public void SetRangeTestFieldTest()
+        {
+            var values = new List<string> { "telefono", "escolaridad" };
+            textRange.SetRange(values);
+            var containsFirstValue = textRange.RangeValues.Contains("telefono");
+            var containsSecondValue = textRange.RangeValues.Contains("escolaridad");
+
+            Assert.IsTrue(containsFirstValue);
+            Assert.IsTrue(containsSecondValue);
+
         }
     }
 }
