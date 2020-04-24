@@ -12,6 +12,8 @@ namespace ImmRequest.Domain.Fields
         {
             if (values.Count == 0)
                 throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
+
+            RangeValues = values;
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
