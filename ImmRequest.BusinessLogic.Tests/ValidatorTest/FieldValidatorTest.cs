@@ -250,11 +250,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(DomainValidationException))]
-        public void NumberFieldRangeIsInverseTest()
+        public void NumberFieldStartGreaterThanEndTest()
         {
             numberRange.RangeStart = 7;
             numberRange.RangeEnd = 1;
             numberRange.ValidateRangeValues();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void DatesFieldStartGreaterThanEndTest()
+        {
+            dateTimeRange.End = new DateTime(2020, 9, 17);
+            dateTimeRange.Start = new DateTime(2020, 11, 17);
+            dateTimeRange.ValidateRangeValues();
         }
 
 

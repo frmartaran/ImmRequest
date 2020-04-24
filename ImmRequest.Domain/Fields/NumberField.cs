@@ -87,10 +87,14 @@ namespace ImmRequest.Domain.Fields
 
         public override bool ValidateRangeValues()
         {
+            IsEndGreaterThanStart();
+            return true;
+        }
+
+        private void IsEndGreaterThanStart()
+        {
             if (RangeEnd < RangeStart)
                 throw new DomainValidationException(DomainResource.FieldRange_StartGreaterThanEnd);
-
-            return true;
         }
     }
 }
