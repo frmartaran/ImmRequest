@@ -225,6 +225,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             dateTimeRange.SetRange(values);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+
+        public void TooManyValuesNumberFieldTest()
+        {
+            var values = new List<string> { "1", "10", "15" };
+            numberRange.SetRange(values);
+
+        }
+
 
     }
 }
