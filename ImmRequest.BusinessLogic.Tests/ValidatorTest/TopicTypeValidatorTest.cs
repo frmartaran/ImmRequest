@@ -53,6 +53,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(ValidationException))]
         public void InvalidWithoutTopic()
         {
+            type.ParentTopic = null;
             var validator = new TopicTypeValidator();
             validator.IsValid(type);
         }

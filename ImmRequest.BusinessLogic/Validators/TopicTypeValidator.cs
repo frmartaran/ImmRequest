@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,11 @@ namespace ImmRequest.BusinessLogic.Validators
     {
         public bool IsValid(TopicType objectToValidate)
         {
+            if (objectToValidate.ParentTopic == null)
+            {
+                throw new ValidationException("Every type must belong to a Topic");
+            }
+
             return true;
         }
     }
