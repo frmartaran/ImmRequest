@@ -126,6 +126,9 @@
   <data name="FieldRange_InvalidFormat" xml:space="preserve">
     <value>Invalid range values for {0} Field. Please insert only {1}s.</value>
   </data>
+  <data name="FieldRange_StartGreaterThanEnd" xml:space="preserve">
+    <value>The Start value should be greater then the End value</value>
+  </data>
   <data name="FieldRange_TooManyValues" xml:space="preserve">
     <value>Only {0} are expected for {1} range.</value>
   </data>

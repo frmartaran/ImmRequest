@@ -115,6 +115,15 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Start value should be greater then the End value.
+        /// </summary>
+        internal static string FieldRange_StartGreaterThanEnd {
+            get {
+                return ResourceManager.GetString("FieldRange_StartGreaterThanEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only {0} are expected for {1} range..
         /// </summary>
         internal static string FieldRange_TooManyValues {
