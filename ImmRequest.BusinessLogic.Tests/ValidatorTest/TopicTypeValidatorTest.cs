@@ -58,6 +58,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             validator.IsValid(type);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+
+        public void InvalidWithoutAName()
+        {
+            type.Name = "";
+            var validator = new TopicTypeValidator();
+            validator.IsValid(type);
+        }
+
 
     }
 }
