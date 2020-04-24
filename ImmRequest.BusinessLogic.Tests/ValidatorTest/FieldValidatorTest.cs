@@ -196,6 +196,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             Assert.AreEqual(start, dateTimeRange.Start);
             Assert.AreEqual(end, dateTimeRange.End);
 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+
+        public void SetRangeValuesNoDatetimeTest()
+        {
+            var startToString = "Last summer";
+            var endToString = "Next Summer";
+            var values = new List<string> { startToString, endToString };
+            dateTimeRange.SetRange(values);
 
         }
 
