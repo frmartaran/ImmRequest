@@ -88,6 +88,33 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Topic.
+        /// </summary>
+        public static string Entity_Topic {
+            get {
+                return ResourceManager.GetString("Entity_Topic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Entity_TopicType {
+            get {
+                return ResourceManager.GetString("Entity_TopicType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Field_Name {
+            get {
+                return ResourceManager.GetString("Field_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There has been an Error while {0} {1}. Please make sure that the {1} exists.
         /// </summary>
         public static string LogicAction_NotFound {
@@ -147,6 +174,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         public static string ValidationError_MustBeUnique {
             get {
                 return ResourceManager.GetString("ValidationError_MustBeUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Must Contain {1}.
+        /// </summary>
+        public static string ValidationError_MustContainField {
+            get {
+                return ResourceManager.GetString("ValidationError_MustContainField", resourceCulture);
             }
         }
         

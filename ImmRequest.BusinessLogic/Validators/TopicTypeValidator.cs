@@ -1,5 +1,6 @@
 ﻿using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.Domain;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,29 @@ namespace ImmRequest.BusinessLogic.Validators
     {
         public bool IsValid(TopicType objectToValidate)
         {
-            if (objectToValidate.ParentTopic == null)
-            {
-                throw new ValidationException("Every type must belong to a Topic");
-            }
+            HasParentTopic(objectToValidate);
+            HasName(objectToValidate);
+            return true;
+        }
 
+        private static void HasName(TopicType objectToValidate)
+        {
             if (string.IsNullOrEmpty(objectToValidate.Name))
             {
-                throw new ValidationException("Must Contain a Name");
+                var message = string.Format(BusinessResource.ValidationError_MustContainField,
+                    BusinessResource.Entity_TopicType, BusinessResource.Field_Name);
+                throw new ValidationException(message);
             }
-            return true;
+        }
+
+        private static void HasParentTopic(TopicType objectToValidate)
+        {
+            if (objectToValidate.ParentTopic == null)
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustContainField,
+                    BusinessResource.Entity_TopicType, "a " + BusinessResource.Entity_Topic);
+                throw new ValidationException(message);
+            }
         }
     }
 }
