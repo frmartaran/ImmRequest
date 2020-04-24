@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ImmRequest.Domain.Enums;
 using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Resources;
 
@@ -14,11 +15,21 @@ namespace ImmRequest.Domain.Fields
         {
             IsNotEmpty(values);
 
-            var start = int.Parse(values.First());
-            RangeStart = start;
+            try
+            {
+                var start = int.Parse(values.First());
+                RangeStart = start;
 
-            var end = int.Parse(values.Skip(1).First());
-            RangeEnd = end;
+                var end = int.Parse(values.Skip(1).First());
+                RangeEnd = end;
+            }
+            catch (FormatException)
+            {
+                var message = string.Format(DomainResource.FieldRange_InvalidFormat,
+                    DomainResource.Field_Numeric, DataType.Number.ToString());
+                throw new InvalidArgumentException(message);
+            }
+            
         }
 
         private static void IsNotEmpty(List<string> values)

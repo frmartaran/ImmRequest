@@ -70,6 +70,33 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date Field.
+        /// </summary>
+        internal static string Field {
+            get {
+                return ResourceManager.GetString("Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numeric Field.
+        /// </summary>
+        internal static string Field_Numeric {
+            get {
+                return ResourceManager.GetString("Field_Numeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Field.
+        /// </summary>
+        internal static string Field_Text {
+            get {
+                return ResourceManager.GetString("Field_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Range values can&apos;t be empty.
         /// </summary>
         internal static string FieldRange_EmptyValues {
@@ -79,7 +106,16 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Format for &apos;{0}&apos; Field. Please provide another value.
+        ///   Looks up a localized string similar to Invalid range values for {0} Field. Please insert only {1}s..
+        /// </summary>
+        internal static string FieldRange_InvalidFormat {
+            get {
+                return ResourceManager.GetString("FieldRange_InvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid value format for &apos;{0}&apos; Field. Please provide another value.
         /// </summary>
         internal static string NumberField_InvalidFormat {
             get {

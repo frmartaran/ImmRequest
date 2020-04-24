@@ -4,7 +4,7 @@ namespace ImmRequest.Domain.Enums
 {
     public enum DataType
     {
-        Integer,
+        Number,
         Text,
         DateTime
     }
