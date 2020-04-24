@@ -14,6 +14,15 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             HasParentTopic(objectToValidate);
             HasName(objectToValidate);
+            foreach (var field in objectToValidate.AllFields)
+            {
+                if (string.IsNullOrEmpty(field.Name))
+                {
+                    var message = string.Format(BusinessResource.ValidationError_MustContainField,
+                        BusinessResource.Entity_TopicType, BusinessResource.Field_Name);
+                    throw new ValidationException(message);
+                }
+            }
             return true;
         }
 
