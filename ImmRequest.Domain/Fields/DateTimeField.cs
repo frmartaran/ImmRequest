@@ -37,7 +37,7 @@ namespace ImmRequest.Domain.Fields
             var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
             if (!isValid)
             {
-                throw new ValidationException(DomainResource.DateTimeNotInRangeException);
+                throw new DomainValidationException(DomainResource.DateTimeNotInRangeException);
             }
             return true;           
         }

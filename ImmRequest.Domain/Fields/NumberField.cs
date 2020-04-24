@@ -40,7 +40,7 @@ namespace ImmRequest.Domain.Fields
             }
             var isValid = numberValue >= RangeStart && numberValue <= RangeEnd;
             if (!isValid)
-                throw new ValidationException(DomainResource.NumberFieldNotInRangeException);
+                throw new DomainValidationException(DomainResource.NumberFieldNotInRangeException);
             return true;
         }
 

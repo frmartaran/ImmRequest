@@ -56,7 +56,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
+        [ExpectedException(typeof(DomainValidationException))]
         public void TextFieldNotInRange()
         {
             var textToValidate = "Contribucion";
@@ -72,7 +72,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
+        [ExpectedException(typeof(DomainValidationException))]
         public void DateTimeFieldNotInRange()
         {
             var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 5));
@@ -104,7 +104,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
+        [ExpectedException(typeof(DomainValidationException))]
         public void NumberFieldNotInRange()
         {
             var numberToValidate = "13";
@@ -135,6 +135,13 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
             Assert.AreEqual(1, numberRange.RangeStart);
             Assert.AreEqual(10, numberRange.RangeEnd);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+        public void SetRangeEmptyValuesNumberFieldTest()
+        {
 
         }
     }

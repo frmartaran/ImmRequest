@@ -23,7 +23,7 @@ namespace ImmRequest.Domain.Fields
         public override bool Validate(string value)
         {
             if (!RangeValues.Contains(value))
-                throw new ValidationException(DomainResource.TextFieldNotInRangeException);
+                throw new DomainValidationException(DomainResource.TextFieldNotInRangeException);
             return true;
         }
 
