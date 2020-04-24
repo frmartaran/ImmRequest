@@ -174,5 +174,13 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             Assert.IsTrue(containsSecondValue);
 
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+        public void SetRangeEmptyValuesDatesFieldTest()
+        {
+            var values = new List<string>();
+            dateTimeRange.SetRange(values);
+        }
     }
 }
