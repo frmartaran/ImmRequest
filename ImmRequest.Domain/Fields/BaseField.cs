@@ -18,6 +18,8 @@ namespace ImmRequest.Domain.Fields
 
         public abstract T ValueToDataType<T>(string value) where T : class;
 
+        public abstract bool ValidateRangeValues();
+
         public virtual void UpdateValues(BaseField valuesToUpdate)
         {
             Name = valuesToUpdate.Name;

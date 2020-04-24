@@ -84,5 +84,10 @@ namespace ImmRequest.Domain.Fields
         {
             throw new NotImplementedException();
         }
+
+        public override bool ValidateRangeValues()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -235,6 +235,19 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         }
 
+        [TestMethod]
+        public void FieldRangesAreValid()
+        {
+            var numberFieldIsValid = numberRange.ValidateRangeValues();
+            var textFieldIsValid = textRange.ValidateRangeValues();
+            var datesFieldsValid = dateTimeRange.ValidateRangeValues();
+
+            Assert.IsTrue(numberFieldIsValid);
+            Assert.IsTrue(textFieldIsValid);
+            Assert.IsTrue(datesFieldsValid);
+
+        }
+
 
     }
 }

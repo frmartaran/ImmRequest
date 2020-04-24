@@ -31,9 +31,6 @@ namespace ImmRequest.Domain.Fields
                     DomainResource.Field_DateTime, DataType.DateTime.ToString());
                 throw new InvalidArgumentException(message);
             }
-
-
-
         }
 
         private static void HasTwoValues(List<string> values)
@@ -80,6 +77,11 @@ namespace ImmRequest.Domain.Fields
         }
 
         public override T ValueToDataType<T>(string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ValidateRangeValues()
         {
             throw new NotImplementedException();
         }

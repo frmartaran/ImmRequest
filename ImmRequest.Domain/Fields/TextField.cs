@@ -30,6 +30,11 @@ namespace ImmRequest.Domain.Fields
             return true;
         }
 
+        public override bool ValidateRangeValues()
+        {
+            throw new NotImplementedException();
+        }
+
         public override T ValueToDataType<T>(string value)
         {
             throw new NotImplementedException();
