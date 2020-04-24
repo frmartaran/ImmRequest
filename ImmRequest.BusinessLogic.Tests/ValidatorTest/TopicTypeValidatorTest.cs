@@ -87,6 +87,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             validator.IsValid(type);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+
+        public void FieldsRangeIsInvalid()
+        {
+            field.RangeEnd = -5;
+            var validator = new TopicTypeValidator();
+            validator.IsValid(type);
+        }
+
 
 
     }
