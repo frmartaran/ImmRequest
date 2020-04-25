@@ -194,6 +194,35 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         }
 
+        [TestMethod]
+        public void GetAllMockTest()
+        {
+
+            var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.GetAll())
+                .Returns(new List<TopicType> { type });
+
+            var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
+
+            var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
+            logic.GetAll();
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            var logic = CreateLogicWithRepositoryAndValidator("Get All Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            var all = logic.GetAll();
+            Assert.AreEqual(1, all.Count);
+
+        }
+
 
     }
 }
