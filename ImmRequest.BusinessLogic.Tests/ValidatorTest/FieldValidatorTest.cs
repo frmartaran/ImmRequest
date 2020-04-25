@@ -89,7 +89,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(JsonReaderException))]
+        [ExpectedException(typeof(InvalidArgumentException))]
         public void DateTimeFieldIsInvalidTest()
         {
             var dateToValidate = "invalid";
@@ -114,9 +114,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(DomainValidationException))]
-        public void NumberFieldNotInRangeTest()
+        public void NumberFieldGreaterThanEndTest()
         {
             var numberToValidate = "13";
+            numberRange.Validate(numberToValidate);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void NumberFieldLowerThanStart()
+        {
+            var numberToValidate = "-2";
             numberRange.Validate(numberToValidate);
         }
 

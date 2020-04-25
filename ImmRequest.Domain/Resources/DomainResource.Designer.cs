@@ -79,6 +79,15 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid value format for &apos;{0}&apos; Field. Please provide another value.
+        /// </summary>
+        internal static string Field_InvalidFormat {
+            get {
+                return ResourceManager.GetString("Field_InvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Numeric Field.
         /// </summary>
         internal static string Field_Numeric {
@@ -129,15 +138,6 @@ namespace ImmRequest.Domain.Resources {
         internal static string FieldRange_TooManyValues {
             get {
                 return ResourceManager.GetString("FieldRange_TooManyValues", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid value format for &apos;{0}&apos; Field. Please provide another value.
-        /// </summary>
-        internal static string NumberField_InvalidFormat {
-            get {
-                return ResourceManager.GetString("NumberField_InvalidFormat", resourceCulture);
             }
         }
         

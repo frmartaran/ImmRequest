@@ -66,12 +66,12 @@ namespace ImmRequest.Domain.Fields
             }
             catch (FormatException exception)
             {
-                var message = string.Format(DomainResource.NumberField_InvalidFormat, Name);
+                var message = string.Format(DomainResource.Field_InvalidFormat, Name);
                 throw new InvalidArgumentException(message, exception);
             }
             catch (OverflowException exception)
             {
-                var message = string.Format(DomainResource.NumberField_InvalidFormat, Name);
+                var message = string.Format(DomainResource.Field_InvalidFormat, Name);
                 throw new InvalidArgumentException(message, exception);
             }
             IsOutOfRange(numberValue);

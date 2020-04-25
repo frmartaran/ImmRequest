@@ -261,6 +261,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void TopicIsInvalidTopicDoesNotBelongToParentAreaTest()
+        {
+            CreateContextFor("TopicIsInvalid");
+            IsTopicValid(2, 1);
+        }
+
+        [TestMethod]
         public void TopicTypeIsValid()
         {
             CreateContextFor("TopicTypeIsValid");
@@ -273,6 +281,15 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             CreateContextFor("TopicTypeIsInvalid");
             IsTopicTypeValid(citizenRequest.AreaId, citizenRequest.TopicId, 150);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void TopicTypeIsInvalidTopicSelectedIsNotParentTest()
+        {
+            CreateContextFor("TopicTypeIsInvalid");
+            IsTopicTypeValid(citizenRequest.AreaId, 3, 1);
         }
     }
 }

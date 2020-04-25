@@ -66,7 +66,8 @@ namespace ImmRequest.Domain.Fields
             }
             catch (JsonReaderException ex)
             {
-                throw ex;
+                var message = string.Format(DomainResource.Field_InvalidFormat, Name);
+                throw new InvalidArgumentException(message, ex);
             }
             var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks 
                 && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;

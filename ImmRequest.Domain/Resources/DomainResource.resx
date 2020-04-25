@@ -135,6 +135,9 @@
   <data name="Field_DateTime" xml:space="preserve">
     <value>Date Field</value>
   </data>
+  <data name="Field_InvalidFormat" xml:space="preserve">
+    <value>Invalid value format for '{0}' Field. Please provide another value</value>
+  </data>
   <data name="Field_Numeric" xml:space="preserve">
     <value>Numeric Field</value>
   </data>
@@ -143,9 +146,6 @@
   </data>
   <data name="NumberFieldNotInRangeException" xml:space="preserve">
     <value>Number added is not in field range</value>
-  </data>
-  <data name="NumberField_InvalidFormat" xml:space="preserve">
-    <value>Invalid value format for '{0}' Field. Please provide another value</value>
   </data>
   <data name="TextFieldNotInRangeException" xml:space="preserve">
     <value>Text added is not in field range.</value>
