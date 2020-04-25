@@ -1,4 +1,6 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Helpers;
+using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using System;
@@ -34,6 +36,8 @@ namespace ImmRequest.BusinessLogic.Logic
         public TopicType Get(long Id)
         {
             var type = Repository.Get(Id);
+            LogicHelpers.WarnIfNotFound(type,
+                BusinessResource.Action_Get, BusinessResource.Entity_TopicType);
             return type;
         }
 

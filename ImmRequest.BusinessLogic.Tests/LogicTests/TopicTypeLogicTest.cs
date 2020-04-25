@@ -168,16 +168,17 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
         public void GetNotFoundTest()
         {
             var logic = CreateLogicWithRepositoryAndValidator("Get Not Found Test");
             var typeInDb = logic.Get(1);
 
-            Assert.ThrowsException<BusinessLogicException>(() => logic.Get(1));
-
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
         public void GetNotFoundMockTest()
         {
             var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
@@ -187,10 +188,9 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
 
             var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
-
+            logic.Get(1);
             mockRepository.VerifyAll();
             mockValidator.VerifyAll();
-            Assert.ThrowsException<BusinessLogicException>(() => logic.Get(1));
 
         }
 
