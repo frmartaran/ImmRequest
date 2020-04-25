@@ -165,5 +165,35 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockRepository.VerifyAll();
             mockValidator.VerifyAll();
         }
+
+
+        [TestMethod]
+        public void GetNotFoundTest()
+        {
+            var logic = CreateLogicWithRepositoryAndValidator("Get Not Found Test");
+            var typeInDb = logic.Get(1);
+
+            Assert.ThrowsException<BusinessLogicException>(() => logic.Get(1));
+
+        }
+
+        [TestMethod]
+        public void GetNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns<TopicType>(null);
+
+            var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
+
+            var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+            Assert.ThrowsException<BusinessLogicException>(() => logic.Get(1));
+
+        }
+
+
     }
 }
