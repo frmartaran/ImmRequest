@@ -5,6 +5,7 @@ using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
@@ -185,6 +186,21 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void CreateInvalidMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<CitizenRequest>()))
+                .Throws(new ValidationException(""));
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Create(citizenRequest);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
         public void GetCitizenRequestMockTest()
         {
             var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
@@ -219,11 +235,44 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void GetNotFoundTest()
+        {
+            CreateContextFor("Get not found citizen request");
+            var citizenRequestRepository = new CitizenRequestRepository(context);
+            var validatorInput = new CitizenRequestValidatorInput
+            {
+                AreaRepository = AreaRepository,
+                FieldRepository = FieldRepository,
+                TopicRepository = TopicRepository,
+                TopicTypeRepository = TopicTypeRepository
+            };
+            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
+            logic.Get(1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void GetNotFoundCitizenRequestMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns<CitizenRequest>(null);
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Get(1);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
         public void GetAllCitizenRequestMockTest()
         {
             var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
             mockRepository.Setup(m => m.GetAll())
-                .Returns(new List<CitizenRequest> 
+                .Returns(new List<CitizenRequest>
                 {
                     citizenRequest
                 }); ;
@@ -296,6 +345,48 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void UpdateNotFoundTest()
+        {
+            CreateContextFor("Update not found citizen request");
+
+            var validatorInput = new CitizenRequestValidatorInput
+            {
+                AreaRepository = AreaRepository,
+                FieldRepository = FieldRepository,
+                TopicRepository = TopicRepository,
+                TopicTypeRepository = TopicTypeRepository
+            };
+            var citizenRequestRepository = new CitizenRequestRepository(context);
+            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
+            var requestCreated = logic.Get(citizenRequest.Id);
+            requestCreated.CitizenName = "Paco";
+            logic.Update(citizenRequest);
+            var citizenRequestUpdated = logic.Get(citizenRequest.Id);
+            Assert.IsNotNull(citizenRequest.CitizenName, citizenRequestUpdated.CitizenName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void UpdateNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Update(It.IsAny<CitizenRequest>()))
+                .Throws(new DatabaseNotFoundException(""));
+
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<CitizenRequest>()))
+                .Returns(true);
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Update(citizenRequest);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ValidationException))]
         public void UpdateInvalidCitizenRequestTest()
         {
@@ -315,6 +406,21 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var requestCreated = logic.Get(citizenRequest.Id);
             requestCreated.AreaId = 15;
             logic.Update(citizenRequest);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void UpdateInvalidMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<CitizenRequest>()))
+                .Throws(new ValidationException(""));
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Update(citizenRequest);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
         }
 
         [TestMethod]
@@ -347,8 +453,47 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
             logic.Delete(citizenRequest.Id);
+            var request = context.CitizenRequests.FirstOrDefault();
+            Assert.IsNull(request);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void DeleteNotFoundTest()
+        {
+            CreateContextFor("Delete not found citizen request");
+
+            var validatorInput = new CitizenRequestValidatorInput
+            {
+                AreaRepository = AreaRepository,
+                FieldRepository = FieldRepository,
+                TopicRepository = TopicRepository,
+                TopicTypeRepository = TopicTypeRepository
+            };
+            var citizenRequestRepository = new CitizenRequestRepository(context);
+            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
+            logic.Delete(citizenRequest.Id);
             var request = logic.Get(citizenRequest.Id);
             Assert.IsNull(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void DeleteNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Delete(It.IsAny<long>()))
+                .Throws(new DatabaseNotFoundException(""));
+            var mockValidator = new Mock<IValidator<CitizenRequest>>(MockBehavior.Strict);
+            var logic = new CitizenRequestLogic(mockRepository.Object, mockValidator.Object);
+            logic.Delete(1);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
         }
     }
 }

@@ -34,10 +34,5 @@ namespace ImmRequest.Domain.Fields
         {
             return true;
         }
-
-        public override T ValueToDataType<T>(string value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

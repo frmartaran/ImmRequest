@@ -43,7 +43,6 @@ namespace ImmRequest.BusinessLogic.Logic
             {
                 LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Delete,
                     Entity_Name);
-                return;
             }
         }
 

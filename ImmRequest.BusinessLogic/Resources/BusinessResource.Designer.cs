@@ -97,6 +97,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Citizen Request.
+        /// </summary>
+        public static string Entity_Request {
+            get {
+                return ResourceManager.GetString("Entity_Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Topic.
         /// </summary>
         public static string Entity_Topic {

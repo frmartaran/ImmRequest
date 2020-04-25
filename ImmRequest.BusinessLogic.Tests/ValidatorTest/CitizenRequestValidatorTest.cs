@@ -1,11 +1,15 @@
 ﻿using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
+using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Fields;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -17,6 +21,8 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public CitizenRequest citizenRequest;
 
         public TextField additionalTextValues;
+
+        public NumberField numberField;
 
         public TopicType topicType;
 
@@ -31,7 +37,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             additionalTextValues = new TextField
             {
-                Id = 1,
                 Name = "AdditionalTextValues",
                 RangeValues = new List<string>
                 {
@@ -39,19 +44,25 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 },
                 ParentTypeId = 1
             };
+            numberField = new NumberField
+            {
+                RangeStart = 1,
+                RangeEnd = 10,
+                Name = "Age Range"
+
+            };
             topicType = new TopicType
             {
-                Id = 1,
                 AllFields = new List<BaseField>
                 {
-                    additionalTextValues
+                    additionalTextValues,
+                    numberField
                 },
                 Name = "Renovacion",
                 ParentTopicId = 1
             };
             topic = new Topic
             {
-                Id = 1,
                 Name = "TramitesLegales",
                 Types = new List<TopicType>
                 {
@@ -61,7 +72,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             };
             area = new Area
             {
-                Id = 1,
                 Name = "Area1",
                 Topics = new List<Topic>
                 {
@@ -70,7 +80,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             };
             requestFieldValue = new RequestFieldValues
             {
-                Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
                 Value = "Credencial"
@@ -78,7 +87,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
             citizenRequest = new CitizenRequest
             {
-                Id = 1,
                 CitizenName = "Francisco",
                 Description = "Quiero mi credencial!",
                 Email = "immrequest@gmail.com",
@@ -111,7 +119,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void FieldExists()
+        public void FieldExistsTest()
         {
             CreateContextFor("FieldExists");
             var exists = FieldExists(1);
@@ -119,11 +127,35 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
+        public void FieldExitstMockTest()
+        {
+            var mockFieldRepository = new Mock<IRepository<BaseField>>(MockBehavior.Strict);
+            mockFieldRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(additionalTextValues);
+            FieldRepository = mockFieldRepository.Object;
+            var exitst = FieldExists(1);
+            mockFieldRepository.VerifyAll();
+            Assert.IsTrue(exitst);
+        }
+
+        [TestMethod]
         public void FieldDoesntExist()
         {
             CreateContextFor("FieldDoesntExist");
-            var exists = FieldExists(2);
+            var exists = FieldExists(3);
             Assert.IsFalse(exists);
+        }
+
+        [TestMethod]
+        public void FieldDoesNotExitstMockTest()
+        {
+            var mockFieldRepository = new Mock<IRepository<BaseField>>(MockBehavior.Strict);
+            mockFieldRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns<BaseField>(null);
+            FieldRepository = mockFieldRepository.Object;
+            var exitst = FieldExists(1);
+            mockFieldRepository.VerifyAll();
+            Assert.IsFalse(exitst);
         }
 
         [TestMethod]
@@ -140,6 +172,27 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             CreateContextFor("BaseFieldsAreInvalid");
             requestFieldValue.Value = "Panaderia";
+            AreBaseFieldValuesValid(citizenRequest.Values);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void BaseFieldHaveInvalidFormat()
+        {
+            CreateContextFor("BaseFieldsAreInvalid");
+            requestFieldValue.Value = "Panaderia";
+            requestFieldValue.FieldId = 2;
+            AreBaseFieldValuesValid(citizenRequest.Values);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void BaseFieldDoesntExistsInDbAnymoreTest()
+        {
+            CreateContextFor("BaseFieldsAreInvalid");
+            context.Fields.Remove(numberField);
+            context.SaveChanges();
+            requestFieldValue.FieldId = 2;
             AreBaseFieldValuesValid(citizenRequest.Values);
         }
 

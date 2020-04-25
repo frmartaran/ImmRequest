@@ -68,17 +68,13 @@ namespace ImmRequest.Domain.Fields
             {
                 throw ex;
             }
-            var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
+            var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks 
+                && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
             if (!isValid)
             {
                 throw new DomainValidationException(DomainResource.DateTimeNotInRangeException);
             }
             return true;
-        }
-
-        public override T ValueToDataType<T>(string value)
-        {
-            throw new NotImplementedException();
         }
 
         public override bool ValidateRangeValues()

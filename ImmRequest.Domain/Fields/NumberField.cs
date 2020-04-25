@@ -64,10 +64,15 @@ namespace ImmRequest.Domain.Fields
             {
                 numberValue = Convert.ToInt32(value);
             }
-            catch (FormatException)
+            catch (FormatException exception)
             {
                 var message = string.Format(DomainResource.NumberField_InvalidFormat, Name);
-                throw new InvalidArgumentException(message);
+                throw new InvalidArgumentException(message, exception);
+            }
+            catch (OverflowException exception)
+            {
+                var message = string.Format(DomainResource.NumberField_InvalidFormat, Name);
+                throw new InvalidArgumentException(message, exception);
             }
             IsOutOfRange(numberValue);
             return true;
@@ -78,11 +83,6 @@ namespace ImmRequest.Domain.Fields
             var isValid = numberValue >= RangeStart && numberValue <= RangeEnd;
             if (!isValid)
                 throw new DomainValidationException(DomainResource.NumberFieldNotInRangeException);
-        }
-
-        public override T ValueToDataType<T>(string value)
-        {
-            throw new NotImplementedException();
         }
 
         public override bool ValidateRangeValues()

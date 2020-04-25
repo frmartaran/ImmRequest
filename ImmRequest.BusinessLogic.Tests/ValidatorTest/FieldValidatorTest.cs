@@ -49,7 +49,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void TextFieldIsValid()
+        public void TextFieldIsValidTest()
         {
             var textToValidate = "Credencial";
             var isValid = textRange.Validate(textToValidate);
@@ -58,14 +58,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(DomainValidationException))]
-        public void TextFieldNotInRange()
+        public void TextFieldNotInRangeTest()
         {
             var textToValidate = "Contribucion";
             textRange.Validate(textToValidate);
         }
 
         [TestMethod]
-        public void DateTimeFieldIsValid()
+        public void DateTimeFieldIsValidTest()
         {
             var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 2));
             var isValid = dateTimeRange.Validate(dateToValidate);
@@ -74,22 +74,30 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(DomainValidationException))]
-        public void DateTimeFieldNotInRange()
+        public void DateTimeFieldNotInRangeAfterEndTest()
         {
             var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 5));
             dateTimeRange.Validate(dateToValidate);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void DateTimeFieldNotInRangeBeforeStartTest()
+        {
+            var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 3, 5));
+            dateTimeRange.Validate(dateToValidate);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(JsonReaderException))]
-        public void DateTimeFieldIsInvalid()
+        public void DateTimeFieldIsInvalidTest()
         {
             var dateToValidate = "invalid";
             dateTimeRange.Validate(dateToValidate);
         }
 
         [TestMethod]
-        public void DateTimeFieldFromDifferentTimeZoneIsValid()
+        public void DateTimeFieldFromDifferentTimeZoneIsValidTest()
         {
             var dateToValidate = JsonConvert.SerializeObject(DateTime.SpecifyKind(new DateTime(2020, 4, 4, 2, 0, 0), DateTimeKind.Utc));
             var isValid = dateTimeRange.Validate(dateToValidate);
@@ -97,7 +105,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void NumberFieldIsValid()
+        public void NumberFieldIsValidTest()
         {
             var numberToValidate = "3";
             var isValid = numberRange.Validate(numberToValidate);
@@ -106,15 +114,15 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(DomainValidationException))]
-        public void NumberFieldNotInRange()
+        public void NumberFieldNotInRangeTest()
         {
             var numberToValidate = "13";
             numberRange.Validate(numberToValidate);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(OverflowException))]
-        public void NumberFieldIsTooLarge()
+        [ExpectedException(typeof(InvalidArgumentException))]
+        public void NumberFieldIsTooLargeTest()
         {
             var numberToValidate = "5000000000000";
             numberRange.Validate(numberToValidate);
@@ -122,7 +130,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(InvalidArgumentException))]
-        public void NumberFieldIsInvalid()
+        public void NumberFieldIsInvalidTest()
         {
             var numberToValidate = "invalid";
             numberRange.Validate(numberToValidate);
@@ -185,7 +193,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void SetRangeValuesDateTimeField()
+        public void SetRangeValuesDateTimeFieldTest()
         {
             var start = new DateTime(2014, 1, 16);
             var startToString = start.ToString();
@@ -214,7 +222,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         [ExpectedException(typeof(InvalidArgumentException))]
 
-        public void MoreThanTwoValuesTestDatesField()
+        public void MoreThanTwoValuesTestDatesFieldTest()
         {
             var start = new DateTime(2014, 1, 16);
             var startToString = start.ToString();
@@ -236,7 +244,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void FieldRangesAreValid()
+        public void FieldRangesAreValidTest()
         {
             var numberFieldIsValid = numberRange.ValidateRangeValues();
             var textFieldIsValid = textRange.ValidateRangeValues();

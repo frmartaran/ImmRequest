@@ -1,5 +1,9 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Helpers;
+using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain;
 using System;
 using System.Collections.Generic;
@@ -29,12 +33,23 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Delete(long id)
         {
-            citizenRequestRepository.Delete(id);
+            try
+            {
+                citizenRequestRepository.Delete(id);
+            }
+            catch (DatabaseNotFoundException exception)
+            {
+                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Delete,
+                    BusinessResource.Entity_Request);
+            }
         }
 
         public CitizenRequest Get(long Id)
         {
-            return citizenRequestRepository.Get(Id);
+            var request =  citizenRequestRepository.Get(Id);
+            LogicHelpers.WarnIfNotFound(request, BusinessResource.Action_Get, 
+                BusinessResource.Entity_Request);
+            return request;
         }
 
         public ICollection<CitizenRequest> GetAll()
@@ -44,10 +59,19 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Update(CitizenRequest objectToUpdate)
         {
-            if (citizenRequestValidator.IsValid(objectToUpdate))
+            try
             {
-                citizenRequestRepository.Update(objectToUpdate);
+                if (citizenRequestValidator.IsValid(objectToUpdate))
+                {
+                    citizenRequestRepository.Update(objectToUpdate);
+                }
             }
+            catch (DatabaseNotFoundException exception)
+            {
+                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Update,
+                    BusinessResource.Entity_Request);
+            }
+
         }
     }
 }
