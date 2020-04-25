@@ -278,6 +278,75 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             mockValidator.VerifyAll();
         }
 
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var logic = CreateLogicWithRepositoryAndValidator("Update Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            var newName = "Another Name";
+            type.Name = newName;
+            logic.Update(type);
+
+            var typeInDb = context.TopicTypes.FirstOrDefault();
+            Assert.AreEqual(newName, typeInDb);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void UpdateInvalidTest()
+        {
+            var logic = CreateLogicWithRepositoryAndValidator("Update Invalid Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            var newName = "";
+            type.Name = newName;
+            logic.Update(type);
+        }
+
+        [TestMethod]
+        public void UpdateMockTest()
+        {
+            var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Update(It.IsAny<TopicType>()));
+
+            var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<TopicType>()))
+                .Returns(true);
+
+            var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
+            var newName = "Another Name";
+            type.Name = newName;
+            logic.Update(type);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void UpdateInvalidMockTest()
+        {
+            var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Update(It.IsAny<TopicType>()));
+
+            var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<TopicType>()))
+                .Throws(new ValidationException(""));
+
+            var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
+            var newName = "";
+            type.Name = newName;
+            logic.Update(type);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+
+
 
     }
 }
