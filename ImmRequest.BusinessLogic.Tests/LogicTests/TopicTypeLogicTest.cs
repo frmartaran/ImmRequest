@@ -290,7 +290,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             logic.Update(type);
 
             var typeInDb = context.TopicTypes.FirstOrDefault();
-            Assert.AreEqual(newName, typeInDb);
+            Assert.AreEqual(newName, typeInDb.Name);
         }
 
         [TestMethod]
@@ -310,7 +310,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void UpdateMockTest()
         {
             var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
-            mockRepository.Setup(m => m.Update(It.IsAny<TopicType>()));
+            mockRepository.Setup(m => m.Update(It.IsAny<TopicType>()))
+                .Returns(type);
 
             var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
             mockValidator.Setup(m => m.IsValid(It.IsAny<TopicType>()))
