@@ -347,6 +347,39 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         }
 
 
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void UpdateNotFoundTest()
+        {
+            var logic = CreateLogicWithRepositoryAndValidator("Update Not Found Test");
+
+            var newName = "";
+            type.Name = newName;
+            logic.Update(type);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void UpdateNotFoundMockTest()
+        {
+            var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Update(It.IsAny<TopicType>()))
+                .Throws(new DatabaseNotFoundException(""));
+
+            var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
+            mockValidator.Setup(m => m.IsValid(It.IsAny<TopicType>()))
+                .Returns(true);
+
+            var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
+            var newName = "";
+            type.Name = newName;
+            logic.Update(type);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
+
 
 
     }
