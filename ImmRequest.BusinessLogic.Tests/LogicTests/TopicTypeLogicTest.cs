@@ -223,6 +223,34 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         }
 
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var logic = CreateLogicWithRepositoryAndValidator("Delete Test");
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+
+            logic.Delete(1);
+
+            var typeInDb = context.TopicTypes.FirstOrDefault();
+            Assert.IsNull(typeInDb);
+        }
+
+        [TestMethod]
+        public void DeleteMockTest()
+        {
+            var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Delete(It.IsAny<long>()));
+
+            var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
+
+            var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
+            logic.Delete(1);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
+        }
+
 
     }
 }
