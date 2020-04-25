@@ -2,6 +2,7 @@
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,15 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Delete(long id)
         {
-            Repository.Delete(id);
+            try
+            {
+                Repository.Delete(id);
+            }
+            catch (DatabaseNotFoundException exception)
+            {
+                LogicHelpers.WarnIfNotFound(exception,
+                    BusinessResource.Action_Delete, BusinessResource.Entity_TopicType);
+            }
         }
 
         public TopicType Get(long Id)
