@@ -57,10 +57,19 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public void Update(TopicType objectToUpdate)
         {
-            if (Validator.IsValid(objectToUpdate))
+            try
             {
-                Repository.Update(objectToUpdate);
+                if (Validator.IsValid(objectToUpdate))
+                {
+                    Repository.Update(objectToUpdate);
+                }
             }
+            catch (DatabaseNotFoundException exception)
+            {
+                LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Update,
+                    BusinessResource.Entity_TopicType);
+            }
+
         }
     }
 }

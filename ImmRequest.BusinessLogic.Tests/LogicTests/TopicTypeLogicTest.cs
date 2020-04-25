@@ -353,7 +353,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             var logic = CreateLogicWithRepositoryAndValidator("Update Not Found Test");
 
-            var newName = "";
+            var newName = "Some Name";
             type.Name = newName;
             logic.Update(type);
         }
