@@ -33,7 +33,8 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public TopicType Get(long Id)
         {
-            throw new NotImplementedException();
+            var type = Repository.Get(Id);
+            return type;
         }
 
         public ICollection<TopicType> GetAll()

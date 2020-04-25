@@ -139,9 +139,9 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         [TestMethod]
         public void GetTest()
         {
+            var logic = CreateLogicWithRepositoryAndValidator("Get Test");
             context.TopicTypes.Add(type);
             context.SaveChanges();
-            var logic = CreateLogicWithRepositoryAndValidator("Get Test");
             var typeInDb = logic.Get(1);
 
             Assert.IsNotNull(typeInDb);
