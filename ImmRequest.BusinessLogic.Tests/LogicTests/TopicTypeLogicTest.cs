@@ -89,7 +89,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         [TestMethod]
         public void CreateTest()
         {
-           
+
             var logic = CreateLogicWithRepositoryAndValidator("Create Test");
             logic.Create(type);
 
@@ -98,7 +98,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
             Assert.IsNotNull(typeInDb);
             Assert.IsNotNull(fieldInDb);
-            
+
         }
 
         [TestMethod]
@@ -132,8 +132,38 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         public void CreateInvalidTest()
         {
             field.RangeEnd = -5;
-            var logic = CreateLogicWithRepositoryAndValidator("Create Test");
+            var logic = CreateLogicWithRepositoryAndValidator("Create Invalid Test");
             logic.Create(type);
+        }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            context.TopicTypes.Add(type);
+            context.SaveChanges();
+            var logic = CreateLogicWithRepositoryAndValidator("Get Test");
+            var typeInDb = logic.Get(1);
+
+            Assert.IsNotNull(typeInDb);
+            var fieldsCount = typeInDb.AllFields.Count();
+            Assert.AreEqual(1, fieldsCount);
+
+        }
+
+        [TestMethod]
+        public void GetMockTest()
+        {
+            var mockRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(type);
+
+            var mockValidator = new Mock<IValidator<TopicType>>(MockBehavior.Strict);
+
+            var logic = new TopicTypeLogic(mockRepository.Object, mockValidator.Object);
+            var typeInDb = logic.Get(1);
+
+            mockRepository.VerifyAll();
+            mockValidator.VerifyAll();
         }
     }
 }
