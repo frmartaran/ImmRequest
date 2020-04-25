@@ -43,7 +43,7 @@ namespace ImmRequest.BusinessLogic.Logic
 
         public ICollection<TopicType> GetAll()
         {
-            throw new NotImplementedException();
+            return Repository.GetAll();
         }
 
         public void Update(TopicType objectToUpdate)
