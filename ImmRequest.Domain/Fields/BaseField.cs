@@ -14,14 +14,14 @@ namespace ImmRequest.Domain.Fields
         public DateTime DeletedDate { get; set; }
         public abstract void SetRange(List<string> values);
 
-        public abstract void Validate(string value);
-
-        public abstract T ValueToDataType<T>(string value) where T : class;
+        public abstract bool Validate(string value);
+        public abstract bool ValidateRangeValues();
 
         public virtual void UpdateValues(BaseField valuesToUpdate)
         {
             Name = valuesToUpdate.Name;
             ParentType = valuesToUpdate.ParentType;
         }
+
     }
 }

@@ -89,8 +89,5 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             };
             validator.IsValid(newSession);
         }
-
-
-
     }
 }

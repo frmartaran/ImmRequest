@@ -1,6 +1,10 @@
+using ImmRequest.Domain.Exceptions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using ImmRequest.Domain.Interfaces;
+using ImmRequest.Domain.Resources;
+using System.Linq;
+using ImmRequest.Domain.Enums;
 
 namespace ImmRequest.Domain.Fields
 {
@@ -10,7 +14,39 @@ namespace ImmRequest.Domain.Fields
         public DateTime End { get; set; }
         public override void SetRange(List<string> values)
         {
-            throw new NotImplementedException();
+            IsNotEmpty(values);
+            HasTwoValues(values);
+
+            try
+            {
+                var start = DateTime.Parse(values.First());
+                Start = start;
+
+                var end = DateTime.Parse(values.Skip(1).First());
+                End = end;
+            }
+            catch (FormatException)
+            {
+                var message = string.Format(DomainResource.FieldRange_InvalidFormat,
+                    DomainResource.Field_DateTime, DataType.DateTime.ToString());
+                throw new InvalidArgumentException(message);
+            }
+        }
+
+        private static void HasTwoValues(List<string> values)
+        {
+            if (values.Count > 2)
+            {
+                var message = string.Format(DomainResource.FieldRange_TooManyValues,
+                    2, DomainResource.Field_DateTime);
+                throw new InvalidArgumentException(message);
+            }
+        }
+
+        private static void IsNotEmpty(List<string> values)
+        {
+            if (values.Count == 0)
+                throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
@@ -21,14 +57,37 @@ namespace ImmRequest.Domain.Fields
             base.UpdateValues(valuesToUpdate);
         }
 
-        public override void Validate(string value)
+        public override bool Validate(string value)
         {
-            throw new NotImplementedException();
+            DateTime dateTimeValue;
+            try
+            {
+                dateTimeValue = JsonConvert.DeserializeObject<DateTime>(value).ToUniversalTime();
+            }
+            catch (JsonReaderException ex)
+            {
+                var message = string.Format(DomainResource.Field_InvalidFormat, Name);
+                throw new InvalidArgumentException(message, ex);
+            }
+            var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks 
+                && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
+            if (!isValid)
+            {
+                throw new DomainValidationException(DomainResource.DateTimeNotInRangeException);
+            }
+            return true;
         }
 
-        public override T ValueToDataType<T>(string value)
+        public override bool ValidateRangeValues()
         {
-            throw new NotImplementedException();
+            IsStartGreaterThenEnd();
+            return true;
+        }
+
+        private void IsStartGreaterThenEnd()
+        {
+            if (Start.CompareTo(End) > 0)
+                throw new DomainValidationException(DomainResource.FieldRange_StartGreaterThanEnd);
         }
     }
 }

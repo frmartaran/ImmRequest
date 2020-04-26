@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using ImmRequest.Domain.Interfaces;
+using ImmRequest.Domain.Exceptions;
+using ImmRequest.Domain.Resources;
 
 namespace ImmRequest.Domain.Fields
 {
@@ -9,7 +10,10 @@ namespace ImmRequest.Domain.Fields
         public List<string> RangeValues { get; set; }
         public override void SetRange(List<string> values)
         {
-            throw new NotImplementedException();
+            if (values.Count == 0)
+                throw new InvalidArgumentException(DomainResource.FieldRange_EmptyValues);
+
+            RangeValues = values;
         }
 
         public override void UpdateValues(BaseField valuesToUpdate)
@@ -19,14 +23,16 @@ namespace ImmRequest.Domain.Fields
             base.UpdateValues(valuesToUpdate);
         }
 
-        public override void Validate(string value)
+        public override bool Validate(string value)
         {
-            throw new NotImplementedException();
+            if (!RangeValues.Contains(value))
+                throw new DomainValidationException(DomainResource.TextFieldNotInRangeException);
+            return true;
         }
 
-        public override T ValueToDataType<T>(string value)
+        public override bool ValidateRangeValues()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

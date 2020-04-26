@@ -4,14 +4,16 @@ using ImmRequest.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImmRequest.DataAccess.Migrations
 {
     [DbContext(typeof(ImmDbContext))]
-    partial class ImmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200423223033_AddDefaultAdministrator")]
+    partial class AddDefaultAdministrator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,10 +120,10 @@ namespace ImmRequest.DataAccess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("FieldId")
+                    b.Property<long>("CitizenRequestId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ParentCitizenRequestId")
+                    b.Property<long>("FieldId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Value")
@@ -129,7 +131,7 @@ namespace ImmRequest.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentCitizenRequestId");
+                    b.HasIndex("CitizenRequestId");
 
                     b.ToTable("RequestFieldValues");
                 });
@@ -291,7 +293,7 @@ namespace ImmRequest.DataAccess.Migrations
                 {
                     b.HasOne("ImmRequest.Domain.CitizenRequest", "ParentCitizenRequest")
                         .WithMany("Values")
-                        .HasForeignKey("ParentCitizenRequestId")
+                        .HasForeignKey("CitizenRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

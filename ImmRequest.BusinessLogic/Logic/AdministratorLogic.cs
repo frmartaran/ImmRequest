@@ -43,7 +43,6 @@ namespace ImmRequest.BusinessLogic.Logic
             {
                 LogicHelpers.WarnIfNotFound(exception, BusinessResource.Action_Delete,
                     Entity_Name);
-                return;
             }
         }
 
@@ -52,7 +51,7 @@ namespace ImmRequest.BusinessLogic.Logic
         public Administrator Get(long Id)
         {
             var administrator = Repository.Get(Id);
-            LogicHelpers.WarnIfNotFound<Administrator>(administrator,
+            LogicHelpers.WarnIfNotFound(administrator,
                 BusinessResource.Action_Get, Entity_Name);
             return administrator;
         }

@@ -88,6 +88,51 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Area.
+        /// </summary>
+        public static string Entity_Area {
+            get {
+                return ResourceManager.GetString("Entity_Area", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Citizen Request.
+        /// </summary>
+        public static string Entity_Request {
+            get {
+                return ResourceManager.GetString("Entity_Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic.
+        /// </summary>
+        public static string Entity_Topic {
+            get {
+                return ResourceManager.GetString("Entity_Topic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Entity_TopicType {
+            get {
+                return ResourceManager.GetString("Entity_TopicType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Field_Name {
+            get {
+                return ResourceManager.GetString("Field_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There has been an Error while {0} {1}. Please make sure that the {1} exists.
         /// </summary>
         public static string LogicAction_NotFound {
@@ -106,6 +151,33 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Area in request is invalid.
+        /// </summary>
+        public static string ValidationError_AreaIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_AreaIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email in request is invalid..
+        /// </summary>
+        public static string ValidationError_EmailIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_EmailIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field {0} in request doesnt exist..
+        /// </summary>
+        public static string ValidationError_FieldDoesntExists {
+            get {
+                return ResourceManager.GetString("ValidationError_FieldDoesntExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Must have a value. .
         /// </summary>
         public static string ValidationError_IsEmpty {
@@ -115,11 +187,56 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Must Belong to It&apos;s Parent {1}.
+        /// </summary>
+        public static string ValidationError_MustBelong {
+            get {
+                return ResourceManager.GetString("ValidationError_MustBelong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Must be Unique. .
         /// </summary>
         public static string ValidationError_MustBeUnique {
             get {
                 return ResourceManager.GetString("ValidationError_MustBeUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Must Contain {1}.
+        /// </summary>
+        public static string ValidationError_MustContainField {
+            get {
+                return ResourceManager.GetString("ValidationError_MustContainField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone in request is invalid..
+        /// </summary>
+        public static string ValidationError_PhoneIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_PhoneIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic in request is invalid..
+        /// </summary>
+        public static string ValidationError_TopicIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_TopicIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic type in request is invalid..
+        /// </summary>
+        public static string ValidationError_TopicTypeIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_TopicTypeIsInvalid", resourceCulture);
             }
         }
     }
