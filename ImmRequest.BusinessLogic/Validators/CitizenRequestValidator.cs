@@ -104,6 +104,10 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             try
             {
+                if (String.IsNullOrEmpty(phone))
+                {
+                    return true;
+                }
                 Convert.ToInt32(phone);
                 return true;
             }

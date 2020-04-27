@@ -221,6 +221,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var isValid = IsPhoneValid(phone);
             Assert.IsTrue(isValid);
         }
+
+        [TestMethod]
+        public void PhoneIsOptional()
+        {
+            CreateContextFor("PhoneIsOptional");
+            var phone = "";
+            var isValid = IsPhoneValid(phone);
+            Assert.IsTrue(isValid);
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
         public void PhoneIsInvalid()
