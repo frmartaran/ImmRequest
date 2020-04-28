@@ -18,6 +18,8 @@ namespace ImmRequest.WebApi.Helpers.Binders
         public override object ReadJson(JsonReader reader, Type objectType,
             object existingValue, JsonSerializer serializer)
         {
+            if (reader == null)
+                throw new ArgumentException("No Json Reader");
             throw new NotImplementedException();
         }
 
