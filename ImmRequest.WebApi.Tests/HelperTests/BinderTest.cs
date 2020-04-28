@@ -60,6 +60,15 @@ namespace ImmRequest.WebApi.Tests.HelperTests
             Assert.IsNull(result);
         }
 
+        [TestMethod]
+        public void NoErrors()
+        {
+            var readermock = new Mock<JsonReader>();
+            readermock.SetupGet(x => x.TokenType).Returns(JsonToken.Boolean);
+            var result = converter.ReadJson(readermock.Object, type, "true", new JsonSerializer());
+            Assert.IsNotNull(result);
+        }
+
 
     }
 }
