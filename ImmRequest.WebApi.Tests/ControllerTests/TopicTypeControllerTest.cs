@@ -75,6 +75,15 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(model.Name, type.Name);
         }
 
+        [TestMethod]
+        public void TypeModelToDomainTest()
+        {
+            var model = TypeModel.ToModel(type);
+            var toEntity = model.ToDomain();
+
+            Assert.AreEqual(model.Name, toEntity.Name);
+        }
+
 
 
     }
