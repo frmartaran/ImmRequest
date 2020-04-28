@@ -125,5 +125,20 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             Assert.AreEqual(model.Name, entity.Name);
         }
+
+        [TestMethod]
+        public void DateTimeFieldToModelTest()
+        {
+            var model = new DateTimeFieldModel().SetModel(datesField);
+            var startAsString = datesField.Start.ToString();
+            var endAsString = datesField.End.ToString();
+
+            Assert.AreEqual(datesField.Name, model.Name);
+
+            var containsRange = model.RangeValues.Contains(startAsString)
+                && model.RangeValues.Contains(endAsString);
+
+            Assert.IsTrue(containsRange);
+        }
     }
 }
