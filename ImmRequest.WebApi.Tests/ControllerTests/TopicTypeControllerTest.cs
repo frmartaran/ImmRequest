@@ -84,6 +84,18 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(model.Name, toEntity.Name);
         }
 
+        [TestMethod]
+        public void NumberFieldToModel()
+        {
+            var model = NumberFieldModel.ToModel(numberField);
+
+            Assert.AreEqual(model.Name, numberField.Name);
+            var containsRange = model.RangeValues.Contains("1")
+                && model.RangeValues.Contains("2");
+
+            Assert.IsTrue(containsRange);
+        }
+
 
 
     }
