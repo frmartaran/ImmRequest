@@ -149,8 +149,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var entity = model.ToDomain() as DateTimeField;
 
             Assert.AreEqual(model.Name, entity.Name);
-            Assert.AreEqual(model.RangeValues.First(), entity.Start);
-            Assert.AreEqual(model.RangeValues.Skip(1).First(), entity.End);
+            Assert.AreEqual(model.RangeValues.First(), entity.Start.ToString());
+            Assert.AreEqual(model.RangeValues.Skip(1).First(), entity.End.ToString());
 
         }
     }

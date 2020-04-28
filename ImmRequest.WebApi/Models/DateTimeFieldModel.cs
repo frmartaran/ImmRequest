@@ -22,7 +22,17 @@ namespace ImmRequest.WebApi.Models
         }
         public override BaseField ToDomain()
         {
-            throw new NotImplementedException();
+            var field = new DateTimeField
+            {
+                Name = Name,
+                ParentTypeId = ParentTypeId
+            };
+            field.SetRange(RangeValues);
+
+            if (Id.HasValue)
+                field.Id = Id.Value;
+
+            return field;
         }
     }
 }
