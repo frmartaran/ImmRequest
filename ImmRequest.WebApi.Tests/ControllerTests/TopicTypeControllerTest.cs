@@ -4,6 +4,7 @@ using ImmRequest.WebApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
@@ -114,6 +115,15 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var model = TextFieldModel.ToModel(textField);
 
             Assert.AreEqual(textField.Name, model.Name);
+        }
+
+        [TestMethod]
+        public void TextFieldToDomainTest()
+        {
+            var model = TextFieldModel.ToModel(textField);
+            var entity = model.ToDomain();
+
+            Assert.AreEqual(model.Name, entity.Name);
         }
 
 
