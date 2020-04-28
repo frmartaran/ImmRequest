@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
@@ -139,6 +140,18 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 && model.RangeValues.Contains(endAsString);
 
             Assert.IsTrue(containsRange);
+        }
+
+        [TestMethod]
+        public void DateTimeFieldToDomainTest()
+        {
+            var model = new DateTimeFieldModel().SetModel(datesField);
+            var entity = model.ToDomain() as DateTimeField;
+
+            Assert.AreEqual(model.Name, entity.Name);
+            Assert.AreEqual(model.RangeValues.First(), entity.Start);
+            Assert.AreEqual(model.RangeValues.Skip(1).First(), entity.End);
+
         }
     }
 }
