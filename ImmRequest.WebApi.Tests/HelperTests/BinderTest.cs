@@ -3,6 +3,7 @@ using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Helpers.Binders;
 using ImmRequest.WebApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,5 +42,15 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         {
             converter.ReadJson(null, type, "", new JsonSerializer());
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NoSerializerTest()
+        {
+            var readermock = new Mock<JsonReader>().Object;
+            converter.ReadJson(readermock, type, "", null);
+        }
+
+
     }
 }
