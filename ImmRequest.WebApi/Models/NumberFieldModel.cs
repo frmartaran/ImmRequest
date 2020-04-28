@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using ImmRequest.Domain.Enums;
 namespace ImmRequest.WebApi.Models
 {
     public class NumberFieldModel : BaseFieldModel
@@ -13,6 +13,7 @@ namespace ImmRequest.WebApi.Models
         public override BaseFieldModel SetModel(BaseField entity)
         {
             var numberField = entity as NumberField;
+            DataType = DataType.Number;
             RangeValues = new List<string> {
                 numberField.RangeStart.ToString(),
                 numberField.RangeEnd.ToString()

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmRequest.Domain.Enums;
 
 namespace ImmRequest.WebApi.Models
 {
@@ -13,6 +14,7 @@ namespace ImmRequest.WebApi.Models
         public override BaseFieldModel SetModel(BaseField entity)
         {
             var asText = entity as TextField;
+            DataType = DataType.Text;
             Id = entity.Id;
             Name = entity.Name;
             ParentTypeId = entity.ParentTypeId;

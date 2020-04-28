@@ -1,4 +1,5 @@
-﻿using ImmRequest.Domain.Fields;
+﻿using ImmRequest.Domain.Enums;
+using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace ImmRequest.WebApi.Models
         public long ParentTypeId { get; set; }
 
         public List<string> RangeValues { get; set; }
+
+        public DataType DataType { get; set; }
 
         public virtual BaseFieldModel SetModel(BaseField entity)
         {

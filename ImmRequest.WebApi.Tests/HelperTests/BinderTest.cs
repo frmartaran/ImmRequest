@@ -12,35 +12,33 @@ using System.Text;
 namespace ImmRequest.WebApi.Tests.HelperTests
 {
     [TestClass]
-    public class BinderTest
+    public class BinderTest : CustomTypeConverter
     {
-        CustomTypeConverter converter;
         Type type;
 
         [TestInitialize]
         public void Setup()
         {
-            converter = new CustomTypeConverter();
             type = typeof(NumberFieldModel);
         }
 
         [TestMethod]
         public void IsAssignableTest()
         {
-            Assert.IsTrue(converter.CanConvert(type));
+            Assert.IsTrue(CanConvert(type));
         }
 
         [TestMethod]
         public void IsNotAssignableTest()
         {
-            Assert.IsFalse(converter.CanConvert(typeof(Administrator)));
+            Assert.IsFalse(CanConvert(typeof(Administrator)));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void NoReaderTest()
         {
-            converter.ReadJson(null, type, "", new JsonSerializer());
+            ReadJson(null, type, "", new JsonSerializer());
         }
 
         [TestMethod]
@@ -48,7 +46,7 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         public void NoSerializerTest()
         {
             var readermock = new Mock<JsonReader>().Object;
-            converter.ReadJson(readermock, type, "", null);
+            ReadJson(readermock, type, "", null);
         }
 
         [TestMethod]
@@ -56,19 +54,16 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         {
             var readermock = new Mock<JsonReader>();
             readermock.SetupGet(x => x.TokenType).Returns(JsonToken.Null);
-            var result = converter.ReadJson(readermock.Object, type, "", new JsonSerializer());
+            var result = ReadJson(readermock.Object, type, "", new JsonSerializer());
             Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void NoErrors()
+        [ExpectedException(typeof(ArgumentException))]
+
+        public void JObjectIsNull()
         {
-            var readermock = new Mock<JsonReader>();
-            readermock.SetupGet(x => x.TokenType).Returns(JsonToken.Boolean);
-            var result = converter.ReadJson(readermock.Object, type, "true", new JsonSerializer());
-            Assert.IsNotNull(result);
+            Create(type, null);
         }
-
-
     }
 }

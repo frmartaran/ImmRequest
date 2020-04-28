@@ -24,7 +24,11 @@ namespace ImmRequest.WebApi.Helpers.Binders
                 throw new ArgumentException("No serializer");
             if (reader.TokenType == JsonToken.Null)
                 return null;
-            throw new NotImplementedException();
+
+            var jObject = JObject.Load(reader);
+            T target = Create(objectType, jObject);
+            serializer.Populate(jObject.CreateReader(), target);
+            return target;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

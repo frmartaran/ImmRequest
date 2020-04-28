@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using ImmRequest.Domain.Enums;
 
 namespace ImmRequest.WebApi.Models
 {
@@ -13,6 +14,7 @@ namespace ImmRequest.WebApi.Models
         public override BaseFieldModel SetModel(BaseField entity)
         {
             var asDateField = entity as DateTimeField;
+            DataType = DataType.DateTime;
             RangeValues = new List<string>
             {
                 asDateField.Start.ToString(),
