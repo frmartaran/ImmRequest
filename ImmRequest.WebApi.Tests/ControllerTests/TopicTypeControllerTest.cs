@@ -2,6 +2,7 @@
 using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

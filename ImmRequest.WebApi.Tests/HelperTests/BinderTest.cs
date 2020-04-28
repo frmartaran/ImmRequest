@@ -1,10 +1,12 @@
-﻿using ImmRequest.Domain.Fields;
+﻿using ImmRequest.Domain.Enums;
+using ImmRequest.Domain.Fields;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Helpers.Binders;
 using ImmRequest.WebApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -64,6 +66,20 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         public void JObjectIsNull()
         {
             Create(type, null);
+        }
+
+        [TestMethod]
+        public void IsNumberFieldModelTest()
+        {
+            var numberModel = new NumberFieldModel
+            {
+                Name = "Name",
+                DataType = DataType.Number
+            };
+            var json = JsonConvert.SerializeObject(numberModel);
+            var jsonObject = new JObject(json);
+            var model = Create(type, jsonObject);
+            Assert.IsInstanceOfType(model, type);
         }
     }
 }
