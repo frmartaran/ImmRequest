@@ -11,6 +11,9 @@ namespace ImmRequest.WebApi.Helpers.Binders
     {
         protected override BaseFieldModel Create(Type objectType, JObject jObject)
         {
+            if (jObject == null)
+                throw new ArgumentNullException("");
+
             throw new NotImplementedException();
         }
     }

@@ -59,7 +59,7 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(ArgumentNullException))]
 
         public void JObjectIsNull()
         {
