@@ -96,6 +96,17 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.IsTrue(containsRange);
         }
 
+        [TestMethod]
+        public void NumberFieldToDomain()
+        {
+            var model = NumberFieldModel.ToModel(numberField);
+            var entity = model.ToDomain();
+
+            Assert.AreEqual(model.Name, entity.Name);
+            Assert.AreEqual(1, entity.RangeStart);
+            Assert.AreEqual(25, entity.RangeEnd);
+        }
+
 
 
     }
