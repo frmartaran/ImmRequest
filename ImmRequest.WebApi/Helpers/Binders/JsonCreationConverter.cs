@@ -20,6 +20,8 @@ namespace ImmRequest.WebApi.Helpers.Binders
         {
             if (reader == null)
                 throw new ArgumentException("No Json Reader");
+            if (serializer == null)
+                throw new ArgumentException("No serializer");
             throw new NotImplementedException();
         }
 
