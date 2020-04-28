@@ -18,7 +18,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         private DateTimeField datesField;
         private TextField textField;
 
-        [TestMethod]
+        [TestInitialize]
         public void SetUp()
         {
             numberField = new NumberField

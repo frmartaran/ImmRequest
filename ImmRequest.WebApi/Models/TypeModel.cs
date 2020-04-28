@@ -13,7 +13,8 @@ namespace ImmRequest.WebApi.Models
 
         public override TypeModel SetModel(TopicType entity)
         {
-            throw new NotImplementedException();
+            Name = entity.Name;
+            return this;
         }
 
         public override TopicType ToDomain()
