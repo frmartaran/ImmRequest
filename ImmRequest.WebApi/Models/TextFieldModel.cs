@@ -10,7 +10,12 @@ namespace ImmRequest.WebApi.Models
     {
         public override TextFieldModel SetModel(TextField entity)
         {
-            throw new NotImplementedException();
+            Id = entity.Id;
+            Name = entity.Name;
+            ParentTypeId = entity.ParentTypeId;
+            RangeValues = entity.RangeValues;
+            return this;
+
         }
 
         public override TextField ToDomain()
