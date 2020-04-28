@@ -26,7 +26,17 @@ namespace ImmRequest.WebApi.Models
 
         public override NumberField ToDomain()
         {
-            throw new NotImplementedException();
+            var numberField = new NumberField
+            {
+                Name = Name,
+                ParentTypeId = ParentTypeId
+            };
+
+            numberField.SetRange(RangeValues);
+            if (Id.HasValue)
+                numberField.Id = Id.Value;
+
+            return numberField;
         }
     }
 }
