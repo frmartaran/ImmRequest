@@ -20,7 +20,17 @@ namespace ImmRequest.WebApi.Models
 
         public override TextField ToDomain()
         {
-            throw new NotImplementedException();
+            var textField = new TextField
+            {
+                Name = Name,
+                ParentTypeId = ParentTypeId,
+            };
+
+            textField.SetRange(RangeValues);
+            if (Id.HasValue)
+                textField.Id = Id.Value;
+
+            return textField;
         }
     }
 }
