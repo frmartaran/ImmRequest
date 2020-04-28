@@ -10,7 +10,7 @@ namespace ImmRequest.WebApi.Models
     {
         public string Name { get; set; }
 
-
+        public long? Id { get; set; }
         public override TypeModel SetModel(TopicType entity)
         {
             Name = entity.Name;
@@ -19,7 +19,15 @@ namespace ImmRequest.WebApi.Models
 
         public override TopicType ToDomain()
         {
-            throw new NotImplementedException();
+            var type = new TopicType
+            {
+                Name = Name,
+            };
+
+            if (Id.HasValue)
+                type.Id = Id.Value;
+
+            return type;
         }
     }
 }
