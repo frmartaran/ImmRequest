@@ -1,4 +1,6 @@
 ﻿using ImmRequest.Domain.Fields;
+using ImmRequest.WebApi.Interfaces;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,31 +8,31 @@ using System.Threading.Tasks;
 
 namespace ImmRequest.WebApi.Models
 {
-    public class TextFieldModel : BaseFieldModel<TextField, TextFieldModel>
+    public class TextFieldModel : BaseFieldModel
     {
-        public override TextFieldModel SetModel(TextField entity)
+        public override BaseFieldModel SetModel(BaseField entity)
         {
+            var asText = entity as TextField;
             Id = entity.Id;
             Name = entity.Name;
             ParentTypeId = entity.ParentTypeId;
-            RangeValues = entity.RangeValues;
+            RangeValues = asText.RangeValues;
             return this;
-
         }
 
-        public override TextField ToDomain()
+        public override BaseField ToDomain()
         {
-            var textField = new TextField
+            var field = new TextField
             {
                 Name = Name,
                 ParentTypeId = ParentTypeId,
             };
 
-            textField.SetRange(RangeValues);
+            field.SetRange(RangeValues);
             if (Id.HasValue)
-                textField.Id = Id.Value;
+                field.Id = Id.Value;
 
-            return textField;
+            return field;
         }
     }
 }

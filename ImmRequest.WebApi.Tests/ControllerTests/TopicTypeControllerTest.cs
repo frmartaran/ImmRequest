@@ -88,7 +88,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void NumberFieldToModelTest()
         {
-            var model = NumberFieldModel.ToModel(numberField);
+            var model = new NumberFieldModel().SetModel(numberField);
 
             Assert.AreEqual(model.Name, numberField.Name);
             var containsRange = model.RangeValues.Contains("1")
@@ -100,8 +100,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void NumberFieldToDomainTest()
         {
-            var model = NumberFieldModel.ToModel(numberField);
-            var entity = model.ToDomain();
+            var model = new NumberFieldModel().SetModel(numberField);
+            var entity = model.ToDomain() as NumberField;
 
             Assert.AreEqual(model.Name, entity.Name);
             Assert.AreEqual(1, entity.RangeStart);
@@ -112,7 +112,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void TextFieldToModelTest()
         {
-            var model = TextFieldModel.ToModel(textField);
+            var model = new TextFieldModel().SetModel(textField);
 
             Assert.AreEqual(textField.Name, model.Name);
         }
@@ -120,13 +120,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void TextFieldToDomainTest()
         {
-            var model = TextFieldModel.ToModel(textField);
+            var model = new TextFieldModel().SetModel(textField);
             var entity = model.ToDomain();
 
             Assert.AreEqual(model.Name, entity.Name);
         }
-
-
-
     }
 }

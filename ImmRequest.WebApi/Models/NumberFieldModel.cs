@@ -1,5 +1,6 @@
 ﻿using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,36 +8,36 @@ using System.Threading.Tasks;
 
 namespace ImmRequest.WebApi.Models
 {
-    public class NumberFieldModel : BaseFieldModel<NumberField, NumberFieldModel>
+    public class NumberFieldModel : BaseFieldModel
     {
-        public override NumberFieldModel SetModel(NumberField entity)
+        public override BaseFieldModel SetModel(BaseField entity)
         {
-            Id = entity.Id;
-            Name = entity.Name;
-            ParentTypeId = entity.ParentTypeId;
-            RangeValues = new List<string>
-            {
-                entity.RangeStart.ToString(),
-                entity.RangeEnd.ToString()
+            var numberField = entity as NumberField;
+            RangeValues = new List<string> {
+                numberField.RangeStart.ToString(),
+                numberField.RangeEnd.ToString()
             };
 
-            return this;
+            return base.SetModel(entity);
 
         }
 
-        public override NumberField ToDomain()
+        public override BaseField ToDomain()
         {
-            var numberField = new NumberField
+            var field = new NumberField
             {
                 Name = Name,
                 ParentTypeId = ParentTypeId
             };
 
-            numberField.SetRange(RangeValues);
-            if (Id.HasValue)
-                numberField.Id = Id.Value;
+            field.SetRange(RangeValues);
 
-            return numberField;
+            if (Id.HasValue)
+                field.Id = Id.Value;
+
+            return field;
         }
+
+
     }
 }
