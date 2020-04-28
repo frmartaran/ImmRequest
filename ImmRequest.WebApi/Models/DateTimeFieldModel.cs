@@ -12,6 +12,12 @@ namespace ImmRequest.WebApi.Models
     {
         public override BaseFieldModel SetModel(BaseField entity)
         {
+            var asDateField = entity as DateTimeField;
+            RangeValues = new List<string>
+            {
+                asDateField.Start.ToString(),
+                asDateField.End.ToString(),
+            };
             return base.SetModel(entity);
         }
         public override BaseField ToDomain()
