@@ -54,8 +54,9 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         [TestMethod]
         public void NoTokenReturnNullTest()
         {
-            var readermock = new Mock<JsonReader>().Object;
-            var result = converter.ReadJson(readermock, type, "", new JsonSerializer());
+            var readermock = new Mock<JsonReader>();
+            readermock.SetupGet(x => x.TokenType).Returns(JsonToken.Null);
+            var result = converter.ReadJson(readermock.Object, type, "", new JsonSerializer());
             Assert.IsNull(result);
         }
 
