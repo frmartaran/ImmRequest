@@ -13,6 +13,7 @@ namespace ImmRequest.WebApi.Models
         public long? Id { get; set; }
         public override TypeModel SetModel(TopicType entity)
         {
+            Id = entity.Id;
             Name = entity.Name;
             return this;
         }

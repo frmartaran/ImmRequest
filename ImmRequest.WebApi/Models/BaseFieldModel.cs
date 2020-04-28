@@ -11,7 +11,7 @@ namespace ImmRequest.WebApi.Models
         where TM : Model<T, TM>, new()
     {
 
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public string Name { get; set; }
 
         public long ParentTypeId { get; set; }

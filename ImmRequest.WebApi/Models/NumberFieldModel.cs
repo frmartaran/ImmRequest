@@ -11,7 +11,17 @@ namespace ImmRequest.WebApi.Models
     {
         public override NumberFieldModel SetModel(NumberField entity)
         {
-            throw new NotImplementedException();
+            Id = entity.Id;
+            Name = entity.Name;
+            ParentTypeId = entity.ParentTypeId;
+            RangeValues = new List<string>
+            {
+                entity.RangeStart.ToString(),
+                entity.RangeEnd.ToString()
+            };
+
+            return this;
+
         }
 
         public override NumberField ToDomain()

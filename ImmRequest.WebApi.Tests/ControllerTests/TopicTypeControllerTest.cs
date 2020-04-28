@@ -91,7 +91,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             Assert.AreEqual(model.Name, numberField.Name);
             var containsRange = model.RangeValues.Contains("1")
-                && model.RangeValues.Contains("2");
+                && model.RangeValues.Contains("25");
 
             Assert.IsTrue(containsRange);
         }
