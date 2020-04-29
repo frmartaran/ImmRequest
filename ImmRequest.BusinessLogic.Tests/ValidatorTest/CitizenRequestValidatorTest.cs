@@ -317,5 +317,21 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             CreateContextFor("CitizenNameIsInvalid");
             IsCitizenNameValid("");
         }
+
+        [TestMethod]
+        public void DescriptionIsValid()
+        {
+            CreateContextFor("DescriptionIsValid");
+            var isValid = IsDescriptionValid("description");
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void DescriptionIsInvalid()
+        {
+            CreateContextFor("DescriptionIsInvalid");
+            IsDescriptionValid("");
+        }
     }
 }
