@@ -160,6 +160,24 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name in request is invalid..
+        /// </summary>
+        public static string ValidationError_CitizenNameIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_CitizenNameIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description in request is invalid..
+        /// </summary>
+        public static string ValidationError_DescriptionIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_DescriptionIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email in request is invalid..
         /// </summary>
         public static string ValidationError_EmailIsInvalid {

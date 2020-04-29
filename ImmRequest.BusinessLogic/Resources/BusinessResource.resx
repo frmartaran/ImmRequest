@@ -150,6 +150,12 @@
   <data name="ValidationError_AreaIsInvalid" xml:space="preserve">
     <value>Area in request is invalid</value>
   </data>
+  <data name="ValidationError_CitizenNameIsInvalid" xml:space="preserve">
+    <value>Name in request is invalid.</value>
+  </data>
+  <data name="ValidationError_DescriptionIsInvalid" xml:space="preserve">
+    <value>Description in request is invalid.</value>
+  </data>
   <data name="ValidationError_EmailIsInvalid" xml:space="preserve">
     <value>Email in request is invalid.</value>
   </data>
