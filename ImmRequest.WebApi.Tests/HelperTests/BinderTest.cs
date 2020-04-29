@@ -83,5 +83,13 @@ namespace ImmRequest.WebApi.Tests.HelperTests
             var model = Create(type, jsonObject);
             Assert.IsInstanceOfType(model, typeof(TextFieldModel));
         }
+
+        [TestMethod]
+        public void IsDateTimeFieldModelTest()
+        {
+            var jsonObject = JObject.Parse(@"{'DataType': 'DateTime'}");
+            var model = Create(type, jsonObject);
+            Assert.IsInstanceOfType(model, typeof(DateTimeField));
+        }
     }
 }
