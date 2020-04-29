@@ -21,6 +21,8 @@ namespace ImmRequest.WebApi.Helpers.Binders
                 return new NumberFieldModel();
             if (type == DataType.Text.ToString().ToUpper())
                 return new TextFieldModel();
+            if (type == DataType.DateTime.ToString().ToUpper())
+                return new DateTimeFieldModel();
             return null;
         }
     }

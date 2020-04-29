@@ -89,7 +89,15 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         {
             var jsonObject = JObject.Parse(@"{'DataType': 'DateTime'}");
             var model = Create(type, jsonObject);
-            Assert.IsInstanceOfType(model, typeof(DateTimeField));
+            Assert.IsInstanceOfType(model, typeof(DateTimeFieldModel));
+        }
+
+        [TestMethod]
+        public void DefaultReturnsNull()
+        {
+            var jsonObject = JObject.Parse(@"{'DataType': 'Other'}");
+            var model = Create(type, jsonObject);
+            Assert.IsNull(model);
         }
     }
 }
