@@ -19,6 +19,8 @@ namespace ImmRequest.WebApi.Helpers.Binders
             var type = jObject["DataType"].ToString().ToUpper();
             if (type == DataType.Number.ToString().ToUpper())
                 return new NumberFieldModel();
+            if (type == DataType.Text.ToString().ToUpper())
+                return new TextFieldModel();
             return null;
         }
     }
