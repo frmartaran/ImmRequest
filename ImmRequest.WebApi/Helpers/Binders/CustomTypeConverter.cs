@@ -1,8 +1,10 @@
-﻿using ImmRequest.WebApi.Models;
+﻿using ImmRequest.Domain.Enums;
+using ImmRequest.WebApi.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace ImmRequest.WebApi.Helpers.Binders
@@ -14,7 +16,10 @@ namespace ImmRequest.WebApi.Helpers.Binders
             if (jObject == null)
                 throw new ArgumentNullException("");
 
-            throw new NotImplementedException();
+            var type = jObject["DataType"].ToString().ToUpper();
+            if (type == DataType.Number.ToString().ToUpper())
+                return new NumberFieldModel();
+            return null;
         }
     }
 }

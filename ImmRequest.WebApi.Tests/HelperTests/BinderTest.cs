@@ -71,13 +71,7 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         [TestMethod]
         public void IsNumberFieldModelTest()
         {
-            var numberModel = new NumberFieldModel
-            {
-                Name = "Name",
-                DataType = DataType.Number
-            };
-            var json = JsonConvert.SerializeObject(numberModel);
-            var jsonObject = new JObject(json);
+            var jsonObject = JObject.Parse(@"{'DataType': 'Number'}");
             var model = Create(type, jsonObject);
             Assert.IsInstanceOfType(model, type);
         }
