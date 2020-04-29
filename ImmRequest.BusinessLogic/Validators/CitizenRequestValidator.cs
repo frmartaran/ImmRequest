@@ -37,7 +37,6 @@ namespace ImmRequest.BusinessLogic.Validators
             IsCitizenNameValid(objectToValidate.CitizenName);
             IsDescriptionValid(objectToValidate.Description);
             IsEmailValid(objectToValidate.Email);
-            IsPhoneValid(objectToValidate.Phone);
             IsAreaValid(objectToValidate.AreaId);
             IsTopicValid(objectToValidate.AreaId, objectToValidate.TopicId);
             IsTopicTypeValid(objectToValidate.AreaId, objectToValidate.TopicId, objectToValidate.TopicTypeId);
@@ -115,23 +114,6 @@ namespace ImmRequest.BusinessLogic.Validators
                 return true;
             }
             catch (FormatException)
-            {
-                throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
-            }
-        }
-
-        protected bool IsPhoneValid(string phone)
-        {
-            try
-            {
-                if (String.IsNullOrEmpty(phone))
-                {
-                    return true;
-                }
-                Convert.ToInt32(phone);
-                return true;
-            }
-            catch (Exception)
             {
                 throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
             }

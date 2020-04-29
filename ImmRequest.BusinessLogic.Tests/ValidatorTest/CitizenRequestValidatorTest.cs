@@ -213,33 +213,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
-        public void PhoneIsValid()
-        {
-            CreateContextFor("PhoneIsValid");
-            var phone = "222222";
-            var isValid = IsPhoneValid(phone);
-            Assert.IsTrue(isValid);
-        }
-
-        [TestMethod]
-        public void PhoneIsOptional()
-        {
-            CreateContextFor("PhoneIsOptional");
-            var phone = "";
-            var isValid = IsPhoneValid(phone);
-            Assert.IsTrue(isValid);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
-        public void PhoneIsInvalid()
-        {
-            CreateContextFor("PhoneIsInvalid");
-            var phone = "invalid";
-            IsPhoneValid(phone);
-        }
-
-        [TestMethod]
         public void AreaIsValid()
         {
             CreateContextFor("AreaIsValid");

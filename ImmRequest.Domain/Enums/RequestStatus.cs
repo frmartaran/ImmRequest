@@ -8,7 +8,6 @@ namespace ImmRequest.Domain.Enums
         OnRevision,
         Acepted,
         Declined,
-        Ended 
-
+        Ended
     }
 }
