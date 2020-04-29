@@ -13,7 +13,6 @@ namespace ImmRequest.Domain
         public string CitizenName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public long RequestNumber { get; set; }
         public RequestStatus Status { get; set; }
         public Area Area { get; set; }
         public long AreaId { get; set; }

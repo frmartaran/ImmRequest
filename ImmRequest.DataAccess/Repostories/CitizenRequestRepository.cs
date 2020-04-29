@@ -34,7 +34,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(CitizenRequest request)
         {
-            return Context.CitizenRequests.Any(cr => cr.RequestNumber == request.RequestNumber);
+            return Context.CitizenRequests.Any(cr => cr.Id == request.Id);
         }
 
         public CitizenRequest Get(long id)
@@ -77,7 +77,6 @@ namespace ImmRequest.DataAccess.Repositories
                 requestToModify.CitizenName = objectToUpdate.CitizenName;
                 requestToModify.Email = objectToUpdate.Email;
                 requestToModify.Phone = objectToUpdate.Phone;
-                requestToModify.RequestNumber = objectToUpdate.RequestNumber;
                 requestToModify.Status = objectToUpdate.Status;
                 requestToModify.Area = objectToUpdate.Area;
                 requestToModify.Topic = objectToUpdate.Topic;

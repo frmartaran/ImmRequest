@@ -91,7 +91,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 Description = "Quiero mi credencial!",
                 Email = "immrequest@gmail.com",
                 Phone = "21233457",
-                RequestNumber = 1,
                 Status = Domain.Enums.RequestStatus.Created,
                 AreaId = 1,
                 TopicId = 1,
