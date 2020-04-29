@@ -34,6 +34,8 @@ namespace ImmRequest.BusinessLogic.Validators
 
         public bool IsValid(CitizenRequest objectToValidate)
         {
+            IsCitizenNameValid(objectToValidate.CitizenName);
+            IsDescriptionValid(objectToValidate.Description);
             IsEmailValid(objectToValidate.Email);
             IsPhoneValid(objectToValidate.Phone);
             IsAreaValid(objectToValidate.AreaId);
@@ -85,6 +87,20 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             var field = FieldRepository.Get(fieldId);
             return field != null;
+        }
+
+        protected bool IsCitizenNameValid(string citizenName)
+        {
+            if (String.IsNullOrEmpty(citizenName))
+            {
+                throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
+            }
+            return true;
+        }
+
+        protected bool IsDescriptionValid(string description)
+        {
+            return false;
         }
 
         protected bool IsEmailValid(string email)
