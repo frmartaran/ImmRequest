@@ -75,5 +75,13 @@ namespace ImmRequest.WebApi.Tests.HelperTests
             var model = Create(type, jsonObject);
             Assert.IsInstanceOfType(model, type);
         }
+
+        [TestMethod]
+        public void IsTextFieldModelTest()
+        {
+            var jsonObject = JObject.Parse(@"{'DataType': 'Text'}");
+            var model = Create(type, jsonObject);
+            Assert.IsInstanceOfType(model, typeof(TextFieldModel));
+        }
     }
 }
