@@ -93,14 +93,18 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             if (String.IsNullOrEmpty(citizenName))
             {
-                throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
+                throw new ValidationException(BusinessResource.ValidationError_CitizenNameIsInvalid);
             }
             return true;
         }
 
         protected bool IsDescriptionValid(string description)
         {
-            return false;
+            if (String.IsNullOrEmpty(description))
+            {
+                throw new ValidationException(BusinessResource.ValidationError_DescriptionIsInvalid);
+            }
+            return true;
         }
 
         protected bool IsEmailValid(string email)
