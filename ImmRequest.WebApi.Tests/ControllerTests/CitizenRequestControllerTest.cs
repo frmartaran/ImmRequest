@@ -112,5 +112,35 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
+
+        [TestMethod]
+        public void GetCitizenRequest()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+
+            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(request);
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
+            var result = controller.GetCitizenRequest(1);
+
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+        }
+
+        [TestMethod]
+        public void GetCitizenRequestNotFoundRequest()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+
+            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
+            var result = controller.GetCitizenRequest(5);
+
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
     }
 }
