@@ -106,6 +106,60 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your request has been recieved!.
+        /// </summary>
+        public static string CitizenRequest_CreatedMessage {
+            get {
+                return ResourceManager.GetString("CitizenRequest_CreatedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request can&apos;t be empty!.
+        /// </summary>
+        public static string CitizenRequest_EmptyRequestMessage {
+            get {
+                return ResourceManager.GetString("CitizenRequest_EmptyRequestMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status can&apos;t be empty!.
+        /// </summary>
+        public static string CitizenRequest_EmptyStatusMessage {
+            get {
+                return ResourceManager.GetString("CitizenRequest_EmptyStatusMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The request made by citizen {0} with description {1} has status {2}..
+        /// </summary>
+        public static string CitizenRequest_GetStatusMessage {
+            get {
+                return ResourceManager.GetString("CitizenRequest_GetStatusMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The status added doesn&apos;t exist..
+        /// </summary>
+        public static string CitizenRequest_StatusDoesntExistsMessage {
+            get {
+                return ResourceManager.GetString("CitizenRequest_StatusDoesntExistsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The status of request number {0} has been updated!.
+        /// </summary>
+        public static string CitizenRequest_StatusUpdatedMessage {
+            get {
+                return ResourceManager.GetString("CitizenRequest_StatusUpdatedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrator.
         /// </summary>
         public static string Entities_Administrator {

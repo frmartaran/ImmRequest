@@ -132,6 +132,24 @@
   <data name="AuthorizationFilter_TokenEmpty" xml:space="preserve">
     <value>The authorization token is empty. Please provide a valid token</value>
   </data>
+  <data name="CitizenRequest_CreatedMessage" xml:space="preserve">
+    <value>Your request has been recieved!</value>
+  </data>
+  <data name="CitizenRequest_EmptyRequestMessage" xml:space="preserve">
+    <value>Request can't be empty!</value>
+  </data>
+  <data name="CitizenRequest_EmptyStatusMessage" xml:space="preserve">
+    <value>Status can't be empty!</value>
+  </data>
+  <data name="CitizenRequest_GetStatusMessage" xml:space="preserve">
+    <value>The request made by citizen {0} with description {1} has status {2}.</value>
+  </data>
+  <data name="CitizenRequest_StatusDoesntExistsMessage" xml:space="preserve">
+    <value>The status added doesn't exist.</value>
+  </data>
+  <data name="CitizenRequest_StatusUpdatedMessage" xml:space="preserve">
+    <value>The status of request number {0} has been updated!</value>
+  </data>
   <data name="Entities_Administrator" xml:space="preserve">
     <value>Administrator</value>
   </data>
