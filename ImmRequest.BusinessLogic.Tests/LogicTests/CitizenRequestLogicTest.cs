@@ -33,8 +33,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         private RequestFieldValues requestFieldValue;
 
-        private CitizenRequestValidatorInput validatorInput;
-
         private IRepository<Area> AreaRepository;
 
         private IRepository<Topic> TopicRepository;
@@ -42,8 +40,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         private IRepository<TopicType> TopicTypeRepository;
 
         private IRepository<BaseField> FieldRepository;
-
-        private IRepository<CitizenRequest> CitizenRequestRepository;
 
         [TestInitialize]
         public void Setup()
