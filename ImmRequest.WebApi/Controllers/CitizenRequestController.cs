@@ -41,5 +41,22 @@ namespace ImmRequest.WebApi.Controllers
                 return BadRequest(exception.Message);
             }
         }
+
+        [HttpGet("{id}")]
+        [AuthorizationFilter]
+        public IActionResult GetCitizenRequest(long requestId)
+        {
+            try
+            {
+                var request = CitizenRequestLogic.Get(requestId);
+                var requestModel = new CitizenRequestModel();
+                requestModel.SetModel(request);
+                return Ok(requestModel);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        }
     }
 }
