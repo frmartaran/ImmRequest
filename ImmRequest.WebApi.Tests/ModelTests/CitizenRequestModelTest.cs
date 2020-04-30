@@ -12,8 +12,6 @@ namespace ImmRequest.WebApi.Tests.ModelTests
     {
         private CitizenRequest request;
 
-        private CitizenRequestModel requestModel;
-
         private RequestFieldValues requestFieldValue;
 
         [TestInitialize]

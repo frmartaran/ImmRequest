@@ -37,6 +37,7 @@ namespace ImmRequest.WebApi.Models
             Phone = entity.Phone;
             AreaId = entity.AreaId;
             TopicId = entity.TopicId;
+            TopicTypeId = entity.TopicTypeId;
             Status = entity.Status;
             Values = RequestFieldValuesModel
                 .ToModel(entity.Values)
@@ -48,6 +49,7 @@ namespace ImmRequest.WebApi.Models
         {
             return new CitizenRequest
             {
+                Id=Id,
                 Description = Description,
                 CitizenName = CitizenName,
                 Email = Email,

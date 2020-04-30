@@ -29,6 +29,7 @@ namespace ImmRequest.WebApi.Models
         {
             return new RequestFieldValues
             {
+                Id = Id,
                 ParentCitizenRequestId = ParentCitizenRequestId,
                 FieldId = FieldId,
                 Value = Value
