@@ -74,5 +74,14 @@ namespace ImmRequest.WebApi.Controllers
                 return BadRequest(exception.Message);
             }
         }
+
+        [HttpGet]
+        [AuthorizationFilter]
+        public IActionResult GetCitizenRequests()
+        {
+            var requests = CitizenRequestLogic.GetAll();
+            var requestsModels = CitizenRequestModel.ToModel(requests);
+            return Ok(requestsModels);
+        }
     }
 }
