@@ -190,5 +190,82 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         }
+
+        [TestMethod]
+        public void UpdateCitizenRequestStatus()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+
+            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(request);
+
+            mockCitizenRequestLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()));
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
+            var result = controller.UpdateCitizenRequestStatus(1, "Created");
+
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+        }
+
+        [TestMethod]
+        public void UpdateCitizenRequestStatusEmptyStatus()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
+            var result = controller.UpdateCitizenRequestStatus(1, "");
+
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void UpdateCitizenRequestStatusRequestNotFound()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+
+            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
+            var result = controller.UpdateCitizenRequestStatus(5, "");
+
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void UpdateCitizenRequestStatusUpdateError()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+
+            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(request);
+
+            mockCitizenRequestLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
+            var result = controller.UpdateCitizenRequestStatus(1, "Created");
+
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void UpdateCitizenRequestStatusNonExistantStatus()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+
+            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(request);
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
+            var result = controller.UpdateCitizenRequestStatus(1, "hola");
+
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
     }
 }
