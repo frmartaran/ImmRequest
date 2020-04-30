@@ -83,5 +83,32 @@ namespace ImmRequest.WebApi.Controllers
             var requestsModels = CitizenRequestModel.ToModel(requests);
             return Ok(requestsModels);
         }
+
+        [HttpPut("{id}")]
+        [AuthorizationFilter]
+        public IActionResult UpdateCitizenRequestStatus(long requestId, [FromBody] string status)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(status))
+                {
+                    return BadRequest(WebApiResource.CitizenRequest_EmptyStatusMessage);
+                }
+                var request = CitizenRequestLogic.Get(requestId);
+                request.Status = status.ToEnum<RequestStatus>();
+                CitizenRequestLogic.Update(request);
+                var statusUpdatedMessage = string.Format(WebApiResource.CitizenRequest_StatusUpdatedMessage,
+                    request.Id);
+                return Ok(statusUpdatedMessage);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest(WebApiResource.CitizenRequest_StatusDoesntExistsMessage);
+            }
+        }
     }
 }
