@@ -1,7 +1,7 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
-using ImmRequest.WebApi.Exceptions;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Models;
@@ -36,7 +36,7 @@ namespace ImmRequest.WebApi.Controllers
                 CitizenRequestLogic.Create(request);
                 return Ok(WebApiResource.CitizenRequest_CreatedMessage);
             }
-            catch (HttpContextException exception)
+            catch (ValidationException exception)
             {
                 return BadRequest(exception.Message);
             }
