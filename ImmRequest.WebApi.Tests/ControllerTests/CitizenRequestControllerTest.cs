@@ -89,12 +89,9 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
 
-            mockCitizenRequestLogic.Setup(m => m.Create(It.IsAny<CitizenRequest>()));
-
             var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
             var result = controller.CreateCitizenRequest(null);
 
-            mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
 
@@ -216,7 +213,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
             var result = controller.UpdateCitizenRequestStatus(1, "");
 
-            mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
 
@@ -225,13 +221,9 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
 
-            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
-                .Throws(new BusinessLogicException(""));
-
             var controller = new CitizenRequestController(mockCitizenRequestLogic.Object);
             var result = controller.UpdateCitizenRequestStatus(5, "");
 
-            mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
 
