@@ -58,5 +58,21 @@ namespace ImmRequest.WebApi.Controllers
                 return BadRequest(exception.Message);
             }
         }
+
+        [HttpGet("status/{id}")]
+        public IActionResult GetCitizenRequestStatus(long requestId)
+        {
+            try
+            {
+                var request = CitizenRequestLogic.Get(requestId);
+                var statusRequestMessage = string.Format(WebApiResource.CitizenRequest_GetStatusMessage,
+                    request.CitizenName, request.Description, request.Status.ToString());
+                return Ok(statusRequestMessage);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        }
     }
 }
