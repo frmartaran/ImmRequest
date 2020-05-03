@@ -96,5 +96,11 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public ActionResult Update(long id, [FromBody] TypeModel model)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
