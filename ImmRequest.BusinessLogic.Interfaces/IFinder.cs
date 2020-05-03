@@ -9,8 +9,8 @@ namespace ImmRequest.BusinessLogic.Interfaces
     {
         T Find(long id);
 
-        List<T> FindAll();
-        List<T> FindAll(Predicate<T> condition);
+        ICollection<T> FindAll();
+        ICollection<T> FindAll(Predicate<T> condition);
 
         T Find(Predicate<T> condition);
     }

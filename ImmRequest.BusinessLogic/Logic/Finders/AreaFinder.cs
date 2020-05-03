@@ -36,12 +36,12 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
             return area;
         }
 
-        public List<Area> FindAll()
+        public ICollection<Area> FindAll()
         {
-            throw new NotImplementedException();
+            return Repository.GetAll();
         }
 
-        public List<Area> FindAll(Predicate<Area> condition)
+        public ICollection<Area> FindAll(Predicate<Area> condition)
         {
             throw new NotImplementedException();
         }
