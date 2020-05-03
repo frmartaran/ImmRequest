@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Controllers;
@@ -6,12 +7,9 @@ using ImmRequest.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
 {

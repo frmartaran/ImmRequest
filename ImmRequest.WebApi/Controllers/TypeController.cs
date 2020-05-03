@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.WebApi.Models;
@@ -27,12 +28,20 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost("{id}")]
         public ActionResult Create(long parentTopicID, [FromBody] TypeModel model)
         {
-            var parentTopic = Finder.Find(t => t.Id == parentTopicID);
-            var type = model.ToDomain();
-            type.ParentTopic = parentTopic;
-            Logic.Create(type);
+            try
+            {
+                var parentTopic = Finder.Find(t => t.Id == parentTopicID);
+                var type = model.ToDomain();
+                type.ParentTopic = parentTopic;
+                Logic.Create(type);
 
-            return Ok("Type Created");
+                return Ok("Type Created");
+            }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
         }
     }
 }
