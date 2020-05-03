@@ -57,7 +57,7 @@ namespace ImmRequest.WebApi.Controllers
                 var model = TypeModel.ToModel(type);
                 return Ok(model);
             }
-            catch(BusinessLogicException exception)
+            catch (BusinessLogicException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -110,7 +110,11 @@ namespace ImmRequest.WebApi.Controllers
             {
                 return BadRequest(exception.Message);
             }
-            
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
         }
 
     }
