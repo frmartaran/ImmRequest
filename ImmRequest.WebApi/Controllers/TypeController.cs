@@ -51,7 +51,10 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(long id)
         {
-            throw new NotImplementedException();
+            var type = Logic.Get(id);
+            var model = TypeModel.ToModel(type);
+            return Ok(model);
+
         }
     }
 }
