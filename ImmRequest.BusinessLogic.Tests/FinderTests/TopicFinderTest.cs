@@ -74,7 +74,7 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
         [ExpectedException(typeof(BusinessLogicException))]
         public void NotFoundTest()
         {
-            var repository = CreateRepositoryWithContext("Find Test");
+            var repository = CreateRepositoryWithContext("Not Found Test");
 
             var finder = new TopicFinder(repository);
 

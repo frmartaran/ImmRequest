@@ -1,4 +1,6 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Helpers;
+using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using System;
@@ -21,6 +23,8 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
             var topic = Repository.GetAll()
                 .Where(t => condition.Invoke(t))
                 .FirstOrDefault();
+            LogicHelpers.WarnIfNotFound(topic, BusinessResource.Action_Find,
+                BusinessResource.Entity_Topic);
             return topic;
         }
 
