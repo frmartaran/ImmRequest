@@ -165,7 +165,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void CreateTest()
         {
             var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Create(It.IsAny<TopicType>()));
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
@@ -181,7 +181,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void CreateWithValidationErrorTest()
         {
             var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Create(It.IsAny<TopicType>()))
                 .Throws(new ValidationException(""));
 
@@ -200,7 +200,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void ParentTopicNotFoundTest()
         {
             var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
@@ -217,8 +217,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void GetTest()
         {
-            var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Get(It.IsAny<long>()))
                 .Returns(type);
 
@@ -239,8 +238,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void GetNotFoundTest()
         {
-            var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Get(It.IsAny<long>()))
                 .Throws(new BusinessLogicException(""));
 
@@ -257,8 +255,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void GetAllTest()
         {
-            var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.GetAll())
                 .Returns(new List<TopicType> { type });
 
@@ -274,6 +271,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(1, models.Count());
             Assert.AreEqual(models.First().Name, type.Name);
 
+            logic.VerifyAll();
+            finder.VerifyAll();
         }
 
         [TestMethod]
@@ -281,8 +280,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
 
             type.ParentTopicId = 1;
-            var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.GetAll())
                 .Returns(new List<TopicType> { type, new TopicType() });
 
@@ -298,7 +296,26 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(1, models.Count());
             Assert.AreEqual(models.First().Name, type.Name);
 
+            logic.VerifyAll();
+            finder.VerifyAll();
+
         }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Delete(It.IsAny<long>()));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Delete(1);
+
+            Assert.IsInstanceOfType(response, OkType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
 
     }
 }

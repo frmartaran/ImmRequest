@@ -64,7 +64,6 @@ namespace ImmRequest.WebApi.Controllers
 
         }
 
-
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -73,7 +72,7 @@ namespace ImmRequest.WebApi.Controllers
             return Ok(models);
         }
 
-        [HttpGet("All/{id}")]
+        [HttpGet("All/{parentTopicId}")]
         public ActionResult GetAll(long parentTopicId)
         {
             var all = Logic.GetAll()
@@ -81,6 +80,12 @@ namespace ImmRequest.WebApi.Controllers
                 .ToList();
             var models = TypeModel.ToModel(all);
             return Ok(models);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(long id)
+        {
+            throw new NotImplementedException();
         }
 
     }
