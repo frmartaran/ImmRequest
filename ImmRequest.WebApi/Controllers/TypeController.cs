@@ -27,7 +27,12 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost("{id}")]
         public ActionResult Create(long parentTopicID, [FromBody] TypeModel model)
         {
-            throw new NotImplementedException();
+            var parentTopic = Finder.Find(t => t.Id == parentTopicID);
+            var type = model.ToDomain();
+            type.ParentTopic = parentTopic;
+            Logic.Create(type);
+
+            return Ok("Type Created");
         }
     }
 }
