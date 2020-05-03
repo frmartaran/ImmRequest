@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Logic.Finders;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Logic.Finders;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
@@ -51,6 +52,32 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             var mock = new Mock<IRepository<Area>>(MockBehavior.Strict);
             mock.Setup(m => m.Get(It.IsAny<long>()))
                 .Returns(area);
+
+            var finder = new AreaFinder(mock.Object);
+            var areaFound = finder.Find(1);
+            mock.VerifyAll();
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void NotFoundTest()
+        {
+            var repository = CreateRepositoryWithContext("Not Found Test");
+
+            var finder = new AreaFinder(repository);
+            var areaFound = finder.Find(1);
+            Assert.IsNull(areaFound);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+
+        public void NotFoundMockTest()
+        {
+            var mock = new Mock<IRepository<Area>>(MockBehavior.Strict);
+            mock.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns<Area>(null);
 
             var finder = new AreaFinder(mock.Object);
             var areaFound = finder.Find(1);
