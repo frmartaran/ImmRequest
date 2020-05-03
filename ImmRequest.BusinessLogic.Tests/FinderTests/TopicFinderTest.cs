@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Logic.Finders;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Logic.Finders;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
@@ -44,7 +45,7 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
         }
 
         [TestMethod]
-        public void FindAreaWithConditionTest()
+        public void FindTest()
         {
             var repository = CreateRepositoryWithContext("Find Test");
             context.Topics.Add(topic);
@@ -57,12 +58,37 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
         }
 
         [TestMethod]
+        public void FindMockTest()
+        {
+            var mock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            mock.Setup(m => m.GetAll())
+                .Returns(new List<Topic> { topic });
+            topic.Id = 1;
+
+            var finder = new TopicFinder(mock.Object);
+            var areaFound = finder.Find(t => t.Id == 1);
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void NotFoundTest()
+        {
+            var repository = CreateRepositoryWithContext("Find Test");
+
+            var finder = new TopicFinder(repository);
+
+            var topicFound = finder.Find(t => t.Id == 1);
+            Assert.AreEqual(topic.Name, topicFound.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
         public void FindAreaWithConditionMockTest()
         {
             var mock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             mock.Setup(m => m.GetAll())
                 .Returns(new List<Topic> { topic });
-            area.Id = 1;
 
             var finder = new TopicFinder(mock.Object);
             var areaFound = finder.Find(t => t.Id == 1);
