@@ -1,4 +1,5 @@
 ﻿using ImmRequest.Domain;
+using ImmRequest.WebApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,13 @@ namespace ImmRequest.WebApi.Models
         public string Name { get; set; }
 
         public long? Id { get; set; }
+
+        public List<BaseFieldModel> Fields { get; set; }
         public override TypeModel SetModel(TopicType entity)
         {
             Id = entity.Id;
             Name = entity.Name;
+            Fields = entity.AllFields.Select(f => BaseFieldModelFactory.GetFieldModel(f)).ToList();
             return this;
         }
 
