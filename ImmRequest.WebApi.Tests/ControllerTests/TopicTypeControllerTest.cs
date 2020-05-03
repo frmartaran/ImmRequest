@@ -24,6 +24,9 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         private DateTimeField datesField;
         private TextField textField;
 
+        private Type OkType = typeof(OkObjectResult);
+        private Type BadRequestType = typeof(BadRequestObjectResult);
+
         [TestInitialize]
         public void SetUp()
         {
@@ -171,7 +174,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Create(1, typeModel);
 
-            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+            Assert.IsInstanceOfType(response, OkType);
         }
 
         [TestMethod]
@@ -188,7 +191,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Create(1, typeModel);
 
-            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            Assert.IsInstanceOfType(response, BadRequestType);
             logic.VerifyAll();
             finder.VerifyAll();
         }
@@ -206,7 +209,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Create(1, typeModel);
 
-            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            Assert.IsInstanceOfType(response, BadRequestType);
             logic.VerifyAll();
             finder.VerifyAll();
         }
@@ -223,7 +226,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Get(1);
 
-            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+            Assert.IsInstanceOfType(response, OkType);
             var asOk = response as OkObjectResult;
             var model = asOk.Value as TypeModel;
 
@@ -245,10 +248,32 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Get(1);
 
-            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            Assert.IsInstanceOfType(response, BadRequestType);
 
             logic.VerifyAll();
             finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>();
+            logic.Setup(m => m.GetAll())
+                .Returns(new List<TopicType> { type });
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Get(1);
+
+            Assert.IsInstanceOfType(response, OkType);
+
+            var asOk = response as OkObjectResult;
+            var models = asOk.Value as List<TypeModel>;
+
+            Assert.AreEqual(1, models.Count);
+            Assert.AreEqual(models.First().Name, type.Name);
+
         }
 
     }
