@@ -233,5 +233,23 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             finder.VerifyAll();
         }
 
+        [TestMethod]
+        public void GetNotFoundTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>();
+            logic.Setup(m => m.Get(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Get(1);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
     }
 }
