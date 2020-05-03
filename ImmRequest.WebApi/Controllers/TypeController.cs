@@ -51,9 +51,16 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(long id)
         {
-            var type = Logic.Get(id);
-            var model = TypeModel.ToModel(type);
-            return Ok(model);
+            try
+            {
+                var type = Logic.Get(id);
+                var model = TypeModel.ToModel(type);
+                return Ok(model);
+            }
+            catch(BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
 
         }
     }
