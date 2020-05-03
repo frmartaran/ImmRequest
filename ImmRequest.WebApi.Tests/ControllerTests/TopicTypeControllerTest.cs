@@ -276,5 +276,27 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
         }
 
+        [TestMethod]
+        public void GetAllFromParentTopicTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>();
+            logic.Setup(m => m.GetAll())
+                .Returns(new List<TopicType> { type });
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.GetAll(1);
+
+            Assert.IsInstanceOfType(response, OkType);
+
+            var asOk = response as OkObjectResult;
+            var models = asOk.Value as IEnumerable<TypeModel>;
+
+            Assert.AreEqual(1, models.Count());
+            Assert.AreEqual(models.First().Name, type.Name);
+
+        }
+
     }
 }

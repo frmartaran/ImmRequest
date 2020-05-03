@@ -65,12 +65,18 @@ namespace ImmRequest.WebApi.Controllers
         }
 
 
-        [HttpGet("All")]
+        [HttpGet]
         public ActionResult GetAll()
         {
             var all = Logic.GetAll();
             var models = TypeModel.ToModel(all);
             return Ok(models);
+        }
+
+        [HttpGet("All/{id}")]
+        public ActionResult GetAll(long id)
+        {
+            throw new NotImplementedException();
         }
 
     }
