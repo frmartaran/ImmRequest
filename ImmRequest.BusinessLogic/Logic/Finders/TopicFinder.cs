@@ -35,7 +35,9 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
 
         public ICollection<Topic> FindAll(Predicate<Topic> condition)
         {
-            throw new NotImplementedException();
+            return Repository.GetAll()
+                .Where(t => condition.Invoke(t))
+                .ToList();
         }
     }
 }
