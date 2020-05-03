@@ -172,7 +172,7 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
 
             var finder = new AreaFinder(repository);
 
-            var areas = finder.FindAll(a => a.Name == "Some Name");
+            var areas = finder.FindAll(a => a.Name == "Some Area");
             Assert.AreEqual(2, areas.Count);
         }
 
@@ -185,7 +185,7 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
                 .Returns(new List<Area> { area, newArea });
 
             var finder = new AreaFinder(mock.Object);
-            var areaFound = finder.FindAll(a => a.Name == "Some Name");
+            var areaFound = finder.FindAll(a => a.Name == "Some Area");
             mock.VerifyAll();
         }
 

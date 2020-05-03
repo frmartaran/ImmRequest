@@ -43,7 +43,9 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
 
         public ICollection<Area> FindAll(Predicate<Area> condition)
         {
-            throw new NotImplementedException();
+            return Repository.GetAll()
+                .Where(a => condition.Invoke(a))
+                .ToList();
         }
     }
 }
