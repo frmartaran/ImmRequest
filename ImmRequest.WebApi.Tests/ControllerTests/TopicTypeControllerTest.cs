@@ -10,6 +10,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
 {
@@ -188,6 +189,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Create(1, typeModel);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            logic.VerifyAll();
+            finder.VerifyAll();
         }
 
         [TestMethod]
@@ -195,7 +198,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var typeModel = TypeModel.ToModel(type);
             var logic = new Mock<ILogic<TopicType>>();
-            logic.Setup(m => m.Create(It.IsAny<TopicType>()));
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
@@ -205,6 +207,30 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Create(1, typeModel);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>();
+            logic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(type);
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Get(1);
+
+            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+            var asOk = response as OkObjectResult;
+            var model = asOk.Value as TypeModel;
+
+            Assert.AreEqual(model.Name, type.Name);
+
+            logic.VerifyAll();
+            finder.VerifyAll();
         }
 
     }

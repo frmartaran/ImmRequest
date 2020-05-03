@@ -47,5 +47,11 @@ namespace ImmRequest.WebApi.Controllers
             }
 
         }
+
+        [HttpGet("{id}")]
+        public ActionResult Get(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
