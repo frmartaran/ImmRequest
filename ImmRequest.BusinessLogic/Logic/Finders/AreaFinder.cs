@@ -17,7 +17,7 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
         }
         public Area Find(long id)
         {
-            throw new NotImplementedException();
+            return Repository.Get(id);
         }
 
         public Area Find(Predicate<bool> condition)
