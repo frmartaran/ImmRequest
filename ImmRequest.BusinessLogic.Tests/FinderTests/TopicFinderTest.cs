@@ -52,8 +52,8 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
 
             var finder = new TopicFinder(repository);
 
-            var areaFound = finder.Find(t => t.Id == 1);
-            Assert.AreEqual(area.Name, areaFound.Name);
+            var topicFound = finder.Find(t => t.Id == 1);
+            Assert.AreEqual(topic.Name, topicFound.Name);
         }
 
         [TestMethod]

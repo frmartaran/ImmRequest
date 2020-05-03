@@ -3,6 +3,7 @@ using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic.Finders
@@ -17,7 +18,10 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
         }
         public Topic Find(Predicate<Topic> condition)
         {
-            throw new NotImplementedException();
+            var topic = Repository.GetAll()
+                .Where(t => condition.Invoke(t))
+                .FirstOrDefault();
+            return topic;
         }
 
         public ICollection<Topic> FindAll()
