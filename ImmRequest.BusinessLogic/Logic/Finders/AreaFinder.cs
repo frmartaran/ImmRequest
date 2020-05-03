@@ -18,13 +18,6 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
         {
             Repository = repository;
         }
-        public Area Find(long id)
-        {
-            var area = Repository.Get(id);
-            LogicHelpers.WarnIfNotFound(area, BusinessResource.Action_Find,
-                BusinessResource.Entity_Area);
-            return area;
-        }
 
         public Area Find(Predicate<Area> condition)
         {

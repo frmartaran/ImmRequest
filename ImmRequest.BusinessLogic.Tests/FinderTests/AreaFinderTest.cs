@@ -35,56 +35,6 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
         }
 
         [TestMethod]
-        public void FindAreaTest()
-        {
-            var repository = CreateRepositoryWithContext("Find Test");
-            context.Areas.Add(area);
-            context.SaveChanges();
-
-            var finder = new AreaFinder(repository);
-            var areaFound = finder.Find(1);
-            Assert.AreEqual(area.Name, areaFound.Name);
-        }
-
-        [TestMethod]
-        public void FindAreaMockTest()
-        {
-            var mock = new Mock<IRepository<Area>>(MockBehavior.Strict);
-            mock.Setup(m => m.Get(It.IsAny<long>()))
-                .Returns(area);
-
-            var finder = new AreaFinder(mock.Object);
-            var areaFound = finder.Find(1);
-            mock.VerifyAll();
-        }
-
-
-        [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException))]
-        public void NotFoundTest()
-        {
-            var repository = CreateRepositoryWithContext("Not Found Test");
-
-            var finder = new AreaFinder(repository);
-            var areaFound = finder.Find(1);
-            Assert.IsNull(areaFound);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException))]
-
-        public void NotFoundMockTest()
-        {
-            var mock = new Mock<IRepository<Area>>(MockBehavior.Strict);
-            mock.Setup(m => m.Get(It.IsAny<long>()))
-                .Returns<Area>(null);
-
-            var finder = new AreaFinder(mock.Object);
-            var areaFound = finder.Find(1);
-            mock.VerifyAll();
-        }
-
-        [TestMethod]
         public void FindAreaWithConditionTest()
         {
             var repository = CreateRepositoryWithContext("Find Test");
@@ -93,7 +43,7 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
 
             var finder = new AreaFinder(repository);
 
-            var areaFound = finder.Find(a => a.Name == "Some Area");
+            var areaFound = finder.Find(a => a.Id == 1);
             Assert.AreEqual(area.Name, areaFound.Name);
         }
 
@@ -103,9 +53,10 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             var mock = new Mock<IRepository<Area>>(MockBehavior.Strict);
             mock.Setup(m => m.GetAll())
                 .Returns(new List<Area> { area });
+            area.Id = 1;
 
             var finder = new AreaFinder(mock.Object);
-            var areaFound = finder.Find(a => a.Name == "Some Area");
+            var areaFound = finder.Find(a => a.Id == 1);
             mock.VerifyAll();
         }
 
