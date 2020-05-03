@@ -74,9 +74,13 @@ namespace ImmRequest.WebApi.Controllers
         }
 
         [HttpGet("All/{id}")]
-        public ActionResult GetAll(long id)
+        public ActionResult GetAll(long parentTopicId)
         {
-            throw new NotImplementedException();
+            var all = Logic.GetAll()
+                .Where(t => t.ParentTopicId == parentTopicId)
+                .ToList();
+            var models = TypeModel.ToModel(all);
+            return Ok(models);
         }
 
     }

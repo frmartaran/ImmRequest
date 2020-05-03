@@ -279,10 +279,12 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void GetAllFromParentTopicTest()
         {
+
+            type.ParentTopicId = 1;
             var typeModel = TypeModel.ToModel(type);
             var logic = new Mock<ILogic<TopicType>>();
             logic.Setup(m => m.GetAll())
-                .Returns(new List<TopicType> { type });
+                .Returns(new List<TopicType> { type, new TopicType() });
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
