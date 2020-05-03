@@ -94,5 +94,30 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             var areaFound = finder.Find(t => t.Id == 1);
             mock.VerifyAll();
         }
+
+        [TestMethod]
+        public void FindAllTest()
+        {
+            var repository = CreateRepositoryWithContext("Find Test");
+            context.Areas.Add(area);
+            context.SaveChanges();
+
+            var finder = new TopicFinder(repository);
+
+            var areas = finder.FindAll();
+            Assert.AreEqual(1, areas.Count);
+        }
+
+        [TestMethod]
+        public void FindAllMock()
+        {
+            var mock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            mock.Setup(m => m.GetAll())
+                .Returns(new List<Topic> { topic });
+
+            var finder = new TopicFinder(mock.Object);
+            var areaFound = finder.FindAll();
+            mock.VerifyAll();
+        }
     }
 }
