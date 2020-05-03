@@ -25,6 +25,7 @@ namespace ImmRequest.BusinessLogic.Logic
         {
             if (Validator.IsValid(objectToCreate))
             {
+                objectToCreate.ParentTopic.Types.Add(objectToCreate);
                 Repository.Insert(objectToCreate);
             }
         }
