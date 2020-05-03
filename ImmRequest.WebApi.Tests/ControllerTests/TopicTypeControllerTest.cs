@@ -264,14 +264,14 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
-            var response = controller.Get(1);
+            var response = controller.GetAll();
 
             Assert.IsInstanceOfType(response, OkType);
 
             var asOk = response as OkObjectResult;
-            var models = asOk.Value as List<TypeModel>;
+            var models = asOk.Value as IEnumerable<TypeModel>;
 
-            Assert.AreEqual(1, models.Count);
+            Assert.AreEqual(1, models.Count());
             Assert.AreEqual(models.First().Name, type.Name);
 
         }
