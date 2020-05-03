@@ -85,7 +85,8 @@ namespace ImmRequest.WebApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(long id)
         {
-            throw new NotImplementedException();
+            Logic.Delete(id);
+            return Ok("Deleted");
         }
 
     }
