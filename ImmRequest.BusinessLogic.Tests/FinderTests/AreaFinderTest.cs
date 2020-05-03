@@ -101,8 +101,8 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
         public void FindAreaWithConditionMockTest()
         {
             var mock = new Mock<IRepository<Area>>(MockBehavior.Strict);
-            mock.Setup(m => m.Get(It.IsAny<long>()))
-                .Returns(area);
+            mock.Setup(m => m.GetAll())
+                .Returns(new List<Area> { area });
 
             var finder = new AreaFinder(mock.Object);
             var areaFound = finder.Find(a => a.Name == "Some Area");

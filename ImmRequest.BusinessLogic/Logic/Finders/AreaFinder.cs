@@ -5,6 +5,7 @@ using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Logic.Finders
@@ -27,7 +28,10 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
 
         public Area Find(Predicate<Area> condition)
         {
-            throw new NotImplementedException();
+            var area = Repository.GetAll()
+                .Where(a => condition.Invoke(a))
+                .FirstOrDefault();
+            return area;
         }
 
         public List<Area> FindAll()
