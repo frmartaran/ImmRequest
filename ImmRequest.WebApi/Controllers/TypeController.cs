@@ -99,9 +99,18 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(long id, [FromBody] TypeModel model)
         {
-            var type = model.ToDomain();
-            Logic.Update(type);
-            return Ok("Updated");
+            try
+            {
+                var type = model.ToDomain();
+                type.Id = id;
+                Logic.Update(type);
+                return Ok("Updated");
+            }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
 
     }
