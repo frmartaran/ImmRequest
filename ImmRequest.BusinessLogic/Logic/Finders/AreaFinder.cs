@@ -40,5 +40,10 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
         {
             throw new NotImplementedException();
         }
+
+        public List<Area> FindAll(Predicate<Area> condition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
