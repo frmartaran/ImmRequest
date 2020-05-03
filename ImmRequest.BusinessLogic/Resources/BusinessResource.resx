@@ -120,6 +120,9 @@
   <data name="Action_Delete" xml:space="preserve">
     <value>Deleting</value>
   </data>
+  <data name="Action_Find" xml:space="preserve">
+    <value>Finding</value>
+  </data>
   <data name="Action_Get" xml:space="preserve">
     <value>Retrieving</value>
   </data>

@@ -70,6 +70,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finding.
+        /// </summary>
+        public static string Action_Find {
+            get {
+                return ResourceManager.GetString("Action_Find", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retrieving.
         /// </summary>
         public static string Action_Get {

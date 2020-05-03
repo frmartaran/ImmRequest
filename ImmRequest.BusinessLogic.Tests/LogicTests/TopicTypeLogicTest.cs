@@ -38,7 +38,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             topic = new Topic
             {
                 Name = "Topic",
-                Area = area
+                Area = area,
+                Types = new List<TopicType>(),
             };
 
             type = new TopicType

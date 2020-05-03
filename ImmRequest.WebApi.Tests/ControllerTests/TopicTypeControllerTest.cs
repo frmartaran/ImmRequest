@@ -1,7 +1,11 @@
-﻿using ImmRequest.Domain;
+﻿using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
+using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -153,6 +157,18 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.AreEqual(model.RangeValues.First(), entity.Start.ToString());
             Assert.AreEqual(model.RangeValues.Skip(1).First(), entity.End.ToString());
 
+        }
+
+        [TestMethod]
+        public void CreateTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>();
+            logic.Setup(m => m.Create(It.IsAny<TopicType>()));
+            var controller = new TypeController(logic.Object);
+            var response = controller.Create(1, typeModel);
+
+            Assert.IsInstanceOfType(typeModel, typeof(OkObjectResult));
         }
     }
 }
