@@ -190,5 +190,22 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
         }
 
+        [TestMethod]
+        public void ParentTopicNotFoundTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>();
+            logic.Setup(m => m.Create(It.IsAny<TopicType>()));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Create(1, typeModel);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+        }
+
     }
 }
