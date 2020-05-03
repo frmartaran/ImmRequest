@@ -316,6 +316,22 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             finder.VerifyAll();
         }
 
+        [TestMethod]
+        public void DeleteNotFoundTest()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Delete(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Delete(1);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
 
     }
 }
