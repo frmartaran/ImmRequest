@@ -31,6 +31,8 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
             var area = Repository.GetAll()
                 .Where(a => condition.Invoke(a))
                 .FirstOrDefault();
+            LogicHelpers.WarnIfNotFound(area, BusinessResource.Action_Find,
+                BusinessResource.Entity_Area);
             return area;
         }
 
