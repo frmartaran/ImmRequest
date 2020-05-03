@@ -1,5 +1,6 @@
 ﻿using ImmRequest.BusinessLogic.Helpers;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using System;
@@ -19,7 +20,8 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
         public Area Find(long id)
         {
             var area = Repository.Get(id);
-            LogicHelpers.WarnIfNotFound(area, "Find", "Area");
+            LogicHelpers.WarnIfNotFound(area, BusinessResource.Action_Find,
+                BusinessResource.Entity_Area);
             return area;
         }
 
