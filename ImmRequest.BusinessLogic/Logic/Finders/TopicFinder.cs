@@ -30,7 +30,7 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
 
         public ICollection<Topic> FindAll()
         {
-            throw new NotImplementedException();
+            return Repository.GetAll();
         }
 
         public ICollection<Topic> FindAll(Predicate<Topic> condition)

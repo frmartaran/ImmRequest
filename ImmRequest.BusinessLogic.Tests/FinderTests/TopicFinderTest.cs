@@ -84,7 +84,7 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
 
         [TestMethod]
         [ExpectedException(typeof(BusinessLogicException))]
-        public void FindAreaWithConditionMockTest()
+        public void NotFoundMockTest()
         {
             var mock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             mock.Setup(m => m.GetAll())
@@ -98,14 +98,14 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
         [TestMethod]
         public void FindAllTest()
         {
-            var repository = CreateRepositoryWithContext("Find Test");
-            context.Areas.Add(area);
+            var repository = CreateRepositoryWithContext("Find All Test");
+            context.Topics.Add(topic);
             context.SaveChanges();
 
             var finder = new TopicFinder(repository);
 
-            var areas = finder.FindAll();
-            Assert.AreEqual(1, areas.Count);
+            var topics = finder.FindAll();
+            Assert.AreEqual(1, topics.Count);
         }
 
         [TestMethod]
