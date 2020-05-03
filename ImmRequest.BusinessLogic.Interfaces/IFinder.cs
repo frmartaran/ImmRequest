@@ -11,6 +11,6 @@ namespace ImmRequest.BusinessLogic.Interfaces
 
         List<T> FindAll();
 
-        T Find(Predicate<bool> condition);
+        T Find(Predicate<T> condition);
     }
 }

@@ -25,7 +25,7 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
             return area;
         }
 
-        public Area Find(Predicate<bool> condition)
+        public Area Find(Predicate<Area> condition)
         {
             throw new NotImplementedException();
         }
