@@ -6,6 +6,7 @@ using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.WebApi.Models;
+using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,8 +35,9 @@ namespace ImmRequest.WebApi.Controllers
                 var type = model.ToDomain();
                 type.ParentTopic = parentTopic;
                 Logic.Create(type);
-
-                return Ok("Type Created");
+                var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Type,
+                    WebApiResource.Action_Created);
+                return Ok(responseMessage);
             }
             catch (ValidationException exception)
             {
@@ -88,7 +90,9 @@ namespace ImmRequest.WebApi.Controllers
             try
             {
                 Logic.Delete(id);
-                return Ok("Deleted");
+                var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Type,
+                        WebApiResource.Action_Deleted);
+                return Ok(responseMessage);
             }
             catch (BusinessLogicException exception)
             {
@@ -104,7 +108,9 @@ namespace ImmRequest.WebApi.Controllers
                 var type = model.ToDomain();
                 type.Id = id;
                 Logic.Update(type);
-                return Ok("Updated");
+                var message = string.Format("{0}: {1} {2}", WebApiResource.Entities_Type,
+                    type.Name, WebApiResource.Action_Updated);
+                return Ok(message);
             }
             catch (ValidationException exception)
             {
