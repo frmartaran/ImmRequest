@@ -119,5 +119,40 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             var areaFound = finder.FindAll();
             mock.VerifyAll();
         }
+
+        [TestMethod]
+        public void FindAllWithConditionTest()
+        {
+            var repository = CreateRepositoryWithContext("Find All With Condition Test");
+            var otherTopic = new Topic
+            {
+                Area = area,
+            };
+            context.Topics.Add(topic);
+            context.Topics.Add(otherTopic);
+            context.SaveChanges();
+
+            var finder = new TopicFinder(repository);
+
+            var topics = finder.FindAll(t => t.AreaId == area.Id);
+            Assert.AreEqual(2, topics.Count);
+        }
+
+        [TestMethod]
+        public void FindAllWithConditionMock()
+        {
+            var mock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var otherTopic = new Topic
+            {
+                Area = area,
+            };
+            mock.Setup(m => m.GetAll())
+                .Returns(new List<Topic> { topic, otherTopic });
+            area.Id = 1;
+
+            var finder = new TopicFinder(mock.Object);
+            var areaFound = finder.FindAll(t => t.AreaId == 1);
+            mock.VerifyAll();
+        }
     }
 }
