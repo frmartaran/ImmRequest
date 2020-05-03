@@ -41,6 +41,10 @@ namespace ImmRequest.WebApi.Controllers
             {
                 return BadRequest(exception.Message);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
 
         }
     }
