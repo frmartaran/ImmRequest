@@ -16,9 +16,12 @@ namespace ImmRequest.WebApi.Controllers
     {
         private ILogic<TopicType> Logic { get; set; }
 
-        public TypeController(ILogic<TopicType> logic)
+        private IFinder<Topic> Finder { get; set; }
+
+        public TypeController(ILogic<TopicType> logic, IFinder<Topic> finder)
         {
             Logic = logic;
+            Finder = finder;
         }
 
         [HttpPost("{id}")]

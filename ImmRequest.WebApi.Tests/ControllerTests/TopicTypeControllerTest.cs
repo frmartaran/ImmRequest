@@ -165,7 +165,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var typeModel = TypeModel.ToModel(type);
             var logic = new Mock<ILogic<TopicType>>();
             logic.Setup(m => m.Create(It.IsAny<TopicType>()));
-            var controller = new TypeController(logic.Object);
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
+                .Returns(new Topic());
+            var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Create(1, typeModel);
 
             Assert.IsInstanceOfType(typeModel, typeof(OkObjectResult));
