@@ -48,7 +48,7 @@ namespace ImmRequest.DataAccess.Context
 
             builder.Entity<DateTimeField>()
             .Property(nf => nf.End);
-            
+
 
             builder.Entity<CitizenRequest>()
                 .HasOne(cr => cr.Area)
@@ -57,11 +57,6 @@ namespace ImmRequest.DataAccess.Context
 
             builder.Entity<CitizenRequest>()
                 .HasOne(cr => cr.Topic)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<CitizenRequest>()
-                .HasOne(cr => cr.TopicType)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
 

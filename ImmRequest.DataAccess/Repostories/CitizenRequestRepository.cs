@@ -40,6 +40,7 @@ namespace ImmRequest.DataAccess.Repositories
         public CitizenRequest Get(long id)
         {
             return Context.CitizenRequests
+                .IgnoreQueryFilters()
                 .Include(cr => cr.Area)
                 .Include(cr => cr.Topic)
                 .Include(cr => cr.TopicType)
@@ -50,6 +51,7 @@ namespace ImmRequest.DataAccess.Repositories
         public ICollection<CitizenRequest> GetAll()
         {
             return Context.CitizenRequests
+                .IgnoreQueryFilters()
                 .Include(cr => cr.Area)
                 .Include(cr => cr.Topic)
                 .Include(cr => cr.TopicType)
