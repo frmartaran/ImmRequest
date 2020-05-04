@@ -169,6 +169,15 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Entities_Type {
+            get {
+                return ResourceManager.GetString("Entities_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error login in. Please check your credentials..
         /// </summary>
         public static string SessionController_UserNotFound {

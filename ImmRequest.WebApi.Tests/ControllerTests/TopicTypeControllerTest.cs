@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Controllers;
@@ -6,12 +7,10 @@ using ImmRequest.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
+using System.Security.Policy;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
 {
@@ -24,6 +23,9 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         private NumberField numberField;
         private DateTimeField datesField;
         private TextField textField;
+
+        private Type OkType = typeof(OkObjectResult);
+        private Type BadRequestType = typeof(BadRequestObjectResult);
 
         [TestInitialize]
         public void SetUp()
@@ -163,12 +165,223 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void CreateTest()
         {
             var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>();
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Create(It.IsAny<TopicType>()));
-            var controller = new TypeController(logic.Object);
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
+                .Returns(new Topic());
+            var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Create(1, typeModel);
 
-            Assert.IsInstanceOfType(typeModel, typeof(OkObjectResult));
+            Assert.IsInstanceOfType(response, OkType);
         }
+
+        [TestMethod]
+        public void CreateWithValidationErrorTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Create(It.IsAny<TopicType>()))
+                .Throws(new ValidationException(""));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
+                .Returns(new Topic());
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Create(1, typeModel);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void ParentTopicNotFoundTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Create(1, typeModel);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(type);
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Get(1);
+
+            Assert.IsInstanceOfType(response, OkType);
+            var asOk = response as OkObjectResult;
+            var model = asOk.Value as TypeModel;
+
+            Assert.AreEqual(model.Name, type.Name);
+
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetNotFoundTest()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Get(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Get(1);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.GetAll())
+                .Returns(new List<TopicType> { type });
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.GetAll();
+
+            Assert.IsInstanceOfType(response, OkType);
+
+            var asOk = response as OkObjectResult;
+            var models = asOk.Value as IEnumerable<TypeModel>;
+
+            Assert.AreEqual(1, models.Count());
+            Assert.AreEqual(models.First().Name, type.Name);
+
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAllFromParentTopicTest()
+        {
+
+            type.ParentTopicId = 1;
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.GetAll())
+                .Returns(new List<TopicType> { type, new TopicType() });
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.GetAll(1);
+
+            Assert.IsInstanceOfType(response, OkType);
+
+            var asOk = response as OkObjectResult;
+            var models = asOk.Value as IEnumerable<TypeModel>;
+
+            Assert.AreEqual(1, models.Count());
+            Assert.AreEqual(models.First().Name, type.Name);
+
+            logic.VerifyAll();
+            finder.VerifyAll();
+
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Delete(It.IsAny<long>()));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Delete(1);
+
+            Assert.IsInstanceOfType(response, OkType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void DeleteNotFoundTest()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Delete(It.IsAny<long>()))
+                .Throws(new BusinessLogicException(""));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Delete(1);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var model = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Update(It.IsAny<TopicType>()));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Update(1, model);
+
+            Assert.IsInstanceOfType(response, OkType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void UpdateWithValidationErrorTest()
+        {
+            var model = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Update(It.IsAny<TopicType>()))
+                .Throws(new ValidationException(""));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Update(1, model);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void UpdateNotFoundTest()
+        {
+            var model = TypeModel.ToModel(type);
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Update(It.IsAny<TopicType>()))
+                .Throws(new BusinessLogicException(""));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Update(1, model);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+
     }
 }

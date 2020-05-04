@@ -153,6 +153,9 @@
   <data name="Entities_Administrator" xml:space="preserve">
     <value>Administrator</value>
   </data>
+  <data name="Entities_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
   <data name="SessionController_UserNotFound" xml:space="preserve">
     <value>There was an error login in. Please check your credentials.</value>
   </data>

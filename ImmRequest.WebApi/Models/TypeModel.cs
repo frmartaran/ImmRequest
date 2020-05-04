@@ -27,10 +27,12 @@ namespace ImmRequest.WebApi.Models
             var type = new TopicType
             {
                 Name = Name,
+                AllFields = Fields.Select(fm => fm.ToDomain()).ToList()
             };
 
             if (Id.HasValue)
                 type.Id = Id.Value;
+            
 
             return type;
         }
