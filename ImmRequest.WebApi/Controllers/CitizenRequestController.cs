@@ -9,6 +9,7 @@ using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace ImmRequest.WebApi.Controllers
 {
@@ -18,9 +19,15 @@ namespace ImmRequest.WebApi.Controllers
     {
         private ILogic<CitizenRequest> CitizenRequestLogic { get; set; }
 
-        public CitizenRequestController(ILogic<CitizenRequest> CitizenRequestLogic)
+        private IFinder<Topic> TopicFinder { get; set; }
+
+        private IFinder<Area> AreaFinder { get; set; }
+
+        public CitizenRequestController(ILogic<CitizenRequest> CitizenRequestLogic, IFinder<Topic> TopicFinder, IFinder<Area> AreaFinder)
         {
             this.CitizenRequestLogic = CitizenRequestLogic;
+            this.TopicFinder = TopicFinder;
+            this.AreaFinder = AreaFinder;
         }
 
         [HttpPost]
@@ -68,6 +75,38 @@ namespace ImmRequest.WebApi.Controllers
                 var statusRequestMessage = string.Format(WebApiResource.CitizenRequest_GetStatusMessage,
                     request.CitizenName, request.Description, request.Status.ToString());
                 return Ok(statusRequestMessage);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        }
+
+        [HttpGet("areas")]
+        public IActionResult GetAllAreas()
+        {
+            try
+            {
+                var allAreas = AreaFinder.FindAll();
+                var allAreasModel = AreaModel.ToModel(allAreas);
+                return Ok(allAreasModel);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        }
+
+        [HttpGet("topics/{parentAreaId}")]
+        public ActionResult GetAllTopicsFromArea(long parentAreaId)
+        {
+            try
+            {
+                var all = TopicFinder.FindAll()
+                    .Where(t => t.AreaId == parentAreaId)
+                    .ToList();
+                var models = TopicModel.ToModel(all);
+                return Ok(models);
             }
             catch (BusinessLogicException exception)
             {
