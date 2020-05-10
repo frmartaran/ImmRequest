@@ -16,5 +16,7 @@ namespace ImmRequest.BusinessLogic.Extensions
         public IRepository<TopicType> TopicTypeRepository { get; set; }
 
         public IRepository<BaseField> FieldRepository { get; set; }
+
+        public IRepository<CitizenRequest> CitizenRequestRepository { get; set; }
     }
 }
