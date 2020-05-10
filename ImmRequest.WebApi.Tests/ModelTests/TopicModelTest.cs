@@ -49,5 +49,26 @@ namespace ImmRequest.WebApi.Tests.ModelTests
             Assert.AreEqual(topic.Name, topicModel.Name);
             Assert.AreEqual(topic.Types.FirstOrDefault().Id, topicModel.Types.FirstOrDefault().Id);
         }
+
+        [TestMethod]
+        public void ToDomain()
+        {
+            var topicModel = TopicModel.ToModel
+            (
+                new List<Topic>
+                {
+                    topic
+                }
+            )
+            .ToList()
+            .FirstOrDefault();
+
+            var request = topicModel.ToDomain();
+
+            Assert.AreEqual(topicModel.Id, request.Id);
+            Assert.AreEqual(topicModel.AreaId, request.AreaId);
+            Assert.AreEqual(topicModel.Name, request.Name);
+            Assert.AreEqual(topicModel.Types.FirstOrDefault().Id, request.Types.FirstOrDefault().Id);
+        }
     }
 }
