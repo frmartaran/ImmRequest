@@ -26,5 +26,18 @@ namespace ImmRequest.WebApi.Models
                 .ToList();
             return this;
         }
+
+        public override Topic ToDomain()
+        {
+            return new Topic
+            {
+                Id = Id,
+                AreaId = AreaId,
+                Name = Name,
+                Types = TypeModel
+                    .ToEntity(Types)
+                    .ToList()
+            };
+        }
     }
 }
