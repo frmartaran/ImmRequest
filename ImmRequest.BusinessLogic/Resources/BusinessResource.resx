@@ -160,7 +160,7 @@
     <value>Description in request is invalid.</value>
   </data>
   <data name="ValidationError_EmailIsInvalid" xml:space="preserve">
-    <value>Email in request is invalid.</value>
+    <value>Email is invalid.</value>
   </data>
   <data name="ValidationError_FieldDoesntExists" xml:space="preserve">
     <value>Field {0} in request doesnt exist.</value>

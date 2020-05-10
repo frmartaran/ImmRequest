@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Resources;
@@ -41,7 +42,21 @@ namespace ImmRequest.BusinessLogic
         private void ValidateEmail(Administrator objectToValidate)
         {
             ValidateEmailsIsNotEmpty(objectToValidate);
+            ValidateEmailFormat(objectToValidate);
             ValidateEmailIsUnique(objectToValidate);
+        }
+
+        private static void ValidateEmailFormat(Administrator objectToValidate)
+        {
+            try
+            {
+                new MailAddress(objectToValidate.Email);
+            }
+            catch (FormatException)
+            {
+                throw new ValidationException(BusinessResource.ValidationError_EmailIsInvalid);
+
+            }
         }
 
         private void ValidateEmailIsUnique(Administrator objectToValidate)
