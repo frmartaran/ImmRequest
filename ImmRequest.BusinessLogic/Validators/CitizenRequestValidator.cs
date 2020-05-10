@@ -42,10 +42,33 @@ namespace ImmRequest.BusinessLogic.Validators
             IsCitizenNameValid(objectToValidate.CitizenName);
             IsDescriptionValid(objectToValidate.Description);
             IsEmailValid(objectToValidate.Email);
+            IsRequestStatusValid(objectToValidate);
             IsAreaValid(objectToValidate.AreaId);
             IsTopicValid(objectToValidate.AreaId, objectToValidate.TopicId);
             IsTopicTypeValid(objectToValidate.AreaId, objectToValidate.TopicId, objectToValidate.TopicTypeId);
             AreBaseFieldValuesValid(objectToValidate.Values);            
+            return true;
+        }
+
+        protected bool IsRequestStatusValid(CitizenRequest objectToValidate)
+        {
+            var existingRequest = CitizenRequestRepository.Get(objectToValidate.Id);
+            if(existingRequest != null)
+            {
+                if (!StatusUpdatedIsValid(existingRequest.Status, objectToValidate.Status))
+                {
+                    var exception = string.Format(BusinessResource.ValidationError_UpdateRequestStatusIsInvalid,
+                        existingRequest.Status.ToString(), objectToValidate.Status.ToString());
+                    throw new ValidationException(exception);
+                }
+            }
+            else
+            {
+                if(objectToValidate.Status != RequestStatus.Created)
+                {
+                    throw new ValidationException(BusinessResource.ValidationError_CreateRequestStatusIsInvalid);
+                }
+            }
             return true;
         }
 
