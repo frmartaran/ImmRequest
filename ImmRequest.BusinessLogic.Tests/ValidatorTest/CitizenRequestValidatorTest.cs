@@ -9,7 +9,7 @@ using ImmRequest.Domain.Fields;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
+using ImmRequest.Domain.Enums;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -304,6 +304,83 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             CreateContextFor("DescriptionIsInvalid");
             IsDescriptionValid("");
+        }
+
+        [TestMethod]
+        public void StatusUpdatedIsValidOldStatusEqualsNewStatus()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Acepted, RequestStatus.Acepted);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedIsValidOldStatusCreated()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Created, RequestStatus.OnRevision);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedInvalidOldStatusCreated()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Created, RequestStatus.Ended);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedIsValidOldStatusEnded()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Ended, RequestStatus.Declined);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedInvalidOldStatusEnded()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Ended, RequestStatus.Created);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedIsValidOldStatusOnRevisionNewStatusIsNext()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.OnRevision, RequestStatus.Declined);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedIsValidOldStatusOnRevisionNewStatusIsPrevious()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.OnRevision, RequestStatus.Created);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedInvalidOldStatusOnRevision()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.OnRevision, RequestStatus.Ended);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedIsValidOldStatusAceptedOrDeclinedNewStatusIsNext()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Declined, RequestStatus.Ended);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedIsValidOldStatusAceptedOrDeclinedNewStatusIsPrevious()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Acepted, RequestStatus.OnRevision);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void StatusUpdatedInvalidOldStatusAceptedOrDeclined()
+        {
+            var result = StatusUpdatedIsValid(RequestStatus.Declined, RequestStatus.Created);
+            Assert.IsFalse(result);
         }
     }
 }
