@@ -123,5 +123,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             validator.IsValid(administrator);
         }
 
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsNotValidEmailFormat()
+        {
+            var mockRepository = new Mock<IRepository<Administrator>>().Object;
+            var validator = new AdministratorValidator(mockRepository);
+            administrator.Email = "julie";
+
+            validator.IsValid(administrator);
+        }
+
     }
 }
