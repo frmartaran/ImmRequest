@@ -18,7 +18,9 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
     {
         public ImmDbContext context;
 
-        public CitizenRequest citizenRequest;
+        public CitizenRequest firstCitizenRequest;
+
+        public CitizenRequest secondCitizenRequest;
 
         public TextField additionalTextValues;
 
@@ -85,13 +87,13 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 Value = "Credencial"
             };
 
-            citizenRequest = new CitizenRequest
+            firstCitizenRequest = new CitizenRequest
             {
                 CitizenName = "Francisco",
                 Description = "Quiero mi credencial!",
                 Email = "immrequest@gmail.com",
                 Phone = "21233457",
-                Status = Domain.Enums.RequestStatus.Created,
+                Status = RequestStatus.Created,
                 AreaId = 1,
                 TopicId = 1,
                 TopicTypeId = 1,
@@ -99,7 +101,23 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 {
                     requestFieldValue
                 }
-            };            
+            };
+
+            secondCitizenRequest = new CitizenRequest
+            {
+                CitizenName = "Francisco",
+                Description = "Quiero mi credencial!",
+                Email = "immrequest@gmail.com",
+                Phone = "21233457",
+                Status = RequestStatus.Declined,
+                AreaId = 1,
+                TopicId = 1,
+                TopicTypeId = 1,
+                Values = new List<RequestFieldValues>
+                {
+                    requestFieldValue
+                }
+            };
         }
 
         private void CreateContextFor(string contextName)
@@ -110,6 +128,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             TopicRepository = new TopicRepository(context);
             TopicTypeRepository = new TopicTypeRepository(context);
             FieldRepository = new FieldsRepository(context);
+            CitizenRequestRepository = new CitizenRequestRepository(context);
 
             FieldRepository.Insert(additionalTextValues);
             TopicTypeRepository.Insert(topicType);
@@ -161,7 +180,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void BaseFieldsAreValid()
         {
             CreateContextFor("BaseFieldsAreValid");
-            var isValid = AreBaseFieldValuesValid(citizenRequest.Values);
+            var isValid = AreBaseFieldValuesValid(firstCitizenRequest.Values);
             Assert.IsTrue(isValid);
         }
 
@@ -171,7 +190,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             CreateContextFor("BaseFieldsAreInvalid");
             requestFieldValue.Value = "Panaderia";
-            AreBaseFieldValuesValid(citizenRequest.Values);
+            AreBaseFieldValuesValid(firstCitizenRequest.Values);
         }
 
         [TestMethod]
@@ -181,7 +200,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             CreateContextFor("BaseFieldsAreInvalid");
             requestFieldValue.Value = "Panaderia";
             requestFieldValue.FieldId = 2;
-            AreBaseFieldValuesValid(citizenRequest.Values);
+            AreBaseFieldValuesValid(firstCitizenRequest.Values);
         }
 
         [TestMethod]
@@ -192,7 +211,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             context.Fields.Remove(numberField);
             context.SaveChanges();
             requestFieldValue.FieldId = 2;
-            AreBaseFieldValuesValid(citizenRequest.Values);
+            AreBaseFieldValuesValid(firstCitizenRequest.Values);
         }
 
         [TestMethod]
@@ -216,7 +235,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void AreaIsValid()
         {
             CreateContextFor("AreaIsValid");
-            var isValid = IsAreaValid(citizenRequest.AreaId);
+            var isValid = IsAreaValid(firstCitizenRequest.AreaId);
             Assert.IsTrue(isValid);
         }
         [TestMethod]
@@ -231,7 +250,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void TopicIsValid()
         {
             CreateContextFor("TopicIsValid");
-            var isValid = IsTopicValid(citizenRequest.AreaId, citizenRequest.TopicId);
+            var isValid = IsTopicValid(firstCitizenRequest.AreaId, firstCitizenRequest.TopicId);
             Assert.IsTrue(isValid);
         }
         [TestMethod]
@@ -239,7 +258,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void TopicIsInvalid()
         {
             CreateContextFor("TopicIsInvalid");
-            IsTopicValid(citizenRequest.AreaId, 150);
+            IsTopicValid(firstCitizenRequest.AreaId, 150);
         }
 
         [TestMethod]
@@ -254,7 +273,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void TopicTypeIsValid()
         {
             CreateContextFor("TopicTypeIsValid");
-            var isValid = IsTopicTypeValid(citizenRequest.AreaId, citizenRequest.TopicId, citizenRequest.TopicTypeId);
+            var isValid = IsTopicTypeValid(firstCitizenRequest.AreaId, firstCitizenRequest.TopicId, firstCitizenRequest.TopicTypeId);
             Assert.IsTrue(isValid);
         }
         [TestMethod]
@@ -262,7 +281,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void TopicTypeIsInvalid()
         {
             CreateContextFor("TopicTypeIsInvalid");
-            IsTopicTypeValid(citizenRequest.AreaId, citizenRequest.TopicId, 150);
+            IsTopicTypeValid(firstCitizenRequest.AreaId, firstCitizenRequest.TopicId, 150);
         }
 
 
@@ -271,7 +290,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void TopicTypeIsInvalidTopicSelectedIsNotParentTest()
         {
             CreateContextFor("TopicTypeIsInvalid");
-            IsTopicTypeValid(citizenRequest.AreaId, 3, 1);
+            IsTopicTypeValid(firstCitizenRequest.AreaId, 3, 1);
         }
 
         [TestMethod]
@@ -381,6 +400,64 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             var result = StatusUpdatedIsValid(RequestStatus.Declined, RequestStatus.Created);
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void IsRequestStatusValidCreateRequest()
+        {
+            CreateContextFor("IsRequestStatusValidCreateRequest");
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns((CitizenRequest)null);
+
+            CitizenRequestRepository = mockRepository.Object;
+
+            var result = IsRequestStatusValid(firstCitizenRequest);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsRequestStatusInvalidCreateRequest()
+        {
+            CreateContextFor("IsRequestStatusInvalidCreateRequest");
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns((CitizenRequest)null);
+            firstCitizenRequest.Status = RequestStatus.Declined;
+
+            CitizenRequestRepository = mockRepository.Object;
+
+            IsRequestStatusValid(firstCitizenRequest);
+        }
+
+        [TestMethod]
+        public void IsRequestStatusValidUpdateRequest()
+        {
+            CreateContextFor("IsRequestStatusValidUpdateRequest");
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(firstCitizenRequest);
+            secondCitizenRequest.Status = RequestStatus.OnRevision;
+
+            CitizenRequestRepository = mockRepository.Object;
+
+            var result = IsRequestStatusValid(secondCitizenRequest);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void IsRequestStatusInvalidUpdateRequest()
+        {
+            CreateContextFor("IsRequestStatusInvalidUpdateRequest");
+            var mockRepository = new Mock<IRepository<CitizenRequest>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(firstCitizenRequest);
+
+            CitizenRequestRepository = mockRepository.Object;
+
+            IsRequestStatusValid(secondCitizenRequest);
         }
     }
 }
