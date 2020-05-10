@@ -13,7 +13,7 @@ namespace ImmRequest.WebApi.Models
 
         public ICollection<TopicModel> Topics { get; set; }
 
-        public override AreaModel SetModel(Area entity)
+        public override AreaModel SetModel(Area entity) 
         {
             Id = entity.Id;
             Name = entity.Name;
