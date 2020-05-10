@@ -22,5 +22,17 @@ namespace ImmRequest.WebApi.Models
                 .ToList();
             return this;
         }
+
+        public override Area ToDomain()
+        {
+            return new Area
+            {
+                Id = Id,
+                Name = Name,
+                Topics = TopicModel
+                .ToEntity(Topics)
+                .ToList()
+            };
+        }
     }
 }
