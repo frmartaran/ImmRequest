@@ -55,5 +55,25 @@ namespace ImmRequest.WebApi.Tests.ModelTests
             Assert.AreEqual(area.Name, areaModel.Name);
             Assert.AreEqual(area.Topics.FirstOrDefault().Id, areaModel.Topics.FirstOrDefault().Id);
         }
+
+        [TestMethod]
+        public void ToDomain()
+        {
+            var areaModel = AreaModel.ToModel
+            (
+                new List<Area>
+                {
+                    area
+                }
+            )
+            .ToList()
+            .FirstOrDefault();
+
+            var request = areaModel.ToDomain();
+
+            Assert.AreEqual(areaModel.Id, request.Id);
+            Assert.AreEqual(areaModel.Name, request.Name);
+            Assert.AreEqual(areaModel.Topics.FirstOrDefault().Id, request.Topics.FirstOrDefault().Id);
+        }
     }
 }
