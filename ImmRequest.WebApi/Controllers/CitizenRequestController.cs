@@ -66,7 +66,7 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
-        [HttpGet("status/{id}")]
+        [HttpGet("Status/{id}")]
         public IActionResult GetCitizenRequestStatus(long requestId)
         {
             try
@@ -82,7 +82,7 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
-        [HttpGet("areas")]
+        [HttpGet("Areas")]
         public IActionResult GetAllAreas()
         {
             try
@@ -97,14 +97,12 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
-        [HttpGet("topics/{parentAreaId}")]
+        [HttpGet("Topics/{parentAreaId}")]
         public ActionResult GetAllTopicsFromArea(long parentAreaId)
         {
             try
             {
-                var all = TopicFinder.FindAll()
-                    .Where(t => t.AreaId == parentAreaId)
-                    .ToList();
+                var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId);
                 var models = TopicModel.ToModel(all);
                 return Ok(models);
             }
