@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using ImmRequest.BusinessLogic.Resources;
 using System.Net.Mail;
 using ImmRequest.Domain.Exceptions;
+using ImmRequest.Domain.Enums;
+using ImmRequest.BusinessLogic.Helpers;
 
 namespace ImmRequest.BusinessLogic.Validators
 {
@@ -22,6 +24,8 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected IRepository<BaseField> FieldRepository { get; set; }
 
+        protected IRepository<CitizenRequest> CitizenRequestRepository { get; set; }
+
         protected CitizenRequestValidator() { }
 
         public CitizenRequestValidator(CitizenRequestValidatorInput repositories)
@@ -30,6 +34,7 @@ namespace ImmRequest.BusinessLogic.Validators
             TopicRepository = repositories.TopicRepository;
             TopicTypeRepository = repositories.TopicTypeRepository;
             FieldRepository = repositories.FieldRepository;
+            CitizenRequestRepository = repositories.CitizenRequestRepository;
         }
 
         public bool IsValid(CitizenRequest objectToValidate)
@@ -40,8 +45,15 @@ namespace ImmRequest.BusinessLogic.Validators
             IsAreaValid(objectToValidate.AreaId);
             IsTopicValid(objectToValidate.AreaId, objectToValidate.TopicId);
             IsTopicTypeValid(objectToValidate.AreaId, objectToValidate.TopicId, objectToValidate.TopicTypeId);
-            AreBaseFieldValuesValid(objectToValidate.Values);
+            AreBaseFieldValuesValid(objectToValidate.Values);            
             return true;
+        }
+
+        protected bool StatusUpdatedIsValid(RequestStatus oldStatus, RequestStatus newStatus)
+        {
+            return oldStatus == newStatus 
+                || StatusHelper.NextStatuses(oldStatus).Contains(newStatus) 
+                || StatusHelper.PreviousStatuses(oldStatus).Contains(newStatus);
         }
 
         protected bool AreBaseFieldValuesValid(ICollection<RequestFieldValues> requestFields)
