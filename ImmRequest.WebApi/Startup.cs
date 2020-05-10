@@ -1,11 +1,13 @@
 using ImmRequest.BusinessLogic;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
+using ImmRequest.BusinessLogic.Logic.Finders;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.DataAccess.Repostories;
+using ImmRequest.Domain;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Interfaces;
@@ -58,6 +60,16 @@ namespace ImmRequest.WebApi
             services.AddScoped<IValidator<Administrator>, AdministratorValidator>();
             services.AddScoped<ISessionLogic, SessionLogic>();
             services.AddScoped<IAdministratorLogic, AdministratorLogic>();
+
+            services.AddScoped<IRepository<Area>, AreaRepository>();
+            services.AddScoped<IRepository<Topic>, TopicRepository>();
+
+            services.AddScoped<IFinder<Area>, AreaFinder>();
+            services.AddScoped<IFinder<Topic>, TopicFinder>();
+
+            services.AddScoped<ILogic<CitizenRequest>, CitizenRequestLogic>();
+            services.AddScoped<IRepository<CitizenRequest>, CitizenRequestRepository>();
+            services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
 
             services.AddSwaggerGen(options =>
             {
