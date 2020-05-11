@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using ImmRequest.BusinessLogic.Resources;
 using System.Net.Mail;
 using ImmRequest.Domain.Exceptions;
+using ImmRequest.Domain.Enums;
+using ImmRequest.BusinessLogic.Helpers;
 
 namespace ImmRequest.BusinessLogic.Validators
 {
@@ -22,6 +24,8 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected IRepository<BaseField> FieldRepository { get; set; }
 
+        protected IRepository<CitizenRequest> CitizenRequestRepository { get; set; }
+
         protected CitizenRequestValidator() { }
 
         public CitizenRequestValidator(CitizenRequestValidatorInput repositories)
@@ -30,6 +34,7 @@ namespace ImmRequest.BusinessLogic.Validators
             TopicRepository = repositories.TopicRepository;
             TopicTypeRepository = repositories.TopicTypeRepository;
             FieldRepository = repositories.FieldRepository;
+            CitizenRequestRepository = repositories.CitizenRequestRepository;
         }
 
         public bool IsValid(CitizenRequest objectToValidate)
@@ -37,11 +42,41 @@ namespace ImmRequest.BusinessLogic.Validators
             IsCitizenNameValid(objectToValidate.CitizenName);
             IsDescriptionValid(objectToValidate.Description);
             IsEmailValid(objectToValidate.Email);
+            IsRequestStatusValid(objectToValidate);
             IsAreaValid(objectToValidate.AreaId);
             IsTopicValid(objectToValidate.AreaId, objectToValidate.TopicId);
             IsTopicTypeValid(objectToValidate.AreaId, objectToValidate.TopicId, objectToValidate.TopicTypeId);
-            AreBaseFieldValuesValid(objectToValidate.Values);
+            AreBaseFieldValuesValid(objectToValidate.Values);            
             return true;
+        }
+
+        protected bool IsRequestStatusValid(CitizenRequest objectToValidate)
+        {
+            var existingRequest = CitizenRequestRepository.Get(objectToValidate.Id);
+            if(existingRequest != null)
+            {
+                if (!StatusUpdatedIsValid(existingRequest.Status, objectToValidate.Status))
+                {
+                    var exception = string.Format(BusinessResource.ValidationError_UpdateRequestStatusIsInvalid,
+                        existingRequest.Status.ToString(), objectToValidate.Status.ToString());
+                    throw new ValidationException(exception);
+                }
+            }
+            else
+            {
+                if(objectToValidate.Status != RequestStatus.Created)
+                {
+                    throw new ValidationException(BusinessResource.ValidationError_CreateRequestStatusIsInvalid);
+                }
+            }
+            return true;
+        }
+
+        protected bool StatusUpdatedIsValid(RequestStatus oldStatus, RequestStatus newStatus)
+        {
+            return oldStatus == newStatus 
+                || StatusHelper.NextStatuses(oldStatus).Contains(newStatus) 
+                || StatusHelper.PreviousStatuses(oldStatus).Contains(newStatus);
         }
 
         protected bool AreBaseFieldValuesValid(ICollection<RequestFieldValues> requestFields)

@@ -41,6 +41,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
         private IRepository<BaseField> FieldRepository;
 
+        private IRepository<CitizenRequest> CitizenRequestRepository;
+
         [TestInitialize]
         public void Setup()
         {
@@ -117,6 +119,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             TopicRepository = new TopicRepository(context);
             TopicTypeRepository = new TopicTypeRepository(context);
             FieldRepository = new FieldsRepository(context);
+            CitizenRequestRepository = new CitizenRequestRepository(context);
 
             FieldRepository.Insert(additionalTextValues);
             TopicTypeRepository.Insert(topicType);
@@ -149,7 +152,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -171,7 +175,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -219,7 +224,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -240,7 +246,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
@@ -289,7 +296,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -326,7 +334,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -351,7 +360,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -392,7 +402,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -441,7 +452,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
@@ -465,7 +477,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 AreaRepository = AreaRepository,
                 FieldRepository = FieldRepository,
                 TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository
+                TopicTypeRepository = TopicTypeRepository,
+                CitizenRequestRepository = CitizenRequestRepository
             };
             var citizenRequestRepository = new CitizenRequestRepository(context);
             var citizenRequestValidator = new CitizenRequestValidator(validatorInput);

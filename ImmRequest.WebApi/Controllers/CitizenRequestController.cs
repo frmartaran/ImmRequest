@@ -102,7 +102,8 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId);
+                var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId)
+                    .ToList();
                 var models = TopicModel.ToModel(all);
                 return Ok(models);
             }
@@ -123,16 +124,12 @@ namespace ImmRequest.WebApi.Controllers
 
         [HttpPut("{id}")]
         [AuthorizationFilter]
-        public IActionResult UpdateCitizenRequestStatus(long requestId, [FromBody] string status)
+        public IActionResult UpdateCitizenRequestStatus(long requestId, [FromBody] RequestStatus status)
         {
             try
             {
-                if (string.IsNullOrEmpty(status))
-                {
-                    return BadRequest(WebApiResource.CitizenRequest_EmptyStatusMessage);
-                }
                 var request = CitizenRequestLogic.Get(requestId);
-                request.Status = status.ToEnum<RequestStatus>();
+                request.Status = status;
                 CitizenRequestLogic.Update(request);
                 var statusUpdatedMessage = string.Format(WebApiResource.CitizenRequest_StatusUpdatedMessage,
                     request.Id);

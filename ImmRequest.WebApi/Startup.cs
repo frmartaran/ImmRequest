@@ -1,4 +1,5 @@
 using ImmRequest.BusinessLogic;
+using ImmRequest.BusinessLogic.Extensions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Logic.Finders;
@@ -70,6 +71,7 @@ namespace ImmRequest.WebApi
             services.AddScoped<ILogic<CitizenRequest>, CitizenRequestLogic>();
             services.AddScoped<IRepository<CitizenRequest>, CitizenRequestRepository>();
             services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
+            services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
 
             services.AddSwaggerGen(options =>
             {

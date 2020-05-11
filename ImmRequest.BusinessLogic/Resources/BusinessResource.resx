@@ -156,6 +156,9 @@
   <data name="ValidationError_CitizenNameIsInvalid" xml:space="preserve">
     <value>Name in request is invalid.</value>
   </data>
+  <data name="ValidationError_CreateRequestStatusIsInvalid" xml:space="preserve">
+    <value>Status in request is invalid. Perhaps you meant Create?</value>
+  </data>
   <data name="ValidationError_DescriptionIsInvalid" xml:space="preserve">
     <value>Description in request is invalid.</value>
   </data>
@@ -185,5 +188,8 @@
   </data>
   <data name="ValidationError_TopicTypeIsInvalid" xml:space="preserve">
     <value>Topic type in request is invalid.</value>
+  </data>
+  <data name="ValidationError_UpdateRequestStatusIsInvalid" xml:space="preserve">
+    <value>Invalid request. Status {0} cannot transition to status {1}.</value>
   </data>
 </root>

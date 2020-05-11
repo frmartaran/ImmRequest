@@ -178,6 +178,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status in request is invalid. Perhaps you meant Create?.
+        /// </summary>
+        public static string ValidationError_CreateRequestStatusIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_CreateRequestStatusIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description in request is invalid..
         /// </summary>
         public static string ValidationError_DescriptionIsInvalid {
@@ -264,6 +273,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         public static string ValidationError_TopicTypeIsInvalid {
             get {
                 return ResourceManager.GetString("ValidationError_TopicTypeIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid request. Status {0} cannot transition to status {1}..
+        /// </summary>
+        public static string ValidationError_UpdateRequestStatusIsInvalid {
+            get {
+                return ResourceManager.GetString("ValidationError_UpdateRequestStatusIsInvalid", resourceCulture);
             }
         }
     }
