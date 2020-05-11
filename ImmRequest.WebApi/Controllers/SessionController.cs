@@ -17,7 +17,6 @@ namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    [ApiController]
     public class SessionController : ControllerBase
     {
         private SessionControllerInputHelper Inputs { get; set; }

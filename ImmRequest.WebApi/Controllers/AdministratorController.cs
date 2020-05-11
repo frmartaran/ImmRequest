@@ -15,7 +15,6 @@ namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    [ApiController]
     [AuthorizationFilter]
     public class AdministratorController : ControllerBase
     {

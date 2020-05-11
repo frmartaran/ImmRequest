@@ -7,13 +7,14 @@ using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.WebApi.Models;
 using ImmRequest.WebApi.Resources;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [EnableCors("CorsPolicy")]
     public class TypeController : ControllerBase
     {
         private ILogic<TopicType> Logic { get; set; }
