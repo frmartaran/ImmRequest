@@ -196,7 +196,7 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email in request is invalid..
+        ///   Looks up a localized string similar to Email is invalid..
         /// </summary>
         public static string ValidationError_EmailIsInvalid {
             get {

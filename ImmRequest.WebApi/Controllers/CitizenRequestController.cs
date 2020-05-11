@@ -66,7 +66,7 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
-        [HttpGet("status/{id}")]
+        [HttpGet("Status/{id}")]
         public IActionResult GetCitizenRequestStatus(long requestId)
         {
             try
@@ -82,7 +82,7 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
-        [HttpGet("areas")]
+        [HttpGet("Areas")]
         public IActionResult GetAllAreas()
         {
             try
@@ -97,7 +97,7 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
-        [HttpGet("topics/{parentAreaId}")]
+        [HttpGet("Topics/{parentAreaId}")]
         public ActionResult GetAllTopicsFromArea(long parentAreaId)
         {
             try

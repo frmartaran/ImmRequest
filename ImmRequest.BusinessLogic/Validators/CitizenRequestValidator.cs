@@ -125,7 +125,7 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool IsCitizenNameValid(string citizenName)
         {
-            if (String.IsNullOrEmpty(citizenName))
+            if (string.IsNullOrEmpty(citizenName))
             {
                 throw new ValidationException(BusinessResource.ValidationError_CitizenNameIsInvalid);
             }
@@ -134,7 +134,7 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool IsDescriptionValid(string description)
         {
-            if (String.IsNullOrEmpty(description))
+            if (string.IsNullOrEmpty(description))
             {
                 throw new ValidationException(BusinessResource.ValidationError_DescriptionIsInvalid);
             }
