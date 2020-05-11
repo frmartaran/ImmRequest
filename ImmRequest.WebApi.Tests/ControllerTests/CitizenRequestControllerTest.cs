@@ -1,5 +1,6 @@
 ﻿using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Controllers;
@@ -7,6 +8,7 @@ using ImmRequest.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -290,7 +292,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var result = controller.GetAllAreas();
 
             mockCitizenRequestLogic.VerifyAll();
-            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         }
 
         [TestMethod]
@@ -300,14 +302,14 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var mockTopicFinder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var mockAreaFinder = new Mock<IFinder<Area>>(MockBehavior.Strict);
 
-            mockTopicFinder.Setup(m => m.FindAll().Where(t => t.AreaId == 1))
+            mockTopicFinder.Setup(m => m.FindAll(It.IsAny<Predicate<Topic>>()))
                 .Returns(new List<Topic> { topic });
 
             var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
             var result = controller.GetAllTopicsFromArea(1);
 
             mockCitizenRequestLogic.VerifyAll();
-            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         }
     }
 }

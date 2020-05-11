@@ -102,8 +102,7 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var all = TopicFinder.FindAll()
-                    .Where(t => t.AreaId == parentAreaId)
+                var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId)
                     .ToList();
                 var models = TopicModel.ToModel(all);
                 return Ok(models);
