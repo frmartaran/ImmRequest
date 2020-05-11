@@ -1,4 +1,5 @@
 using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;

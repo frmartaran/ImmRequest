@@ -85,7 +85,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             {
                 topicType
             };
-            var topic = new Topic
+            topic = new Topic
             {
                 Id = 1,
                 AreaId = 1,

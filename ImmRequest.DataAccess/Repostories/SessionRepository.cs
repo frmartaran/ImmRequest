@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ImmRequest.DataAccess.Repostories
+namespace ImmRequest.DataAccess.Repositories
 {
     public class SessionRepository : IRepository<Session>
     {
