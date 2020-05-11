@@ -6,7 +6,7 @@ using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Interfaces.Exceptions;
-using ImmRequest.DataAccess.Repostories;
+using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain.UserManagement;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Query.Internal;
