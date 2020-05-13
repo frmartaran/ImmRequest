@@ -43,7 +43,7 @@ namespace ImmRequest.WebApi.Controllers
             {
                 if(requestModel == null)
                 {
-                    return BadRequest(WebApiResource.CitizenRequest_EmptyRequestMessage);
+                    return BadRequest(WebApiResource.EmptyRequestMessage);
                 }
                 var request = requestModel.ToDomain();
                 CitizenRequestLogic.Create(request);
@@ -61,7 +61,7 @@ namespace ImmRequest.WebApi.Controllers
         /// <param name="requestId">Este parámetro contiene el número de la solicitud existente</param>
         /// <response code="200">Se devuelve la solicitud requerida.</response>
         /// <response code="400">La solicitud no ha sido encontrada.</response>
-        [HttpGet("{id}")]
+        [HttpGet("{requestId}")]
         [AuthorizationFilter]
         public IActionResult GetCitizenRequest(long requestId)
         {
@@ -84,7 +84,7 @@ namespace ImmRequest.WebApi.Controllers
         /// <param name="requestId">Este parámetro contiene el número del solicitud existente</param>
         /// <response code="200">Se devuelve el status de la solicitud.</response>
         /// <response code="400">La solicitud no ha sido encontrada.</response>
-        [HttpGet("Status/{id}")]
+        [HttpGet("Status/{requestId}")]
         public IActionResult GetCitizenRequestStatus(long requestId)
         {
             try
@@ -146,7 +146,7 @@ namespace ImmRequest.WebApi.Controllers
         /// <param name="status">Este parámetro contiene el nuevo status que debe tener la solicitud</param>
         /// <response code="200">La solicitud requerida fue actualizada.</response>
         /// <response code="400">Status no existe o error en el sistema.</response>
-        [HttpPut("{id}")]
+        [HttpPut("{requestId}")]
         [AuthorizationFilter]
         public IActionResult UpdateCitizenRequestStatus(long requestId, [FromBody] RequestStatus status)
         {

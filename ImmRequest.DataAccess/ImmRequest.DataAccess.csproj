@@ -1,6 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200513005706_AddedDataTypeToFields.cs" />
+    <Compile Remove="Migrations\20200513005706_AddedDataTypeToFields.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ImmRequest.DataAccess.Interfaces\ImmRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.Domain\ImmRequest.Domain.csproj" />
     <ProjectReference Include="..\ImmRequest.Domain.Interfaces\ImmRequest.Domain.Interfaces.csproj" />

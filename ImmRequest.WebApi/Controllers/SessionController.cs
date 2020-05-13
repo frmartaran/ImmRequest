@@ -17,7 +17,6 @@ namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    [ApiController]
     public class SessionController : ControllerBase
     {
         private SessionControllerInputHelper Inputs { get; set; }
@@ -36,6 +35,8 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Login([FromBody] SessionModel model)
         {
+            if (model == null)
+                return BadRequest(WebApiResource.EmptyRequestMessage);
             var administrator = Inputs.AdministratorLogic
                 .FindAdministratorByCredentials(model.Email, model.Password);
             if (administrator == null)

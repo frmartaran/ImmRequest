@@ -333,13 +333,45 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         }
 
         [TestMethod]
+        public void UpdateNullModel()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Update(1, null);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void CreateNullModel()
+        {
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Create(1, null);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
         public void UpdateTest()
         {
             var model = TypeModel.ToModel(type);
+
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(type);
             logic.Setup(m => m.Update(It.IsAny<TopicType>()));
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Update(1, model);
 
@@ -353,6 +385,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var model = TypeModel.ToModel(type);
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(type);
             logic.Setup(m => m.Update(It.IsAny<TopicType>()))
                 .Throws(new ValidationException(""));
 
@@ -370,6 +404,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var model = TypeModel.ToModel(type);
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(type);
             logic.Setup(m => m.Update(It.IsAny<TopicType>()))
                 .Throws(new BusinessLogicException(""));
 

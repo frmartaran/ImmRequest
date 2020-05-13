@@ -15,7 +15,6 @@ namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    [ApiController]
     public class TypeController : ControllerBase
     {
         private ILogic<TopicType> Logic { get; set; }
@@ -34,10 +33,13 @@ namespace ImmRequest.WebApi.Controllers
         /// <param name="parentTopicID">Este parámetro contiene el identificador del tema</param>
         /// <param name="model">Este modelo contiene la información del nuevo tipo.</param>
         /// <response code="200">Se creó el tipo con éxito</response>
-        /// <response code="400">Error. No se pudo crear el tipo.</response>
-        [HttpPost("{id}")]
+        /// <response code="400">Error. No se pudo crear el tipo.</response>        
+        [HttpPost("{parentTopicID}")]
         public ActionResult Create(long parentTopicID, [FromBody] TypeModel model)
         {
+            if (model == null)
+                return BadRequest(WebApiResource.EmptyRequestMessage);
+
             try
             {
                 var parentTopic = Finder.Find(t => t.Id == parentTopicID);
@@ -139,10 +141,14 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(long id, [FromBody] TypeModel model)
         {
+            if (model == null)
+                return BadRequest(WebApiResource.EmptyRequestMessage);
             try
             {
                 var type = model.ToDomain();
                 type.Id = id;
+                var oldType = Logic.Get(id);
+                type.ParentTopic = oldType.ParentTopic;
                 Logic.Update(type);
                 var message = string.Format("{0}: {1} {2}", WebApiResource.Entities_Type,
                     type.Name, WebApiResource.Action_Updated);

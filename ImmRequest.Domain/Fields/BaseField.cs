@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ImmRequest.Domain.Enums;
 using ImmRequest.Domain.Interfaces;
 
 namespace ImmRequest.Domain.Fields
@@ -7,6 +8,7 @@ namespace ImmRequest.Domain.Fields
     public abstract class BaseField : ICustomField, IIdentifiable, ISoftDelete
     {
         public long Id { get; set; }
+        public abstract DataType InputType { get; }
         public string Name { get; set; }
         public long ParentTypeId { get; set; }
         public TopicType ParentType { get; set; }

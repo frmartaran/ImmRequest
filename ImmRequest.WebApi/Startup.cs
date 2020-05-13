@@ -8,6 +8,7 @@ using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
+using ImmRequest.Domain.Fields;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Interfaces;
@@ -49,31 +50,36 @@ namespace ImmRequest.WebApi
                     );
             });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddDbContext<ImmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
+            services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
             services.AddScoped<IContextHelper, CurrentSessionInfo>();
-            services.AddScoped<IRepository<Session>, SessionRepository>();
-            services.AddScoped<IValidator<Session>, SessionValidator>();
-            services.AddScoped<IRepository<Administrator>, AdministratorRepository>();
-            services.AddScoped<IValidator<Administrator>, AdministratorValidator>();
-            services.AddScoped<ISessionLogic, SessionLogic>();
-            services.AddScoped<IAdministratorLogic, AdministratorLogic>();
 
+            services.AddScoped<IRepository<Session>, SessionRepository>();
+            services.AddScoped<IRepository<Administrator>, AdministratorRepository>();
+            services.AddScoped<IRepository<CitizenRequest>, CitizenRequestRepository>();
             services.AddScoped<IRepository<Area>, AreaRepository>();
             services.AddScoped<IRepository<Topic>, TopicRepository>();
+            services.AddScoped<IRepository<TopicType>, TopicTypeRepository>();
+            services.AddScoped<IRepository<BaseField>, FieldsRepository>();
+
+            services.AddScoped<IValidator<Session>, SessionValidator>();
+            services.AddScoped<IValidator<Administrator>, AdministratorValidator>();
+            services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
+            services.AddScoped<IValidator<TopicType>, TopicTypeValidator>();
+
+            services.AddScoped<ISessionLogic, SessionLogic>();
+            services.AddScoped<IAdministratorLogic, AdministratorLogic>();
+            services.AddScoped<ILogic<TopicType>, TopicTypeLogic>();
+            services.AddScoped<ILogic<CitizenRequest>, CitizenRequestLogic>();
 
             services.AddScoped<IFinder<Area>, AreaFinder>();
             services.AddScoped<IFinder<Topic>, TopicFinder>();
 
-            services.AddScoped<ILogic<CitizenRequest>, CitizenRequestLogic>();
-            services.AddScoped<IRepository<CitizenRequest>, CitizenRequestRepository>();
-            services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
-            services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
 
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

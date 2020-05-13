@@ -15,7 +15,6 @@ namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    [ApiController]
     [AuthorizationFilter]
     public class AdministratorController : ControllerBase
     {
@@ -69,6 +68,8 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] AdministratorModel model)
         {
+            if (model == null)
+                return BadRequest(WebApiResource.EmptyRequestMessage);
             try
             {
                 var administratorToCreate = model.ToDomain();
@@ -94,6 +95,9 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(long id, [FromBody] AdministratorModel model)
         {
+            if (model == null)
+                return BadRequest(WebApiResource.EmptyRequestMessage);
+
             try
             {
                 var modifiedAdministrator = model.ToDomain();

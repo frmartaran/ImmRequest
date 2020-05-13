@@ -99,6 +99,27 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         }
 
         [TestMethod]
+        public void LoginNullModel()
+        {
+            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
+
+            var mockAdministratorLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+
+            var mockHelper = new Mock<IContextHelper>();
+            var inputs = new SessionControllerInputHelper(
+                mockSessionLogic.Object,
+                mockAdministratorLogic.Object,
+                mockHelper.Object
+                );
+
+            var controller = new SessionController(inputs);
+            var response = controller.Login(null);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            
+        }
+
+        [TestMethod]
         public void LoginWrongCredentials()
         {
             var mockSessionLogic = new Mock<ISessionLogic>();
