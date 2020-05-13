@@ -6,7 +6,7 @@ using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain.UserManagement;
 
-namespace ImmRequest.BusinessLogic
+namespace ImmRequest.BusinessLogic.Validators
 {
     public class AdministratorValidator : IValidator<Administrator>
     {

@@ -25,7 +25,6 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         private TopicType type;
         private NumberField field;
         private ImmDbContext context;
-        private TopicTypeLogic logic;
 
         [TestInitialize]
         public void Setup()
