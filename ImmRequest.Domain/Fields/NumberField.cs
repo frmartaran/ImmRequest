@@ -9,6 +9,7 @@ namespace ImmRequest.Domain.Fields
 {
     public class NumberField : BaseField
     {
+        public override DataType Type { get { return DataType.Number; } }
         public int RangeStart { get; set; }
         public int RangeEnd { get; set; }
         public override void SetRange(List<string> values)

@@ -1,4 +1,5 @@
-﻿using ImmRequest.Domain.Fields;
+﻿using ImmRequest.Domain.Enums;
+using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace ImmRequest.WebApi.Helpers
 
         public static BaseFieldModel GetFieldModel(BaseField field)
         {
-            if (field is NumberField)
+            if (field.Type == DataType.Number)
                 return new NumberFieldModel().SetModel(field);
-            else if (field is DateTimeField)
+            else if (field.Type == DataType.Number)
                 return new DateTimeFieldModel().SetModel(field);
-            else if (field is TextField)
+            else if (field.Type == DataType.Number)
                 return new TextFieldModel().SetModel(field);
             else return null;
         }

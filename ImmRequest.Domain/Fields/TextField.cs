@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using ImmRequest.Domain.Enums;
 using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Resources;
 
@@ -7,6 +9,7 @@ namespace ImmRequest.Domain.Fields
 {
     public class TextField : BaseField
     {
+        public override DataType Type { get { return DataType.Text; } }
         public List<string> RangeValues { get; set; }
         public override void SetRange(List<string> values)
         {

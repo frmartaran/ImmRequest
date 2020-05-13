@@ -56,9 +56,6 @@ namespace ImmRequest.DataAccess.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("RequestNumber")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
