@@ -10,6 +10,7 @@ namespace ImmRequest.WebApi.Helpers.Binders
     public abstract class JsonCreationConverter<T> : JsonConverter
         where T : class
     {
+        public override bool CanWrite { get => false; }
         public override bool CanConvert(Type objectType)
         {
             return typeof(T).IsAssignableFrom(objectType);

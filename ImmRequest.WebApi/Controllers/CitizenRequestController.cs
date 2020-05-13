@@ -37,7 +37,7 @@ namespace ImmRequest.WebApi.Controllers
             {
                 if(requestModel == null)
                 {
-                    return BadRequest(WebApiResource.CitizenRequest_EmptyRequestMessage);
+                    return BadRequest(WebApiResource.EmptyRequestMessage);
                 }
                 var request = requestModel.ToDomain();
                 CitizenRequestLogic.Create(request);

@@ -115,15 +115,6 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request can&apos;t be empty!.
-        /// </summary>
-        public static string CitizenRequest_EmptyRequestMessage {
-            get {
-                return ResourceManager.GetString("CitizenRequest_EmptyRequestMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status can&apos;t be empty!.
         /// </summary>
         public static string CitizenRequest_EmptyStatusMessage {
@@ -156,6 +147,15 @@ namespace ImmRequest.WebApi.Resources {
         public static string CitizenRequest_StatusUpdatedMessage {
             get {
                 return ResourceManager.GetString("CitizenRequest_StatusUpdatedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request can&apos;t be empty!.
+        /// </summary>
+        public static string EmptyRequestMessage {
+            get {
+                return ResourceManager.GetString("EmptyRequestMessage", resourceCulture);
             }
         }
         

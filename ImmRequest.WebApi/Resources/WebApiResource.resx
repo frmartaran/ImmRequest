@@ -135,9 +135,6 @@
   <data name="CitizenRequest_CreatedMessage" xml:space="preserve">
     <value>Your request has been recieved!</value>
   </data>
-  <data name="CitizenRequest_EmptyRequestMessage" xml:space="preserve">
-    <value>Request can't be empty!</value>
-  </data>
   <data name="CitizenRequest_EmptyStatusMessage" xml:space="preserve">
     <value>Status can't be empty!</value>
   </data>
@@ -149,6 +146,9 @@
   </data>
   <data name="CitizenRequest_StatusUpdatedMessage" xml:space="preserve">
     <value>The status of request number {0} has been updated!</value>
+  </data>
+  <data name="EmptyRequestMessage" xml:space="preserve">
+    <value>Request can't be empty!</value>
   </data>
   <data name="Entities_Administrator" xml:space="preserve">
     <value>Administrator</value>

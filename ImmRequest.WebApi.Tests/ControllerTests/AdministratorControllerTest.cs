@@ -156,6 +156,33 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
         }
 
+
+        [TestMethod]
+        public void CreateNullTest()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Create(null);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockLogic.VerifyAll();
+
+        }
+
+        [TestMethod]
+        public void UpdateNullTest()
+        {
+            var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
+
+            var controller = new AdministratorController(mockLogic.Object);
+            var response = controller.Update(1, null);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+            mockLogic.VerifyAll();
+
+        }
+
         [TestMethod]
         public void UpdateTest()
         {

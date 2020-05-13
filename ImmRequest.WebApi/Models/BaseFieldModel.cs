@@ -1,13 +1,17 @@
 ﻿using ImmRequest.Domain.Enums;
 using ImmRequest.Domain.Fields;
+using ImmRequest.WebApi.Helpers.Binders;
 using ImmRequest.WebApi.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace ImmRequest.WebApi.Models
 {
+    [JsonConverter(typeof(CustomTypeConverter))]
     public abstract class BaseFieldModel : IModel<BaseField, BaseFieldModel>
     {
         public long? Id { get; set; }

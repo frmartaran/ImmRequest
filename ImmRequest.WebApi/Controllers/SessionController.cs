@@ -29,6 +29,8 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Login([FromBody] SessionModel model)
         {
+            if (model == null)
+                return BadRequest(WebApiResource.EmptyRequestMessage);
             var administrator = Inputs.AdministratorLogic
                 .FindAdministratorByCredentials(model.Email, model.Password);
             if (administrator == null)

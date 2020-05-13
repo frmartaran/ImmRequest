@@ -15,9 +15,9 @@ namespace ImmRequest.WebApi.Helpers
         {
             if (field.InputType == DataType.Number)
                 return new NumberFieldModel().SetModel(field);
-            else if (field.InputType == DataType.Number)
+            else if (field.InputType == DataType.DateTime)
                 return new DateTimeFieldModel().SetModel(field);
-            else if (field.InputType == DataType.Number)
+            else if (field.InputType == DataType.Text)
                 return new TextFieldModel().SetModel(field);
             else return null;
         }

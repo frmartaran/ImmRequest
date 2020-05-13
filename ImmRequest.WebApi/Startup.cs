@@ -47,7 +47,7 @@ namespace ImmRequest.WebApi
                     );
             });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddDbContext<ImmDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
