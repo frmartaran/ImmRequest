@@ -10,7 +10,7 @@ namespace ImmRequest.Domain.Fields
 {
     public class DateTimeField : BaseField
     {
-        public override DataType Type { get { return DataType.DateTime; } }
+        public override DataType InputType { get { return DataType.DateTime; } }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public override void SetRange(List<string> values)

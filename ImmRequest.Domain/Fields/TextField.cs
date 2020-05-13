@@ -9,7 +9,7 @@ namespace ImmRequest.Domain.Fields
 {
     public class TextField : BaseField
     {
-        public override DataType Type { get { return DataType.Text; } }
+        public override DataType InputType { get { return DataType.Text; } }
         public List<string> RangeValues { get; set; }
         public override void SetRange(List<string> values)
         {
