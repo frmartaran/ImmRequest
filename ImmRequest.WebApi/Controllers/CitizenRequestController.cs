@@ -30,6 +30,12 @@ namespace ImmRequest.WebApi.Controllers
             this.AreaFinder = AreaFinder;
         }
 
+        /// <summary>
+        /// Permite al usuario ingresar una solicitud al sistema
+        /// </summary>
+        /// <param name="requestModel">Este modelo contiene la información acerca de la solicitud</param>
+        /// <response code="200">Se creó la solicitud con éxito</response>
+        /// <response code="400">Error. No se creó la solicitud</response>
         [HttpPost]
         public IActionResult CreateCitizenRequest([FromBody] CitizenRequestModel requestModel)
         {
@@ -49,6 +55,12 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite al administrador obtener una solicitud existente en el sistema
+        /// </summary>
+        /// <param name="requestId">Este parámetro contiene el número de la solicitud existente</param>
+        /// <response code="200">Se devuelve la solicitud requerida.</response>
+        /// <response code="400">La solicitud no ha sido encontrada.</response>
         [HttpGet("{id}")]
         [AuthorizationFilter]
         public IActionResult GetCitizenRequest(long requestId)
@@ -66,6 +78,12 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite a un usuario obtener el status de su solicitud
+        /// </summary>
+        /// <param name="requestId">Este parámetro contiene el número del solicitud existente</param>
+        /// <response code="200">Se devuelve el status de la solicitud.</response>
+        /// <response code="400">La solicitud no ha sido encontrada.</response>
         [HttpGet("Status/{id}")]
         public IActionResult GetCitizenRequestStatus(long requestId)
         {
@@ -82,37 +100,36 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite a un usuario obtener todas las áreas del sistema
+        /// </summary>
+        /// <response code="200">Se devuelven las áreas existentes en el sistema.</response>
         [HttpGet("Areas")]
         public IActionResult GetAllAreas()
         {
-            try
-            {
-                var allAreas = AreaFinder.FindAll();
-                var allAreasModel = AreaModel.ToModel(allAreas);
-                return Ok(allAreasModel);
-            }
-            catch (BusinessLogicException exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            var allAreas = AreaFinder.FindAll();
+            var allAreasModel = AreaModel.ToModel(allAreas);
+            return Ok(allAreasModel);
         }
 
+        /// <summary>
+        /// Permite a un usuario obtener todas los temas de un área del sistema.
+        /// </summary>
+        /// <param name="parentAreaId">Este parámetro contiene el número de área al cual los temas pertenecen</param>
+        /// <response code="200">Se devuelven los temas para el área en el sistema.</response>
         [HttpGet("Topics/{parentAreaId}")]
         public ActionResult GetAllTopicsFromArea(long parentAreaId)
         {
-            try
-            {
-                var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId)
-                    .ToList();
-                var models = TopicModel.ToModel(all);
-                return Ok(models);
-            }
-            catch (BusinessLogicException exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId)
+                .ToList();
+            var models = TopicModel.ToModel(all);
+            return Ok(models);
         }
 
+        /// <summary>
+        /// Permite al administrador obtener todas las solicitudes del sistema.
+        /// </summary>
+        /// <response code="200">Se devuelve la solicitud requerida.</response>
         [HttpGet]
         [AuthorizationFilter]
         public IActionResult GetCitizenRequests()
@@ -122,6 +139,13 @@ namespace ImmRequest.WebApi.Controllers
             return Ok(requestsModels);
         }
 
+        /// <summary>
+        /// Permite al administrador actualizar el status de una solicitud existente en el sistema
+        /// </summary>
+        /// <param name="requestId">Este parámetro contiene el número de la solicitud existente</param>
+        /// <param name="status">Este parámetro contiene el nuevo status que debe tener la solicitud</param>
+        /// <response code="200">La solicitud requerida fue actualizada.</response>
+        /// <response code="400">Status no existe o error en el sistema.</response>
         [HttpPut("{id}")]
         [AuthorizationFilter]
         public IActionResult UpdateCitizenRequestStatus(long requestId, [FromBody] RequestStatus status)

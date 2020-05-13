@@ -21,6 +21,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace ImmRequest.WebApi
 {
@@ -73,9 +76,14 @@ namespace ImmRequest.WebApi
             services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
             services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
 
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "ImmRequest", Version = "v1" });
+                options.IncludeXmlComments(xmlPath);
+                options.OperationFilter<AuthorizationFilterOperationFilter>();
             });
 
         }

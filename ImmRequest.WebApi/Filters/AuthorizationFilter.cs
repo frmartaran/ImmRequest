@@ -26,7 +26,7 @@ namespace ImmRequest.WebApi.Filters
                 var message = WebApiResource.AuthorizationFilter_TokenEmpty;
                 context.Result = new ContentResult
                 {
-                    StatusCode = 400,
+                    StatusCode = 403,
                     Content = message
                 };
                 return;

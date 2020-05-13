@@ -27,6 +27,12 @@ namespace ImmRequest.WebApi.Controllers
             Inputs = inputs;
         }
 
+        /// <summary>
+        /// Permite a un administrador loguearse al sistema.
+        /// </summary>
+        /// <param name="model">Este modelo contiene la información para iniciar sesión</param>
+        /// <response code="200">Se inició sesión con éxito</response>
+        /// <response code="400">Error. No se pudo iniciar sesión.</response>
         [HttpPost]
         public ActionResult Login([FromBody] SessionModel model)
         {
@@ -49,6 +55,11 @@ namespace ImmRequest.WebApi.Controllers
 
         }
 
+        /// <summary>
+        /// Permite a un administrador cerrar sesión en el sistema.
+        /// </summary>
+        /// <response code="200">Se cerró sesión con éxito</response>
+        /// <response code="400">Error. No se pudo cerrar la sesión.</response>
         [HttpDelete]
         public ActionResult Logout()
         {
