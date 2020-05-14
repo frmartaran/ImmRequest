@@ -16,6 +16,7 @@
               <Exclude>
                 <Function>.*\.Migrations\..*</Function>
                 <Function>.*\.Resources\..*</Function>
+                <Function>.*\.Swagger\..*</Function>
               </Exclude>
             </Functions>
           </CodeCoverage>
