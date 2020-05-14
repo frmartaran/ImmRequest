@@ -62,7 +62,7 @@ namespace ImmRequest.DataAccess.Context
 
             builder.Entity<RequestFieldValues>()
                 .HasOne(rf => rf.Field)
-                .WithOne()
+                .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<TopicType>()
