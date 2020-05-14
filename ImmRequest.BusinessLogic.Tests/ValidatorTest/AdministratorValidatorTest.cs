@@ -22,7 +22,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             administrator = new Administrator
             {
                 UserName = "왕 잭슨",
-                PassWord = "Aite Aite",
+                Password = "Aite Aite",
                 Email = "jackson@wang.com"
             };
         }
@@ -65,7 +65,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             {
                 Email = "youngjae@email.com",
                 UserName = "최 영재",
-                PassWord = "1234"
+                Password = "1234"
             };
 
             var isValid = validator.IsValid(newAdmin);
@@ -85,7 +85,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             {
                 Email = "jackson@wang.com",
                 UserName = "최 영재",
-                PassWord = "1234"
+                Password = "1234"
             };
 
             validator.IsValid(newAdmin);
@@ -119,7 +119,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             var mockRepository = new Mock<IRepository<Administrator>>().Object;
             var validator = new AdministratorValidator(mockRepository);
-            administrator.PassWord = "";
+            administrator.Password = "";
 
             validator.IsValid(administrator);
         }

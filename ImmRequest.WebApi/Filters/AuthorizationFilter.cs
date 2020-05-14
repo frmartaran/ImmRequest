@@ -15,7 +15,7 @@ namespace ImmRequest.WebApi.Filters
         private const string Authorization_Header = "Authorization";
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
+
         }
 
         public void OnActionExecuting(ActionExecutingContext context)

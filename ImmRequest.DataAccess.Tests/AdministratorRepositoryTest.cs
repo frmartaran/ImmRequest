@@ -20,7 +20,7 @@ namespace ImmRequest.DataAccess.Tests
             administrator = new Administrator
             {
                 UserName = "Julie",
-                PassWord = "1234"
+                Password = "1234"
             };
         }
 
@@ -110,7 +110,7 @@ namespace ImmRequest.DataAccess.Tests
             var otherAdministrator = new Administrator
             {
                 UserName = "Francisco",
-                PassWord = "6543210"
+                Password = "6543210"
             };
             context.Administrators.Add(otherAdministrator);
             context.Administrators.Add(administrator);

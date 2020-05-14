@@ -11,6 +11,6 @@ namespace ImmRequest.Domain.UserManagement
 
         public Administrator AdministratorInSession { get; set; }
 
-        public long AdministratorId { get; set; }
+        public long AdministratorInSessionId { get; set; }
     }
 }

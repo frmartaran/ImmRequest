@@ -68,7 +68,7 @@ namespace ImmRequest.WebApi.Tests.FilterTests
 
             Assert.IsInstanceOfType(executingContext.Result, typeof(ContentResult));
             var result = executingContext.Result as ContentResult;
-            Assert.AreEqual(400, result.StatusCode);
+            Assert.AreEqual(403, result.StatusCode);
         }
 
         [TestMethod]

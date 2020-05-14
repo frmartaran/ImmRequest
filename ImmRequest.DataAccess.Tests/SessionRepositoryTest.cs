@@ -27,7 +27,7 @@ namespace ImmRequest.DataAccess.Tests
             administrator = new Administrator
             {
                 UserName = "임 재범",
-                PassWord = "1234"
+                Password = "1234"
             };
 
             session = new Session
@@ -56,7 +56,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Administrators.Add(administrator);
             context.SaveChanges();
 
-            session.AdministratorId = administrator.Id;
+            session.AdministratorInSessionId = administrator.Id;
             repository.Insert(session);
 
             var sessionCount = context.Sessions.Count();
@@ -70,7 +70,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Administrators.Add(administrator);
             context.SaveChanges();
 
-            session.AdministratorId = administrator.Id;
+            session.AdministratorInSessionId = administrator.Id;
             context.Sessions.Add(session);
             context.SaveChanges();
 
@@ -86,7 +86,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Administrators.Add(administrator);
             context.SaveChanges();
 
-            session.AdministratorId = administrator.Id;
+            session.AdministratorInSessionId = administrator.Id;
             context.Sessions.Add(session);
             context.SaveChanges();
 
@@ -111,7 +111,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Administrators.Add(administrator);
             context.SaveChanges();
 
-            session.AdministratorId = administrator.Id;
+            session.AdministratorInSessionId = administrator.Id;
             context.Sessions.Add(session);
             context.SaveChanges();
 
@@ -138,7 +138,7 @@ namespace ImmRequest.DataAccess.Tests
             context.Administrators.Add(administrator);
             context.SaveChanges();
 
-            session.AdministratorId = administrator.Id;
+            session.AdministratorInSessionId = administrator.Id;
             context.Sessions.Add(session);
             context.SaveChanges();
 
@@ -163,8 +163,8 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
             var otherSession = new Session();
 
-            otherSession.AdministratorId = administrator.Id;
-            session.AdministratorId = administrator.Id;
+            otherSession.AdministratorInSessionId = administrator.Id;
+            session.AdministratorInSessionId = administrator.Id;
             context.Sessions.Add(session);
             context.Sessions.Add(otherSession);
 

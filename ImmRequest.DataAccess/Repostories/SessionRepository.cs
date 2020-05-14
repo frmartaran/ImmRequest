@@ -38,7 +38,7 @@ namespace ImmRequest.DataAccess.Repositories
         {
             return Context.Sessions
                 .Where(s => s.Id != session.Id)
-                .Any(s => s.AdministratorId == session.AdministratorId);
+                .Any(s => s.AdministratorInSessionId == session.AdministratorInSessionId);
         }
 
         public Session Get(long id)
@@ -72,7 +72,7 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var sessionToModify = Get(objectToUpdate.Id);
                 sessionToModify.AdministratorInSession = objectToUpdate.AdministratorInSession;
-                sessionToModify.AdministratorId = objectToUpdate.Id;
+                sessionToModify.AdministratorInSessionId = objectToUpdate.Id;
                 sessionToModify.Token = objectToUpdate.Token;
                 Save();
                 return sessionToModify;

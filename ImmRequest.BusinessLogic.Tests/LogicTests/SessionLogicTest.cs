@@ -34,7 +34,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 {
                     Email = "notbythemoon@song.com",
                     UserName = "Not by the moon",
-                    PassWord = "1324"
+                    Password = "1324"
                 },
             };
         }

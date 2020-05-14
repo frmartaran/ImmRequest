@@ -24,7 +24,7 @@ namespace ImmRequest.WebApi.Models.UserManagement
             {
                 Email = this.Email,
                 UserName = Username,
-                PassWord = Password
+                Password = Password
             };
 
             if (Id.HasValue)
@@ -38,7 +38,7 @@ namespace ImmRequest.WebApi.Models.UserManagement
         {
             this.Id = entity.Id;
             this.Username = entity.UserName;
-            this.Password = entity.PassWord;
+            this.Password = entity.Password;
             this.Email = entity.Email;
 
             return this;

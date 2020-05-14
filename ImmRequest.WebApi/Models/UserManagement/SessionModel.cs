@@ -20,11 +20,6 @@ namespace ImmRequest.WebApi.Models.UserManagement
         {
             var newSession = new Session
             {
-                AdministratorInSession = new Administrator
-                {
-                    Email = Email,
-                    PassWord = Password
-                },
                 Token = Token,
             };
 
@@ -39,7 +34,7 @@ namespace ImmRequest.WebApi.Models.UserManagement
         {
             this.Id = entity.Id;
             this.Email = entity.AdministratorInSession.Email;
-            this.Password = entity.AdministratorInSession.PassWord;
+            this.Password = entity.AdministratorInSession.Password;
             this.Token = entity.Token;
             return this;
         }
