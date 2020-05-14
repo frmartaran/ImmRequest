@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
+using ImmRequest.Domain.Exceptions;
 using ImmRequest.WebApi.Models;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
@@ -55,6 +56,10 @@ namespace ImmRequest.WebApi.Controllers
                 return BadRequest(exception.Message);
             }
             catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (InvalidArgumentException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -159,6 +164,10 @@ namespace ImmRequest.WebApi.Controllers
                 return BadRequest(exception.Message);
             }
             catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (InvalidArgumentException exception)
             {
                 return BadRequest(exception.Message);
             }
