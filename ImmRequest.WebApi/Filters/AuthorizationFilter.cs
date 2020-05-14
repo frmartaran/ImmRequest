@@ -15,7 +15,7 @@ namespace ImmRequest.WebApi.Filters
         private const string Authorization_Header = "Authorization";
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
+
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
@@ -26,7 +26,7 @@ namespace ImmRequest.WebApi.Filters
                 var message = WebApiResource.AuthorizationFilter_TokenEmpty;
                 context.Result = new ContentResult
                 {
-                    StatusCode = 400,
+                    StatusCode = 403,
                     Content = message
                 };
                 return;

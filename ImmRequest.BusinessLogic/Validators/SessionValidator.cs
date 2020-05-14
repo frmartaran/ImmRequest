@@ -28,7 +28,6 @@ namespace ImmRequest.BusinessLogic.Validators
 
         private void ValidateAdministratorLoggedIn(Session objectToValidate)
         {
-            ValidateAdministratorNotEmpty(objectToValidate);
             ValidateIfSessionAlreadyExists(objectToValidate);
         }
 
@@ -38,16 +37,6 @@ namespace ImmRequest.BusinessLogic.Validators
             if (alreadyInSession)
             {
                 var errorMessage = BusinessResource.ValidationError_AlreadyInSession;
-                throw new ValidationException(errorMessage);
-            }
-        }
-
-        private static void ValidateAdministratorNotEmpty(Session objectToValidate)
-        {
-            if (objectToValidate.AdministratorInSession == null)
-            {
-                var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
-                    Admin_PropertyName);
                 throw new ValidationException(errorMessage);
             }
         }

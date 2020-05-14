@@ -28,7 +28,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             administrator = new Administrator
             {
                 UserName = "김 유겸",
-                PassWord = "654",
+                Password = "654",
                 Email = "hitthestage@yugyeom.com"
             };
         }
@@ -262,12 +262,12 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
             repository.Insert(administrator);
-            administrator.PassWord = "852";
+            administrator.Password = "852";
             var logic = new AdministratorLogic(repository, validator);
             logic.Update(administrator);
 
             var adminInDb = context.Administrators.FirstOrDefault();
-            Assert.AreEqual("852", adminInDb.PassWord);
+            Assert.AreEqual("852", adminInDb.Password);
 
         }
 
@@ -279,7 +279,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var context = ContextFactory.GetMemoryContext("Update NotFound");
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
-            administrator.PassWord = "852";
+            administrator.Password = "852";
             var logic = new AdministratorLogic(repository, validator);
             logic.Update(administrator);
 
@@ -311,7 +311,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var context = ContextFactory.GetMemoryContext("Update Invalid");
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
-            administrator.PassWord = "";
+            administrator.Password = "";
             var logic = new AdministratorLogic(repository, validator);
             logic.Update(administrator);
         }
@@ -344,7 +344,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var validator = new AdministratorValidator(repository);
             var logic = new AdministratorLogic(repository, validator);
             var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
-                administrator.PassWord);
+                administrator.Password);
             Assert.IsNotNull(administratorFound);
         }
 
@@ -359,7 +359,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
             var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
             var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
-                administrator.PassWord);
+                administrator.Password);
 
             mockRepository.VerifyAll();
             Assert.IsNotNull(administratorFound);
@@ -374,7 +374,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var validator = new AdministratorValidator(repository);
             var logic = new AdministratorLogic(repository, validator);
             var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
-                administrator.PassWord);
+                administrator.Password);
             Assert.IsNull(administratorFound);
         }
 
@@ -389,7 +389,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
             var logic = new AdministratorLogic(mockRepository.Object, mockValidator);
             var administratorFound = logic.FindAdministratorByCredentials(administrator.Email,
-                administrator.PassWord);
+                administrator.Password);
 
             mockRepository.VerifyAll();
             Assert.IsNull(administratorFound);

@@ -69,7 +69,7 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var administratorToModify = Get(objectToUpdate.Id);
                 administratorToModify.UserName = objectToUpdate.UserName;
-                administratorToModify.PassWord = objectToUpdate.PassWord;
+                administratorToModify.Password = objectToUpdate.Password;
                 Save();
                 return administratorToModify;
             }

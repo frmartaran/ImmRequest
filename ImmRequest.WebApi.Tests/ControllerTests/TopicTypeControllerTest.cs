@@ -178,6 +178,23 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         }
 
         [TestMethod]
+        public void CreateInvalidRangeTest()
+        {
+            var typeModel = TypeModel.ToModel(type);
+            typeModel.Fields.First().RangeValues.Add("1");
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            logic.Setup(m => m.Create(It.IsAny<TopicType>()));
+
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
+                .Returns(new Topic());
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Create(1, typeModel);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
+        }
+
+        [TestMethod]
         public void CreateWithValidationErrorTest()
         {
             var typeModel = TypeModel.ToModel(type);
@@ -376,6 +393,22 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Update(1, model);
 
             Assert.IsInstanceOfType(response, OkType);
+            logic.VerifyAll();
+            finder.VerifyAll();
+        }
+
+        [TestMethod]
+        public void UpdateInvalidRangeTest()
+        {
+            var model = TypeModel.ToModel(type);
+            model.Fields.FirstOrDefault().RangeValues.Add("1");
+            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+
+            var controller = new TypeController(logic.Object, finder.Object);
+            var response = controller.Update(1, model);
+
+            Assert.IsInstanceOfType(response, BadRequestType);
             logic.VerifyAll();
             finder.VerifyAll();
         }

@@ -1,5 +1,4 @@
 using ImmRequest.BusinessLogic;
-using ImmRequest.BusinessLogic.Extensions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Logic.Finders;
@@ -21,6 +20,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace ImmRequest.WebApi
 {
@@ -53,7 +55,6 @@ namespace ImmRequest.WebApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
-            services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
             services.AddScoped<IContextHelper, CurrentSessionInfo>();
 
             services.AddScoped<IRepository<Session>, SessionRepository>();
@@ -78,9 +79,14 @@ namespace ImmRequest.WebApi
             services.AddScoped<IFinder<Topic>, TopicFinder>();
 
 
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "ImmRequest", Version = "v1" });
+                options.IncludeXmlComments(xmlPath);
+                options.OperationFilter<AuthorizationFilterOperationFilter>();
             });
 
         }

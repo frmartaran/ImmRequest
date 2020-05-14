@@ -14,6 +14,8 @@ namespace ImmRequest.Domain
 
         public long FieldId { get; set; }
 
+        public BaseField Field { get; set; }
+
         public string Value { get; set; }
     }
 }

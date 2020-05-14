@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
+using ImmRequest.Domain.Exceptions;
+using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Models;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
@@ -27,7 +29,15 @@ namespace ImmRequest.WebApi.Controllers
             Finder = finder;
         }
 
+        /// <summary>
+        /// Permite a un usuario crear un tipo de solicitud especificando su tema.
+        /// </summary>
+        /// <param name="parentTopicID">Este parámetro contiene el identificador del tema</param>
+        /// <param name="model">Este modelo contiene la información del nuevo tipo.</param>
+        /// <response code="200">Se creó el tipo con éxito</response>
+        /// <response code="400">Error. No se pudo crear el tipo.</response>        
         [HttpPost("{parentTopicID}")]
+        [AuthorizationFilter]
         public ActionResult Create(long parentTopicID, [FromBody] TypeModel model)
         {
             if (model == null)
@@ -51,9 +61,19 @@ namespace ImmRequest.WebApi.Controllers
             {
                 return BadRequest(exception.Message);
             }
+            catch (InvalidArgumentException exception)
+            {
+                return BadRequest(exception.Message);
+            }
 
         }
 
+        /// <summary>
+        /// Permite a un usuario obtener un tipo.
+        /// </summary>
+        /// <param name="id">Este parámetro contiene el identificador del tipo en el sistema</param>
+        /// <response code="200">Se obtuvo el tipo con éxito</response>
+        /// <response code="400">Error. No se pudo obtener el tipo.</response>
         [HttpGet("{id}")]
         public ActionResult Get(long id)
         {
@@ -70,6 +90,10 @@ namespace ImmRequest.WebApi.Controllers
 
         }
 
+        /// <summary>
+        /// Permite a un usuario obtener todos los tipos del sistema.
+        /// </summary>
+        /// <response code="200">Se borró el administrador del sistema</response>
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -78,6 +102,11 @@ namespace ImmRequest.WebApi.Controllers
             return Ok(models);
         }
 
+        /// <summary>
+        /// Permite a un usuario obtener todos los tipos para un tema del sistema.
+        /// </summary>
+        /// <param name="parentTopicId">Este parámetro contiene el identificador del tema</param>
+        /// <response code="200">Se obtuvieron los tipos con éxito<response>
         [HttpGet("All/{parentTopicId}")]
         public ActionResult GetAll(long parentTopicId)
         {
@@ -88,7 +117,14 @@ namespace ImmRequest.WebApi.Controllers
             return Ok(models);
         }
 
+        /// <summary>
+        /// Permite a un usuario borrar un tipo del sistema.
+        /// </summary>
+        /// <param name="id">Este parámetro contiene el identificador del tipo en el sistema</param>
+        /// <response code="200">Se borró el tipo del sistema</response>
+        /// <response code="400">Error. No se pudo borrar al tipo</response>
         [HttpDelete("{id}")]
+        [AuthorizationFilter]
         public ActionResult Delete(long id)
         {
             try
@@ -104,7 +140,14 @@ namespace ImmRequest.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite a un usuario actualizar la información de un tipo.
+        /// </summary>
+        /// <param name="id">Este parámetro contiene el identificador del tipo en el sistema</param>
+        /// <response code="200">Se actualizó el tipo con éxito</response>
+        /// <response code="400">Error. No se pudo actualizar el tipo.</response>
         [HttpPut("{id}")]
+        [AuthorizationFilter]
         public ActionResult Update(long id, [FromBody] TypeModel model)
         {
             if (model == null)
@@ -125,6 +168,10 @@ namespace ImmRequest.WebApi.Controllers
                 return BadRequest(exception.Message);
             }
             catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (InvalidArgumentException exception)
             {
                 return BadRequest(exception.Message);
             }

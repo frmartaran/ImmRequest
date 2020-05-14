@@ -52,16 +52,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
-        public void IsNotValidWithtoutAnAdmin()
-        {
-            var mockRepository = new Mock<IRepository<Session>>();
-            var validator = new SessionValidator(mockRepository.Object);
-            session.AdministratorInSession = null;
-            validator.IsValid(session);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
 
         public void IsNotValidIfAnotherSessionAlreadyExistsMock()
         {
@@ -83,7 +73,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var validator = new SessionValidator(repository);
             var newSession = new Session
             {
-                AdministratorId = session.AdministratorId,
+                AdministratorInSessionId = session.AdministratorInSessionId,
                 AdministratorInSession = session.AdministratorInSession,
                 Token = Guid.NewGuid()
             };

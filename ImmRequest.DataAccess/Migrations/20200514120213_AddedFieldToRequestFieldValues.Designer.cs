@@ -4,14 +4,16 @@ using ImmRequest.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImmRequest.DataAccess.Migrations
 {
     [DbContext(typeof(ImmDbContext))]
-    partial class ImmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200514120213_RequestFieldValuesDeleteBehaviorSpecified")]
+    partial class AddedFieldToRequestFieldValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,7 +128,8 @@ namespace ImmRequest.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FieldId");
+                    b.HasIndex("FieldId")
+                        .IsUnique();
 
                     b.HasIndex("ParentCitizenRequestId");
 
@@ -289,8 +292,8 @@ namespace ImmRequest.DataAccess.Migrations
             modelBuilder.Entity("ImmRequest.Domain.RequestFieldValues", b =>
                 {
                     b.HasOne("ImmRequest.Domain.Fields.BaseField", "Field")
-                        .WithMany()
-                        .HasForeignKey("FieldId")
+                        .WithOne()
+                        .HasForeignKey("ImmRequest.Domain.RequestFieldValues", "FieldId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

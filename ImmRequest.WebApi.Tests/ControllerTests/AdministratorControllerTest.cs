@@ -32,7 +32,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             administrator = new Administrator
             {
                 Email = "another@example.com",
-                PassWord = "1235",
+                Password = "1235",
                 UserName = "Another Example"
             };
         }
@@ -43,7 +43,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var admin = model.ToDomain();
             Assert.AreEqual(model.Email, admin.Email);
             Assert.AreEqual(model.Username, admin.UserName);
-            Assert.AreEqual(model.Password, admin.PassWord);
+            Assert.AreEqual(model.Password, admin.Password);
 
         }
 
@@ -54,7 +54,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var admin = model.ToDomain();
             Assert.AreEqual(model.Email, admin.Email);
             Assert.AreEqual(model.Username, admin.UserName);
-            Assert.AreEqual(model.Password, admin.PassWord);
+            Assert.AreEqual(model.Password, admin.Password);
             Assert.AreEqual(model.Id.Value, admin.Id);
 
         }
@@ -65,7 +65,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var newModel = AdministratorModel.ToModel(administrator);
             Assert.AreEqual(administrator.Email, newModel.Email);
             Assert.AreEqual(administrator.UserName, newModel.Username);
-            Assert.AreEqual(administrator.PassWord, newModel.Password);
+            Assert.AreEqual(administrator.Password, newModel.Password);
             Assert.AreEqual(administrator.Id, newModel.Id.Value);
         }
 

@@ -83,7 +83,7 @@ namespace ImmRequest.BusinessLogic.Logic
         {
             return Repository.GetAll()
                 .Where(a => a.Email == email)
-                .Where(a => a.PassWord == password)
+                .Where(a => a.Password == password)
                 .FirstOrDefault();
         }
     }

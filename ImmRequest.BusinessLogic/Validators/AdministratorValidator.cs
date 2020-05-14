@@ -31,7 +31,7 @@ namespace ImmRequest.BusinessLogic.Validators
 
         private static void ValidatePassword(Administrator objectToValidate)
         {
-            if (string.IsNullOrEmpty(objectToValidate.PassWord))
+            if (string.IsNullOrEmpty(objectToValidate.Password))
             {
                 var errorMessage = string.Format(BusinessResource.ValidationError_IsEmpty,
                     Password_PropertyName);
