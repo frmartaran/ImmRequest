@@ -6,6 +6,7 @@ using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Exceptions;
+using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Models;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
@@ -36,6 +37,7 @@ namespace ImmRequest.WebApi.Controllers
         /// <response code="200">Se creó el tipo con éxito</response>
         /// <response code="400">Error. No se pudo crear el tipo.</response>        
         [HttpPost("{parentTopicID}")]
+        [AuthorizationFilter]
         public ActionResult Create(long parentTopicID, [FromBody] TypeModel model)
         {
             if (model == null)
@@ -122,6 +124,7 @@ namespace ImmRequest.WebApi.Controllers
         /// <response code="200">Se borró el tipo del sistema</response>
         /// <response code="400">Error. No se pudo borrar al tipo</response>
         [HttpDelete("{id}")]
+        [AuthorizationFilter]
         public ActionResult Delete(long id)
         {
             try
@@ -144,6 +147,7 @@ namespace ImmRequest.WebApi.Controllers
         /// <response code="200">Se actualizó el tipo con éxito</response>
         /// <response code="400">Error. No se pudo actualizar el tipo.</response>
         [HttpPut("{id}")]
+        [AuthorizationFilter]
         public ActionResult Update(long id, [FromBody] TypeModel model)
         {
             if (model == null)
