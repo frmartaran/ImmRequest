@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>
+            <ModulePaths>
+              <Exclude>
+                <ModulePath>.*\\ImmRequest\.BusinessLogic\.Tests\.dll$</ModulePath>
+                <ModulePath>.*\\ImmRequest\.DataAccess\.Tests\.dll$</ModulePath>
+                <ModulePath>.*\\ImmRequest\.WebApi\.Tests\.dll$</ModulePath>
+              </Exclude>
+            </ModulePaths>
+            <Functions>
+              <Exclude>
+                <Function>.*\.Migrations\..*</Function>
+                <Function>.*\.Resources\..*</Function>
+              </Exclude>
+            </Functions>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

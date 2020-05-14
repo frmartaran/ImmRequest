@@ -23,7 +23,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.WebApi.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.BusinessLogic.Tests", "ImmRequest.BusinessLogic.Tests\ImmRequest.BusinessLogic.Tests.csproj", "{4B2AFEFD-9A9A-4E8E-897C-1251C99A5367}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.WebApi.Interfaces", "ImmRequest.WebApi.Interfaces\ImmRequest.WebApi.Interfaces.csproj", "{C066101D-488E-491B-A0E2-40D3E28FB3B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.WebApi.Interfaces", "ImmRequest.WebApi.Interfaces\ImmRequest.WebApi.Interfaces.csproj", "{C066101D-488E-491B-A0E2-40D3E28FB3B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F361D08F-9743-4E04-B152-D0505B694A50}"
+	ProjectSection(SolutionItems) = preProject
+		testSettings.runsettings = testSettings.runsettings
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

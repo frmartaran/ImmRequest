@@ -15,7 +15,7 @@ namespace ImmRequest.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    public class CitizenRequestController: ControllerBase
+    public class CitizenRequestController : ControllerBase
     {
         private ILogic<CitizenRequest> CitizenRequestLogic { get; set; }
 
@@ -35,7 +35,7 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                if(requestModel == null)
+                if (requestModel == null)
                 {
                     return BadRequest(WebApiResource.EmptyRequestMessage);
                 }
@@ -85,32 +85,19 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("Areas")]
         public IActionResult GetAllAreas()
         {
-            try
-            {
-                var allAreas = AreaFinder.FindAll();
-                var allAreasModel = AreaModel.ToModel(allAreas);
-                return Ok(allAreasModel);
-            }
-            catch (BusinessLogicException exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            var allAreas = AreaFinder.FindAll();
+            var allAreasModel = AreaModel.ToModel(allAreas);
+            return Ok(allAreasModel);
         }
 
         [HttpGet("Topics/{parentAreaId}")]
         public ActionResult GetAllTopicsFromArea(long parentAreaId)
         {
-            try
-            {
-                var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId)
-                    .ToList();
-                var models = TopicModel.ToModel(all);
-                return Ok(models);
-            }
-            catch (BusinessLogicException exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId)
+                .ToList();
+            var models = TopicModel.ToModel(all);
+            return Ok(models);
+
         }
 
         [HttpGet]
