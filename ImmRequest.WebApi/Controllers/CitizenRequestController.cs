@@ -143,23 +143,30 @@ namespace ImmRequest.WebApi.Controllers
         /// Permite al administrador actualizar el status de una solicitud existente en el sistema
         /// </summary>
         /// <param name="requestId">Este parámetro contiene el número de la solicitud existente</param>
-        /// <param name="status">Este parámetro contiene el nuevo status que debe tener la solicitud</param>
+        /// <param name="model">Este parámetro contiene el nuevo status que debe tener la solicitud</param>
         /// <response code="200">La solicitud requerida fue actualizada.</response>
         /// <response code="400">Status no existe o error en el sistema.</response>
         [HttpPut("{requestId}")]
         [AuthorizationFilter]
-        public IActionResult UpdateCitizenRequestStatus(long requestId, [FromBody] RequestStatus status)
+        public IActionResult UpdateCitizenRequestStatus(long requestId, [FromBody] StatusModel model)
         {
             try
             {
                 var request = CitizenRequestLogic.Get(requestId);
-                request.Status = status;
-                CitizenRequestLogic.Update(request);
+                var untrackedRequest = CitizenRequestModel
+                    .ToModel(request)
+                    .ToDomain();
+                untrackedRequest.Status = model.Status;
+                CitizenRequestLogic.Update(untrackedRequest);
                 var statusUpdatedMessage = string.Format(WebApiResource.CitizenRequest_StatusUpdatedMessage,
                     request.Id);
                 return Ok(statusUpdatedMessage);
             }
             catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (ValidationException exception)
             {
                 return BadRequest(exception.Message);
             }

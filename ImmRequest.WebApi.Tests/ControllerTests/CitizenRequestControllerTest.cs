@@ -2,6 +2,7 @@
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
+using ImmRequest.Domain.Enums;
 using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Models;
@@ -227,7 +228,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var mockAreaFinder = new Mock<IFinder<Area>>(MockBehavior.Strict);
 
             mockCitizenRequestLogic.Setup(m => m.GetAll())
-                .Returns(new List<CitizenRequest> 
+                .Returns(new List<CitizenRequest>
                 {
                     request
                 });
@@ -252,7 +253,9 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             mockCitizenRequestLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()));
 
             var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
-            var result = controller.UpdateCitizenRequestStatus(1, Domain.Enums.RequestStatus.Created);
+            var model = new StatusModel();
+            model.Status = RequestStatus.Created;
+            var result = controller.UpdateCitizenRequestStatus(1, model);
 
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(OkObjectResult));
@@ -272,8 +275,30 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 .Throws(new BusinessLogicException(""));
 
             var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
-            var result = controller.UpdateCitizenRequestStatus(1, Domain.Enums.RequestStatus.Created);
+            var model = new StatusModel();
+            model.Status = RequestStatus.Created;
+            var result = controller.UpdateCitizenRequestStatus(1, model);
+            mockCitizenRequestLogic.VerifyAll();
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
 
+        [TestMethod]
+        public void UpdateCitizenRequestStatusUpdateValidationError()
+        {
+            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            var mockTopicFinder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
+            var mockAreaFinder = new Mock<IFinder<Area>>(MockBehavior.Strict);
+
+            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(request);
+
+            mockCitizenRequestLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()))
+                .Throws(new ValidationException(""));
+
+            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var model = new StatusModel();
+            model.Status = RequestStatus.Created;
+            var result = controller.UpdateCitizenRequestStatus(1, model);
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
