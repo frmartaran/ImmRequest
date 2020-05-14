@@ -1,0 +1,759 @@
+{
+	"info": {
+		"_postman_id": "2278fc4d-c7ca-4da5-8c5c-7b9f8a8102c2",
+		"name": "ImmRequest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AdministratorController",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"frmartaran@gmail.com\",\r\n  \"username\": \"francisco\",\r\n  \"password\": \"heyJuliette\"\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Administrator",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Administrator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "191e5283-4f2c-4fc2-a309-ffd1936c8dfd",
+								"exec": [
+									"pm.environment.set(\"id\",2)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"hola@gmail.com\",\r\n  \"username\": \"frmartaran\",\r\n  \"password\": \"hola!\"\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Administrator/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Administrator",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/Administrator",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Administrator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "12e6509b-a205-4aa1-b450-cfbaf37675a6",
+								"exec": [
+									"pm.environment.set(\"id\", 1)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/Administrator/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Administrator",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "684dfa99-865f-49a3-bf99-d432c3163e78",
+								"exec": [
+									"pm.environment.set(\"id\", 2)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/Administrator/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Administrator",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CitizenRequestController",
+			"item": [
+				{
+					"name": "CreateCitizenRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Arreglar luces\",\r\n  \"citizenName\": \"Juliette\",\r\n  \"email\": \"juliette@gmail.com\",\r\n  \"phone\": \"123456789\",\r\n  \"areaId\": 2,\r\n  \"topicId\": 7,\r\n  \"topicTypeId\": 7,\r\n  \"status\": 1,\r\n  \"values\": [\r\n    {\r\n      \"fieldId\": 20,\r\n      \"value\": \"2020-04-24T18:25:43.511Z\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/CitizenRequest",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"CitizenRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCitizenRequestStatus",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "03895c93-3e7c-43f4-8dcc-c62803126871",
+								"exec": [
+									"pm.environment.set(\"id\", 1)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Status\": \"Ended\"\n\t\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/CitizenRequest/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"CitizenRequest",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCitizenRequest",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8899d863-b5e7-49b7-8497-4e3fd3732ed0",
+								"exec": [
+									"pm.environment.set(\"id\", 10);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/CitizenRequest/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"CitizenRequest",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStatus",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "efb78463-f5e6-4b2a-9ff3-67c585c79bb8",
+								"exec": [
+									"pm.environment.set(\"id\", 1);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/CitizenRequest/Status/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"CitizenRequest",
+								"Status",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllAreas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/CitizenRequest/Areas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"CitizenRequest",
+								"Areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTopics",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1a4fb0d7-3aef-466d-adeb-5d1d6817468b",
+								"exec": [
+									"pm.environment.set(\"id\", 1);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/CitizenRequest/Topics/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"CitizenRequest",
+								"Topics",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/CitizenRequest",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"CitizenRequest"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SessionController",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "190ec5df-21bd-46ef-b323-cc00d81d1994",
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.environment.set(\"token\", data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"administrator@global.com\",\r\n  \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Session",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Session"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "09a40ede-0c3c-494b-b6a4-08fbdfe77cc0",
+								"exec": [
+									"pm.environment.set(\"token\", '');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/Session",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Session"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "TypeController",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0173aa94-c5c7-4ca8-aac6-f6b3008a82b5",
+								"exec": [
+									"pm.environment.set(\"id\", 7)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Reparacion de Luces\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"Horario\",\r\n      \"rangeValues\": [\r\n        \"2020-04-23T18:25:43.511Z\",\"2020-04-25T18:25:43.511Z\"\r\n      ],\r\n      \"dataType\": \"DateTime\"\r\n    },\r\n    {\r\n    \t\"name\": \"cantidad de reparaciones\",\r\n    \t\"rangeValues\": [1, 50],\r\n    \t\"dataType\": \"Number\"\r\n    },\r\n    {\r\n    \t\"name\": \"Barrios\",\r\n    \t\"rangeValues\": [\"Pocitos\", \"Punta Carretas\"],\r\n    \t\"dataType\": \"Text\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Type/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Type",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "931585da-4e65-4598-90ba-d0ad13254120",
+								"exec": [
+									"pm.environment.set(\"id\", 2)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Type/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Type",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "10ea7808-6eb4-43c7-9805-1b62b1fcdbe7",
+								"exec": [
+									"pm.environment.set(\"id\", 6)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"contenedor-limpieza\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"horarioLimpieza\",\r\n      \"rangeValues\": [\r\n        \"2020-04-23T18:25:43.511Z\",\"2020-04-28T18:25:43.511Z\"\r\n      ],\r\n      \"dataType\": \"DateTime\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Type/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Type",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Type",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllFromParentTopicId",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "24a70dbf-a5b1-4c3d-a900-3be13d7e658c",
+								"exec": [
+									"pm.environment.set(\"parentTopicId\", 7)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Type/All/{{parentTopicId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Type",
+								"All",
+								"{{parentTopicId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f16eee52-9ed5-4b5b-b781-1b94dac99a24",
+								"exec": [
+									"pm.environment.set(\"id\", 1)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/Type/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Type",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
