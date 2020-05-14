@@ -60,6 +60,11 @@ namespace ImmRequest.DataAccess.Context
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<RequestFieldValues>()
+                .HasOne(rf => rf.Field)
+                .WithOne()
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.Entity<TopicType>()
                 .Property<bool>("IsDeleted");
             builder.Entity<TopicType>()

@@ -1,5 +1,4 @@
 ﻿using ImmRequest.BusinessLogic.Exceptions;
-using ImmRequest.BusinessLogic.Extensions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Validators;
@@ -147,16 +146,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Valid citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
 
@@ -170,16 +161,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Invalid citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             citizenRequest.AreaId = 15;
             logic.Create(citizenRequest);
@@ -219,16 +202,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Get citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
             var requestReturned = logic.Get(citizenRequest.Id);
@@ -241,15 +216,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Get not found citizen request");
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Get(1);
         }
@@ -291,16 +258,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Get all citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
             var requestReturned = logic.GetAll()
@@ -329,16 +288,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Update valid citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
             var requestCreated = logic.Get(citizenRequest.Id);
@@ -355,16 +306,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Update not found citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             var requestCreated = logic.Get(citizenRequest.Id);
             requestCreated.CitizenName = "Paco";
@@ -397,16 +340,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Update invalid citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
             var requestCreated = logic.Get(citizenRequest.Id);
@@ -447,16 +382,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Delete citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
             logic.Delete(citizenRequest.Id);
@@ -472,16 +399,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             CreateContextFor("Delete not found citizen request");
 
-            var validatorInput = new CitizenRequestValidatorInput
-            {
-                AreaRepository = AreaRepository,
-                FieldRepository = FieldRepository,
-                TopicRepository = TopicRepository,
-                TopicTypeRepository = TopicTypeRepository,
-                CitizenRequestRepository = CitizenRequestRepository
-            };
             var citizenRequestRepository = new CitizenRequestRepository(context);
-            var citizenRequestValidator = new CitizenRequestValidator(validatorInput);
+            var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Delete(citizenRequest.Id);
             var request = logic.Get(citizenRequest.Id);

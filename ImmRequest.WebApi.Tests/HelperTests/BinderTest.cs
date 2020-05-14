@@ -71,7 +71,7 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         [TestMethod]
         public void IsNumberFieldModelTest()
         {
-            var jsonObject = JObject.Parse(@"{'DataType': 'Number'}");
+            var jsonObject = JObject.Parse(@"{'dataType': 'Number'}");
             var model = Create(type, jsonObject);
             Assert.IsInstanceOfType(model, type);
         }
@@ -79,7 +79,7 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         [TestMethod]
         public void IsTextFieldModelTest()
         {
-            var jsonObject = JObject.Parse(@"{'DataType': 'Text'}");
+            var jsonObject = JObject.Parse(@"{'dataType': 'Text'}");
             var model = Create(type, jsonObject);
             Assert.IsInstanceOfType(model, typeof(TextFieldModel));
         }
@@ -87,7 +87,7 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         [TestMethod]
         public void IsDateTimeFieldModelTest()
         {
-            var jsonObject = JObject.Parse(@"{'DataType': 'DateTime'}");
+            var jsonObject = JObject.Parse(@"{'dataType': 'DateTime'}");
             var model = Create(type, jsonObject);
             Assert.IsInstanceOfType(model, typeof(DateTimeFieldModel));
         }
@@ -95,7 +95,7 @@ namespace ImmRequest.WebApi.Tests.HelperTests
         [TestMethod]
         public void DefaultReturnsNull()
         {
-            var jsonObject = JObject.Parse(@"{'DataType': 'Other'}");
+            var jsonObject = JObject.Parse(@"{'dataType': 'Other'}");
             var model = Create(type, jsonObject);
             Assert.IsNull(model);
         }

@@ -1,5 +1,4 @@
 ﻿using ImmRequest.BusinessLogic.Exceptions;
-using ImmRequest.BusinessLogic.Extensions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
@@ -28,13 +27,15 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected CitizenRequestValidator() { }
 
-        public CitizenRequestValidator(CitizenRequestValidatorInput repositories)
+        public CitizenRequestValidator(IRepository<Area> AreaRepository, IRepository<Topic> TopicRepository,
+            IRepository<TopicType> TopicTypeRepository, IRepository<BaseField> FieldRepository,
+            IRepository<CitizenRequest> CitizenRequestRepository)
         {
-            AreaRepository = repositories.AreaRepository;
-            TopicRepository = repositories.TopicRepository;
-            TopicTypeRepository = repositories.TopicTypeRepository;
-            FieldRepository = repositories.FieldRepository;
-            CitizenRequestRepository = repositories.CitizenRequestRepository;
+            this.AreaRepository = AreaRepository;
+            this.TopicRepository = TopicRepository;
+            this.TopicTypeRepository = TopicTypeRepository;
+            this.FieldRepository = FieldRepository;
+            this.CitizenRequestRepository = CitizenRequestRepository;
         }
 
         public bool IsValid(CitizenRequest objectToValidate)

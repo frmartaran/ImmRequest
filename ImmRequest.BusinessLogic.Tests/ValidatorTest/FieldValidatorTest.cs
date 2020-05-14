@@ -67,7 +67,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void DateTimeFieldIsValidTest()
         {
-            var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 2));
+            var dateToValidate = "2020-04-03T18:25:43.511-03:00";
             var isValid = dateTimeRange.Validate(dateToValidate);
             Assert.IsTrue(isValid);
         }
@@ -76,7 +76,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(DomainValidationException))]
         public void DateTimeFieldNotInRangeAfterEndTest()
         {
-            var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 4, 5));
+            var dateToValidate = "2020-04-05T18:25:43.511-03:00";
             dateTimeRange.Validate(dateToValidate);
         }
 
@@ -84,7 +84,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(DomainValidationException))]
         public void DateTimeFieldNotInRangeBeforeStartTest()
         {
-            var dateToValidate = JsonConvert.SerializeObject(new DateTime(2020, 3, 5));
+            var dateToValidate = "2020-03-31T18:25:43.511-03:00";
             dateTimeRange.Validate(dateToValidate);
         }
 
@@ -99,7 +99,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void DateTimeFieldFromDifferentTimeZoneIsValidTest()
         {
-            var dateToValidate = JsonConvert.SerializeObject(DateTime.SpecifyKind(new DateTime(2020, 4, 4, 2, 0, 0), DateTimeKind.Utc));
+            var dateToValidate = "2020-04-03T18:25:43.511Z";
             var isValid = dateTimeRange.Validate(dateToValidate);
             Assert.IsTrue(isValid);
         }

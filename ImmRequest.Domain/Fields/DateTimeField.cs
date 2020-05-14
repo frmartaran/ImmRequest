@@ -63,9 +63,9 @@ namespace ImmRequest.Domain.Fields
             DateTime dateTimeValue;
             try
             {
-                dateTimeValue = JsonConvert.DeserializeObject<DateTime>(value).ToUniversalTime();
+                dateTimeValue = DateTime.Parse(value);
             }
-            catch (JsonReaderException ex)
+            catch (FormatException ex)
             {
                 var message = string.Format(DomainResource.Field_InvalidFormat, Name);
                 throw new InvalidArgumentException(message, ex);

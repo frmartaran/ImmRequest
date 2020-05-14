@@ -1,5 +1,4 @@
 using ImmRequest.BusinessLogic;
-using ImmRequest.BusinessLogic.Extensions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Logic.Finders;
@@ -56,7 +55,6 @@ namespace ImmRequest.WebApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
-            services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
             services.AddScoped<IContextHelper, CurrentSessionInfo>();
 
             services.AddScoped<IRepository<Session>, SessionRepository>();
