@@ -210,15 +210,15 @@ namespace ImmRequest.DataAccess.Tests
             
         }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(DBDeveloperException))]
-        //public void FindAllNoPredicateWithoutDBSetTest()
-        //{
-        //    var context = ContextFactory.GetMemoryContext("No set");
-        //    var finder = new DatabaseFinder(context);
-        //    finder.FindAll<MockClassWithOutDbSet>();
+        [TestMethod]
+        [ExpectedException(typeof(DBDeveloperException))]
+        public void FindAllNoPredicateWithoutDBSetTest()
+        {
+            var context = ContextFactory.GetMemoryContext("No set");
+            var finder = new DatabaseFinder(context);
+            finder.FindAll<MockClassWithOutDbSet>();
 
-        //}
+        }
 
         [TestMethod]
         public void FindCitizenRequestNoFilter()
