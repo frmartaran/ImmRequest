@@ -6,7 +6,7 @@ namespace ImmRequest.DataAccess.Interfaces
 {
     public interface IDatabaseFinder
     {
-        T Find<T>(Predicate<T> condition);
+        T Find<T>(Predicate<T> condition) where T : class;
 
         ICollection<T> FindAll<T>(Predicate<T> condition);
     }
