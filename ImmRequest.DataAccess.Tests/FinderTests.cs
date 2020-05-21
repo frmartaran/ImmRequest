@@ -200,6 +200,34 @@ namespace ImmRequest.DataAccess.Tests
             
         }
 
+        //[TestMethod]
+        //[ExpectedException(typeof(DBDeveloperException))]
+        //public void FindAllNoPredicateWithoutDBSetTest()
+        //{
+        //    var context = ContextFactory.GetMemoryContext("No set");
+        //    var finder = new DatabaseFinder(context);
+        //    finder.FindAll<MockClassWithOutDbSet>();
+
+        //}
+
+        [TestMethod]
+        public void FindCitizenRequestNoFilter()
+        {
+            var context = ContextFactory.GetMemoryContext("Find All Areas");
+            var newYear = new DateTime(2020, 1, 1);
+            var request = new CitizenRequest { CreatedDate = new DateTime(2020, 1, 1) };
+            var request2 = new CitizenRequest { CreatedDate = new DateTime(2020, 2, 1) };
+            var request3 = new CitizenRequest { CreatedDate = new DateTime(2020, 2, 10) };
+            context.CitizenRequests.Add(request);
+            context.CitizenRequests.Add(request2);
+            context.CitizenRequests.Add(request3);
+            context.SaveChanges();
+
+            var finder = new DatabaseFinder(context);
+            var allRequest = finder.FindAll<CitizenRequest>();
+            Assert.AreEqual(3, allRequest.Count);
+        }
+
 
 
 

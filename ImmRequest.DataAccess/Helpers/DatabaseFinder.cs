@@ -37,10 +37,24 @@ namespace ImmRequest.DataAccess.Helpers
 
         public ICollection<T> FindAll<T>(Predicate<T> condition) where T : class
         {
-            return context.Set<T>()
+            try
+            {
+                return context.Set<T>()
                 .ToList()
                 .Where(x => condition.Invoke(x))
                 .ToList();
+            }
+            catch (InvalidOperationException)
+            {
+
+                throw new DBDeveloperException(DataAccessResource.Missing_Dataset);
+            }
+
+        }
+
+        public ICollection<T> FindAll<T>() where T : class
+        {
+            throw new NotImplementedException();
         }
     }
 }
