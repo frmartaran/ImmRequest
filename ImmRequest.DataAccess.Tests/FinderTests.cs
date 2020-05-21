@@ -112,6 +112,8 @@ namespace ImmRequest.DataAccess.Tests
 
             var finder = new DatabaseFinder(context);
             var allAreasWithoutTopics = finder.FindAll<Area>(a => a.Topics.Count == 0);
+            context.Dispose();
+
             Assert.AreEqual(2, allAreasWithoutTopics.Count);
 
 
@@ -131,6 +133,8 @@ namespace ImmRequest.DataAccess.Tests
 
             var finder = new DatabaseFinder(context);
             var allTopicsWithoutTypes = finder.FindAll<Topic>(a => a.Types.Count == 0);
+            context.Dispose();
+
             Assert.AreEqual(2, allTopicsWithoutTypes.Count);
 
 
@@ -150,6 +154,8 @@ namespace ImmRequest.DataAccess.Tests
 
             var finder = new DatabaseFinder(context);
             var allTypesWithoutFields = finder.FindAll<TopicType>(a => a.AllFields.Count == 0);
+            context.Dispose();
+
             Assert.AreEqual(2, allTypesWithoutFields.Count);
         }
 
@@ -167,6 +173,8 @@ namespace ImmRequest.DataAccess.Tests
 
             var finder = new DatabaseFinder(context);
             var allFieldsWithoutName = finder.FindAll<BaseField>(f => f.Name == "");
+            context.Dispose();
+
             Assert.AreEqual(2, allFieldsWithoutName.Count);
         }
 
@@ -186,6 +194,8 @@ namespace ImmRequest.DataAccess.Tests
 
             var finder = new DatabaseFinder(context);
             var allRequest = finder.FindAll<CitizenRequest>(cr => cr.CreatedDate > newYear);
+            context.Dispose();
+
             Assert.AreEqual(2, allRequest.Count);
         }
 
@@ -213,8 +223,7 @@ namespace ImmRequest.DataAccess.Tests
         [TestMethod]
         public void FindCitizenRequestNoFilter()
         {
-            var context = ContextFactory.GetMemoryContext("Find All Areas");
-            var newYear = new DateTime(2020, 1, 1);
+            var context = ContextFactory.GetMemoryContext("Find All Requests No Filter");
             var request = new CitizenRequest { CreatedDate = new DateTime(2020, 1, 1) };
             var request2 = new CitizenRequest { CreatedDate = new DateTime(2020, 2, 1) };
             var request3 = new CitizenRequest { CreatedDate = new DateTime(2020, 2, 10) };
@@ -225,6 +234,7 @@ namespace ImmRequest.DataAccess.Tests
 
             var finder = new DatabaseFinder(context);
             var allRequest = finder.FindAll<CitizenRequest>();
+            context.Dispose();
             Assert.AreEqual(3, allRequest.Count);
         }
 

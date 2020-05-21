@@ -54,7 +54,7 @@ namespace ImmRequest.DataAccess.Helpers
 
         public ICollection<T> FindAll<T>() where T : class
         {
-            throw new NotImplementedException();
+            return context.Set<T>().ToList();
         }
     }
 }
