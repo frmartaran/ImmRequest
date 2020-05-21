@@ -8,6 +8,6 @@ namespace ImmRequest.DataAccess.Interfaces
     {
         T Find<T>(Predicate<T> condition) where T : class;
 
-        ICollection<T> FindAll<T>(Predicate<T> condition);
+        ICollection<T> FindAll<T>(Predicate<T> condition) where T : class;
     }
 }

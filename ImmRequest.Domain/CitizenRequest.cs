@@ -20,6 +20,7 @@ namespace ImmRequest.Domain
         public Topic Topic { get; set; }
         public long TopicTypeId { get; set; }
         public TopicType TopicType { get; set; }
+        public DateTime CreatedDate { get; set; }
         public List<RequestFieldValues> Values { get; set; }
 
     }

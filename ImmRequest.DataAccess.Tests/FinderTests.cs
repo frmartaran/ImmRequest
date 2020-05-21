@@ -117,6 +117,81 @@ namespace ImmRequest.DataAccess.Tests
 
         }
 
+        [TestMethod]
+        public void FindAllTopicsWithoutTypes()
+        {
+            var context = ContextFactory.GetMemoryContext("Find All Topics");
+            var topic = new Topic { Name = "Area1", Types = new List<TopicType>() };
+            var topic2 = new Topic { Name = "Area2", Types = new List<TopicType>() };
+            var topic3 = new Topic { Name = "Area2", Types = new List<TopicType> { new TopicType() } };
+            context.Topics.Add(topic);
+            context.Topics.Add(topic2);
+            context.Topics.Add(topic3);
+            context.SaveChanges();
+
+            var finder = new DatabaseFinder(context);
+            var allTopicsWithoutTypes = finder.FindAll<Topic>(a => a.Types.Count == 0);
+            Assert.AreEqual(2, allTopicsWithoutTypes.Count);
+
+
+        }
+
+        [TestMethod]
+        public void FindAllTypesWithoutFields()
+        {
+            var context = ContextFactory.GetMemoryContext("Find All Types");
+            var type = new TopicType { Name = "Area1", AllFields = new List<BaseField>() };
+            var type2 = new TopicType { Name = "Area2", AllFields = new List<BaseField>() };
+            var type3 = new TopicType { Name = "Area2", AllFields = new List<BaseField> { new NumberField() } };
+            context.TopicTypes.Add(type);
+            context.TopicTypes.Add(type2);
+            context.TopicTypes.Add(type3);
+            context.SaveChanges();
+
+            var finder = new DatabaseFinder(context);
+            var allTypesWithoutFields = finder.FindAll<TopicType>(a => a.AllFields.Count == 0);
+            Assert.AreEqual(2, allTypesWithoutFields.Count);
+        }
+
+        [TestMethod]
+        public void FindAllFieldsWithoutName()
+        {
+            var context = ContextFactory.GetMemoryContext("Find All Fields");
+            var numberField = new NumberField { Name = "" };
+            var textField = new TextField { Name = "" };
+            var dateTimefield = new DateTimeField { Name = "Birthday" };
+            context.Fields.Add(numberField);
+            context.Fields.Add(textField);
+            context.Fields.Add(dateTimefield);
+            context.SaveChanges();
+
+            var finder = new DatabaseFinder(context);
+            var allFieldsWithoutName = finder.FindAll<BaseField>(f => f.Name == "");
+            Assert.AreEqual(2, allFieldsWithoutName.Count);
+        }
+
+
+        [TestMethod]
+        public void FindCitizenRequestByCreatedDate()
+        {
+            var context = ContextFactory.GetMemoryContext("Find All Areas");
+            var newYear = new DateTime(2020, 1, 1);
+            var request = new CitizenRequest { CreatedDate = new DateTime(2020, 1, 1) };
+            var request2 = new CitizenRequest { CreatedDate = new DateTime(2020, 2, 1) };
+            var request3 = new CitizenRequest { CreatedDate = new DateTime(2020, 2, 10) };
+            context.CitizenRequests.Add(request);
+            context.CitizenRequests.Add(request2);
+            context.CitizenRequests.Add(request3);
+            context.SaveChanges();
+
+            var finder = new DatabaseFinder(context);
+            var allRequest = finder.FindAll<CitizenRequest>(cr => cr.CreatedDate > newYear);
+            Assert.AreEqual(2, allRequest.Count);
+        }
+
+
+
+
         internal class MockClassWithOutDbSet
         {
             public string FilterProperty { get; set; }

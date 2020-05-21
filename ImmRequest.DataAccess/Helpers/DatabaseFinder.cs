@@ -35,9 +35,12 @@ namespace ImmRequest.DataAccess.Helpers
 
         }
 
-        public ICollection<T> FindAll<T>(Predicate<T> condition)
+        public ICollection<T> FindAll<T>(Predicate<T> condition) where T : class
         {
-            throw new NotImplementedException();
+            return context.Set<T>()
+                .ToList()
+                .Where(x => condition.Invoke(x))
+                .ToList();
         }
     }
 }
