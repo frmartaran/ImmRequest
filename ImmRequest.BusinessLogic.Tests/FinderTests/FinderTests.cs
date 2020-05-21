@@ -290,6 +290,15 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             var finder = new Finder(dbFinder);
             finder.FindAll<MockClass>(m => m.FilterProperty == "");
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DeveloperException))]
+        public void FindAllWihoutConditionOfTypeWithoutDbSet()
+        {
+            var dbFinder = CreateDBFinderWithContext("No Set");
+            var finder = new Finder(dbFinder);
+            finder.FindAll<MockClass>();
+        }
         #endregion
     }
 }

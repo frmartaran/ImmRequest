@@ -23,12 +23,26 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
 
         public ICollection<T> FindAll<T>() where T : class
         {
-            return DBFinder.FindAll<T>();
+            try
+            {
+                return DBFinder.FindAll<T>();
+            }
+            catch (DBDeveloperException exception)
+            {
+                throw new DeveloperException(BusinessResource.Developer_Exception, exception);
+            }
         }
 
         public ICollection<T> FindAll<T>(Predicate<T> condition) where T : class
         {
-            return DBFinder.FindAll<T>(condition);
+            try
+            {
+                return DBFinder.FindAll<T>(condition);
+            }
+            catch (DBDeveloperException exception)
+            {
+                throw new DeveloperException(BusinessResource.Developer_Exception, exception);
+            }
         }
 
         public T Find<T>(Predicate<T> condition) where T : class
