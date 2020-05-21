@@ -54,7 +54,15 @@ namespace ImmRequest.DataAccess.Helpers
 
         public ICollection<T> FindAll<T>() where T : class
         {
-            return context.Set<T>().ToList();
+            try
+            {
+                return context.Set<T>().ToList();
+
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DBDeveloperException(DataAccessResource.Missing_Dataset);
+            }
         }
     }
 }
