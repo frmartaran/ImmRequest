@@ -38,6 +38,8 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             };
         }
 
+        #region Topic Tests
+
         [TestCleanup]
         public void TearDown()
         {
@@ -154,6 +156,8 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             mock.VerifyAll();
         }
 
+        #endregion
+
         #region Area Tests
 
         [TestMethod]
@@ -259,6 +263,23 @@ namespace ImmRequest.BusinessLogic.Tests.FinderTests
             var finder = new Finder(mock.Object);
             var areaFound = finder.FindAll<Area>(a => a.Name == "Some Area");
             mock.VerifyAll();
+        }
+        #endregion
+
+        #region No DBSet Tests
+
+        internal class MockClass
+        {
+            public string FilterProperty { get; set; }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DeveloperException))]
+        public void FindOfTypeWithoutDbSet()
+        {
+            var dbFinder = CreateDBFinderWithContext("No Set");
+            var finder = new Finder(dbFinder);
+            finder.Find<MockClass>(m => m.FilterProperty == "");
         }
         #endregion
     }
