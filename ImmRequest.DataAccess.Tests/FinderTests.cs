@@ -45,7 +45,7 @@ namespace ImmRequest.DataAccess.Tests
         [TestMethod]
         public void FindTypeByNameTest()
         {
-            var context = ContextFactory.GetMemoryContext("Find Topic");
+            var context = ContextFactory.GetMemoryContext("Find Type");
             var type = new TopicType { Name = "Name" };
             context.TopicTypes.Add(type);
             context.SaveChanges();
@@ -59,7 +59,7 @@ namespace ImmRequest.DataAccess.Tests
         [TestMethod]
         public void FindFieldByTypeTest()
         {
-            var context = ContextFactory.GetMemoryContext("Find Topic");
+            var context = ContextFactory.GetMemoryContext("Find Field");
             var field = new NumberField { Name = "Number" };
             var anotherField = new TextField();
             context.Fields.Add(field);
@@ -76,7 +76,7 @@ namespace ImmRequest.DataAccess.Tests
         [TestMethod]
         public void FindCitizenRequestByStatusTest()
         {
-            var context = ContextFactory.GetMemoryContext("Find Topic");
+            var context = ContextFactory.GetMemoryContext("Find Request");
             var request = new CitizenRequest { Status = RequestStatus.Acepted };
             context.CitizenRequests.Add(request);
             context.SaveChanges();
@@ -91,11 +91,30 @@ namespace ImmRequest.DataAccess.Tests
         [ExpectedException(typeof(DBDeveloperException))]
         public void TypeWithoutDBSetTest()
         {
-            var context = ContextFactory.GetMemoryContext("Find Topic");
+            var context = ContextFactory.GetMemoryContext("NO DB Set");
             var topic = new MockClassWithOutDbSet { FilterProperty = "Test" };
 
             var finder = new DatabaseFinder(context);
             var topicFound = finder.Find<MockClassWithOutDbSet>(m => m.FilterProperty == "Test");
+        }
+
+        [TestMethod]
+        public void FindAllAreasWithoutTopics()
+        {
+            var context = ContextFactory.GetMemoryContext("Find All Areas");
+            var area1 = new Area { Name = "Area1", Topics = new List<Topic>() };
+            var area2 = new Area { Name = "Area2", Topics = new List<Topic>() };
+            var area3 = new Area { Name = "Area2", Topics = new List<Topic> { new Topic() } };
+            context.Areas.Add(area1);
+            context.Areas.Add(area2);
+            context.Areas.Add(area3);
+            context.SaveChanges();
+
+            var finder = new DatabaseFinder(context);
+            var allAreasWithoutTopics = finder.FindAll<Area>(a => a.Topics.Count == 0);
+            Assert.AreEqual(2, allAreasWithoutTopics.Count);
+
+
         }
 
         internal class MockClassWithOutDbSet
