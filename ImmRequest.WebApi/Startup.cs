@@ -75,7 +75,7 @@ namespace ImmRequest.WebApi
             services.AddScoped<ILogic<TopicType>, TopicTypeLogic>();
             services.AddScoped<ILogic<CitizenRequest>, CitizenRequestLogic>();
 
-            services.AddScoped<IFinder<Area>, AreaFinder>();
+            services.AddScoped<IFinder<Area>, Finder>();
             services.AddScoped<IFinder<Topic>, TopicFinder>();
 
 

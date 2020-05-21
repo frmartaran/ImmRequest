@@ -19,15 +19,13 @@ namespace ImmRequest.WebApi.Controllers
     {
         private ILogic<CitizenRequest> CitizenRequestLogic { get; set; }
 
-        private IFinder<Topic> TopicFinder { get; set; }
+        private IFinder Finder { get; set; }
 
-        private IFinder<Area> AreaFinder { get; set; }
 
-        public CitizenRequestController(ILogic<CitizenRequest> CitizenRequestLogic, IFinder<Topic> TopicFinder, IFinder<Area> AreaFinder)
+        public CitizenRequestController(ILogic<CitizenRequest> CitizenRequestLogic, IFinder finder)
         {
             this.CitizenRequestLogic = CitizenRequestLogic;
-            this.TopicFinder = TopicFinder;
-            this.AreaFinder = AreaFinder;
+            this.Finder = finder;
         }
 
         /// <summary>
@@ -107,7 +105,7 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("Areas")]
         public IActionResult GetAllAreas()
         {
-            var allAreas = AreaFinder.FindAll();
+            var allAreas = Finder.FindAll<Area>();
             var allAreasModel = AreaModel.ToModel(allAreas);
             return Ok(allAreasModel);
         }
@@ -120,7 +118,7 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("Topics/{parentAreaId}")]
         public ActionResult GetAllTopicsFromArea(long parentAreaId)
         {
-            var all = TopicFinder.FindAll(t => t.AreaId == parentAreaId)
+            var all = Finder.FindAll<Topic>(t => t.AreaId == parentAreaId)
                 .ToList();
             var models = TopicModel.ToModel(all);
             return Ok(models);
