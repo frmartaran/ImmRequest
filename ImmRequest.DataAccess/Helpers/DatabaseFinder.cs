@@ -1,5 +1,7 @@
 ﻿using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
+using ImmRequest.DataAccess.Resources;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
@@ -18,11 +20,19 @@ namespace ImmRequest.DataAccess.Helpers
         }
         public T Find<T>(Predicate<T> condition) where T : class
         {
-            var objectFound = context.Set<T>()
+            try
+            {
+                var objectFound = context.Set<T>()
                 .ToList()
                 .Where(x => condition.Invoke(x))
                 .FirstOrDefault();
-            return objectFound;
+                return objectFound;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DBDeveloperException(DataAccessResource.Missing_Dataset);
+            }
+
         }
 
         public ICollection<T> FindAll<T>(Predicate<T> condition)

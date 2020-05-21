@@ -96,8 +96,6 @@ namespace ImmRequest.DataAccess.Tests
 
             var finder = new DatabaseFinder(context);
             var topicFound = finder.Find<MockClassWithOutDbSet>(m => m.FilterProperty == "Test");
-            context.Dispose();
-            Assert.IsNotNull(topicFound);
         }
 
         internal class MockClassWithOutDbSet

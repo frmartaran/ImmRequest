@@ -68,5 +68,14 @@ namespace ImmRequest.DataAccess.Resources {
                 return ResourceManager.GetString("Exception_NotFound_Action", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type {0} does not have a DbSet. Please use another finder method..
+        /// </summary>
+        public static string Missing_Dataset {
+            get {
+                return ResourceManager.GetString("Missing_Dataset", resourceCulture);
+            }
+        }
     }
 }
