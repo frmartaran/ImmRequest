@@ -190,6 +190,17 @@ namespace ImmRequest.DataAccess.Tests
         }
 
 
+        [TestMethod]
+        [ExpectedException(typeof(DBDeveloperException))]
+        public void FindAllWithoutDBSetTest()
+        {
+            var context = ContextFactory.GetMemoryContext("No set");
+            var finder = new DatabaseFinder(context);
+            finder.FindAll<MockClassWithOutDbSet>(m => m.FilterProperty == "");
+            
+        }
+
+
 
 
         internal class MockClassWithOutDbSet
