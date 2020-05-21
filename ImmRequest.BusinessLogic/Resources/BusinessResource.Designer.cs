@@ -97,6 +97,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no finder for this entity. Contact support..
+        /// </summary>
+        public static string Developer_Exception {
+            get {
+                return ResourceManager.GetString("Developer_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
         public static string Entity_Area {

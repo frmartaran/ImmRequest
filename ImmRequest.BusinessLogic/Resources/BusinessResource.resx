@@ -129,6 +129,9 @@
   <data name="Action_Update" xml:space="preserve">
     <value>Updating</value>
   </data>
+  <data name="Developer_Exception" xml:space="preserve">
+    <value>There is no finder for this entity. Contact support.</value>
+  </data>
   <data name="Entity_Area" xml:space="preserve">
     <value>Area</value>
   </data>

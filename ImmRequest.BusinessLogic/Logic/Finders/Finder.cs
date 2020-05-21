@@ -1,7 +1,9 @@
-﻿using ImmRequest.BusinessLogic.Helpers;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Helpers;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Interfaces.Exceptions;
 using ImmRequest.Domain;
 using System;
 using System.Collections.Generic;
@@ -31,9 +33,16 @@ namespace ImmRequest.BusinessLogic.Logic.Finders
 
         public T Find<T>(Predicate<T> condition) where T : class
         {
-            var objectFound = DBFinder.Find<T>(condition);
-            LogicHelpers.WarnIfNotFound(objectFound, BusinessResource.Action_Find, "");
-            return objectFound;
+            try
+            {
+                var objectFound = DBFinder.Find<T>(condition);
+                LogicHelpers.WarnIfNotFound(objectFound, BusinessResource.Action_Find, "");
+                return objectFound;
+            }
+            catch (DBDeveloperException exception)
+            {
+                throw new DeveloperException(BusinessResource.Developer_Exception, exception);
+            }
         }
     }
 }
