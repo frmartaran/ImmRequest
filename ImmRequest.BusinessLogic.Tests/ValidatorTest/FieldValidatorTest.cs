@@ -56,6 +56,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             };
         }
 
+        #region Validate() Tests
         [TestMethod]
         public void TextFieldIsValidTest()
         {
@@ -172,6 +173,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             boolRange.Validate(values);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void BoolFieldDoesNotAcceptMultipleSelection()
+        {
+            var values = new List<string> { "true", "false" };
+            boolRange.Validate(values);
+        }
+
+        #endregion
+
+        #region SetRange() Tests
         [TestMethod]
         public void SetRangeNumberFieldTest()
         {
@@ -309,7 +321,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             dateTimeRange.Start = new DateTime(2020, 11, 17);
             dateTimeRange.ValidateRangeValues();
         }
-
+        #endregion
 
 
     }
