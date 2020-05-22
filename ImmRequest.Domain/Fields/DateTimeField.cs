@@ -58,12 +58,12 @@ namespace ImmRequest.Domain.Fields
             base.UpdateValues(valuesToUpdate);
         }
 
-        public override bool Validate(string value)
+        public override bool Validate(List<string> values)
         {
             DateTime dateTimeValue;
             try
             {
-                dateTimeValue = DateTime.Parse(value);
+                dateTimeValue = DateTime.Parse(values.First());
             }
             catch (FormatException ex)
             {

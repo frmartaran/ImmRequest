@@ -58,12 +58,12 @@ namespace ImmRequest.Domain.Fields
             base.UpdateValues(valuesToUpdate);
         }
 
-        public override bool Validate(string value)
+        public override bool Validate(List<string> values)
         {
-            int numberValue;
             try
             {
-                numberValue = Convert.ToInt32(value);
+                var numberValue = Convert.ToInt32(values.First());
+                IsOutOfRange(numberValue);
             }
             catch (FormatException exception)
             {
@@ -75,7 +75,6 @@ namespace ImmRequest.Domain.Fields
                 var message = string.Format(DomainResource.Field_InvalidFormat, Name);
                 throw new InvalidArgumentException(message, exception);
             }
-            IsOutOfRange(numberValue);
             return true;
         }
 

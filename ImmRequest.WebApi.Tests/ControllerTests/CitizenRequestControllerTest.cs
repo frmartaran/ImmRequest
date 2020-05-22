@@ -38,13 +38,13 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Values = new List<string> { "Credencial" }
             };
             requestFieldValuesModel = new RequestFieldValuesModel
             {
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Value = new List<string> { "Credencial" }
             };
             request = new CitizenRequest
             {

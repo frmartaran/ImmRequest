@@ -17,7 +17,7 @@ namespace ImmRequest.Domain.Fields
         public virtual bool IsMultipleSelectEnabled { get; set; }
         public virtual void SetRange(List<string> values) { }
 
-        public abstract bool Validate(string value);
+        public abstract bool Validate(List<string> values);
         public virtual bool ValidateRangeValues() { return true; }
 
         public virtual void UpdateValues(BaseField valuesToUpdate)

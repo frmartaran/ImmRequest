@@ -84,7 +84,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             {
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Values = new List<string> { "Credencial" }
             };
 
             firstCitizenRequest = new CitizenRequest
@@ -189,7 +189,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void BaseFieldsAreInvalid()
         {
             CreateContextFor("BaseFieldsAreInvalid");
-            requestFieldValue.Value = "Panaderia";
+            requestFieldValue.Values = new List<string> { "Panaderia" };
             AreBaseFieldValuesValid(firstCitizenRequest.Values);
         }
 
@@ -198,7 +198,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void BaseFieldHaveInvalidFormat()
         {
             CreateContextFor("BaseFieldsAreInvalid");
-            requestFieldValue.Value = "Panaderia";
+            requestFieldValue.Values = new List<string> { "Panaderia" };
             requestFieldValue.FieldId = 2;
             AreBaseFieldValuesValid(firstCitizenRequest.Values);
         }

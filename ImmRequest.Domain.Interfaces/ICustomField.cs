@@ -12,7 +12,7 @@ namespace ImmRequest.Domain.Interfaces
 
         bool ValidateRangeValues();
 
-        bool Validate(string value);
+        bool Validate(List<string> values);
 
     }
 }

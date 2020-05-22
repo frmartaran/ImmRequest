@@ -3,6 +3,7 @@ using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Resources;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.Domain.Fields
@@ -16,11 +17,11 @@ namespace ImmRequest.Domain.Fields
             get { return false; }
             set { return; }
         }
-        public override bool Validate(string value)
+        public override bool Validate(List<string> values)
         {
             try
             {
-                Convert.ToBoolean(value);
+                Convert.ToBoolean(values.First());
                 return true;
 
             }

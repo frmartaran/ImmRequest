@@ -89,7 +89,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Values = new List<string> { "Credencial" }
             };
 
             citizenRequest = new CitizenRequest

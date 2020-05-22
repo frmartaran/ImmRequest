@@ -4,7 +4,6 @@ using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Logic.Finders;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
-using ImmRequest.DataAccess.Helpers;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;

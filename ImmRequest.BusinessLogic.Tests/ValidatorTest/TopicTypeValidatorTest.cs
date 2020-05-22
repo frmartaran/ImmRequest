@@ -47,7 +47,9 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 Name = "Name"
             };
 
-            field2 = new BoolField();
+            field2 = new BoolField { 
+                Name = "Name"
+            };
             type.AllFields.Add(field);
             type.AllFields.Add(field2);
 

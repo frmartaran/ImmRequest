@@ -59,7 +59,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void TextFieldIsValidTest()
         {
-            var textToValidate = "Credencial";
+            var textToValidate = new List<string> { "Credencial" };
             var isValid = textRange.Validate(textToValidate);
             Assert.IsTrue(isValid);
         }
@@ -68,14 +68,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(DomainValidationException))]
         public void TextFieldNotInRangeTest()
         {
-            var textToValidate = "Contribucion";
+            var textToValidate = new List<string> { "Contribucion" };
             textRange.Validate(textToValidate);
         }
 
         [TestMethod]
         public void DateTimeFieldIsValidTest()
         {
-            var dateToValidate = "2020-04-03T18:25:43.511-03:00";
+            var dateToValidate = new List<string> { "2020-04-03T18:25:43.511-03:00" };
             var isValid = dateTimeRange.Validate(dateToValidate);
             Assert.IsTrue(isValid);
         }
@@ -84,7 +84,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(DomainValidationException))]
         public void DateTimeFieldNotInRangeAfterEndTest()
         {
-            var dateToValidate = "2020-04-05T18:25:43.511-03:00";
+            var dateToValidate = new List<string> { "2020-04-05T18:25:43.511-03:00" };
             dateTimeRange.Validate(dateToValidate);
         }
 
@@ -92,7 +92,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(DomainValidationException))]
         public void DateTimeFieldNotInRangeBeforeStartTest()
         {
-            var dateToValidate = "2020-03-31T18:25:43.511-03:00";
+            var dateToValidate = new List<string> { "2020-03-31T18:25:43.511-03:00" };
             dateTimeRange.Validate(dateToValidate);
         }
 
@@ -100,14 +100,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(InvalidArgumentException))]
         public void DateTimeFieldIsInvalidTest()
         {
-            var dateToValidate = "invalid";
+            var dateToValidate = new List<string> { "invalid" };
             dateTimeRange.Validate(dateToValidate);
         }
 
         [TestMethod]
         public void DateTimeFieldFromDifferentTimeZoneIsValidTest()
         {
-            var dateToValidate = "2020-04-03T18:25:43.511Z";
+            var dateToValidate = new List<string> { "2020-04-03T18:25:43.511Z" };
             var isValid = dateTimeRange.Validate(dateToValidate);
             Assert.IsTrue(isValid);
         }
@@ -115,7 +115,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void NumberFieldIsValidTest()
         {
-            var numberToValidate = "3";
+            var numberToValidate = new List<string> { "3" };
             var isValid = numberRange.Validate(numberToValidate);
             Assert.IsTrue(isValid);
         }
@@ -124,7 +124,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(DomainValidationException))]
         public void NumberFieldGreaterThanEndTest()
         {
-            var numberToValidate = "13";
+            var numberToValidate = new List<string> { "13" };
             numberRange.Validate(numberToValidate);
         }
 
@@ -132,7 +132,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(DomainValidationException))]
         public void NumberFieldLowerThanStart()
         {
-            var numberToValidate = "-2";
+            var numberToValidate = new List<string> { "-2" };
             numberRange.Validate(numberToValidate);
         }
 
@@ -140,7 +140,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(InvalidArgumentException))]
         public void NumberFieldIsTooLargeTest()
         {
-            var numberToValidate = "5000000000000";
+            var numberToValidate = new List<string> { "5000000000000" };
             numberRange.Validate(numberToValidate);
         }
 
@@ -148,7 +148,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(InvalidArgumentException))]
         public void NumberFieldIsInvalidTest()
         {
-            var numberToValidate = "invalid";
+            var numberToValidate = new List<string> { "invalid" };
             numberRange.Validate(numberToValidate);
         }
 
@@ -159,7 +159,8 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [DataRow("False")]
         public void BoolValuesAreValid(string value)
         {
-            var isValid = boolRange.Validate(value);
+            var values = new List<string> { value };
+            var isValid = boolRange.Validate(values);
             Assert.IsTrue(isValid);
         }
 
@@ -167,8 +168,8 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [ExpectedException(typeof(InvalidArgumentException))]
         public void NonBooleanValuesAreNotValid()
         {
-            var value = "non boolean";
-            boolRange.Validate(value);
+            var values = new List<string> { "non boolean" };
+            boolRange.Validate(values);
         }
 
         [TestMethod]

@@ -97,7 +97,7 @@ namespace ImmRequest.BusinessLogic.Validators
                     bool isValid;
                     try
                     {
-                        isValid = field.Validate(requestField.Value);
+                        isValid = field.Validate(requestField.Values);
                     }
                     catch (DomainValidationException exception)
                     {
