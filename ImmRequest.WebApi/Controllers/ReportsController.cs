@@ -7,6 +7,7 @@ using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Models;
+using ImmRequest.WebApi.Models.Reporting;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,13 +35,14 @@ namespace ImmRequest.WebApi.Controllers
                                                                 && cr.Email == model.Email);
             var byStatus = requests
                 .GroupBy(cr => cr.Status)
-                .Select(g => new Tuple<RequestStatus, int>
-                (
-                    item1: g.Key,
-                    item2: g.Count()
-                ))
+                .Select(g => new RequestSummary
+                {
+                    Status = g.Key,
+                    Count = g.Count(),
+                    RequestNumbers = g.Select(cr => cr.Id).ToList()
+                })
                 .ToList();
-            model.RequestSummary = byStatus;
+            model.Summary = byStatus;
             return Ok(model);
 
         }

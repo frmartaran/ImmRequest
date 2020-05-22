@@ -7,6 +7,7 @@ using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
 using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Models;
+using ImmRequest.WebApi.Models.Reporting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -119,20 +120,20 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
 
             var asOkReponse = response as OkObjectResult;
             var content = asOkReponse.Value as RequestSummaryReportModel;
-            var createdRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Created);
-            var onRevisionRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.OnRevision);
-            var acceptedRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Acepted);
-            var declinedRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Declined);
-            var finishedRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Ended);
+            var createdRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Created);
+            var onRevisionRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.OnRevision);
+            var acceptedRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Acepted);
+            var declinedRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Declined);
+            var finishedRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Ended);
 
-            Assert.AreEqual(2, createdRequests.Item2);
-            Assert.AreEqual(2, onRevisionRequests.Item2);
-            Assert.AreEqual(1, acceptedRequests.Item2);
+            Assert.AreEqual(2, createdRequests.Count);
+            Assert.AreEqual(2, onRevisionRequests.Count);
+            Assert.AreEqual(1, acceptedRequests.Count);
             Assert.IsNull(declinedRequests);
             Assert.IsNull(finishedRequests);
         }
@@ -160,20 +161,20 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
 
             var asOkReponse = response as OkObjectResult;
             var content = asOkReponse.Value as RequestSummaryReportModel;
-            var createdRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Created);
-            var onRevisionRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.OnRevision);
-            var acceptedRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Acepted);
-            var declinedRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Declined);
-            var finishedRequests = content.RequestSummary
-                .FirstOrDefault(x => x.Item1 == RequestStatus.Ended);
+            var createdRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Created);
+            var onRevisionRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.OnRevision);
+            var acceptedRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Acepted);
+            var declinedRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Declined);
+            var finishedRequests = content.Summary
+                .FirstOrDefault(x => x.Status == RequestStatus.Ended);
 
-            Assert.AreEqual(2, createdRequests.Item2);
-            Assert.AreEqual(2, onRevisionRequests.Item2);
-            Assert.AreEqual(1, acceptedRequests.Item2);
+            Assert.AreEqual(2, createdRequests.Count);
+            Assert.AreEqual(2, onRevisionRequests.Count);
+            Assert.AreEqual(1, acceptedRequests.Count);
             Assert.IsNull(declinedRequests);
             Assert.IsNull(finishedRequests);
         }

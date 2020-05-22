@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImmRequest.WebApi.Models
+namespace ImmRequest.WebApi.Models.Reporting
 {
     public class RequestSummaryReportModel
     {
@@ -15,6 +15,6 @@ namespace ImmRequest.WebApi.Models
 
         public DateTime End { get; set; }
 
-        public List<Tuple<RequestStatus, int>> RequestSummary { get; set; }
+        public List<RequestSummary> Summary { get; set; }
     }
 }
