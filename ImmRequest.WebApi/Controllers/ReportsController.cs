@@ -30,7 +30,7 @@ namespace ImmRequest.WebApi.Controllers
         }
 
         [HttpGet("RequestSummary")]
-        public ActionResult RequestSummaryReportGet([FromBody] RequestSummaryReportModel model)
+        public ActionResult RequestSummaryReportGet([FromBody] ReportRequestBodyModel model)
         {
             var requests = Logic.GetAll()
                 .Where(cr => cr.CreatedDate >= model.Start)
@@ -40,7 +40,7 @@ namespace ImmRequest.WebApi.Controllers
 
             if (requests.Count == 0)
             {
-                var message = string.Format(WebApiResource.Reports_NoRequests, model.Email,
+                var message = string.Format(WebApiResource.Reports_NoRequestsForUser, model.Email,
                     model.Start, model.End);
                 return BadRequest(message);
             }
@@ -54,13 +54,13 @@ namespace ImmRequest.WebApi.Controllers
                     RequestNumbers = g.Select(cr => cr.Id).ToList()
                 })
                 .ToList();
-            model.Summary = byStatus;
-            return Ok(model);
+            
+            return Ok(byStatus);
 
         }
 
         [HttpGet("TypesSummary")]
-        public ActionResult TypeSummaryReportGet([FromBody] RequestSummaryReportModel model)
+        public ActionResult TypeSummaryReportGet([FromBody] ReportRequestBodyModel model)
         {
             var requests = Logic.GetAll()
                 .Where(cr => cr.CreatedDate >= model.Start)
@@ -75,6 +75,13 @@ namespace ImmRequest.WebApi.Controllers
                 .OrderByDescending(s => s.Count)
                 .ThenBy(s => s.TypeCreatedAt)
                 .ToList();
+
+            if(requests.Count == 0)
+            {
+                var message = string.Format(WebApiResource.Report_NoRequest,
+                    model.Start, model.End);
+                return BadRequest(message);
+            }
 
             return Ok(requests);
         }

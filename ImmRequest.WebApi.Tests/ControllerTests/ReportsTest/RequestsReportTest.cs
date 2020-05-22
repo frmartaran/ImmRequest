@@ -167,7 +167,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
                 .Returns(AllRequests);
 
             var controller = new ReportsController(mock.Object);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Email = citizenEmail,
                 Start = new DateTime(2020, 1, 1),
@@ -178,16 +178,16 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             Assert.IsInstanceOfType(response, okType);
 
             var asOkReponse = response as OkObjectResult;
-            var content = asOkReponse.Value as RequestSummaryReportModel;
-            var createdRequests = content.Summary
+            var content = asOkReponse.Value as List<RequestSummary>;
+            var createdRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Created);
-            var onRevisionRequests = content.Summary
+            var onRevisionRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.OnRevision);
-            var acceptedRequests = content.Summary
+            var acceptedRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Acepted);
-            var declinedRequests = content.Summary
+            var declinedRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Declined);
-            var finishedRequests = content.Summary
+            var finishedRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Ended);
 
             Assert.AreEqual(2, createdRequests.Count);
@@ -209,7 +209,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             var logic = new CitizenRequestLogic(repository, validatorMock.Object);
 
             var controller = new ReportsController(logic);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Email = citizenEmail,
                 Start = new DateTime(2020, 1, 1),
@@ -220,16 +220,16 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             Assert.IsInstanceOfType(response, okType);
 
             var asOkReponse = response as OkObjectResult;
-            var content = asOkReponse.Value as RequestSummaryReportModel;
-            var createdRequests = content.Summary
+            var content = asOkReponse.Value as List<RequestSummary>;
+            var createdRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Created);
-            var onRevisionRequests = content.Summary
+            var onRevisionRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.OnRevision);
-            var acceptedRequests = content.Summary
+            var acceptedRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Acepted);
-            var declinedRequests = content.Summary
+            var declinedRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Declined);
-            var finishedRequests = content.Summary
+            var finishedRequests = content
                 .FirstOrDefault(x => x.Status == RequestStatus.Ended);
 
             Assert.AreEqual(2, createdRequests.Count);
@@ -252,7 +252,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             var logic = new CitizenRequestLogic(repository, validatorMock.Object);
 
             var controller = new ReportsController(logic);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Email = citizenEmail,
                 Start = new DateTime(2021, 1, 1),
@@ -273,7 +273,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
                 .Returns(AllRequests);
 
             var controller = new ReportsController(mock.Object);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Email = "some@user.com",
                 Start = new DateTime(2020, 1, 1),
@@ -300,7 +300,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             SeventhRequest.TopicTypeId = 3;
 
             var controller = new ReportsController(mock.Object);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Start = new DateTime(2020, 1, 1),
                 End = new DateTime(2020, 1, 8)
@@ -337,7 +337,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             var logic = new CitizenRequestLogic(repository, validatorMock.Object);
 
             var controller = new ReportsController(logic);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Start = new DateTime(2020, 1, 1),
                 End = new DateTime(2020, 1, 8)
@@ -374,7 +374,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             var logic = new CitizenRequestLogic(repository, validatorMock.Object);
 
             var controller = new ReportsController(logic);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Start = new DateTime(2021, 1, 1),
                 End = new DateTime(2021, 1, 8)
@@ -394,7 +394,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
                 .Returns(AllRequests);
 
             var controller = new ReportsController(mock.Object);
-            var model = new RequestSummaryReportModel
+            var model = new ReportRequestBodyModel
             {
                 Start = new DateTime(2021, 1, 1),
                 End = new DateTime(2021, 1, 8)

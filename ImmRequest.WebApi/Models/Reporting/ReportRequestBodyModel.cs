@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImmRequest.WebApi.Models.Reporting
 {
-    public class RequestSummaryReportModel
+    public class ReportRequestBodyModel
     {
         public string Email { get; set; }
 
@@ -15,6 +15,5 @@ namespace ImmRequest.WebApi.Models.Reporting
 
         public DateTime End { get; set; }
 
-        public List<RequestSummary> Summary { get; set; }
     }
 }

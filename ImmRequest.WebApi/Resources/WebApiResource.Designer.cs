@@ -178,11 +178,20 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no request created between {0} and {1}.
+        /// </summary>
+        public static string Report_NoRequest {
+            get {
+                return ResourceManager.GetString("Report_NoRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no requests for the user {0} between the dates {1} and {2}.
         /// </summary>
-        public static string Reports_NoRequests {
+        public static string Reports_NoRequestsForUser {
             get {
-                return ResourceManager.GetString("Reports_NoRequests", resourceCulture);
+                return ResourceManager.GetString("Reports_NoRequestsForUser", resourceCulture);
             }
         }
         
