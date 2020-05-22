@@ -239,6 +239,34 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var isValid = textRange.Validate(values);
         }
 
+        [TestMethod]
+        public void DateTimeFieldAcceptsMultipleSelection()
+        {
+            dateTimeRange.IsMultipleSelectEnabled = true;
+            var values = new List<string> { "2020-04-02T18:25:43.511Z", "2020-04-03T18:25:43.511Z" };
+            var isValid = dateTimeRange.Validate(values);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void DateTimeFieldDoesNotAcceptsMultipleSelection()
+        {
+            dateTimeRange.IsMultipleSelectEnabled = false;
+            var values = new List<string> { "2020-04-02T18:25:43.511Z", "2020-04-03T18:25:43.511Z" };
+            var isValid = dateTimeRange.Validate(values);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void DateTimeFieldSecondValueIsInvalid()
+        {
+            dateTimeRange.IsMultipleSelectEnabled = false;
+            var values = new List<string> { "2020-04-02T18:25:43.511Z", "2020-04-20T18:25:43.511Z" };
+            dateTimeRange.Validate(values);
+        }
+
         #endregion
 
         #region SetRange() Tests
