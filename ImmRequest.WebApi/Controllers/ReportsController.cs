@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain;
@@ -31,9 +32,9 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("RequestSummary")]
         public ActionResult RequestSummaryReportGet([FromBody] RequestSummaryReportModel model)
         {
-            var requests = Finder.FindAll<CitizenRequest>(cr => (cr.CreatedDate >= model.Start
-                                                                && cr.CreatedDate < model.End)
-                                                                && cr.Email == model.Email);
+            var requests = Finder.FindAll<CitizenRequest>(cr => 
+                cr.CreatedDate >= model.Start && cr.CreatedDate < model.End
+                && cr.Email == model.Email);
 
             if (requests.Count == 0)
             {

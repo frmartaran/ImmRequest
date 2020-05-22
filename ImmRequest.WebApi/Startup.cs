@@ -4,6 +4,7 @@ using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Logic.Finders;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Context;
+using ImmRequest.DataAccess.Helpers;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
@@ -76,6 +77,8 @@ namespace ImmRequest.WebApi
             services.AddScoped<ILogic<CitizenRequest>, CitizenRequestLogic>();
 
             services.AddScoped<IFinder, Finder>();
+            services.AddScoped<IDatabaseFinder, DatabaseFinder>();
+
 
 
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
