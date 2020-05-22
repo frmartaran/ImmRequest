@@ -21,9 +21,9 @@ namespace ImmRequest.WebApi.Controllers
     {
         private ILogic<TopicType> Logic { get; set; }
 
-        private IFinder Finder { get; set; }
+        private IFinder<Topic> Finder { get; set; }
 
-        public TypeController(ILogic<TopicType> logic, IFinder finder)
+        public TypeController(ILogic<TopicType> logic, IFinder<Topic> finder)
         {
             Logic = logic;
             Finder = finder;
@@ -45,7 +45,7 @@ namespace ImmRequest.WebApi.Controllers
 
             try
             {
-                var parentTopic = Finder.Find<Topic>(t => t.Id == parentTopicID);
+                var parentTopic = Finder.Find(t => t.Id == parentTopicID);
                 var type = model.ToDomain();
                 type.ParentTopic = parentTopic;
                 Logic.Create(type);

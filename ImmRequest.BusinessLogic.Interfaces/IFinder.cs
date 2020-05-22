@@ -4,10 +4,12 @@ using System.Text;
 
 namespace ImmRequest.BusinessLogic.Interfaces
 {
-    public interface IFinder
+    public interface IFinder<T>
+        where T : class
     {
-        ICollection<T> FindAll<T>() where T : class;
-        ICollection<T> FindAll<T>(Predicate<T> condition) where T : class;
-        T Find<T>(Predicate<T> condition) where T : class;
+        ICollection<T> FindAll();
+        ICollection<T> FindAll(Predicate<T> condition);
+
+        T Find(Predicate<T> condition);
     }
 }

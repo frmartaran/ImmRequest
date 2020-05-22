@@ -1,8 +1,10 @@
 ﻿using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Logic;
 using ImmRequest.BusinessLogic.Logic.Finders;
 using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Helpers;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
 using ImmRequest.WebApi.Controllers;
@@ -45,42 +47,60 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             {
                 CreatedDate = startDate,
                 Email = citizenEmail,
-                Status = RequestStatus.Created
+                Status = RequestStatus.Created,
+                Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType()
             };
 
             SecondRequest = new CitizenRequest
             {
                 CreatedDate = startDate.AddDays(1),
                 Email = citizenEmail,
-                Status = RequestStatus.Created
+                Status = RequestStatus.Created,
+                Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType()
             };
 
             ThirdRequest = new CitizenRequest
             {
                 CreatedDate = startDate.AddDays(2),
                 Email = citizenEmail,
-                Status = RequestStatus.OnRevision
+                Status = RequestStatus.OnRevision,
+                Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType()
             };
 
             FourthRequest = new CitizenRequest
             {
                 CreatedDate = startDate.AddDays(3),
                 Email = citizenEmail,
-                Status = RequestStatus.OnRevision
+                Status = RequestStatus.OnRevision,
+                Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType()
             };
 
             FifthRequest = new CitizenRequest
             {
                 CreatedDate = startDate.AddDays(4),
                 Email = citizenEmail,
-                Status = RequestStatus.Acepted
+                Status = RequestStatus.Acepted,
+                Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType()
             };
 
             SixthRequest = new CitizenRequest
             {
                 CreatedDate = startDate.AddDays(3),
                 Email = "another@email.com",
-                Status = RequestStatus.Created
+                Status = RequestStatus.Created,
+                Area = new Area(),
+                Topic = new Topic(),
+                TopicType = new TopicType()
             };
 
             AllRequests = new List<CitizenRequest>
@@ -98,17 +118,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         [TestMethod]
         public void GetSummaryReport()
         {
-            var requests = new List<CitizenRequest>
-            {
-                FirstRequest,
-                SecondRequest,
-                ThirdRequest,
-                FourthRequest,
-                FifthRequest,
-            };
-            var finderMock = new Mock<IFinder>(MockBehavior.Strict);
-            finderMock.Setup(m => m.FindAll<CitizenRequest>(It.IsAny<Predicate<CitizenRequest>>()))
-                .Returns(requests);
+            
+            var finderMock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            finderMock.Setup(m => m.GetAll())
+                .Returns(AllRequests);
 
             var controller = new ReportsController(finderMock.Object);
             var model = new RequestSummaryReportModel
@@ -148,10 +161,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             context.CitizenRequests.AddRange(AllRequests);
             context.SaveChanges();
 
-            var databaseFinder = new DatabaseFinder(context);
-            var finder = new Finder(databaseFinder);
+            var repository = new CitizenRequestRepository(context);
+            var validatorMock = new Mock<IValidator<CitizenRequest>>();
+            var logic = new CitizenRequestLogic(repository, validatorMock.Object);
 
-            var controller = new ReportsController(finder);
+            var controller = new ReportsController(logic);
             var model = new RequestSummaryReportModel
             {
                 Email = citizenEmail,
@@ -160,7 +174,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             };
 
             var response = controller.RequestSummaryReportGet(model);
-            context.Dispose();
             Assert.IsInstanceOfType(response, okType);
 
             var asOkReponse = response as OkObjectResult;
@@ -187,14 +200,15 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         [TestMethod]
         public void NoRequestDuringThatDateTest()
         {
-            var context = ContextFactory.GetMemoryContext("Request Summary Report");
+            var context = ContextFactory.GetMemoryContext("No Requests");
             context.CitizenRequests.AddRange(AllRequests);
             context.SaveChanges();
 
-            var databaseFinder = new DatabaseFinder(context);
-            var finder = new Finder(databaseFinder);
+            var repository = new CitizenRequestRepository(context);
+            var validatorMock = new Mock<IValidator<CitizenRequest>>();
+            var logic = new CitizenRequestLogic(repository, validatorMock.Object);
 
-            var controller = new ReportsController(finder);
+            var controller = new ReportsController(logic);
             var model = new RequestSummaryReportModel
             {
                 Email = citizenEmail,
@@ -211,9 +225,9 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         [TestMethod]
         public void NoRequestForEmailTest()
         {
-            var finderMock = new Mock<IFinder>(MockBehavior.Strict);
-            finderMock.Setup(m => m.FindAll<CitizenRequest>(It.IsAny<Predicate<CitizenRequest>>()))
-                .Returns(new List<CitizenRequest>());
+            var finderMock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            finderMock.Setup(m => m.GetAll())
+                .Returns(AllRequests);
 
             var controller = new ReportsController(finderMock.Object);
             var model = new RequestSummaryReportModel

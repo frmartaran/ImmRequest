@@ -168,7 +168,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Create(It.IsAny<TopicType>()));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
                 .Returns(new Topic());
             var controller = new TypeController(logic.Object, finder.Object);
@@ -185,7 +185,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Create(It.IsAny<TopicType>()));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
                 .Returns(new Topic());
             var controller = new TypeController(logic.Object, finder.Object);
@@ -202,7 +202,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.Create(It.IsAny<TopicType>()))
                 .Throws(new ValidationException(""));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
                 .Returns(new Topic());
             var controller = new TypeController(logic.Object, finder.Object);
@@ -219,7 +219,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var typeModel = TypeModel.ToModel(type);
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
                 .Throws(new BusinessLogicException(""));
 
@@ -238,7 +238,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.Get(It.IsAny<long>()))
                 .Returns(type);
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Get(1);
 
@@ -259,7 +259,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.Get(It.IsAny<long>()))
                 .Throws(new BusinessLogicException(""));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Get(1);
 
@@ -276,7 +276,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.GetAll())
                 .Returns(new List<TopicType> { type });
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.GetAll();
 
@@ -301,7 +301,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.GetAll())
                 .Returns(new List<TopicType> { type, new TopicType() });
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.GetAll(1);
 
@@ -324,7 +324,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
             logic.Setup(m => m.Delete(It.IsAny<long>()));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Delete(1);
 
@@ -340,7 +340,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.Delete(It.IsAny<long>()))
                 .Throws(new BusinessLogicException(""));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Delete(1);
 
@@ -354,7 +354,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Update(1, null);
 
@@ -368,7 +368,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Create(1, null);
 
@@ -387,7 +387,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 .Returns(type);
             logic.Setup(m => m.Update(It.IsAny<TopicType>()));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Update(1, model);
@@ -403,7 +403,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var model = TypeModel.ToModel(type);
             model.Fields.FirstOrDefault().RangeValues.Add("1");
             var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
 
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Update(1, model);
@@ -423,7 +423,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.Update(It.IsAny<TopicType>()))
                 .Throws(new ValidationException(""));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Update(1, model);
 
@@ -442,7 +442,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             logic.Setup(m => m.Update(It.IsAny<TopicType>()))
                 .Throws(new BusinessLogicException(""));
 
-            var finder = new Mock<IFinder>(MockBehavior.Strict);
+            var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var controller = new TypeController(logic.Object, finder.Object);
             var response = controller.Update(1, model);
 

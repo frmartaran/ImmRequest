@@ -22,19 +22,21 @@ namespace ImmRequest.WebApi.Controllers
 
     public class ReportsController : ControllerBase
     {
-        private IFinder Finder { get; set; }
+        private ILogic<CitizenRequest> Logic { get; set; }
 
-        public ReportsController(IFinder finder)
+        public ReportsController(ILogic<CitizenRequest> logic)
         {
-            Finder = finder;
+            Logic = logic;
         }
 
         [HttpGet("RequestSummary")]
         public ActionResult RequestSummaryReportGet([FromBody] RequestSummaryReportModel model)
         {
-            var requests = Finder.FindAll<CitizenRequest>(cr => 
-                cr.CreatedDate >= model.Start && cr.CreatedDate < model.End
-                && cr.Email == model.Email);
+            var requests = Logic.GetAll()
+                .Where(cr => cr.CreatedDate >= model.Start)
+                .Where(cr => cr.CreatedDate < model.End)
+                .Where(cr => cr.Email == model.Email)
+                .ToList();
 
             if (requests.Count == 0)
             {
