@@ -60,7 +60,7 @@ namespace ImmRequest.WebApi.Controllers
         }
 
         [HttpGet("TypesSummary")]
-        public ActionResult TypeSummaryReportGet()
+        public ActionResult TypeSummaryReportGet([FromBody] RequestSummaryReportModel model)
         {
             throw new NotImplementedException();
         }
