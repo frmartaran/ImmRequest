@@ -157,7 +157,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [DataRow("True")]
         [DataRow("false")]
         [DataRow("False")]
-        public void boolValuesAreValid(string value)
+        public void BoolValuesAreValid(string value)
         {
             var isValid = boolRange.Validate(value);
             Assert.IsTrue(isValid);

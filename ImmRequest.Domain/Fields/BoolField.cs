@@ -16,7 +16,8 @@ namespace ImmRequest.Domain.Fields
         }
         public override bool Validate(string value)
         {
-            throw new NotImplementedException();
+            Convert.ToBoolean(value);
+            return true;
         }
     }
 }
