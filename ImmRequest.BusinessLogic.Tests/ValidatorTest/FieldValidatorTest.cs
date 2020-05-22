@@ -164,6 +164,14 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidArgumentException))]
+        public void NonBooleanValuesAreNotValid()
+        {
+            var value = "non boolean";
+            boolRange.Validate(value);
+        }
+
+        [TestMethod]
         public void SetRangeNumberFieldTest()
         {
             var values = new List<string> { "1", "10" };
