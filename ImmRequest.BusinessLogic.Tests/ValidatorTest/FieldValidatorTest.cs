@@ -17,6 +17,8 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         public NumberField numberRange;
 
+        public BoolField boolRange;
+
         [TestInitialize]
         public void Setup()
         {
@@ -45,6 +47,12 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 RangeStart = 1,
                 RangeEnd = 4,
                 ParentTypeId = 1
+            };
+            boolRange = new BoolField
+            {
+                Id = 4,
+                Name = "Bool Range",
+                ParentTypeId = 1,
             };
         }
 
@@ -142,6 +150,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             var numberToValidate = "invalid";
             numberRange.Validate(numberToValidate);
+        }
+
+        [DataTestMethod]
+        [DataRow("true")]
+        [DataRow("True")]
+        [DataRow("false")]
+        [DataRow("False")]
+        public void boolValuesAreValid(string value)
+        {
+            var isValid = boolRange.Validate(value);
+            Assert.IsTrue(isValid);
         }
 
         [TestMethod]
