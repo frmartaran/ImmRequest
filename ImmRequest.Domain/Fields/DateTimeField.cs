@@ -60,22 +60,28 @@ namespace ImmRequest.Domain.Fields
 
         public override bool Validate(List<string> values)
         {
-            DateTime dateTimeValue;
+            if (!IsMultipleSelectEnabled && values.Count > 1)
+                ExceptionThrowerHelper.ThrowMultipleSelectionDisable(Name);
+
             try
             {
-                dateTimeValue = DateTime.Parse(values.First());
+                foreach (var value in values)
+                {
+                    var dateTimeValue = DateTime.Parse(values.First());
+                    var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks
+                        && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
+                    if (!isValid)
+                    {
+                        throw new DomainValidationException(DomainResource.DateTimeNotInRangeException);
+                    }
+                }
             }
             catch (FormatException ex)
             {
                 var message = string.Format(DomainResource.Field_InvalidFormat, Name);
                 throw new InvalidArgumentException(message, ex);
             }
-            var isValid = dateTimeValue.Ticks >= Start.ToUniversalTime().Ticks 
-                && dateTimeValue.Ticks <= End.ToUniversalTime().Ticks;
-            if (!isValid)
-            {
-                throw new DomainValidationException(DomainResource.DateTimeNotInRangeException);
-            }
+
             return true;
         }
 
