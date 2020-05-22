@@ -147,6 +147,9 @@
   <data name="Field_Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="MultipleSelecction_Disable" xml:space="preserve">
+    <value>Multiple Selection is not Allowed on {0}</value>
+  </data>
   <data name="NumberFieldNotInRangeException" xml:space="preserve">
     <value>Number added is not in field range</value>
   </data>

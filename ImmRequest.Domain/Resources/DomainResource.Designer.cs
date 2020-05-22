@@ -151,6 +151,15 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Multiple Selection is not Allowed on {0}.
+        /// </summary>
+        internal static string MultipleSelecction_Disable {
+            get {
+                return ResourceManager.GetString("MultipleSelecction_Disable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number added is not in field range.
         /// </summary>
         internal static string NumberFieldNotInRangeException {

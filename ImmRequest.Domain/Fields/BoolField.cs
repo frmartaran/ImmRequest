@@ -19,6 +19,9 @@ namespace ImmRequest.Domain.Fields
         }
         public override bool Validate(List<string> values)
         {
+            if (values.Count > 1)
+                ExceptionThrowerHelper.ThrowMultipleSelectionDisable(Name);
+
             try
             {
                 Convert.ToBoolean(values.First());
