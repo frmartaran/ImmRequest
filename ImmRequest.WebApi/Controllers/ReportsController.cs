@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.Domain;
+using ImmRequest.Domain.Enums;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Models;
 using Microsoft.AspNetCore.Cors;
@@ -27,7 +29,20 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("RequestSummary")]
         public ActionResult RequestSummaryReportGet([FromBody] RequestSummaryReportModel model)
         {
-            throw new NotImplementedException();
+            var requests = Finder.FindAll<CitizenRequest>(cr => (cr.CreatedDate >= model.Start
+                                                                && cr.CreatedDate < model.End)
+                                                                && cr.Email == model.Email);
+            var byStatus = requests
+                .GroupBy(cr => cr.Status)
+                .Select(g => new Tuple<RequestStatus, int>
+                (
+                    item1: g.Key,
+                    item2: g.Count()
+                ))
+                .ToList();
+            model.RequestSummary = byStatus;
+            return Ok(model);
+
         }
 
         [HttpGet("TypesSummary")]
