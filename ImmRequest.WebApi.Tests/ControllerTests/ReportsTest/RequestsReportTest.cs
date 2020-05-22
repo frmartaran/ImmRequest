@@ -31,11 +31,14 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         CitizenRequest SixthRequest;
         List<CitizenRequest> AllRequests;
         Type okType;
+        Type BadRequest;
 
         [TestInitialize]
         public void SetUp()
         {
             okType = typeof(OkObjectResult);
+            BadRequest = typeof(BadRequestObjectResult);
+
             citizenEmail = "user@email.com";
             var startDate = new DateTime(2020, 1, 1);
             FirstRequest = new CitizenRequest
@@ -157,6 +160,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             };
 
             var response = controller.RequestSummaryReportGet(model);
+            context.Dispose();
             Assert.IsInstanceOfType(response, okType);
 
             var asOkReponse = response as OkObjectResult;
@@ -178,6 +182,51 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             Assert.IsNull(declinedRequests);
             Assert.IsNull(finishedRequests);
         }
+
+
+        [TestMethod]
+        public void NoRequestDuringThatDateTest()
+        {
+            var context = ContextFactory.GetMemoryContext("Request Summary Report");
+            context.CitizenRequests.AddRange(AllRequests);
+            context.SaveChanges();
+
+            var databaseFinder = new DatabaseFinder(context);
+            var finder = new Finder(databaseFinder);
+
+            var controller = new ReportsController(finder);
+            var model = new RequestSummaryReportModel
+            {
+                Email = citizenEmail,
+                Start = new DateTime(2021, 1, 1),
+                End = new DateTime(2021, 2, 1)
+            };
+
+            var response = controller.RequestSummaryReportGet(model);
+            context.Dispose();
+            Assert.IsInstanceOfType(response, BadRequest);
+
+        }
+
+        [TestMethod]
+        public void NoRequestForEmailTest()
+        {
+            var finderMock = new Mock<IFinder>(MockBehavior.Strict);
+            finderMock.Setup(m => m.FindAll<CitizenRequest>(It.IsAny<Predicate<CitizenRequest>>()))
+                .Returns(new List<CitizenRequest>());
+
+            var controller = new ReportsController(finderMock.Object);
+            var model = new RequestSummaryReportModel
+            {
+                Email = "some@user.com",
+                Start = new DateTime(2020, 1, 1),
+                End = new DateTime(2020, 2, 1)
+            };
+
+            var response = controller.RequestSummaryReportGet(model);
+            Assert.IsInstanceOfType(response, BadRequest);
+        }
+
 
 
     }
