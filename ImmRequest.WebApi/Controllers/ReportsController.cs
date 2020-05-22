@@ -62,7 +62,21 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet("TypesSummary")]
         public ActionResult TypeSummaryReportGet([FromBody] RequestSummaryReportModel model)
         {
-            throw new NotImplementedException();
+            var requests = Logic.GetAll()
+                .Where(cr => cr.CreatedDate >= model.Start)
+                .Where(cr => cr.CreatedDate < model.End)
+                .GroupBy(cr => cr.TopicTypeId)
+                .Select(g => new TypeSummary
+                {
+                    Count = g.Count(),
+                    Name = g.FirstOrDefault().TopicType.Name,
+                    TypeCreatedAt = g.FirstOrDefault().TopicType.CreatedAt
+                })
+                .OrderByDescending(s => s.Count)
+                .ThenBy(s => s.TypeCreatedAt)
+                .ToList();
+
+            return Ok(requests);
         }
 
 

@@ -161,7 +161,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         [TestMethod]
         public void GetSummaryReport()
         {
-            
+
             var finderMock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
             finderMock.Setup(m => m.GetAll())
                 .Returns(AllRequests);
@@ -291,6 +291,14 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             finderMock.Setup(m => m.GetAll())
                 .Returns(AllRequests);
 
+            FirstRequest.TopicTypeId = 1;
+            SecondRequest.TopicTypeId = 1;
+            ThirdRequest.TopicTypeId = 1;
+            FourthRequest.TopicTypeId = 2;
+            FifthRequest.TopicTypeId = 2;
+            SixthRequest.TopicTypeId = 3;
+            SeventhRequest.TopicTypeId = 3;
+
             var controller = new ReportsController(finderMock.Object);
             var model = new RequestSummaryReportModel
             {
@@ -314,7 +322,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             Assert.AreEqual(TypeTwo.Name, typeTwo.Name);
             Assert.AreEqual(2, typeTwo.Count);
             Assert.AreEqual(TypeThree.Name, typeThree.Name);
-            Assert.AreEqual(2, typeOne.Count);
+            Assert.AreEqual(2, typeThree.Count);
         }
 
         [TestMethod]
@@ -351,7 +359,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             Assert.AreEqual(TypeTwo.Name, typeTwo.Name);
             Assert.AreEqual(2, typeTwo.Count);
             Assert.AreEqual(TypeThree.Name, typeThree.Name);
-            Assert.AreEqual(2, typeOne.Count);
+            Assert.AreEqual(2, typeThree.Count);
         }
     }
 
