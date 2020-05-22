@@ -8,6 +8,7 @@ using ImmRequest.Domain.Enums;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Models;
 using ImmRequest.WebApi.Models.Reporting;
+using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,14 @@ namespace ImmRequest.WebApi.Controllers
             var requests = Finder.FindAll<CitizenRequest>(cr => (cr.CreatedDate >= model.Start
                                                                 && cr.CreatedDate < model.End)
                                                                 && cr.Email == model.Email);
+
+            if (requests.Count == 0)
+            {
+                var message = string.Format(WebApiResource.Reports_NoRequests, model.Email,
+                    model.Start, model.End);
+                return BadRequest(message);
+            }
+
             var byStatus = requests
                 .GroupBy(cr => cr.Status)
                 .Select(g => new RequestSummary

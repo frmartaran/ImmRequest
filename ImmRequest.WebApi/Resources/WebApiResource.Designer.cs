@@ -178,6 +178,15 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no requests for the user {0} between the dates {1} and {2}.
+        /// </summary>
+        public static string Reports_NoRequests {
+            get {
+                return ResourceManager.GetString("Reports_NoRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error login in. Please check your credentials..
         /// </summary>
         public static string SessionController_UserNotFound {

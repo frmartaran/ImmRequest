@@ -226,9 +226,6 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             var response = controller.RequestSummaryReportGet(model);
             Assert.IsInstanceOfType(response, BadRequest);
         }
-
-
-
     }
 
 }
