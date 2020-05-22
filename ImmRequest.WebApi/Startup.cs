@@ -75,8 +75,7 @@ namespace ImmRequest.WebApi
             services.AddScoped<ILogic<TopicType>, TopicTypeLogic>();
             services.AddScoped<ILogic<CitizenRequest>, CitizenRequestLogic>();
 
-            services.AddScoped<IFinder<Area>, Finder>();
-            services.AddScoped<IFinder<Topic>, TopicFinder>();
+            services.AddScoped<IFinder, Finder>();
 
 
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
