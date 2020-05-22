@@ -222,7 +222,6 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 
         [TestMethod]
         [ExpectedException(typeof(DomainValidationException))]
-
         public void TextFieldDoesNotAcceptsMultipleSelection()
         {
             textRange.IsMultipleSelectEnabled = false;

@@ -29,8 +29,15 @@ namespace ImmRequest.Domain.Fields
 
         public override bool Validate(List<string> values)
         {
-            if (!RangeValues.Contains(values.First()))
-                throw new DomainValidationException(DomainResource.TextFieldNotInRangeException);
+            if (!IsMultipleSelectEnabled && values.Count > 1)
+                ExceptionThrowerHelper.ThrowMultipleSelectionDisable(Name);
+
+            foreach(var value in values)
+            {
+                if (!RangeValues.Contains(value))
+                    throw new DomainValidationException(DomainResource.TextFieldNotInRangeException);
+
+            }
             return true;
         }
 
