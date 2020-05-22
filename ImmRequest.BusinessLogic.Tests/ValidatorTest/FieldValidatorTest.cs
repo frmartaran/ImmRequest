@@ -5,6 +5,7 @@ using System;
 using Newtonsoft.Json;
 using ImmRequest.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Xml.Schema;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -179,6 +180,24 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         {
             var values = new List<string> { "true", "false" };
             boolRange.Validate(values);
+        }
+
+        [TestMethod]
+        public void NumberFieldAcceptsMultipleSelection()
+        {
+            var values = new List<string> { "2", "3" };
+            var isValid = numberRange.Validate(values);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+
+        public void NumberFieldDoesNotAcceptsMultipleSelection()
+        {
+            numberRange.IsMultipleSelectEnabled = false;
+            var values = new List<string> { "2", "3" };
+            numberRange.Validate(values);
         }
 
         #endregion
