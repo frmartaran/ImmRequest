@@ -162,11 +162,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         public void GetSummaryReport()
         {
 
-            var finderMock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
-            finderMock.Setup(m => m.GetAll())
+            var mock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            mock.Setup(m => m.GetAll())
                 .Returns(AllRequests);
 
-            var controller = new ReportsController(finderMock.Object);
+            var controller = new ReportsController(mock.Object);
             var model = new RequestSummaryReportModel
             {
                 Email = citizenEmail,
@@ -268,11 +268,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         [TestMethod]
         public void NoRequestForEmailTest()
         {
-            var finderMock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
-            finderMock.Setup(m => m.GetAll())
+            var mock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            mock.Setup(m => m.GetAll())
                 .Returns(AllRequests);
 
-            var controller = new ReportsController(finderMock.Object);
+            var controller = new ReportsController(mock.Object);
             var model = new RequestSummaryReportModel
             {
                 Email = "some@user.com",
@@ -287,8 +287,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
         [TestMethod]
         public void GetTypeReport()
         {
-            var finderMock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
-            finderMock.Setup(m => m.GetAll())
+            var mock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            mock.Setup(m => m.GetAll())
                 .Returns(AllRequests);
 
             FirstRequest.TopicTypeId = 1;
@@ -299,7 +299,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             SixthRequest.TopicTypeId = 3;
             SeventhRequest.TopicTypeId = 3;
 
-            var controller = new ReportsController(finderMock.Object);
+            var controller = new ReportsController(mock.Object);
             var model = new RequestSummaryReportModel
             {
                 Start = new DateTime(2020, 1, 1),
@@ -360,6 +360,50 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             Assert.AreEqual(2, typeTwo.Count);
             Assert.AreEqual(TypeThree.Name, typeThree.Name);
             Assert.AreEqual(2, typeThree.Count);
+        }
+
+        [TestMethod]
+        public void GetEmptyTypeReportNoMock()
+        {
+            var context = ContextFactory.GetMemoryContext("Type Empty Summary Report");
+            context.CitizenRequests.AddRange(AllRequests);
+            context.SaveChanges();
+
+            var repository = new CitizenRequestRepository(context);
+            var validatorMock = new Mock<IValidator<CitizenRequest>>();
+            var logic = new CitizenRequestLogic(repository, validatorMock.Object);
+
+            var controller = new ReportsController(logic);
+            var model = new RequestSummaryReportModel
+            {
+                Start = new DateTime(2021, 1, 1),
+                End = new DateTime(2021, 1, 8)
+            };
+
+            var response = controller.TypeSummaryReportGet(model);
+
+            Assert.IsInstanceOfType(response, BadRequest);
+
+        }
+
+        [TestMethod]
+        public void GetEmptyTypeReport()
+        {
+            var mock = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            mock.Setup(m => m.GetAll())
+                .Returns(AllRequests);
+
+            var controller = new ReportsController(mock.Object);
+            var model = new RequestSummaryReportModel
+            {
+                Start = new DateTime(2021, 1, 1),
+                End = new DateTime(2021, 1, 8)
+            };
+
+            var response = controller.TypeSummaryReportGet(model);
+
+            Assert.IsInstanceOfType(response, BadRequest);
+
         }
     }
 
