@@ -70,6 +70,15 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bool.
+        /// </summary>
+        internal static string Field_Bool {
+            get {
+                return ResourceManager.GetString("Field_Bool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date Field.
         /// </summary>
         internal static string Field_DateTime {
@@ -88,7 +97,7 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Numeric Field.
+        ///   Looks up a localized string similar to Numeric .
         /// </summary>
         internal static string Field_Numeric {
             get {
@@ -97,7 +106,7 @@ namespace ImmRequest.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text Field.
+        ///   Looks up a localized string similar to Text.
         /// </summary>
         internal static string Field_Text {
             get {

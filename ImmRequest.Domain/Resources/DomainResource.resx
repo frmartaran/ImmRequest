@@ -132,6 +132,9 @@
   <data name="FieldRange_TooManyValues" xml:space="preserve">
     <value>Only {0} are expected for {1} range.</value>
   </data>
+  <data name="Field_Bool" xml:space="preserve">
+    <value>Bool</value>
+  </data>
   <data name="Field_DateTime" xml:space="preserve">
     <value>Date Field</value>
   </data>
@@ -139,10 +142,10 @@
     <value>Invalid value format for '{0}' Field. Please provide another value</value>
   </data>
   <data name="Field_Numeric" xml:space="preserve">
-    <value>Numeric Field</value>
+    <value>Numeric </value>
   </data>
   <data name="Field_Text" xml:space="preserve">
-    <value>Text Field</value>
+    <value>Text</value>
   </data>
   <data name="NumberFieldNotInRangeException" xml:space="preserve">
     <value>Number added is not in field range</value>
