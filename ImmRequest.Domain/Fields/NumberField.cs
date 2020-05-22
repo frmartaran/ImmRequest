@@ -60,10 +60,17 @@ namespace ImmRequest.Domain.Fields
 
         public override bool Validate(List<string> values)
         {
+            if (!IsMultipleSelectEnabled && values.Count > 1)
+                ExceptionThrowerHelper.ThrowMultipleSelectionDisable(Name);
+
             try
             {
-                var numberValue = Convert.ToInt32(values.First());
-                IsOutOfRange(numberValue);
+                foreach (var value in values)
+                {
+                    var numberValue = Convert.ToInt32(value);
+                    IsOutOfRange(numberValue);
+
+                }
             }
             catch (FormatException exception)
             {

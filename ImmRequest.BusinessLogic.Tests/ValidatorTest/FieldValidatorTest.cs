@@ -185,9 +185,20 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         [TestMethod]
         public void NumberFieldAcceptsMultipleSelection()
         {
+            numberRange.IsMultipleSelectEnabled = true;
             var values = new List<string> { "2", "3" };
             var isValid = numberRange.Validate(values);
             Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+
+        public void NumberFieldSecondValuesIsInvalid()
+        {
+            numberRange.IsMultipleSelectEnabled = true;
+            var values = new List<string> { "2", "30" };
+            numberRange.Validate(values);
         }
 
         [TestMethod]
