@@ -211,6 +211,35 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             numberRange.Validate(values);
         }
 
+        [TestMethod]
+        public void TextFieldAcceptsMultipleSelection()
+        {
+            textRange.IsMultipleSelectEnabled = true;
+            var values = new List<string> { "Credencial", "Cedula" };
+            var isValid = textRange.Validate(values);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+
+        public void TextFieldDoesNotAcceptsMultipleSelection()
+        {
+            textRange.IsMultipleSelectEnabled = false;
+            var values = new List<string> { "Credencial", "Cedula" };
+            var isValid = textRange.Validate(values);
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainValidationException))]
+        public void TextFieldSecondValueIsInvalid()
+        {
+            textRange.IsMultipleSelectEnabled = true;
+            var values = new List<string> { "Credencial", "Calle" };
+            var isValid = textRange.Validate(values);
+        }
+
         #endregion
 
         #region SetRange() Tests
