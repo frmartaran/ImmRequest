@@ -61,6 +61,15 @@ namespace ImmRequest.Importer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The directory specified could not be found!.
+        /// </summary>
+        public static string FileLoad_DirectoryNotFound {
+            get {
+                return ResourceManager.GetString("FileLoad_DirectoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The path of the file must not be empty!.
         /// </summary>
         public static string FileLoad_EmptyPath {

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FileLoad_DirectoryNotFound" xml:space="preserve">
+    <value>The directory specified could not be found!</value>
+  </data>
   <data name="FileLoad_EmptyPath" xml:space="preserve">
     <value>The path of the file must not be empty!</value>
   </data>
