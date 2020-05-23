@@ -1,4 +1,5 @@
-﻿using ImmRequest.Importer.Interfaces;
+﻿using ImmRequest.Importer.Importers.Json;
+using ImmRequest.Importer.Interfaces;
 using ImmRequest.Importer.Interfaces.Domain;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace ImmRequest.Importer.Importers
 {
-    public class JsonTypeImporter : IEntityImporter<string, IType>
+    public class JsonTypeImporter : JsonImporter<IType>
     {
         protected string File { get; set; }
 
@@ -14,14 +15,10 @@ namespace ImmRequest.Importer.Importers
         {
             File = ReadFile(file);
         }
-        public ICollection<IType> Import()
+        public override ICollection<IType> Import()
         {
             throw new NotImplementedException();
         }
-
-        public string ReadFile(string file)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
