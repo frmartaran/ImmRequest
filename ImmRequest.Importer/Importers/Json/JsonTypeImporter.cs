@@ -9,8 +9,6 @@ namespace ImmRequest.Importer.Importers
 {
     public class JsonTypeImporter : JsonImporter<IType>
     {
-        protected string File { get; set; }
-
         public JsonTypeImporter(string file)
         {
             File = ReadFile(file);

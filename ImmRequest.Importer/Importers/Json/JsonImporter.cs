@@ -8,33 +8,16 @@ using System.Text;
 
 namespace ImmRequest.Importer.Importers.Json
 {
-    public abstract class JsonImporter<Entity> : IEntityImporter<string, Entity>
+    public abstract class JsonImporter<Entity> : Importer<string, Entity>
     {
-        public abstract ICollection<Entity> Import();
-
-        public virtual string ReadFile(string file)
+        protected string File { get; set; }
+        public override string LoadFile(string file)
         {
-            try
+            using (var reader = new StreamReader(file))
             {
-                using (var reader = new StreamReader(file))
-                {
-                    var loadedFile = reader.ReadToEnd();
-                    return loadedFile;
-                }
+                var loadedFile = reader.ReadToEnd();
+                return loadedFile;
             }
-            catch (ArgumentException)
-            {
-                throw new FileLoadFailureException(ImporterResource.FileLoad_EmptyPath);
-            }
-            catch (FileNotFoundException)
-            {
-                throw new FileLoadFailureException(ImporterResource.FileLoad_FileNotFound);
-            }
-            catch (DirectoryNotFoundException)
-            {
-                throw new FileLoadFailureException(ImporterResource.FileLoad_DirectoryNotFound);
-            }
-            
         }
     }
 }

@@ -5,9 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ImmRequest.Importer.Tests
 {
     [TestClass]
-    public class JsonTypeImporterTests
+    public class JsonImporterTests
     {
-        private const string ROOT_PATH = "~\\..\\..\\..\\..\\JsonTests\\Files\\";
+        protected const string ROOT_PATH = "~\\..\\..\\..\\..\\JsonTests\\Files\\";
 
         [TestMethod]
         public void ReadFile()
