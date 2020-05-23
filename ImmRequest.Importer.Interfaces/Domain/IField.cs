@@ -8,6 +8,8 @@ namespace ImmRequest.Importer.Interfaces.Domain
     {
         string Name { get; set; }
 
+        DataType DataType { get; set; }
+
         ICollection<string> RangeValues { get; set; }
     }
 }

@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ImmRequest.Importer.Interfaces\ImmRequest.Importer.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>
