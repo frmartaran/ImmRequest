@@ -34,6 +34,14 @@ namespace ImmRequest.Importer.Tests
             new JsonTypeImporter(path);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(FileLoadFailureException))]
+        public void ReadFileDirectoryNotFound()
+        {
+            var path = $"{ROOT_PATH}\\NonExistantDirectory\\ImportType.json";
+            new JsonTypeImporter(path);
+        }
+
 
     }
 }
