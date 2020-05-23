@@ -1,4 +1,5 @@
 using ImmRequest.Importer.Importers;
+using ImmRequest.Importer.Interfaces.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ImmRequest.Importer.Tests
@@ -16,6 +17,15 @@ namespace ImmRequest.Importer.Tests
             var file = importer.ReadFile(filePath);
             Assert.IsNotNull(file);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(FileLoadFailureException))]
+        public void ReadFileEmptyPath()
+        {
+            var path = "";
+            new JsonTypeImporter(path);
+        }
+
 
     }
 }
