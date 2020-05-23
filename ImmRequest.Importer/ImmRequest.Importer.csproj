@@ -8,4 +8,19 @@
     <ProjectReference Include="..\ImmRequest.Importer.Interfaces\ImmRequest.Importer.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\ImporterResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ImporterResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\ImporterResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImporterResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

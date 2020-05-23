@@ -1,4 +1,6 @@
 ﻿using ImmRequest.Importer.Interfaces;
+using ImmRequest.Importer.Interfaces.Exceptions;
+using ImmRequest.Importer.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,11 +14,19 @@ namespace ImmRequest.Importer.Importers.Json
 
         public virtual string ReadFile(string file)
         {
-            using (var reader = new StreamReader(file))
+            try
             {
-                var loadedFile = reader.ReadToEnd();
-                return loadedFile;
+                using (var reader = new StreamReader(file))
+                {
+                    var loadedFile = reader.ReadToEnd();
+                    return loadedFile;
+                }
             }
+            catch (ArgumentException)
+            {
+                throw new FileLoadFailureException(ImporterResource.FileLoad_EmptyPath);
+            }
+            
         }
     }
 }
