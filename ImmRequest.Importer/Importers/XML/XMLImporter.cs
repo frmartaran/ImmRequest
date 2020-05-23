@@ -10,7 +10,9 @@ namespace ImmRequest.Importer.Importers.XML
         protected XmlDocument File { get; set; }
         public override XmlDocument LoadFile(string file)
         {
-            throw new NotImplementedException();
+            var document = new XmlDocument();
+            document.Load(file);
+            return document;
         }
     }
 }

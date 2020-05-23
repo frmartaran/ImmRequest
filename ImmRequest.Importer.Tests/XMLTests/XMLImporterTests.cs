@@ -33,7 +33,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileNotFound()
         {
-            var path = $"{ROOT_PATH}notfound.json";
+            var path = $"{ROOT_PATH}notfound.xml";
             new XMLTypeImporter(path);
         }
 
