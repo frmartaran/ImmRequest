@@ -26,6 +26,10 @@ namespace ImmRequest.Importer.Importers.Json
             {
                 throw new FileLoadFailureException(ImporterResource.FileLoad_EmptyPath);
             }
+            catch (FileNotFoundException)
+            {
+                throw new FileLoadFailureException(ImporterResource.FileLoad_FileNotFound);
+            }
             
         }
     }
