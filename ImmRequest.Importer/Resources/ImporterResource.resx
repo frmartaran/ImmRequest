@@ -129,4 +129,7 @@
   <data name="Format_Invalid" xml:space="preserve">
     <value>Invalid format, please correct the file</value>
   </data>
+  <data name="Json_ReaderNull" xml:space="preserve">
+    <value>Json reader is null</value>
+  </data>
 </root>

@@ -95,5 +95,14 @@ namespace ImmRequest.Importer.Resources {
                 return ResourceManager.GetString("Format_Invalid", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Json reader is null.
+        /// </summary>
+        public static string Json_ReaderNull {
+            get {
+                return ResourceManager.GetString("Json_ReaderNull", resourceCulture);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ImmRequest.Importer.Resources;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,9 @@ namespace ImmRequest.Importer.Importers.Json.Binders
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader == null)
+                throw new ArgumentException(ImporterResource.Json_ReaderNull);
+
             throw new NotImplementedException();
         }
 
