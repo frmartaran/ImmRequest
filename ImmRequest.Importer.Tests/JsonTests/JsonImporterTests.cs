@@ -1,6 +1,7 @@
 using ImmRequest.Importer.Importers;
 using ImmRequest.Importer.Interfaces.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace ImmRequest.Importer.Tests
 {
@@ -39,6 +40,26 @@ namespace ImmRequest.Importer.Tests
         {
             var path = $"{TestConstants.JsonPath}\\NonExistantDirectory\\ImportType.json";
             new JsonTypeImporter(path);
+        }
+
+        [TestMethod]
+        public void SuccessfulImport()
+        {
+            var path = $"{TestConstants.JsonPath}\\ImportType.json";
+            var importer = new JsonTypeImporter(path);
+            var types = importer.Import();
+
+            Assert.AreEqual(1, types.Count);
+            Assert.AreEqual(4, types.First().Fields.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+        public void UnsucessfulImport()
+        {
+            var path = $"{TestConstants.JsonPath}\\FormatError.json";
+            var importer = new JsonTypeImporter(path);
+            var types = importer.Import();
         }
 
 
