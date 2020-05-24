@@ -1,6 +1,7 @@
 ﻿using ImmRequest.Importer.Domain;
 using ImmRequest.Importer.Importers.Json.Binders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,15 @@ namespace ImmRequest.Importer.Tests.JsonTests
         {
             var fieldConverter = new CustomTypeBinder<Field>();
             var field = fieldConverter.ReadJson(null, fieldType, new { }, new JsonSerializer());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SerializerIsNull()
+        {
+            var fieldConverter = new CustomTypeBinder<Field>();
+            var readermock = new Mock<JsonReader>().Object;
+            var field = fieldConverter.ReadJson(readermock, fieldType, new { }, null);
         }
     }
 }
