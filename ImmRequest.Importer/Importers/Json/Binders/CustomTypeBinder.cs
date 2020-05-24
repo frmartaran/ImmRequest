@@ -9,7 +9,7 @@ namespace ImmRequest.Importer.Importers.Json.Binders
     {
         public override bool CanConvert(Type objectType)
         {
-            throw new NotImplementedException();
+            return typeof(T).IsAssignableFrom(objectType);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
