@@ -44,5 +44,15 @@ namespace ImmRequest.Importer.Tests.XMLTests
             var path = $"{ROOT_PATH}\\NonExistantDirectory\\ImportType.xml";
             new XMLTypeImporter(path);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(FileLoadFailureException))]
+        public void ReadFileFormatError()
+        {
+            var path = $"{ROOT_PATH}\\FormatError.xml";
+            new XMLTypeImporter(path);
+        }
+
+       
     }
 }

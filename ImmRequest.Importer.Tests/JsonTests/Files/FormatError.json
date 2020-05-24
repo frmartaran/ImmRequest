@@ -1,0 +1,25 @@
+{
+  "Name": "Personal Data",
+  "Fields": [
+    {
+      "Name": "Birthdate",
+      "DataType": "DateTime",
+      "RangeValues": [ "1990-1-1", "2020-1-1" ]
+    },
+    {
+      "Name": "Neighbourhood",
+      "DataType": "Text",
+      "RangeValues": [ "Pocitos", "Centro", "Cordon", "Ciudad Vieja" ]
+    },
+    {
+      "Name": "Single",
+      "DataType": "Bool",
+      "RangeValues": []
+    },
+    {
+      "Name": "Children",
+      "DataType": "Number",
+      "RangeValues": ["0", "10"]
+    
+  ]
+}

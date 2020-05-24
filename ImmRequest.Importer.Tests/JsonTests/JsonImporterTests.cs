@@ -41,7 +41,5 @@ namespace ImmRequest.Importer.Tests
             var path = $"{ROOT_PATH}\\NonExistantDirectory\\ImportType.json";
             new JsonTypeImporter(path);
         }
-
-
     }
 }
