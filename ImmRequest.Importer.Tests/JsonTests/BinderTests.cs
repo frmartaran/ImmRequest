@@ -52,8 +52,6 @@ namespace ImmRequest.Importer.Tests.JsonTests
             var deserializedField = fieldConverter.ReadJson(reader, fieldType, new { },
                 serializer);
             Assert.IsInstanceOfType(deserializedField, fieldType);
-
-
         }
     }
 }

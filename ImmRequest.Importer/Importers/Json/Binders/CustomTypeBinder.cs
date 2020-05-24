@@ -20,10 +20,10 @@ namespace ImmRequest.Importer.Importers.Json.Binders
             if (serializer == null)
                 throw new ArgumentException(ImporterResource.Json_SerializerNull);
 
-            throw new NotImplementedException();
+            return serializer.Deserialize<T>(reader);
         }
 
-        public override void WriteJson(JsonWriter writer,  object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
