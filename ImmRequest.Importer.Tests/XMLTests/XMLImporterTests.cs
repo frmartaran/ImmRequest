@@ -56,12 +56,12 @@ namespace ImmRequest.Importer.Tests.XMLTests
         [TestMethod]
         public void SuccessfulImport()
         {
-            var path = $"{TestConstants.XMLPath}\\ImportType.xml";
+            var path = $"{TestConstants.XMLPath}\\TypeWithNoFields.xml";
             var importer = new XMLTypeImporter(path);
             var types = importer.Import();
 
             Assert.IsNotNull(types.First());
-            Assert.AreEqual(4, types.First().Fields.Count);
+            Assert.AreEqual("Wrong Address", types.First().Name);
         }
 
 

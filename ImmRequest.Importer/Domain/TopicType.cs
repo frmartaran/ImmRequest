@@ -1,4 +1,5 @@
-﻿using ImmRequest.Importer.Interfaces.Domain;
+﻿using ImmRequest.Importer.Extentions;
+using ImmRequest.Importer.Interfaces.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,12 @@ namespace ImmRequest.Importer.Domain
 {
     public class TopicType : IType
     {
+        public TopicType() { }
 
-        public TopicType(ICollection<Field> fields)
+        [JsonConstructor]
+        public TopicType(List<Field> fields)
         {
-            Fields = fields.Cast<IField>().ToList();
+            Fields = fields.ToInterfaceList<IField, Field>();
         }
         public string Name { get; set; }
 
