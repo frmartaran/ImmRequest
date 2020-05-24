@@ -132,4 +132,7 @@
   <data name="Json_ReaderNull" xml:space="preserve">
     <value>Json reader is null</value>
   </data>
+  <data name="Json_SerializerNull" xml:space="preserve">
+    <value>Json Serializer is Null</value>
+  </data>
 </root>

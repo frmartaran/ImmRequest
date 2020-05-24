@@ -5,6 +5,7 @@ using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ImmRequest.Importer.Tests.JsonTests
@@ -39,6 +40,20 @@ namespace ImmRequest.Importer.Tests.JsonTests
             var fieldConverter = new CustomTypeBinder<Field>();
             var readermock = new Mock<JsonReader>().Object;
             var field = fieldConverter.ReadJson(readermock, fieldType, new { }, null);
+        }
+
+        [TestMethod]
+        public void DeserializeField()
+        {
+            var fieldConverter = new CustomTypeBinder<Field>();
+            var field = @"{'name': 'Field', 'dataType': 'bool', 'rangeValues': []}";
+            var reader = new JsonTextReader(new StringReader(field));
+            var serializer = new JsonSerializer();
+            var deserializedField = fieldConverter.ReadJson(reader, fieldType, new { },
+                serializer);
+            Assert.IsInstanceOfType(deserializedField, fieldType);
+
+
         }
     }
 }

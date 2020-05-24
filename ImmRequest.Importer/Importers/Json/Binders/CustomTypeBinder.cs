@@ -17,6 +17,8 @@ namespace ImmRequest.Importer.Importers.Json.Binders
         {
             if (reader == null)
                 throw new ArgumentException(ImporterResource.Json_ReaderNull);
+            if (serializer == null)
+                throw new ArgumentException(ImporterResource.Json_SerializerNull);
 
             throw new NotImplementedException();
         }

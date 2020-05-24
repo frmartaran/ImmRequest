@@ -104,5 +104,14 @@ namespace ImmRequest.Importer.Resources {
                 return ResourceManager.GetString("Json_ReaderNull", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Json Serializer is Null.
+        /// </summary>
+        public static string Json_SerializerNull {
+            get {
+                return ResourceManager.GetString("Json_SerializerNull", resourceCulture);
+            }
+        }
     }
 }
