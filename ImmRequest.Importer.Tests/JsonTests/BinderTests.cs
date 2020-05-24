@@ -53,5 +53,14 @@ namespace ImmRequest.Importer.Tests.JsonTests
                 serializer);
             Assert.IsInstanceOfType(deserializedField, fieldType);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void WriteJsonNotImplemented()
+        {
+            var fieldConverter = new CustomTypeBinder<Field>();
+            var mock = new Mock<JsonWriter>().Object;
+            fieldConverter.WriteJson(mock, new { }, new JsonSerializer());
+        }
     }
 }

@@ -99,5 +99,6 @@ namespace ImmRequest.WebApi.Tests.HelperTests
             var model = Create(type, jsonObject);
             Assert.IsNull(model);
         }
+
     }
 }
