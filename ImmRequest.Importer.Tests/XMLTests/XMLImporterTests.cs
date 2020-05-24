@@ -3,6 +3,7 @@ using ImmRequest.Importer.Interfaces.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.Importer.Tests.XMLTests
@@ -52,6 +53,17 @@ namespace ImmRequest.Importer.Tests.XMLTests
             new XMLTypeImporter(path);
         }
 
-       
+        [TestMethod]
+        public void SuccessfulImport()
+        {
+            var path = $"{TestConstants.XMLPath}\\ImportType.xml";
+            var importer = new XMLTypeImporter(path);
+            var types = importer.Import();
+
+            Assert.IsNotNull(types.First());
+            Assert.AreEqual(4, types.First().Fields.Count);
+        }
+
+
     }
 }
