@@ -1,4 +1,5 @@
 ﻿using ImmRequest.Importer.Importers.XML;
+using ImmRequest.Importer.Interfaces.Domain;
 using ImmRequest.Importer.Interfaces.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -62,6 +63,28 @@ namespace ImmRequest.Importer.Tests.XMLTests
 
             Assert.IsNotNull(types.First());
             Assert.AreEqual("Wrong Address", types.First().Name);
+        }
+
+        [TestMethod]
+        public void SuccessfulImportWithFields()
+        {
+            var path = $"{TestConstants.XMLPath}\\ImportType.xml";
+            var importer = new XMLTypeImporter(path);
+            var types = importer.Import();
+            var type = types.First();
+            Assert.IsNotNull(type);
+            Assert.AreEqual(4, type.Fields.Count);
+
+            var numberField = type.Fields.FirstOrDefault(f => f.DataType == DataType.Number);
+            var textField = type.Fields.FirstOrDefault(f => f.DataType == DataType.Text);
+            var dateTimeField = type.Fields.FirstOrDefault(f => f.DataType == DataType.DateTime);
+            var boolField = type.Fields.FirstOrDefault(f => f.DataType == DataType.Bool);
+
+            Assert.IsNotNull(numberField);
+            Assert.IsNotNull(textField);
+            Assert.IsNotNull(dateTimeField);
+            Assert.IsNotNull(boolField);
+
         }
 
 
