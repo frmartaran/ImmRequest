@@ -1,6 +1,8 @@
-﻿using ImmRequest.Importer.Importers.Json;
+﻿using ImmRequest.Importer.Domain;
+using ImmRequest.Importer.Importers.Json;
 using ImmRequest.Importer.Interfaces;
 using ImmRequest.Importer.Interfaces.Domain;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +17,8 @@ namespace ImmRequest.Importer.Importers
         }
         public override ICollection<IType> Import()
         {
-            throw new NotImplementedException();
+            var types = JsonConvert.DeserializeObject<List<TopicType>>(File);
+            return types as ICollection<IType>;
         }
         
     }
