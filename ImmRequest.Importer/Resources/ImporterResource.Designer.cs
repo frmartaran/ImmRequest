@@ -86,5 +86,14 @@ namespace ImmRequest.Importer.Resources {
                 return ResourceManager.GetString("FileLoad_FileNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid format, please correct the file.
+        /// </summary>
+        public static string Format_Invalid {
+            get {
+                return ResourceManager.GetString("Format_Invalid", resourceCulture);
+            }
+        }
     }
 }
