@@ -2,6 +2,8 @@
 using ImmRequest.Importer.Importers.Json;
 using ImmRequest.Importer.Interfaces;
 using ImmRequest.Importer.Interfaces.Domain;
+using ImmRequest.Importer.Interfaces.Exceptions;
+using ImmRequest.Importer.Resources;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,8 +20,16 @@ namespace ImmRequest.Importer.Importers
         }
         public override ICollection<IType> Import()
         {
-            var types = JsonConvert.DeserializeObject<List<TopicType>>(File);
-            return types.Cast<IType>().ToList();
+            try
+            {
+                var types = JsonConvert.DeserializeObject<List<TopicType>>(File);
+                return types.Cast<IType>().ToList();
+
+            }
+            catch (JsonSerializationException)
+            {
+                throw new InvalidFormatException(ImporterResource.Format_Invalid);
+            }
         }
         
     }
