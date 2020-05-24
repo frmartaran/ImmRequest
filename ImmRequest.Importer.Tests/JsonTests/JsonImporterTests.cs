@@ -7,12 +7,11 @@ namespace ImmRequest.Importer.Tests
     [TestClass]
     public class JsonImporterTests
     {
-        protected const string ROOT_PATH = "~\\..\\..\\..\\..\\JsonTests\\Files\\";
 
         [TestMethod]
         public void ReadFile()
         {
-            var filePath = $"{ROOT_PATH}ImportType.json";
+            var filePath = $"{TestConstants.JsonPath}ImportType.json";
             var importer = new JsonTypeImporter(filePath);
             var file = importer.ReadFile(filePath);
             Assert.IsNotNull(file);
@@ -30,7 +29,7 @@ namespace ImmRequest.Importer.Tests
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileNotFound()
         {
-            var path = $"{ROOT_PATH}notfound.json";
+            var path = $"{TestConstants.JsonPath}notfound.json";
             new JsonTypeImporter(path);
         }
 
@@ -38,8 +37,10 @@ namespace ImmRequest.Importer.Tests
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileDirectoryNotFound()
         {
-            var path = $"{ROOT_PATH}\\NonExistantDirectory\\ImportType.json";
+            var path = $"{TestConstants.JsonPath}\\NonExistantDirectory\\ImportType.json";
             new JsonTypeImporter(path);
         }
+
+
     }
 }

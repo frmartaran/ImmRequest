@@ -10,12 +10,11 @@ namespace ImmRequest.Importer.Tests.XMLTests
     [TestClass]
     public class XMLImporterTests
     {
-        protected const string ROOT_PATH = "~\\..\\..\\..\\..\\XMLTests\\Files\\";
 
         [TestMethod]
         public void ReadFile()
         {
-            var filePath = $"{ROOT_PATH}ImportType.xml";
+            var filePath = $"{TestConstants.XMLPath}ImportType.xml";
             var importer = new XMLTypeImporter(filePath);
             var file = importer.ReadFile(filePath);
             Assert.IsNotNull(file);
@@ -33,7 +32,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileNotFound()
         {
-            var path = $"{ROOT_PATH}notfound.xml";
+            var path = $"{TestConstants.XMLPath}notfound.xml";
             new XMLTypeImporter(path);
         }
 
@@ -41,7 +40,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileDirectoryNotFound()
         {
-            var path = $"{ROOT_PATH}\\NonExistantDirectory\\ImportType.xml";
+            var path = $"{TestConstants.XMLPath}\\NonExistantDirectory\\ImportType.xml";
             new XMLTypeImporter(path);
         }
 
@@ -49,7 +48,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileFormatError()
         {
-            var path = $"{ROOT_PATH}\\FormatError.xml";
+            var path = $"{TestConstants.XMLPath}\\FormatError.xml";
             new XMLTypeImporter(path);
         }
 
