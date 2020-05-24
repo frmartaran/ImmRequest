@@ -1,26 +1,26 @@
 [
   {
-    "Name": "Personal Data",
-    "Fields": [
+    "name": "Personal Data",
+    "fields": [
       {
-        "Name": "Birthdate",
-        "DataType": "DateTime",
-        "RangeValues": [ "1990-1-1", "2020-1-1" ]
+        "name": "Birthdate",
+        "dataType": "DateTime",
+        "rangeValues": [ "1990-1-1", "2020-1-1" ]
       },
       {
-        "Name": "Neighbourhood",
-        "DataType": "Text",
-        "RangeValues": [ "Pocitos", "Centro", "Cordon", "Ciudad Vieja" ]
+        "name": "Neighbourhood",
+        "dataType": "Text",
+        "rangeValues": [ "Pocitos", "Centro", "Cordon", "Ciudad Vieja" ]
       },
       {
-        "Name": "Single",
-        "DataType": "Bool",
-        "RangeValues": []
+        "name": "Single",
+        "dataType": "Bool",
+        "rangeValues": []
       },
       {
-        "Name": "Children",
-        "DataType": "Number",
-        "RangeValues": [ "0", "10" ]
+        "name": "Children",
+        "dataType": "Number",
+        "rangeValues": [ "0", "10" ]
       }
     ]
   }

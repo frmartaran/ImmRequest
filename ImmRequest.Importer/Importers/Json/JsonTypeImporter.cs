@@ -5,6 +5,7 @@ using ImmRequest.Importer.Interfaces.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.Importer.Importers
@@ -18,7 +19,7 @@ namespace ImmRequest.Importer.Importers
         public override ICollection<IType> Import()
         {
             var types = JsonConvert.DeserializeObject<List<TopicType>>(File);
-            return types as ICollection<IType>;
+            return types.Cast<IType>().ToList();
         }
         
     }
