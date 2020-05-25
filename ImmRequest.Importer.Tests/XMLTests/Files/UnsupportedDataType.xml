@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+  <Type name="Personal Data">
+    <Field name ="Birthdate">
+      <DataType>DateTime</DataType>
+      <Range>
+        <Value>1990-1-1</Value>
+        <Value>2020-1-1</Value>
+      </Range>
+    </Field>
+    <Field name="Neighbourhood">
+      <DataType>String</DataType>
+      <Range>
+        <Value>Pocitos</Value>
+        <Value>Centro</Value>
+        <Value>Ciudad Vieja</Value>
+        <Value>Cordon</Value>
+      </Range>
+    </Field>
+    <Field name="Single">
+      <DataType>Bool</DataType>
+    </Field>
+    <Field name="Children">
+      <DataType>Number</DataType>
+      <Range>
+        <Value>0</Value>
+        <Value>10</Value>
+      </Range>
+    </Field>
+  </Type>

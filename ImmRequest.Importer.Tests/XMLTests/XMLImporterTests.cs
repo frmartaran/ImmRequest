@@ -107,6 +107,16 @@ namespace ImmRequest.Importer.Tests.XMLTests
             importer.Import();
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+
+        public void UnsupportedDataType()
+        {
+            var path = $"{TestConstants.XMLPath}\\UnsupportedDataType.xml";
+            var importer = new XMLTypeImporter(path);
+            importer.Import();
+        }
+
 
     }
 }
