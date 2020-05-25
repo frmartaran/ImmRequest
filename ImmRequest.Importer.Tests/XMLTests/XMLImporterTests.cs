@@ -97,6 +97,16 @@ namespace ImmRequest.Importer.Tests.XMLTests
 
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+
+        public void NoDataTypeTag()
+        {
+            var path = $"{TestConstants.XMLPath}\\NoDataTypeTag.xml";
+            var importer = new XMLTypeImporter(path);
+            importer.Import();
+        }
+
 
     }
 }
