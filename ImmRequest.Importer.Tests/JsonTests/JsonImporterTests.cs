@@ -62,6 +62,15 @@ namespace ImmRequest.Importer.Tests
             var types = importer.Import();
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+        public void EmptyJson()
+        {
+            var path = $"{TestConstants.JsonPath}\\EmptyJson.json";
+            var importer = new JsonTypeImporter(path);
+            var types = importer.Import();
+        }
+
 
     }
 }
