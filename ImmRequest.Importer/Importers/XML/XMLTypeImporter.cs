@@ -107,11 +107,13 @@ namespace ImmRequest.Importer.Importers.XML
         private static DataType GetDataType(List<XmlElement> childNodes)
         {
             var dataType = childNodes
-                .FirstOrDefault(xmle => xmle.Name == DATA_TYPE_TAG)
-                .InnerText;
+                .FirstOrDefault(xmle => xmle.Name == DATA_TYPE_TAG);
+
+            if (dataType == null)
+                throw new InvalidFormatException(ImporterResource.XMLImporter_Type_NoDataTypeTag);
 
             DataType dataTypeEnum;
-            Enum.TryParse(dataType, out dataTypeEnum);
+            Enum.TryParse(dataType.InnerText, out dataTypeEnum);
             return dataTypeEnum;
         }
     }

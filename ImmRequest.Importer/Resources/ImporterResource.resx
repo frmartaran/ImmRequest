@@ -141,4 +141,7 @@
   <data name="NoEntityToImport" xml:space="preserve">
     <value>There are no {0} to import on this file. Please verify the formatting</value>
   </data>
+  <data name="XMLImporter_Type_NoDataTypeTag" xml:space="preserve">
+    <value>Missing Data Type Tag. Please verfy the formatting of the file.</value>
+  </data>
 </root>

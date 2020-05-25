@@ -131,5 +131,14 @@ namespace ImmRequest.Importer.Resources {
                 return ResourceManager.GetString("NoEntityToImport", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Data Type Tag. Please verfy the formatting of the file..
+        /// </summary>
+        public static string XMLImporter_Type_NoDataTypeTag {
+            get {
+                return ResourceManager.GetString("XMLImporter_Type_NoDataTypeTag", resourceCulture);
+            }
+        }
     }
 }
