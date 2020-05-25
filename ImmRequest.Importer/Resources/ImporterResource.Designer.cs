@@ -140,5 +140,14 @@ namespace ImmRequest.Importer.Resources {
                 return ResourceManager.GetString("XMLImporter_Type_NoDataTypeTag", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported DataType, please make sure the data types are either: Number, Text, DateTime or Bool.
+        /// </summary>
+        public static string XMLImporter_Type_UnsupportedDataType {
+            get {
+                return ResourceManager.GetString("XMLImporter_Type_UnsupportedDataType", resourceCulture);
+            }
+        }
     }
 }

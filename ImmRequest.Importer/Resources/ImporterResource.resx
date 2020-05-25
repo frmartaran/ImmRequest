@@ -144,4 +144,7 @@
   <data name="XMLImporter_Type_NoDataTypeTag" xml:space="preserve">
     <value>Missing Data Type Tag. Please verfy the formatting of the file.</value>
   </data>
+  <data name="XMLImporter_Type_UnsupportedDataType" xml:space="preserve">
+    <value>Unsupported DataType, please make sure the data types are either: Number, Text, DateTime or Bool</value>
+  </data>
 </root>

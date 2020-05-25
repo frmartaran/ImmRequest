@@ -113,7 +113,10 @@ namespace ImmRequest.Importer.Importers.XML
                 throw new InvalidFormatException(ImporterResource.XMLImporter_Type_NoDataTypeTag);
 
             DataType dataTypeEnum;
-            Enum.TryParse(dataType.InnerText, out dataTypeEnum);
+            var canParse = Enum.TryParse(dataType.InnerText, out dataTypeEnum);
+            if (!canParse)
+                throw new InvalidFormatException(ImporterResource.XMLImporter_Type_UnsupportedDataType);
+
             return dataTypeEnum;
         }
     }
