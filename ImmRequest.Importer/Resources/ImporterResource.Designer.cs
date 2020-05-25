@@ -61,6 +61,15 @@ namespace ImmRequest.Importer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Types.
+        /// </summary>
+        public static string EntityToImport_Type {
+            get {
+                return ResourceManager.GetString("EntityToImport_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The directory specified could not be found!.
         /// </summary>
         public static string FileLoad_DirectoryNotFound {
@@ -88,7 +97,7 @@ namespace ImmRequest.Importer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid format, please correct the file.
+        ///   Looks up a localized string similar to Invalid format or Empty file, please correct the file.
         /// </summary>
         public static string Format_Invalid {
             get {
@@ -111,6 +120,15 @@ namespace ImmRequest.Importer.Resources {
         public static string Json_SerializerNull {
             get {
                 return ResourceManager.GetString("Json_SerializerNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no {0} to import on this file. Please verify the formatting.
+        /// </summary>
+        public static string NoEntityToImport {
+            get {
+                return ResourceManager.GetString("NoEntityToImport", resourceCulture);
             }
         }
     }

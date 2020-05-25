@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EntityToImport_Type" xml:space="preserve">
+    <value>Types</value>
+  </data>
   <data name="FileLoad_DirectoryNotFound" xml:space="preserve">
     <value>The directory specified could not be found!</value>
   </data>
@@ -127,12 +130,15 @@
     <value>The file specified could not be found!</value>
   </data>
   <data name="Format_Invalid" xml:space="preserve">
-    <value>Invalid format, please correct the file</value>
+    <value>Invalid format or Empty file, please correct the file</value>
   </data>
   <data name="Json_ReaderNull" xml:space="preserve">
     <value>Json reader is null</value>
   </data>
   <data name="Json_SerializerNull" xml:space="preserve">
     <value>Json Serializer is Null</value>
+  </data>
+  <data name="NoEntityToImport" xml:space="preserve">
+    <value>There are no {0} to import on this file. Please verify the formatting</value>
   </data>
 </root>

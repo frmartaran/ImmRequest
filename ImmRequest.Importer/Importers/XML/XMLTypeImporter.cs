@@ -1,6 +1,8 @@
 ﻿using ImmRequest.Importer.Domain;
 using ImmRequest.Importer.Extentions;
 using ImmRequest.Importer.Interfaces.Domain;
+using ImmRequest.Importer.Interfaces.Exceptions;
+using ImmRequest.Importer.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,15 +29,26 @@ namespace ImmRequest.Importer.Importers.XML
         public override ICollection<IType> Import()
         {
             var allTypes = new List<TopicType>();
-            var typeTags = File.GetElementsByTagName(TYPE_TAG).AsList();
+            var typeNodes = File.GetElementsByTagName(TYPE_TAG).AsList();
+            CancelImportOnEmptyFile(typeNodes);
 
-            foreach (var xmlType in typeTags)
+            foreach (var xmlType in typeNodes)
             {
                 var type = ImportType(xmlType);
                 allTypes.Add(type);
             }
 
             return allTypes.ToInterfaceList<IType, TopicType>();
+        }
+
+        private static void CancelImportOnEmptyFile(List<XmlElement> typeTags)
+        {
+            if (typeTags.Count == 0)
+            {
+                var message = string.Format(ImporterResource.NoEntityToImport,
+                    ImporterResource.EntityToImport_Type);
+                throw new InvalidFormatException(message);
+            }
         }
 
         private TopicType ImportType(XmlElement xmlTypeNode)
