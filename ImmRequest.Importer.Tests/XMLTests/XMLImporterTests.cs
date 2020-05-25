@@ -4,6 +4,7 @@ using ImmRequest.Importer.Interfaces.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -84,6 +85,16 @@ namespace ImmRequest.Importer.Tests.XMLTests
             Assert.IsNotNull(textField);
             Assert.IsNotNull(dateTimeField);
             Assert.IsNotNull(boolField);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+        public void NoTypesToImport()
+        {
+            var path = $"{TestConstants.XMLPath}\\EmptyFile.xml";
+            var importer = new XMLTypeImporter(path);
+            importer.Import();
 
         }
 
