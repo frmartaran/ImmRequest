@@ -23,6 +23,7 @@ namespace ImmRequest.Importer.Importers
             try
             {
                 var types = JsonConvert.DeserializeObject<List<TopicType>>(File);
+                CancelIfThereAreNoTypes(types);
                 return types.Cast<IType>().ToList();
 
             }
@@ -31,6 +32,15 @@ namespace ImmRequest.Importer.Importers
                 throw new InvalidFormatException(ImporterResource.Format_Invalid);
             }
         }
-        
+
+        private static void CancelIfThereAreNoTypes(List<TopicType> types)
+        {
+            if (types.Count == 0)
+            {
+                var message = string.Format(ImporterResource.NoEntityToImport,
+                    ImporterResource.EntityToImport_Type);
+                throw new InvalidFormatException(message);
+            }
+        }
     }
 }
