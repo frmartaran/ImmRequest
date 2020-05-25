@@ -3,8 +3,8 @@
     <Field name ="Birthdate">
       <DataType>DateTime</DataType>
       <Range>
-        <Start>1990-1-1</Start>
-        <End>2020-1-1</End>
+        <Value>1990-1-1</Value>
+        <Value>2020-1-1</Value>
       </Range>
     </Field>
     <Field name="Neighbourhood">
@@ -22,8 +22,8 @@
     <Field name="Children">
       <DataType>Number</DataType>
       <Range>
-        <Start>0</Start>
-        <End>10</End>
+        <Value>0</Value>
+        <Value>10</Value>
       </Range>
     </Field>
   </Type>

@@ -24,5 +24,11 @@ namespace ImmRequest.Importer.Importers.XML
                 throw new FileLoadFailureException(ImporterResource.Format_Invalid);
             }
         }
+
+        protected static string GetNodeName(XmlElement node)
+        {
+            const string ATTRIBUTE_NAME = "name";
+            return node.GetAttribute(ATTRIBUTE_NAME);
+        }
     }
 }
