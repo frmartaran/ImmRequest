@@ -8,17 +8,17 @@ using System.Text;
 
 namespace ImmRequest.Importer.Importers
 {
-    public abstract class Importer<FileType, Entity> : IEntityImporter<Entity>
+    public abstract class Importer<FileType, Entity> : IEntityImporter<FileType, Entity>
     {
         public abstract ICollection<Entity> Import();
 
         public abstract FileType LoadFile(string file);
 
-        public FileType ReadFile(string file)
+        public FileType ReadFile(string path)
         {
             try
             {
-                return LoadFile(file);
+                return LoadFile(path);
             }
             catch (ArgumentException)
             {

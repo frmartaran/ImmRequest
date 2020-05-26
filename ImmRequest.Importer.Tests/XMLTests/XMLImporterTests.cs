@@ -17,7 +17,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFile()
         {
             var filePath = $"{TestConstants.XMLPath}ImportType.xml";
-            var importer = new XMLTypeImporter(filePath);
+            var importer = new XmlTypeImporter(filePath);
             var file = importer.ReadFile(filePath);
             Assert.IsNotNull(file);
         }
@@ -27,7 +27,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFileEmptyPath()
         {
             var path = "";
-            new XMLTypeImporter(path);
+            new XmlTypeImporter(path);
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFileNotFound()
         {
             var path = $"{TestConstants.XMLPath}notfound.xml";
-            new XMLTypeImporter(path);
+            new XmlTypeImporter(path);
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFileDirectoryNotFound()
         {
             var path = $"{TestConstants.XMLPath}\\NonExistantDirectory\\ImportType.xml";
-            new XMLTypeImporter(path);
+            new XmlTypeImporter(path);
         }
 
         [TestMethod]
@@ -51,14 +51,14 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFileFormatError()
         {
             var path = $"{TestConstants.XMLPath}\\FormatError.xml";
-            new XMLTypeImporter(path);
+            new XmlTypeImporter(path);
         }
 
         [TestMethod]
         public void SuccessfulImport()
         {
             var path = $"{TestConstants.XMLPath}\\TypeWithNoFields.xml";
-            var importer = new XMLTypeImporter(path);
+            var importer = new XmlTypeImporter(path);
             var types = importer.Import();
 
             Assert.IsNotNull(types.First());
@@ -69,7 +69,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void SuccessfulImportWithFields()
         {
             var path = $"{TestConstants.XMLPath}\\ImportType.xml";
-            var importer = new XMLTypeImporter(path);
+            var importer = new XmlTypeImporter(path);
             var types = importer.Import();
             var type = types.First();
             Assert.IsNotNull(type);
@@ -92,7 +92,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void NoTypesToImport()
         {
             var path = $"{TestConstants.XMLPath}\\EmptyFile.xml";
-            var importer = new XMLTypeImporter(path);
+            var importer = new XmlTypeImporter(path);
             importer.Import();
 
         }
@@ -103,7 +103,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void NoDataTypeTag()
         {
             var path = $"{TestConstants.XMLPath}\\NoDataTypeTag.xml";
-            var importer = new XMLTypeImporter(path);
+            var importer = new XmlTypeImporter(path);
             importer.Import();
         }
 
@@ -113,7 +113,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void UnsupportedDataType()
         {
             var path = $"{TestConstants.XMLPath}\\UnsupportedDataType.xml";
-            var importer = new XMLTypeImporter(path);
+            var importer = new XmlTypeImporter(path);
             importer.Import();
         }
 
@@ -122,7 +122,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void SuccessfulImportOfMultipleTypes()
         {
             var path = $"{TestConstants.XMLPath}\\MultipleTypes.xml";
-            var importer = new XMLTypeImporter(path);
+            var importer = new XmlTypeImporter(path);
             var types = importer.Import();
 
             Assert.AreEqual(3, types.Count);

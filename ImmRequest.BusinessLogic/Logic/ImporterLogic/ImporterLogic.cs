@@ -21,7 +21,7 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
             var importers = assembly.GetTypes()
                 .Where(t => t.GetInterfaces()
                     .Any(i => i.IsGenericType
-                        && i.GetGenericTypeDefinition() == typeof(IEntityImporter<>)
+                        && i.GetGenericTypeDefinition() == typeof(IEntityImporter<,>)
                     )
                 )
                 .Where(t => !t.GetTypeInfo().IsAbstract)

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace ImmRequest.Importer.Interfaces
 {
-    public interface IEntityImporter<Entity>
+    public interface IEntityImporter<FileType, Entity>
     {
+        FileType ReadFile(string path);
         ICollection<Entity> Import();
     }
 }
