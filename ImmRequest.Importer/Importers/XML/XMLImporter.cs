@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace ImmRequest.Importer.Importers.XML
 {
-    public abstract class XMLImporter<Entity> : Importer<XmlDocument, Entity>
+    public abstract class XmlImporter<Entity> : Importer<XmlDocument, Entity>
     {
         protected XmlDocument File { get; set; }
         public override XmlDocument LoadFile(string file)

@@ -8,6 +8,7 @@
     <ProjectReference Include="..\ImmRequest.BusinessLogic.Interfaces\ImmRequest.BusinessLogic.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.DataAccess.Interfaces\ImmRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.Domain\ImmRequest.Domain.csproj" />
+    <ProjectReference Include="..\ImmRequest.Importer.Interfaces\ImmRequest.Importer.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

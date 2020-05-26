@@ -15,10 +15,8 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             var logic = new ImporterLogic();
             var allImporterNames = logic.GetImporterOptions();
             var jsonTypeImporter = "Json Type Importer";
-            var xmlTypeImporter = "XML Type Importer";
 
             Assert.IsTrue(allImporterNames.Contains(jsonTypeImporter));
-            Assert.IsTrue(allImporterNames.Contains(xmlTypeImporter));
 
         }
     }

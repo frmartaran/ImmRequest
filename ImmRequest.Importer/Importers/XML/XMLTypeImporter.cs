@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace ImmRequest.Importer.Importers.XML
 {
-    public class XMLTypeImporter : XMLImporter<IType>
+    public class XmlTypeImporter : XmlImporter<IType>
     {
         private const string TYPE_TAG = "Type";
         private const string FIELD_TAG = "Field";
@@ -22,7 +22,7 @@ namespace ImmRequest.Importer.Importers.XML
         private const string RANGE_VALUE_TAG = "Value";
 
 
-        public XMLTypeImporter(string filePath)
+        public XmlTypeImporter(string filePath)
         {
             File = ReadFile(filePath);
         }
