@@ -25,10 +25,13 @@ namespace ImmRequest.Importer.Importers.XML
             }
         }
 
-        protected static string GetNodeName(XmlElement node)
+        protected T GetAttributeAs<T>(XmlElement node, string attributeName)
         {
-            const string ATTRIBUTE_NAME = "name";
-            return node.GetAttribute(ATTRIBUTE_NAME);
+            var value = node.GetAttribute(attributeName);
+            if (string.IsNullOrEmpty(value))
+                return default;
+
+            return (T)Convert.ChangeType(value, typeof(T));
         }
     }
 }

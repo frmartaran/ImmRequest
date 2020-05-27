@@ -13,8 +13,8 @@ namespace ImmRequest.Importer.Tests
         [TestMethod]
         public void ReadFile()
         {
-            var filePath = $"{TestConstants.JsonPath}ImportType.json";
-            var importer = new JsonTypeImporter(filePath);
+            var filePath = $"{TestConstants.JsonPath}ImportArea.json";
+            var importer = new JsonAreaImporter(filePath);
             var file = importer.ReadFile(filePath);
             Assert.IsNotNull(file);
         }
@@ -24,7 +24,7 @@ namespace ImmRequest.Importer.Tests
         public void ReadFileEmptyPath()
         {
             var path = "";
-            new JsonTypeImporter(path);
+            new JsonAreaImporter(path);
         }
 
         [TestMethod]
@@ -32,26 +32,31 @@ namespace ImmRequest.Importer.Tests
         public void ReadFileNotFound()
         {
             var path = $"{TestConstants.JsonPath}notfound.json";
-            new JsonTypeImporter(path);
+            new JsonAreaImporter(path);
         }
 
         [TestMethod]
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileDirectoryNotFound()
         {
-            var path = $"{TestConstants.JsonPath}\\NonExistantDirectory\\ImportType.json";
-            new JsonTypeImporter(path);
+            var path = $"{TestConstants.JsonPath}\\NonExistantDirectory\\ImportArea.json";
+            new JsonAreaImporter(path);
         }
 
         [TestMethod]
         public void SuccessfulImport()
         {
-            var path = $"{TestConstants.JsonPath}\\ImportType.json";
-            var importer = new JsonTypeImporter(path);
-            var types = importer.Import();
+            var path = $"{TestConstants.JsonPath}\\ImportArea.json";
+            var importer = new JsonAreaImporter(path);
+            var areas = importer.Import();
 
-            Assert.AreEqual(1, types.Count);
-            Assert.AreEqual(4, types.First().Fields.Count);
+            Assert.AreEqual(1, areas.Count);
+            var firstArea = areas.FirstOrDefault();
+
+            Assert.AreEqual(2, firstArea.Topics.Count);
+            var secondTopicFirstArea = firstArea.Topics.Skip(1).FirstOrDefault();
+
+            Assert.AreEqual(1, secondTopicFirstArea.Types.Count);
         }
 
         [TestMethod]
@@ -59,7 +64,7 @@ namespace ImmRequest.Importer.Tests
         public void UnsucessfulImport()
         {
             var path = $"{TestConstants.JsonPath}\\FormatError.json";
-            var importer = new JsonTypeImporter(path);
+            var importer = new JsonAreaImporter(path);
             var types = importer.Import();
         }
 
@@ -68,47 +73,30 @@ namespace ImmRequest.Importer.Tests
         public void EmptyJson()
         {
             var path = $"{TestConstants.JsonPath}\\EmptyJson.json";
-            var importer = new JsonTypeImporter(path);
+            var importer = new JsonAreaImporter(path);
             var types = importer.Import();
         }
 
         [TestMethod]
         public void SuccessfulImportOfMultipleTypes()
         {
-            var path = $"{TestConstants.JsonPath}\\MultipleTypes.json";
-            var importer = new JsonTypeImporter(path);
-            var types = importer.Import();
+            var path = $"{TestConstants.JsonPath}\\MultipleAreas.json";
+            var importer = new JsonAreaImporter(path);
+            var areas = importer.Import();
 
-            Assert.AreEqual(3, types.Count);
+            Assert.AreEqual(2, areas.Count);
 
-            var type1 = types.First();
+            Assert.AreEqual(2, areas.Count);
+            var firstArea = areas.FirstOrDefault();
 
-            Assert.AreEqual(4, type1.Fields.Count);
+            Assert.AreEqual(2, firstArea.Topics.Count);
+            var secondTopicFirstArea = firstArea.Topics.Skip(1).FirstOrDefault();
 
-            var numberField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.Number);
-            var textField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.Text);
-            var dateTimeField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.DateTime);
-            var boolField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.Bool);
+            Assert.AreEqual(1, secondTopicFirstArea.Types.Count);
 
-            Assert.IsNotNull(numberField);
-            Assert.IsNotNull(textField);
-            Assert.IsNotNull(dateTimeField);
-            Assert.IsNotNull(boolField);
+            var secondArea = areas.Skip(1).FirstOrDefault();
+            Assert.AreEqual(2, secondArea.Topics.Count);
 
-            var type2 = types.Skip(1).First();
-            Assert.AreEqual(2, type2.Fields.Count);
-            var numberField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.Number);
-            var textField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.Text);
-            var dateTimeField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.DateTime);
-            var boolField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.Bool);
-
-            Assert.IsNull(numberField2);
-            Assert.IsNotNull(textField2);
-            Assert.IsNotNull(dateTimeField2);
-            Assert.IsNull(boolField2);
-
-            var type3 = types.Skip(2).First();
-            Assert.AreEqual(0, type3.Fields.Count);
         }
 
 

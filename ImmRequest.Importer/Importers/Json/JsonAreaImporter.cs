@@ -12,28 +12,28 @@ using System.Text;
 
 namespace ImmRequest.Importer.Importers
 {
-    public class JsonTypeImporter : JsonImporter<IType>
+    public class JsonAreaImporter : JsonImporter<IArea>
     {
-        public JsonTypeImporter(string file)
+        public JsonAreaImporter(string file)
         {
             File = ReadFile(file);
         }
-        public override ICollection<IType> Import()
+        public override ICollection<IArea> Import()
         {
             try
             {
-                var types = JsonConvert.DeserializeObject<List<TopicType>>(File);
+                var types = JsonConvert.DeserializeObject<List<Area>>(File);
                 CancelIfThereAreNoTypes(types);
-                return types.Cast<IType>().ToList();
+                return types.Cast<IArea>().ToList();
 
             }
-            catch (JsonSerializationException)
+            catch (JsonSerializationException e)
             {
                 throw new InvalidFormatException(ImporterResource.Format_Invalid);
             }
         }
 
-        private static void CancelIfThereAreNoTypes(List<TopicType> types)
+        private static void CancelIfThereAreNoTypes(List<Area> types)
         {
             if (types.Count == 0)
             {

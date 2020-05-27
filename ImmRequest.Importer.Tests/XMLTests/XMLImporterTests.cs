@@ -16,8 +16,8 @@ namespace ImmRequest.Importer.Tests.XMLTests
         [TestMethod]
         public void ReadFile()
         {
-            var filePath = $"{TestConstants.XMLPath}ImportType.xml";
-            var importer = new XmlTypeImporter(filePath);
+            var filePath = $"{TestConstants.XMLPath}ImportArea.xml";
+            var importer = new XmlAreaImporter(filePath);
             var file = importer.ReadFile(filePath);
             Assert.IsNotNull(file);
         }
@@ -27,7 +27,7 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFileEmptyPath()
         {
             var path = "";
-            new XmlTypeImporter(path);
+            new XmlAreaImporter(path);
         }
 
         [TestMethod]
@@ -35,15 +35,15 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFileNotFound()
         {
             var path = $"{TestConstants.XMLPath}notfound.xml";
-            new XmlTypeImporter(path);
+            new XmlAreaImporter(path);
         }
 
         [TestMethod]
         [ExpectedException(typeof(FileLoadFailureException))]
         public void ReadFileDirectoryNotFound()
         {
-            var path = $"{TestConstants.XMLPath}\\NonExistantDirectory\\ImportType.xml";
-            new XmlTypeImporter(path);
+            var path = $"{TestConstants.XMLPath}\\NonExistantDirectory\\ImportArea.xml";
+            new XmlAreaImporter(path);
         }
 
         [TestMethod]
@@ -51,110 +51,56 @@ namespace ImmRequest.Importer.Tests.XMLTests
         public void ReadFileFormatError()
         {
             var path = $"{TestConstants.XMLPath}\\FormatError.xml";
-            new XmlTypeImporter(path);
+            new XmlAreaImporter(path);
         }
+
 
         [TestMethod]
         public void SuccessfulImport()
         {
-            var path = $"{TestConstants.XMLPath}\\TypeWithNoFields.xml";
-            var importer = new XmlTypeImporter(path);
-            var types = importer.Import();
+            var path = $"{TestConstants.XMLPath}\\ImportArea.xml";
+            var importer = new XmlAreaImporter(path);
+            var areas = importer.Import();
 
-            Assert.IsNotNull(types.First());
-            Assert.AreEqual("Wrong Address", types.First().Name);
-        }
+            Assert.AreEqual(1, areas.Count);
+            var firstArea = areas.FirstOrDefault();
 
-        [TestMethod]
-        public void SuccessfulImportWithFields()
-        {
-            var path = $"{TestConstants.XMLPath}\\ImportType.xml";
-            var importer = new XmlTypeImporter(path);
-            var types = importer.Import();
-            var type = types.First();
-            Assert.IsNotNull(type);
-            Assert.AreEqual(4, type.Fields.Count);
+            Assert.AreEqual(2, firstArea.Topics.Count);
+            var secondTopicFirstArea = firstArea.Topics.Skip(1).FirstOrDefault();
 
-            var numberField = type.Fields.FirstOrDefault(f => f.DataType == DataType.Number);
-            var textField = type.Fields.FirstOrDefault(f => f.DataType == DataType.Text);
-            var dateTimeField = type.Fields.FirstOrDefault(f => f.DataType == DataType.DateTime);
-            var boolField = type.Fields.FirstOrDefault(f => f.DataType == DataType.Bool);
-
-            Assert.IsNotNull(numberField);
-            Assert.IsNotNull(textField);
-            Assert.IsNotNull(dateTimeField);
-            Assert.IsNotNull(boolField);
+            Assert.AreEqual(2, secondTopicFirstArea.Types.Count);
 
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidFormatException))]
-        public void NoTypesToImport()
+        public void NoAreasToImport()
         {
             var path = $"{TestConstants.XMLPath}\\EmptyFile.xml";
-            var importer = new XmlTypeImporter(path);
+            var importer = new XmlAreaImporter(path);
             importer.Import();
 
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidFormatException))]
-
-        public void NoDataTypeTag()
-        {
-            var path = $"{TestConstants.XMLPath}\\NoDataTypeTag.xml";
-            var importer = new XmlTypeImporter(path);
-            importer.Import();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidFormatException))]
-
-        public void UnsupportedDataType()
-        {
-            var path = $"{TestConstants.XMLPath}\\UnsupportedDataType.xml";
-            var importer = new XmlTypeImporter(path);
-            importer.Import();
-        }
-
 
         [TestMethod]
         public void SuccessfulImportOfMultipleTypes()
         {
-            var path = $"{TestConstants.XMLPath}\\MultipleTypes.xml";
-            var importer = new XmlTypeImporter(path);
-            var types = importer.Import();
+            var path = $"{TestConstants.XMLPath}\\MultipleAreas.xml";
+            var importer = new XmlAreaImporter(path);
+            var areas = importer.Import();
+            Assert.AreEqual(2, areas.Count);
 
-            Assert.AreEqual(3, types.Count);
-            
-            var type1 = types.First();
+            Assert.AreEqual(2, areas.Count);
+            var firstArea = areas.FirstOrDefault();
 
-            Assert.AreEqual(4, type1.Fields.Count);
+            Assert.AreEqual(2, firstArea.Topics.Count);
+            var secondTopicFirstArea = firstArea.Topics.Skip(1).FirstOrDefault();
 
-            var numberField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.Number);
-            var textField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.Text);
-            var dateTimeField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.DateTime);
-            var boolField = type1.Fields.FirstOrDefault(f => f.DataType == DataType.Bool);
+            Assert.AreEqual(2, secondTopicFirstArea.Types.Count);
 
-            Assert.IsNotNull(numberField);
-            Assert.IsNotNull(textField);
-            Assert.IsNotNull(dateTimeField);
-            Assert.IsNotNull(boolField);
+            var secondArea = areas.Skip(1).FirstOrDefault();
+            Assert.AreEqual(2, secondArea.Topics.Count);
 
-            var type2 = types.Skip(1).First();
-            Assert.AreEqual(2, type2.Fields.Count);
-            var numberField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.Number);
-            var textField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.Text);
-            var dateTimeField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.DateTime);
-            var boolField2 = type2.Fields.FirstOrDefault(f => f.DataType == DataType.Bool);
-
-            Assert.IsNull(numberField2);
-            Assert.IsNotNull(textField2);
-            Assert.IsNotNull(dateTimeField2);
-            Assert.IsNull(boolField2);
-
-            var type3 = types.Skip(2).First();
-            Assert.AreEqual(0, type3.Fields.Count);
         }
     }
 }
