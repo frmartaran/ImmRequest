@@ -42,6 +42,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void TopicWithoutANameInvalid()
         {
             var mockRepository = new Mock<IRepository<Topic>>();
+            topic.Name = "";
             var validator = new TopicValidator(mockRepository.Object);
             validator.IsValid(topic);
         }
