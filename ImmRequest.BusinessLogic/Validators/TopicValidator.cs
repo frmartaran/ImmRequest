@@ -19,12 +19,24 @@ namespace ImmRequest.BusinessLogic.Validators
         }
         public bool IsValid(Topic objectToValidate)
         {
-            if (string.IsNullOrEmpty(objectToValidate.Name))
+            HasName(objectToValidate);
+            HasUniqueName(objectToValidate);
+            HasParentArea(objectToValidate);
+            return true;
+        }
+
+        private static void HasParentArea(Topic objectToValidate)
+        {
+            if (objectToValidate.Area == null)
             {
                 var message = string.Format(BusinessResource.ValidationError_MustContainField,
-                    BusinessResource.Entity_Topic, BusinessResource.Field_Name);
+                    BusinessResource.Entity_Topic, BusinessResource.Entity_Area);
                 throw new ValidationException(message);
             }
+        }
+
+        private void HasUniqueName(Topic objectToValidate)
+        {
             var exists = Repository.Exists(objectToValidate);
             if (exists)
             {
@@ -32,13 +44,16 @@ namespace ImmRequest.BusinessLogic.Validators
                     BusinessResource.Field_Name);
                 throw new ValidationException(message);
             }
-            if (objectToValidate.Area == null)
+        }
+
+        private static void HasName(Topic objectToValidate)
+        {
+            if (string.IsNullOrEmpty(objectToValidate.Name))
             {
                 var message = string.Format(BusinessResource.ValidationError_MustContainField,
-                    BusinessResource.Entity_Topic, BusinessResource.Entity_Area);
+                    BusinessResource.Entity_Topic, BusinessResource.Field_Name);
                 throw new ValidationException(message);
             }
-            return true;
         }
     }
 }
