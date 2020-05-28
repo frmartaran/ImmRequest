@@ -12,11 +12,17 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
 {
     public class ImporterLogic : IImporterLogic
     {
-        private const string ASSEMBLY_PATH = @"~\..\ImmRequest.Importer.dll";
+        private const string IMPORTER_ASSEMBLY_PATH = @"~\..\ImmRequest.Importer.dll";
+        private const string DATA_ACCESS_ASSEMBLY_PATH = @"`\..\ImmRequest.DataAccess.dll";
+
+        public IValidator<T> FindValidatorFor<T>() where T : class
+        {
+            throw new NotImplementedException();
+        }
+
         public List<string> GetImporterOptions()
         {
-            var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var normalizedPath = Path.Combine(currentDirectory, ASSEMBLY_PATH);
+            var normalizedPath = NormalizePath(IMPORTER_ASSEMBLY_PATH);
             var assembly = Assembly.LoadFile(normalizedPath);
             var importers = assembly.GetTypes()
                 .Where(t => t.GetInterfaces()
@@ -30,6 +36,13 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
                 .Select(im => im.Name.SplitByCamelCase())
                 .ToList();
             return allNames;
+        }
+
+        private static string NormalizePath(string pathToNormalize)
+        {
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var normalizedPath = Path.Combine(currentDirectory, pathToNormalize);
+            return normalizedPath;
         }
 
         public void Import(string path)
