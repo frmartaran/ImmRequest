@@ -33,6 +33,13 @@ namespace ImmRequest.BusinessLogic.Validators
                     BusinessResource.Field_Name);
                 throw new ValidationException(message);
             }
+
+            if(objectToValidate.Topics.Count == 0)
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustContainField,
+                    BusinessResource.Entity_Area, "at least one " + BusinessResource.Entity_Topic);
+                throw new ValidationException(message);
+            }
             return true;
         }
     }
