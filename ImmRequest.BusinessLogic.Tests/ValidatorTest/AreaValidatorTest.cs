@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
@@ -33,6 +34,17 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var isValid = validator.IsValid(area);
 
             Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void AreaWithoutNameIsInvalid()
+        {
+            var mockRepository = new Mock<IRepository<Area>>();
+            var validator = new AreaValidator(mockRepository.Object);
+            area.Name = "";
+            validator.IsValid(area);
+
         }
     }
 }
