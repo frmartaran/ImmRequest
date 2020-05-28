@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Validators;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,6 +35,15 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var isValid = validator.IsValid(topic);
 
             Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void TopicWithoutANameInvalid()
+        {
+            var mockRepository = new Mock<IRepository<Topic>>();
+            var validator = new TopicValidator(mockRepository.Object);
+            validator.IsValid(topic);
         }
     }
 }
