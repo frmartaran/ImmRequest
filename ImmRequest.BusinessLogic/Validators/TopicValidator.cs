@@ -32,6 +32,12 @@ namespace ImmRequest.BusinessLogic.Validators
                     BusinessResource.Field_Name);
                 throw new ValidationException(message);
             }
+            if (objectToValidate.Area == null)
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustContainField,
+                    BusinessResource.Entity_Topic, BusinessResource.Entity_Area);
+                throw new ValidationException(message);
+            }
             return true;
         }
     }
