@@ -57,5 +57,15 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var validator = new TopicValidator(mockRepository.Object);
             validator.IsValid(topic);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void TopicWithoutAreaIsInvalid()
+        {
+            var mockRepository = new Mock<IRepository<Topic>>();
+            topic.Area = null;
+            var validator = new TopicValidator(mockRepository.Object);
+            validator.IsValid(topic);
+        }
     }
 }
