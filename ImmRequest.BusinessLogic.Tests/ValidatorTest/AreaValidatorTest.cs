@@ -46,5 +46,18 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             validator.IsValid(area);
 
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void AreaWithRepeatedNameIsInvalid()
+        {
+            var mockRepository = new Mock<IRepository<Area>>(MockBehavior.Strict);
+            mockRepository.Setup(m => m.Exists(It.IsAny<Area>()));
+            var validator = new AreaValidator(mockRepository.Object);
+            validator.IsValid(area);
+            mockRepository.VerifyAll();
+
+        }
+
     }
 }

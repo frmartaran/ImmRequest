@@ -35,7 +35,7 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(Area area)
         {
-            return Context.Areas.Any(a => a.Id == area.Id);
+            return Context.Areas.Any(a => a.Name == area.Name);
         }
 
         public Area Get(long id)
