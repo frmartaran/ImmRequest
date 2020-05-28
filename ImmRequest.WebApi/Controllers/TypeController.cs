@@ -49,6 +49,8 @@ namespace ImmRequest.WebApi.Controllers
                 var type = model.ToDomain();
                 type.ParentTopic = parentTopic;
                 Logic.Create(type);
+                Logic.Save();
+
                 var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Type,
                     WebApiResource.Action_Created);
                 return Ok(responseMessage);
@@ -130,6 +132,8 @@ namespace ImmRequest.WebApi.Controllers
             try
             {
                 Logic.Delete(id);
+                Logic.Save();
+
                 var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Type,
                         WebApiResource.Action_Deleted);
                 return Ok(responseMessage);
@@ -159,6 +163,8 @@ namespace ImmRequest.WebApi.Controllers
                 var oldType = Logic.Get(id);
                 type.ParentTopic = oldType.ParentTopic;
                 Logic.Update(type);
+                Logic.Save();
+
                 var message = string.Format("{0}: {1} {2}", WebApiResource.Entities_Type,
                     type.Name, WebApiResource.Action_Updated);
                 return Ok(message);

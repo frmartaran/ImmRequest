@@ -134,6 +134,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             TopicTypeRepository.Insert(topicType);
             TopicRepository.Insert(topic);
             AreaRepository.Insert(area);
+            AreaRepository.Save();
         }
 
         [TestMethod]

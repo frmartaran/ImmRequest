@@ -55,6 +55,8 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("InsertTest");
             repository.Insert(topic);
+            repository.Save();
+
 
             var topicInDb = context.Topics.FirstOrDefault();
             Assert.IsNotNull(topicInDb);
@@ -120,6 +122,8 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             repository.Delete(1);
+            repository.Save();
+
             var topicInDb = context.Topics.FirstOrDefault();
             Assert.IsNull(topicInDb);
         }

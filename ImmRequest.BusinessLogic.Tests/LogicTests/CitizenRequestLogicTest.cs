@@ -124,6 +124,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             TopicTypeRepository.Insert(topicType);
             TopicRepository.Insert(topic);
             AreaRepository.Insert(area);
+            context.SaveChanges();
         }
 
         [TestMethod]
@@ -150,6 +151,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
+            logic.Save();
 
             var citizenRequestCreated = context.CitizenRequests.FirstOrDefault();
             Assert.IsNotNull(citizenRequestCreated);
@@ -206,6 +208,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
+            logic.Save();
+
             var requestReturned = logic.Get(citizenRequest.Id);
             Assert.AreEqual(requestReturned.Id, citizenRequest.Id);
         }
@@ -262,6 +266,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
+            logic.Save();
             var requestReturned = logic.GetAll()
                 .FirstOrDefault();
             Assert.AreEqual(requestReturned.Id, citizenRequest.Id);
@@ -292,9 +297,13 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
+            logic.Save();
+
             var requestCreated = logic.Get(citizenRequest.Id);
             requestCreated.CitizenName = "Paco";
             logic.Update(citizenRequest);
+            logic.Save();
+
             var citizenRequestUpdated = logic.Get(citizenRequest.Id);
             Assert.IsNotNull(citizenRequest.CitizenName, citizenRequestUpdated.CitizenName);
         }
@@ -344,9 +353,13 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
+            logic.Save();
+
             var requestCreated = logic.Get(citizenRequest.Id);
             requestCreated.AreaId = 15;
             logic.Update(citizenRequest);
+            logic.Save();
+
         }
 
         [TestMethod]
@@ -386,7 +399,10 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var citizenRequestValidator = new CitizenRequestValidator(AreaRepository, TopicRepository, TopicTypeRepository, FieldRepository, CitizenRequestRepository);
             var logic = new CitizenRequestLogic(citizenRequestRepository, citizenRequestValidator);
             logic.Create(citizenRequest);
+            logic.Save();
             logic.Delete(citizenRequest.Id);
+            logic.Save();
+
             var request = context.CitizenRequests.FirstOrDefault();
             Assert.IsNull(request);
         }

@@ -24,7 +24,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var areaToDelete = Get(id);
                 Context.Areas.Remove(areaToDelete);
-                Save();
             }
             catch (ArgumentNullException)
             {
@@ -60,7 +59,6 @@ namespace ImmRequest.DataAccess.Repositories
         public void Insert(Area objectToAdd)
         {
             Context.Areas.Add(objectToAdd);
-            Save();
         }
 
         public void Save()
@@ -75,7 +73,6 @@ namespace ImmRequest.DataAccess.Repositories
                 var areaToUpdate = Get(objectToUpdate.Id);
                 areaToUpdate.Name = objectToUpdate.Name;
                 areaToUpdate.Topics = objectToUpdate.Topics;
-                Save();
                 return areaToUpdate;
             }
             catch (NullReferenceException)

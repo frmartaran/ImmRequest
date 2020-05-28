@@ -86,5 +86,10 @@ namespace ImmRequest.BusinessLogic.Logic
                 .Where(a => a.Password == password)
                 .FirstOrDefault();
         }
+
+        public void Save()
+        {
+            Repository.Save();
+        }
     }
 }

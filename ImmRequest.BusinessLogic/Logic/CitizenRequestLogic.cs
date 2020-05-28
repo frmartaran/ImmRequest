@@ -75,5 +75,10 @@ namespace ImmRequest.BusinessLogic.Logic
             }
 
         }
+
+        public void Save()
+        {
+            citizenRequestRepository.Save();
+        }
     }
 }

@@ -165,13 +165,14 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void CreateTest()
         {
             var typeModel = TypeModel.ToModel(type);
-            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
-            logic.Setup(m => m.Create(It.IsAny<TopicType>()));
+            var mockLogic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Create(It.IsAny<TopicType>()));
+            mockLogic.Setup(m => m.Save());
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             finder.Setup(m => m.Find(It.IsAny<Predicate<Topic>>()))
                 .Returns(new Topic());
-            var controller = new TypeController(logic.Object, finder.Object);
+            var controller = new TypeController(mockLogic.Object, finder.Object);
             var response = controller.Create(1, typeModel);
 
             Assert.IsInstanceOfType(response, OkType);
@@ -321,15 +322,17 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void DeleteTest()
         {
-            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
-            logic.Setup(m => m.Delete(It.IsAny<long>()));
+            var mockLogic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Delete(It.IsAny<long>()));
+            mockLogic.Setup(m => m.Save());
+
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
-            var controller = new TypeController(logic.Object, finder.Object);
+            var controller = new TypeController(mockLogic.Object, finder.Object);
             var response = controller.Delete(1);
 
             Assert.IsInstanceOfType(response, OkType);
-            logic.VerifyAll();
+            mockLogic.VerifyAll();
             finder.VerifyAll();
         }
 
@@ -382,18 +385,19 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var model = TypeModel.ToModel(type);
 
-            var logic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
-            logic.Setup(m => m.Get(It.IsAny<long>()))
+            var mockLogic = new Mock<ILogic<TopicType>>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Get(It.IsAny<long>()))
                 .Returns(type);
-            logic.Setup(m => m.Update(It.IsAny<TopicType>()));
+            mockLogic.Setup(m => m.Update(It.IsAny<TopicType>()));
+            mockLogic.Setup(m => m.Save());
 
             var finder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             
-            var controller = new TypeController(logic.Object, finder.Object);
+            var controller = new TypeController(mockLogic.Object, finder.Object);
             var response = controller.Update(1, model);
 
             Assert.IsInstanceOfType(response, OkType);
-            logic.VerifyAll();
+            mockLogic.VerifyAll();
             finder.VerifyAll();
         }
 

@@ -25,7 +25,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var sessionToDelete = Get(id);
                 Context.Sessions.Remove(sessionToDelete);
-                Save();
             }
             catch (ArgumentNullException)
             {
@@ -58,7 +57,6 @@ namespace ImmRequest.DataAccess.Repositories
         public void Insert(Session objectToAdd)
         {
             Context.Sessions.Add(objectToAdd);
-            Save();
         }
 
         public void Save()
@@ -74,7 +72,6 @@ namespace ImmRequest.DataAccess.Repositories
                 sessionToModify.AdministratorInSession = objectToUpdate.AdministratorInSession;
                 sessionToModify.AdministratorInSessionId = objectToUpdate.Id;
                 sessionToModify.Token = objectToUpdate.Token;
-                Save();
                 return sessionToModify;
             }
             catch (NullReferenceException)

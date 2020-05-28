@@ -93,6 +93,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
             var logic = CreateLogicWithRepositoryAndValidator("Create Test");
             logic.Create(type);
+            logic.Save();
 
             var typeInDb = context.TopicTypes.FirstOrDefault();
             var fieldInDb = context.Fields.FirstOrDefault();
@@ -232,6 +233,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             context.SaveChanges();
 
             logic.Delete(1);
+            logic.Save();
 
             var typeInDb = context.TopicTypes.FirstOrDefault();
             Assert.IsNull(typeInDb);

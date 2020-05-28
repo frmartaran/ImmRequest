@@ -11,6 +11,7 @@ namespace ImmRequest.BusinessLogic.Interfaces
         void Delete(long id);
         T Get(long Id);
         ICollection<T> GetAll();
+        void Save();
 
     }
 }

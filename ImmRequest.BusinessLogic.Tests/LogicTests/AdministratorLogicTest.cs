@@ -57,6 +57,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
 
             var logic = new AdministratorLogic(repository, validator);
             logic.Create(administrator);
+            logic.Save();
 
             var adminInDb = context.Administrators.FirstOrDefault();
             Assert.IsNotNull(adminInDb);
@@ -116,9 +117,11 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
             repository.Insert(administrator);
+            repository.Save();
 
             var logic = new AdministratorLogic(repository, validator);
             logic.Delete(administrator.Id);
+            logic.Save();
 
             var adminInDb = context.Administrators.FirstOrDefault();
             Assert.IsNull(adminInDb);
@@ -175,6 +178,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
             repository.Insert(administrator);
+            repository.Save();
             var logic = new AdministratorLogic(repository, validator);
             var admin = logic.Get(administrator.Id);
 
@@ -231,6 +235,8 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
             repository.Insert(administrator);
+            repository.Save();
+
             var logic = new AdministratorLogic(repository, validator);
             var administrators = logic.GetAll();
 
@@ -262,9 +268,13 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             var repository = new AdministratorRepository(context);
             var validator = new AdministratorValidator(repository);
             repository.Insert(administrator);
+            repository.Save();
+
             administrator.Password = "852";
             var logic = new AdministratorLogic(repository, validator);
             logic.Update(administrator);
+            repository.Save();
+
 
             var adminInDb = context.Administrators.FirstOrDefault();
             Assert.AreEqual("852", adminInDb.Password);

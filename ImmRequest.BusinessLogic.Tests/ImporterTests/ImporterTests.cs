@@ -20,7 +20,6 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             Assert.IsTrue(allImporterNames.Contains(jsonTypeImporter));
             Assert.IsTrue(allImporterNames.Contains(xmlTypeImporter));
 
-
         }
     }
 }

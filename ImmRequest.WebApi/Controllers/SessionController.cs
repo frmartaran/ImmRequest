@@ -47,6 +47,7 @@ namespace ImmRequest.WebApi.Controllers
                 var session = model.ToDomain();
                 session.AdministratorInSessionId = administrator.Id;
                 var token = Inputs.Logic.Create(session);
+                Inputs.Logic.Save();
                 return Ok(token);
             }
             catch (ValidationException exception)
@@ -69,6 +70,7 @@ namespace ImmRequest.WebApi.Controllers
                 var token = Inputs.ContextHelper.GetAuthorizationHeader(HttpContext);
                 var sessionToDelete = Inputs.Logic.Get(token);
                 Inputs.Logic.Delete(sessionToDelete.Id);
+                Inputs.Logic.Save();
                 return Ok();
             }
             catch (BusinessLogicException exception)

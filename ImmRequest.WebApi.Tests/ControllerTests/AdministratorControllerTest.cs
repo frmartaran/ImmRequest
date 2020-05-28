@@ -132,6 +132,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Create(It.IsAny<Administrator>()));
+            mockLogic.Setup(m => m.Save());
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Create(model);
@@ -188,6 +189,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Update(It.IsAny<Administrator>()));
+            mockLogic.Setup(m => m.Save());
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Update(1, model);
@@ -232,9 +234,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         {
             var mockLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Delete(It.IsAny<long>()));
+            mockLogic.Setup(m => m.Save());
 
             var controller = new AdministratorController(mockLogic.Object);
             var response = controller.Delete(1);
+
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
             mockLogic.VerifyAll();

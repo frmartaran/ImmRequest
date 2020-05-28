@@ -73,5 +73,10 @@ namespace ImmRequest.BusinessLogic.Logic
             }
 
         }
+
+        public void Save()
+        {
+            Repository.Save();
+        }
     }
 }
