@@ -97,10 +97,14 @@ namespace ImmRequest.DataAccess.Tests
         public void ExistsTest()
         {
             CreateRepository("Topic Exists Test");
+            var otherTopic = new Topic
+            {
+                Name = topic.Name
+            };
             context.Topics.Add(topic);
             context.SaveChanges();
 
-            var exists = repository.Exists(topic);
+            var exists = repository.Exists(otherTopic);
             Assert.IsTrue(exists);
         }
 

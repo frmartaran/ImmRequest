@@ -46,5 +46,16 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var validator = new TopicValidator(mockRepository.Object);
             validator.IsValid(topic);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void TopicWithRepeatedNameIsInvalid()
+        {
+            var mockRepository = new Mock<IRepository<Topic>>();
+            mockRepository.Setup(m => m.Exists(It.IsAny<Topic>()))
+                .Returns(true);
+            var validator = new TopicValidator(mockRepository.Object);
+            validator.IsValid(topic);
+        }
     }
 }

@@ -138,10 +138,15 @@ namespace ImmRequest.DataAccess.Tests
         public void ExistsTest()
         {
             CreateRepository("ExistsTest");
+            var otherArea = new Area
+            {
+                Name = area.Name
+            };
+
             context.Areas.Add(area);
             context.SaveChanges();
 
-            var exists = repository.Exists(area);
+            var exists = repository.Exists(otherArea);
             Assert.IsTrue(exists);
         }
 

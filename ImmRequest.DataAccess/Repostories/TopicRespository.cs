@@ -35,7 +35,9 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(Topic topic)
         {
-            return Context.Topics.Any(t => t.Id == topic.Id);
+            return Context.Topics
+                .Where(t => t.Id != topic.Id)
+                .Any(t => t.Name == topic.Name);
         }
 
         public Topic Get(long id)
