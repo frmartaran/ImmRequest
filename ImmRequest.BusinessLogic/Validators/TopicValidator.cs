@@ -25,6 +25,13 @@ namespace ImmRequest.BusinessLogic.Validators
                     BusinessResource.Entity_Topic, BusinessResource.Field_Name);
                 throw new ValidationException(message);
             }
+            var exists = Repository.Exists(objectToValidate);
+            if (exists)
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustBeUnique,
+                    BusinessResource.Field_Name);
+                throw new ValidationException(message);
+            }
             return true;
         }
     }
