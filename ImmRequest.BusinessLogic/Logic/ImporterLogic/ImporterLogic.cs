@@ -1,5 +1,7 @@
 ﻿using ImmRequest.BusinessLogic.Extentions;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Validators;
+using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Importer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,6 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
         private const string IMPORTER_ASSEMBLY_PATH = @"~\..\ImmRequest.Importer.dll";
         private const string DATA_ACCESS_ASSEMBLY_PATH = @"`\..\ImmRequest.DataAccess.dll";
 
-        public IValidator<T> FindValidatorFor<T>() where T : class
-        {
-            throw new NotImplementedException();
-        }
 
         public List<string> GetImporterOptions()
         {

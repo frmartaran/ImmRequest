@@ -9,8 +9,5 @@ namespace ImmRequest.BusinessLogic.Interfaces
         List<string> GetImporterOptions();
 
         void Import(string path);
-
-        IValidator<T> FindValidatorFor<T>() where T : class;
-
     }
 }
