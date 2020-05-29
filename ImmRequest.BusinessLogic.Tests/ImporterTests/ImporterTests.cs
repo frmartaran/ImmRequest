@@ -4,12 +4,15 @@ using ImmRequest.BusinessLogic.Helpers.Inputs;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic.ImporterLogic;
 using ImmRequest.BusinessLogic.Validators;
+using ImmRequest.DataAccess.Context;
 using ImmRequest.DataAccess.Interfaces;
+using ImmRequest.DataAccess.Repositories;
 using ImmRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ImmRequest.BusinessLogic.Tests.ImporterTests
@@ -17,6 +20,7 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
     [TestClass]
     public class ImporterTests
     {
+        private const string Path = @"~\..\..\..\..\ImporterTests\Files\";
         [TestMethod]
         public void GetImporterOptionsTest()
         {
@@ -63,6 +67,33 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
         {
             var mapper = MapperProfile.GetMapper();
             Assert.IsInstanceOfType(mapper, typeof(IMapper));
+        }
+
+        [TestMethod]
+        [TestCategory("New Areas with just topics")]
+        public void ImportUsingJson()
+        {
+            var context = ContextFactory.GetMemoryContext("Import Area");
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import($"{Path}ImportArea.json");
+
+            var areaInDb = context.Areas.First();
+            Assert.AreEqual(2, areaInDb.Topics.Count);
         }
     }
 }
