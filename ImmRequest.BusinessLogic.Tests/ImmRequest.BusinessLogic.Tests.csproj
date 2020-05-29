@@ -24,6 +24,10 @@
     <ProjectReference Include="..\ImmRequest.Domain\ImmRequest.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Importers\" />
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="copy &quot;$(ProjectDir)..\ImmRequest.Importer\bin\$(Configuration)\netstandard2.0\ImmRequest.Importer.dll&quot; &quot;$(OutDir)&quot;" />
   </Target>
