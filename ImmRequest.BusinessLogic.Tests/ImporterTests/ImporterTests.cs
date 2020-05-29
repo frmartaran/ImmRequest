@@ -1,4 +1,6 @@
-﻿using ImmRequest.BusinessLogic.Helpers.Inputs;
+﻿using AutoMapper;
+using ImmRequest.BusinessLogic.Helpers.Automapper;
+using ImmRequest.BusinessLogic.Helpers.Inputs;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic.ImporterLogic;
 using ImmRequest.BusinessLogic.Validators;
@@ -54,6 +56,13 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             var otherImporter = "Test Importer";
 
             Assert.IsTrue(allImporterNames.Contains(otherImporter));
+        }
+
+        [TestMethod]
+        public void GetMapper()
+        {
+            var mapper = MapperProfile.GetMapper();
+            Assert.IsInstanceOfType(mapper, typeof(IMapper));
         }
     }
 }
