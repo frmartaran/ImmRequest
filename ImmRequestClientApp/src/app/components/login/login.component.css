@@ -1,0 +1,37 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.login-container > * {
+    width: 100%;
+}
+
+mat-card{
+    text-align: center;
+    display: flex;
+}
+
+.main-div{
+    height: 100vh;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.error{
+    color: red;
+}
+
+mat-form-field{
+    display: block;
+    font-size: 18px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width:auto 
+}
+
+mat-card-footer{
+    margin: auto;
+}

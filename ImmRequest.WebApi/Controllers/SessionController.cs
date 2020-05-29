@@ -47,7 +47,9 @@ namespace ImmRequest.WebApi.Controllers
                 var session = model.ToDomain();
                 session.AdministratorInSessionId = administrator.Id;
                 var token = Inputs.Logic.Create(session);
-                return Ok(token);
+                model.Token = token;
+                model.Password = "";
+                return Ok(model);
             }
             catch (ValidationException exception)
             {

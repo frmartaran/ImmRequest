@@ -1,0 +1,21 @@
+.flex-spacer {
+  flex-grow: 1;
+}
+
+mat-toolbar{
+  background-color: white;
+}
+
+.avatar{
+  height: 30px;
+  width: 30px;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+}
+
+#logo{
+    display:block;
+}
