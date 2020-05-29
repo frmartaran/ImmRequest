@@ -8,6 +8,6 @@ namespace ImmRequest.BusinessLogic.Interfaces
     {
         List<string> GetImporterOptions();
 
-        void Import(string path);
+        void Import(string importerName, string path);
     }
 }

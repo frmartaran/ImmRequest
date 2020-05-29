@@ -90,7 +90,7 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             );
 
             var importer = new ImporterLogic(inputs);
-            importer.Import($"{Path}ImportArea.json");
+            importer.Import("Json Area Importer", $"{Path}ImportArea.json");
 
             var areaInDb = context.Areas.First();
             Assert.AreEqual(2, areaInDb.Topics.Count);
