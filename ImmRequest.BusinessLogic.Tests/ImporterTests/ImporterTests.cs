@@ -100,7 +100,7 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
         [TestCategory("New Areas with just topics")]
         public void ImportWtihTypesUsingJson()
         {
-            var context = ContextFactory.GetMemoryContext("Import Area");
+            var context = ContextFactory.GetMemoryContext("Import Area With Topic");
             var areaRepository = new AreaRepository(context);
             var topicRepository = new TopicRepository(context);
             var areaValidator = new AreaValidator(areaRepository);

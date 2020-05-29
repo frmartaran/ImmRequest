@@ -5,6 +5,7 @@ using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
+using ImmRequest.Domain.Fields;
 using ImmRequest.Importer.Interfaces;
 using ImmRequest.Importer.Interfaces.Domain;
 using System;
@@ -90,6 +91,12 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
                 {
                     topic.Area = area;
                     TopicValidator.IsValid(topic);
+                    foreach (var type in topic.Types)
+                    {
+                        type.ParentTopic = topic;
+                        type.AllFields = new List<BaseField>();
+                        TopicTypeValidator.IsValid(type);
+                    }
                 }
                 if (AreaValidator.IsValid(area))
                 {
