@@ -95,5 +95,35 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             var areaInDb = context.Areas.First();
             Assert.AreEqual(2, areaInDb.Topics.Count);
         }
+
+        [TestMethod]
+        [TestCategory("New Areas with just topics")]
+        public void ImportWtihTypesUsingJson()
+        {
+            var context = ContextFactory.GetMemoryContext("Import Area");
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Json Area Importer", $"{Path}ImportAreaWithTypes.json");
+
+            var areaInDb = context.Areas.First();
+            Assert.AreEqual(2, areaInDb.Topics.Count);
+
+            var secondTopic = areaInDb.Topics.Skip(1).First();
+            Assert.AreEqual(1, secondTopic.Types.Count);
+        }
     }
 }

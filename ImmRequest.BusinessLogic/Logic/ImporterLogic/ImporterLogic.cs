@@ -76,24 +76,16 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
 
         public void Import(string importerName, string path)
         {
-            var normalizedPath = NormalizePath(IMPORTERS_FOLDER);
-            var allImporters = GetAllImporters(normalizedPath);
-            var normalizedName = Regex.Replace(importerName, @"\s+", "").ToUpper();
-            var importerType = allImporters
-                .Where(t => t.Name.ToUpper().Equals(normalizedName))
-                .FirstOrDefault();
+            var importerType = FindImporter(importerName);
+            var areas = InvokeImport(path, importerType);
+            var mappedAreas = Map(areas);
+            SaveImportedElements(mappedAreas);
+        }
 
-            var importer = Activator.CreateInstance(importerType, path);
-            var methodInfo = importerType.GetMethod(IMPORT_METHOD_NAME);
-            var result = methodInfo.Invoke(importer, new object[] { });
-            var areas = result as ICollection<IArea>;
-
-            var mapper = MapperProfile.GetMapper();
-            var mappedAreas = mapper.Map<ICollection<IArea>, ICollection<Area>>(areas);
-
+        private void SaveImportedElements(ICollection<Area> mappedAreas)
+        {
             foreach (var area in mappedAreas)
             {
-
                 foreach (var topic in area.Topics)
                 {
                     topic.Area = area;
@@ -105,6 +97,33 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
                     AreaRepository.Save();
                 }
             }
+        }
+
+        private ICollection<Area> Map(ICollection<IArea> areas)
+        {
+            var mapper = MapperProfile.GetMapper();
+            var mappedAreas = mapper.Map<ICollection<IArea>, ICollection<Area>>(areas);
+            return mappedAreas;
+        }
+
+        private ICollection<IArea> InvokeImport(string path, Type importerType)
+        {
+            var importer = Activator.CreateInstance(importerType, path);
+            var methodInfo = importerType.GetMethod(IMPORT_METHOD_NAME);
+            var result = methodInfo.Invoke(importer, new object[] { });
+            var areas = result as ICollection<IArea>;
+            return areas;
+        }
+
+        private Type FindImporter(string importerName)
+        {
+            var normalizedPath = NormalizePath(IMPORTERS_FOLDER);
+            var allImporters = GetAllImporters(normalizedPath);
+            var normalizedName = Regex.Replace(importerName, @"\s+", "").ToUpper();
+            var importerType = allImporters
+                .Where(t => t.Name.ToUpper().Equals(normalizedName))
+                .FirstOrDefault();
+            return importerType;
         }
     }
 }
