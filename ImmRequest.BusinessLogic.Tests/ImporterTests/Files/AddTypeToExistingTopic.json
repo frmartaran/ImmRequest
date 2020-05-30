@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Area 1",
+    "id": 1,
+    "topics": [
+      {
+        "name": "Topic A",
+        "types": []
+      },
+      {
+        "name": "Topic B",
+        "Id": 1,
+        "types": [
+          {
+            "name": "Type A1"
+          }
+        ]
+      }
+    ]
+  }
+]

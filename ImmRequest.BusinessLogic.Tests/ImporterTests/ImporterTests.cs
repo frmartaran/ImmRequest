@@ -73,7 +73,7 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
         [TestCategory("New Areas with just topics")]
         public void ImportUsingJson()
         {
-            var context = ContextFactory.GetMemoryContext("Import Area");
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
             var areaRepository = new AreaRepository(context);
             var topicRepository = new TopicRepository(context);
             var areaValidator = new AreaValidator(areaRepository);
@@ -100,7 +100,7 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
         [TestCategory("New Areas with just topics")]
         public void ImportWtihTypesUsingJson()
         {
-            var context = ContextFactory.GetMemoryContext("Import Area With Topic");
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
             var areaRepository = new AreaRepository(context);
             var topicRepository = new TopicRepository(context);
             var areaValidator = new AreaValidator(areaRepository);
@@ -118,6 +118,50 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
 
             var importer = new ImporterLogic(inputs);
             importer.Import("Json Area Importer", $"{Path}ImportAreaWithTypes.json");
+
+            var areaInDb = context.Areas.First();
+            Assert.AreEqual(2, areaInDb.Topics.Count);
+
+            var secondTopic = areaInDb.Topics.Skip(1).First();
+            Assert.AreEqual(1, secondTopic.Types.Count);
+        }
+
+        [TestMethod]
+        [TestCategory("Add a new Type for existing topic and a new Topic for area")]
+        public void ImportTypeToExistingTopic()
+        {
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
+            var area = new Area
+            {
+                Name = "Area 1",
+                Topics = new List<Topic> {
+                    new Topic
+                    {
+                        Name = "Topic B",
+                        Types = new List<TopicType>(),
+                    }
+                }
+            };
+            var areaRepository = new AreaRepository(context);
+            areaRepository.Insert(area);
+            areaRepository.Save();
+
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Json Area Importer", $"{Path}AddTypeToExistingTopic.json");
 
             var areaInDb = context.Areas.First();
             Assert.AreEqual(2, areaInDb.Topics.Count);
