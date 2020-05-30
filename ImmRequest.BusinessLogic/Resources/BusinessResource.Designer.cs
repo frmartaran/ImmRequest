@@ -124,6 +124,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error importing the entities. Please try again later.
+        /// </summary>
+        public static string DeveloperException_UnknownIssue {
+            get {
+                return ResourceManager.GetString("DeveloperException_UnknownIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
         public static string Entity_Area {
@@ -165,6 +174,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         public static string Field_Name {
             get {
                 return ResourceManager.GetString("Field_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified file could not be found. Please verify the name and the extention of the file are correct..
+        /// </summary>
+        public static string Importer_FileNotFound {
+            get {
+                return ResourceManager.GetString("Importer_FileNotFound", resourceCulture);
             }
         }
         

@@ -9,6 +9,7 @@ using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using ImmRequest.Importer.Interfaces;
 using ImmRequest.Importer.Interfaces.Domain;
+using ImmRequest.Importer.Interfaces.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -162,11 +163,19 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
             {
                 throw new DeveloperException(BusinessResource.DeveloperException_ImporterWrongParameters,
                     exception);
-            }catch(ArgumentNullException exception)
+            }
+            catch (ArgumentNullException exception)
             {
                 throw new DeveloperException(BusinessResource.DeveloperException_ImporterNotFound,
                     exception);
-            }            
+            }
+            catch (TargetInvocationException exception)
+            {
+                if (exception.InnerException != null)
+                    throw new BusinessLogicException(exception.InnerException.Message, exception);
+
+                throw new DeveloperException(BusinessResource.DeveloperException_UnknownIssue, exception);
+            }
         }
 
         private Type FindImporter(string importerName)

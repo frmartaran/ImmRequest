@@ -135,6 +135,9 @@
   <data name="DeveloperException_ImporterWrongParameters" xml:space="preserve">
     <value>Wrong parameters or missing Construsctor. Please use another importer</value>
   </data>
+  <data name="DeveloperException_UnknownIssue" xml:space="preserve">
+    <value>There was an error importing the entities. Please try again later</value>
+  </data>
   <data name="Developer_Exception" xml:space="preserve">
     <value>There is no finder for this entity. Contact support.</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="Field_Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Importer_FileNotFound" xml:space="preserve">
+    <value>The specified file could not be found. Please verify the name and the extention of the file are correct.</value>
   </data>
   <data name="LogicAction_NotFound" xml:space="preserve">
     <value>There has been an Error while {0} {1}. Please make sure that the {1} exists</value>

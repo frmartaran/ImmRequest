@@ -266,5 +266,32 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             var importer = new ImporterLogic(inputs);
             importer.Import("Xml Area Importer", $"{Path}someFile.xml");
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void FileHasValidationError()
+        {
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Json Area Importer", $"{Path}ValidationError.json");
+
+            var areaInDb = context.Areas.FirstOrDefault();
+            Assert.IsNull(areaInDb);
+        }
     }
 }
