@@ -32,7 +32,9 @@ namespace ImmRequest.WebApi.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            throw new NotImplementedException();
+            var allImporters = Logic.GetImporterOptions();
+
+            return Ok(allImporters);
         }
     }
 }
