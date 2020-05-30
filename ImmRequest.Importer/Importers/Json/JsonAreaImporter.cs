@@ -27,7 +27,7 @@ namespace ImmRequest.Importer.Importers
                 return types.Cast<IArea>().ToList();
 
             }
-            catch (JsonSerializationException e)
+            catch (JsonSerializationException)
             {
                 throw new InvalidFormatException(ImporterResource.Format_Invalid);
             }

@@ -91,18 +91,40 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
                 {
                     topic.Area = area;
                     TopicValidator.IsValid(topic);
-                    foreach (var type in topic.Types)
+                    ImportTypes(topic);
+                    var topicInDb = TopicRepository.Get(topic.Id);
+                    if (topicInDb != null)
                     {
-                        type.ParentTopic = topic;
-                        type.AllFields = new List<BaseField>();
-                        TopicTypeValidator.IsValid(type);
+                        topicInDb.Types.AddRange(topic.Types);
+                        TopicRepository.Update(topicInDb);
                     }
                 }
                 if (AreaValidator.IsValid(area))
                 {
-                    AreaRepository.Insert(area);
-                    AreaRepository.Save();
+                    var areaInDb = AreaRepository.Get(area.Id);
+                    if (areaInDb != null)
+                    {
+                        var newTopics = area.Topics.Where(t => t.Id == 0).ToList();
+                        areaInDb.Topics.AddRange(newTopics);
+                        AreaRepository.Update(areaInDb);
+                    }
+                    else
+                    {
+                        AreaRepository.Insert(area);
+                    }
                 }
+                AreaRepository.Save();
+
+            }
+        }
+
+        private void ImportTypes(Topic topic)
+        {
+            foreach (var type in topic.Types)
+            {
+                type.ParentTopic = topic;
+                type.AllFields = new List<BaseField>();
+                TopicTypeValidator.IsValid(type);
             }
         }
 

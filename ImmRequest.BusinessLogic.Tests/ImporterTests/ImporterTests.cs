@@ -166,8 +166,8 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             var areaInDb = context.Areas.First();
             Assert.AreEqual(2, areaInDb.Topics.Count);
 
-            var secondTopic = areaInDb.Topics.Skip(1).First();
-            Assert.AreEqual(1, secondTopic.Types.Count);
+            var alreadyExistingTopic = areaInDb.Topics.First();
+            Assert.AreEqual(1, alreadyExistingTopic.Types.Count);
         }
     }
 }
