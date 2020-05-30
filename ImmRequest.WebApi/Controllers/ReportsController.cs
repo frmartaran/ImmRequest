@@ -19,7 +19,6 @@ namespace ImmRequest.WebApi.Controllers
     [Route("api/[controller]")]
     [AuthorizationFilter]
     [EnableCors("CorsPolicy")]
-
     public class ReportsController : ControllerBase
     {
         private ILogic<CitizenRequest> Logic { get; set; }
