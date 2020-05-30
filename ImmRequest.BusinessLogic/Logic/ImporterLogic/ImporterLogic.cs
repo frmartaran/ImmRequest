@@ -86,35 +86,48 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
         private void SaveImportedElements(ICollection<Area> mappedAreas)
         {
             foreach (var area in mappedAreas)
-            {
-                foreach (var topic in area.Topics)
-                {
-                    topic.Area = area;
-                    TopicValidator.IsValid(topic);
-                    ImportTypes(topic);
-                    var topicInDb = TopicRepository.Get(topic.Id);
-                    if (topicInDb != null)
-                    {
-                        topicInDb.Types.AddRange(topic.Types);
-                        TopicRepository.Update(topicInDb);
-                    }
-                }
-                if (AreaValidator.IsValid(area))
-                {
-                    var areaInDb = AreaRepository.Get(area.Id);
-                    if (areaInDb != null)
-                    {
-                        var newTopics = area.Topics.Where(t => t.Id == 0).ToList();
-                        areaInDb.Topics.AddRange(newTopics);
-                        AreaRepository.Update(areaInDb);
-                    }
-                    else
-                    {
-                        AreaRepository.Insert(area);
-                    }
-                }
-                AreaRepository.Save();
+                ImportAreas(area);
+            AreaRepository.Save();
+        }
 
+        private void ImportAreas(Area area)
+        {
+            ImportTopics(area);
+            if (AreaValidator.IsValid(area))
+            {
+                var areaInDb = AreaRepository.Get(area.Id);
+                if (areaInDb != null)
+                    UpdateExistingArea(area, areaInDb);
+                else
+                    AreaRepository.Insert(area);
+            }
+        }
+
+        private void UpdateExistingArea(Area area, Area areaInDb)
+        {
+            var newTopics = area.Topics.Where(t => t.Id == 0).ToList();
+            areaInDb.Topics.AddRange(newTopics);
+            AreaRepository.Update(areaInDb);
+        }
+
+        private void ImportTopics(Area area)
+        {
+            foreach (var topic in area.Topics)
+            {
+                topic.Area = area;
+                TopicValidator.IsValid(topic);
+                ImportTypes(topic);
+                var topicInDb = TopicRepository.Get(topic.Id);
+                UpdateExistingTopic(topic, topicInDb);
+            }
+        }
+
+        private void UpdateExistingTopic(Topic topic, Topic topicInDb)
+        {
+            if (topicInDb != null)
+            {
+                topicInDb.Types.AddRange(topic.Types);
+                TopicRepository.Update(topicInDb);
             }
         }
 
