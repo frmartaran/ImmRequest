@@ -86,9 +86,18 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
 
         private void SaveImportedElements(ICollection<Area> mappedAreas)
         {
-            foreach (var area in mappedAreas)
-                ImportAreas(area);
-            AreaRepository.Save();
+            try
+            {
+                foreach (var area in mappedAreas)
+                    ImportAreas(area);
+                AreaRepository.Save();
+            }
+            catch (InvalidOperationException exception)
+            {
+                throw new ValidationException(BusinessResource.ValidationError_AddExistingTopicsToNewArea,
+                    exception);
+            }
+
         }
 
         private void ImportAreas(Area area)

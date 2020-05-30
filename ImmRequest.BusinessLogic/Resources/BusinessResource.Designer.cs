@@ -196,6 +196,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adding existing topics to a new area is not allowed. Please reference the area the topic belongs to if you want to add types to it.
+        /// </summary>
+        public static string ValidationError_AddExistingTopicsToNewArea {
+            get {
+                return ResourceManager.GetString("ValidationError_AddExistingTopicsToNewArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are alredy logged in. Try logging out before trying to sign in again..
         /// </summary>
         public static string ValidationError_AlreadyInSession {

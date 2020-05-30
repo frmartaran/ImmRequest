@@ -162,6 +162,9 @@
   <data name="LogicAction_NotFound" xml:space="preserve">
     <value>There has been an Error while {0} {1}. Please make sure that the {1} exists</value>
   </data>
+  <data name="ValidationError_AddExistingTopicsToNewArea" xml:space="preserve">
+    <value>Adding existing topics to a new area is not allowed. Please reference the area the topic belongs to if you want to add types to it</value>
+  </data>
   <data name="ValidationError_AlreadyInSession" xml:space="preserve">
     <value>You are alredy logged in. Try logging out before trying to sign in again.</value>
   </data>
