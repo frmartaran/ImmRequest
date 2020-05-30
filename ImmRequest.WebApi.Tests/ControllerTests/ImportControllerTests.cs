@@ -1,4 +1,5 @@
-﻿using ImmRequest.BusinessLogic.Helpers.Inputs;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Helpers.Inputs;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.BusinessLogic.Logic.ImporterLogic;
 using ImmRequest.DataAccess.Interfaces;
@@ -72,15 +73,32 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void ImportTest()
         {
             var file = new Mock<IFormFile>();
-            file.SetupProperty(f => f.FileName, "ImportArea.json");
+            file.SetupGet(f => f.FileName).Returns("ImportArea.json");
 
             var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()));
 
             var controller = new ImporterController(mockLogic.Object);
-            var response = controller.Import(file.Object);
+            var response = controller.Import("Json Area Importer", file.Object);
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+
+        }
+
+        [TestMethod]
+        public void ImportValidationErrorTest()
+        {
+            var file = new Mock<IFormFile>();
+            file.SetupGet(f => f.FileName).Returns("ImportArea.json");
+
+            var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()))
+                .Throws(new ValidationException(""));
+
+            var controller = new ImporterController(mockLogic.Object);
+            var response = controller.Import("Json Area Importer", file.Object);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
 
         }
 

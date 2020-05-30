@@ -178,6 +178,15 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import was successful.
+        /// </summary>
+        public static string Import_Successful {
+            get {
+                return ResourceManager.GetString("Import_Successful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no request created between {0} and {1}.
         /// </summary>
         public static string Report_NoRequest {

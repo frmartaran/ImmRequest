@@ -156,6 +156,9 @@
   <data name="Entities_Type" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="Import_Successful" xml:space="preserve">
+    <value>Import was successful</value>
+  </data>
   <data name="Reports_NoRequestsForUser" xml:space="preserve">
     <value>There are no requests for the user {0} between the dates {1} and {2}</value>
   </data>

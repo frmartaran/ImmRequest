@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Resources;
@@ -28,16 +29,24 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Import([FromBody] string importer, [FromBody] IFormFile file)
         {
-            var mainPath = AppDomain.CurrentDomain.BaseDirectory;
-            var today = DateTime.Now.ToString("yyyy-MM-dd");
-            var path = mainPath + $"{today}-Uploads\\";
-            
-            Directory.CreateDirectory(path);
-            var filePath = Path.Combine(path, file.FileName);
-            System.IO.File.Create(filePath);
+            try
+            {
+                var mainPath = AppDomain.CurrentDomain.BaseDirectory;
+                var today = DateTime.Now.ToString("yyyy-MM-dd");
+                var path = mainPath + $"{today}-Uploads\\";
 
-            Logic.Import(importer, filePath);
-            return Ok(WebApiResource.Import_Successful);
+                Directory.CreateDirectory(path);
+                var filePath = Path.Combine(path, file.FileName);
+                System.IO.File.Create(filePath);
+
+                Logic.Import(importer, filePath);
+                return Ok(WebApiResource.Import_Successful);
+            }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
         }
 
         [HttpGet]
