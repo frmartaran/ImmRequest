@@ -73,7 +73,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void ImportTest()
         {
             var file = new Mock<IFormFile>();
-            file.SetupGet(f => f.FileName).Returns("ImportArea.json");
+            var guidForUniqueName = Guid.NewGuid().ToString();
+            file.SetupGet(f => f.FileName).Returns($"{guidForUniqueName}-ImportFile.json");
 
             var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()));
@@ -89,7 +90,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         public void ImportValidationErrorTest()
         {
             var file = new Mock<IFormFile>();
-            file.SetupGet(f => f.FileName).Returns("ImportArea.json");
+            var guidForUniqueName = Guid.NewGuid().ToString();
+            file.SetupGet(f => f.FileName).Returns($"{guidForUniqueName}-ImportFile.json");
 
             var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()))
@@ -99,6 +101,43 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Import("Json Area Importer", file.Object);
 
             Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+
+        }
+
+        [TestMethod]
+        public void ImportBusinessLogicErrorTest()
+        {
+            var file = new Mock<IFormFile>();
+            var guidForUniqueName = Guid.NewGuid().ToString();
+            file.SetupGet(f => f.FileName).Returns($"{guidForUniqueName}-ImportFile.json");
+
+            var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()))
+                .Throws(new BusinessLogicException(""));
+
+            var controller = new ImporterController(mockLogic.Object);
+            var response = controller.Import("Json Area Importer", file.Object);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
+
+        }
+
+
+        [TestMethod]
+        public void ImportDeveloperExceptionTest()
+        {
+            var file = new Mock<IFormFile>();
+            var guidForUniqueName = Guid.NewGuid().ToString();
+            file.SetupGet(f => f.FileName).Returns($"{guidForUniqueName}-ImportFile.json");
+
+            var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()))
+                .Throws(new DeveloperException(""));
+
+            var controller = new ImporterController(mockLogic.Object);
+            var response = controller.Import("Json Area Importer", file.Object);
+
+            Assert.IsInstanceOfType(response, typeof(ObjectResult));
 
         }
 

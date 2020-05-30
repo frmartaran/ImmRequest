@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.WebApi.Filters;
@@ -45,6 +46,14 @@ namespace ImmRequest.WebApi.Controllers
             catch (ValidationException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (DeveloperException exception)
+            {
+                return StatusCode(500, exception.Message);
             }
 
         }
