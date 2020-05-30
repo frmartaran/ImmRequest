@@ -1,7 +1,9 @@
-﻿using ImmRequest.BusinessLogic.Extentions;
+﻿using ImmRequest.BusinessLogic.Exceptions;
+using ImmRequest.BusinessLogic.Extentions;
 using ImmRequest.BusinessLogic.Helpers.Automapper;
 using ImmRequest.BusinessLogic.Helpers.Inputs;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.BusinessLogic.Resources;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
@@ -148,11 +150,20 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
 
         private ICollection<IArea> InvokeImport(string path, Type importerType)
         {
-            var importer = Activator.CreateInstance(importerType, path);
-            var methodInfo = importerType.GetMethod(IMPORT_METHOD_NAME);
-            var result = methodInfo.Invoke(importer, new object[] { });
-            var areas = result as ICollection<IArea>;
-            return areas;
+            try
+            {
+                var importer = Activator.CreateInstance(importerType, path);
+                var methodInfo = importerType.GetMethod(IMPORT_METHOD_NAME);
+                var result = methodInfo.Invoke(importer, new object[] { });
+                var areas = result as ICollection<IArea>;
+                return areas;
+            }
+            catch (MissingMethodException exception)
+            {
+                throw new DeveloperException(BusinessResource.DeveloperException_ImporterWrongParameters,
+                    exception);
+            }
+            
         }
 
         private Type FindImporter(string importerName)

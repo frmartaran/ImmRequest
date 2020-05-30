@@ -106,6 +106,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wrong parameters or missing Construsctor. Please use another importer.
+        /// </summary>
+        public static string DeveloperException_ImporterWrongParameters {
+            get {
+                return ResourceManager.GetString("DeveloperException_ImporterWrongParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
         public static string Entity_Area {
