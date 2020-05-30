@@ -293,5 +293,47 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             var areaInDb = context.Areas.FirstOrDefault();
             Assert.IsNull(areaInDb);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void NewAreaGetsExistingTopics()
+        {
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var area = new Area
+            {
+                Name = "Another Area",
+                Topics = new List<Topic> {
+                    new Topic
+                    {
+                        Name = "Topic A",
+                        Types = new List<TopicType>(),
+                    }
+                }
+            };
+            areaRepository.Insert(area);
+            areaRepository.Save();
+
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Json Area Importer", $"{Path}FirstTopicExists.json");
+
+            var areaInDb = context.Areas.FirstOrDefault();
+            Assert.IsNotNull(areaInDb);
+
+        }
     }
 }
