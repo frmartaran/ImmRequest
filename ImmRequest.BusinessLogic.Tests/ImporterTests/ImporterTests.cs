@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Helpers.Automapper;
 using ImmRequest.BusinessLogic.Helpers.Inputs;
 using ImmRequest.BusinessLogic.Interfaces;
@@ -168,6 +169,30 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
 
             var alreadyExistingTopic = areaInDb.Topics.First();
             Assert.AreEqual(1, alreadyExistingTopic.Types.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DeveloperException))]
+        public void ImporterHasOtherParameters()
+        {
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Test Importer", $"{Path}AddTypeToExistingTopic.json");
         }
     }
 }

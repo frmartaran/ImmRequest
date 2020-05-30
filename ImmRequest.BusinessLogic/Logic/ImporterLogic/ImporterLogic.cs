@@ -2,7 +2,6 @@
 using ImmRequest.BusinessLogic.Helpers.Automapper;
 using ImmRequest.BusinessLogic.Helpers.Inputs;
 using ImmRequest.BusinessLogic.Interfaces;
-using ImmRequest.BusinessLogic.Validators;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
@@ -13,7 +12,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
