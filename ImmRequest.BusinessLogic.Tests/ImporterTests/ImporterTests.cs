@@ -242,5 +242,29 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
             var importer = new ImporterLogic(inputs);
             importer.Import("Non Existing Importer", $"{Path}AddTypeToExistingTopic.json");
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException))]
+        public void FileNotFound()
+        {
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Xml Area Importer", $"{Path}someFile.xml");
+        }
     }
 }
