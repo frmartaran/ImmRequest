@@ -173,7 +173,7 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
 
         [TestMethod]
         [ExpectedException(typeof(DeveloperException))]
-        public void ImporterHasOtherParameters()
+        public void ImporterDoesntHaveConstructor()
         {
             var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
             var areaRepository = new AreaRepository(context);
@@ -193,6 +193,54 @@ namespace ImmRequest.BusinessLogic.Tests.ImporterTests
 
             var importer = new ImporterLogic(inputs);
             importer.Import("Test Importer", $"{Path}AddTypeToExistingTopic.json");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DeveloperException))]
+        public void ImporterWrongParameters()
+        {
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Wrong Parameters Importer", $"{Path}AddTypeToExistingTopic.json");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DeveloperException))]
+        public void ImporterNotFound()
+        {
+            var context = ContextFactory.GetMemoryContext(Guid.NewGuid().ToString());
+            var areaRepository = new AreaRepository(context);
+            var topicRepository = new TopicRepository(context);
+            var areaValidator = new AreaValidator(areaRepository);
+            var topicValidator = new TopicValidator(topicRepository);
+            var typeValidator = new TopicTypeValidator();
+
+            var inputs = new AreaImporterInput
+            (
+                areaRepository,
+                topicRepository,
+                areaValidator,
+                topicValidator,
+                typeValidator
+            );
+
+            var importer = new ImporterLogic(inputs);
+            importer.Import("Non Existing Importer", $"{Path}AddTypeToExistingTopic.json");
         }
     }
 }
