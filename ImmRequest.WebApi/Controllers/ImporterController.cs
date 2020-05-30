@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.WebApi.Filters;
+using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +26,18 @@ namespace ImmRequest.WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Import(IFormFile file)
+        public ActionResult Import([FromBody] string importer, [FromBody] IFormFile file)
         {
-            throw new NotImplementedException();
+            var mainPath = AppDomain.CurrentDomain.BaseDirectory;
+            var today = DateTime.Now.ToString("yyyy-MM-dd");
+            var path = mainPath + $"{today}-Uploads\\";
+            
+            Directory.CreateDirectory(path);
+            var filePath = Path.Combine(path, file.FileName);
+            System.IO.File.Create(filePath);
+
+            Logic.Import(importer, filePath);
+            return Ok(WebApiResource.Import_Successful);
         }
 
         [HttpGet]
