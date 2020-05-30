@@ -22,7 +22,7 @@ using System.Text;
 namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
 {
     [TestClass]
-    public class RequestsReportTest
+    public class ReportControllerTests
     {
         string citizenEmail;
         CitizenRequest FirstRequest;

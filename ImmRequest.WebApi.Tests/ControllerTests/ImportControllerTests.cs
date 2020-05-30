@@ -4,11 +4,13 @@ using ImmRequest.BusinessLogic.Logic.ImporterLogic;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.WebApi.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
@@ -16,6 +18,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
     [TestClass]
     public class ImportControllerTests
     {
+        private const string Path = @"~\..\..\..\..\ControllerTests\Files";
+
         [TestMethod]
         public void GetImportersMockTest()
         {
@@ -63,5 +67,23 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             Assert.IsTrue(allNames.Contains("Xml Area Importer"));
 
         }
+
+        [TestMethod]
+        public void ImportTest()
+        {
+            var file = new Mock<IFormFile>();
+            file.SetupProperty(f => f.FileName, "ImportArea.json");
+
+            var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()));
+
+            var controller = new ImporterController(mockLogic.Object);
+            var response = controller.Import(file.Object);
+
+            Assert.IsInstanceOfType(response, typeof(OkObjectResult));
+
+        }
+
+
     }
 }
