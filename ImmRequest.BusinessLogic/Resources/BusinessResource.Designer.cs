@@ -106,6 +106,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Importer not found. Please select another importer.
+        /// </summary>
+        public static string DeveloperException_ImporterNotFound {
+            get {
+                return ResourceManager.GetString("DeveloperException_ImporterNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wrong parameters or missing Construsctor. Please use another importer.
         /// </summary>
         public static string DeveloperException_ImporterWrongParameters {

@@ -129,6 +129,9 @@
   <data name="Action_Update" xml:space="preserve">
     <value>Updating</value>
   </data>
+  <data name="DeveloperException_ImporterNotFound" xml:space="preserve">
+    <value>Importer not found. Please select another importer</value>
+  </data>
   <data name="DeveloperException_ImporterWrongParameters" xml:space="preserve">
     <value>Wrong parameters or missing Construsctor. Please use another importer</value>
   </data>

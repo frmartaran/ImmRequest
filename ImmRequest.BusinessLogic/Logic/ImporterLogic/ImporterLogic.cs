@@ -162,8 +162,11 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
             {
                 throw new DeveloperException(BusinessResource.DeveloperException_ImporterWrongParameters,
                     exception);
-            }
-            
+            }catch(ArgumentNullException exception)
+            {
+                throw new DeveloperException(BusinessResource.DeveloperException_ImporterNotFound,
+                    exception);
+            }            
         }
 
         private Type FindImporter(string importerName)
