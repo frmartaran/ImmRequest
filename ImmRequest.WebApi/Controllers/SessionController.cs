@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.BusinessLogic.Interfaces;
+using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Exceptions;
 using ImmRequest.WebApi.Helpers;
 using ImmRequest.WebApi.Interfaces;
@@ -47,7 +48,9 @@ namespace ImmRequest.WebApi.Controllers
                 var session = model.ToDomain();
                 session.AdministratorInSessionId = administrator.Id;
                 var token = Inputs.Logic.Create(session);
+                model.Id = session.AdministratorInSessionId;
                 model.Token = token;
+                model.Username = administrator.UserName;
                 model.Password = "";
                 return Ok(model);
             }
