@@ -5,6 +5,7 @@ using ImmRequest.BusinessLogic.Logic.ImporterLogic;
 using ImmRequest.DataAccess.Interfaces;
 using ImmRequest.Domain;
 using ImmRequest.WebApi.Controllers;
+using ImmRequest.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -92,7 +93,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var file = new Mock<IFormFile>();
             var guidForUniqueName = Guid.NewGuid().ToString();
             file.SetupGet(f => f.FileName).Returns($"{guidForUniqueName}-ImportFile.json");
-
+        
             var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()))
                 .Throws(new ValidationException(""));
@@ -129,7 +130,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var file = new Mock<IFormFile>();
             var guidForUniqueName = Guid.NewGuid().ToString();
             file.SetupGet(f => f.FileName).Returns($"{guidForUniqueName}-ImportFile.json");
-
+           
             var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
             mockLogic.Setup(m => m.Import(It.IsAny<string>(), It.IsAny<string>()))
                 .Throws(new DeveloperException(""));

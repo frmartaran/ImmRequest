@@ -42,6 +42,8 @@ namespace ImmRequest.WebApi.Extentions
             services.AddScoped<IValidator<Administrator>, AdministratorValidator>();
             services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
             services.AddScoped<IValidator<TopicType>, TopicTypeValidator>();
+            services.AddScoped<IValidator<Area>, AreaValidator>();
+            services.AddScoped<IValidator<Topic>, TopicValidator>();
 
             services.AddScoped<ISessionLogic, SessionLogic>();
             services.AddScoped<IAdministratorLogic, AdministratorLogic>();

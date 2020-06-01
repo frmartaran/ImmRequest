@@ -27,7 +27,7 @@ namespace ImmRequest.WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Import([FromBody] string importer, [FromBody] IFormFile file)
+        public ActionResult Import([FromForm] string importer, [FromForm] IFormFile file)
         {
             try
             {
@@ -37,7 +37,11 @@ namespace ImmRequest.WebApi.Controllers
 
                 Directory.CreateDirectory(path);
                 var filePath = Path.Combine(path, file.FileName);
-                System.IO.File.Create(filePath);
+                using (var newFile = System.IO.File.Create(filePath))
+                {
+                    file.CopyToAsync(newFile).Wait();
+                    newFile.Close();
+                }
 
                 Logic.Import(importer, filePath);
                 return Ok(WebApiResource.Import_Successful);
