@@ -7,5 +7,6 @@ export interface Session {
 
 export interface SnackbarInput{
   message: string;
-  action: string
+  action: string;
+  config: {}
 }

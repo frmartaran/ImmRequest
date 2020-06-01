@@ -31,9 +31,9 @@ declare var require: any;
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: 'login', component: LoginComponent, canActivate: [AdminLoggedIn] },
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'home-page', component: RequestManagementComponent, canActivate: [AdminNotLoggedIn] },
+      { path: 'login', component: LoginComponent },
+      { path: '', redirectTo: 'home-page', pathMatch: 'full' },
+      { path: 'home-page', component: RequestManagementComponent},
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn ],

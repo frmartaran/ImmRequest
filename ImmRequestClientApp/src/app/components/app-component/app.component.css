@@ -1,3 +1,13 @@
 body{
     background-color:rgba(128,128,128,0.1);
 }
+
+::ng-deep .style-success button {
+    background-color: #323232;
+    color: #49cc90;
+}
+
+::ng-deep .style-error button {
+    background-color: #323232;
+    color: #ff4081;
+}

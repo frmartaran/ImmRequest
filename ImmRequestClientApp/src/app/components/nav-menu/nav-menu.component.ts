@@ -1,8 +1,12 @@
+import { LoginService } from './../../services/login.service';
 import { SnackbarService } from './../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LogoutComponent } from 'src/app/modals/logout/logout.component';
 import { LogoutService } from 'src/app/services/logout.service';
+import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { HtmlHelpers } from 'src/app/helpers/html.helper';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,20 +15,31 @@ import { LogoutService } from 'src/app/services/logout.service';
 })
 export class NavMenuComponent implements OnInit {
   public imageUrl = "assets/images/logoIM-home.png";
+  public email$ = new Observable<string>();
+  public isAuthenticated$: Observable<boolean>;
 
   constructor(private logoutService: LogoutService,
     public dialog: MatDialog,
-    private snackbarService : SnackbarService) { }
+    private snackbarService : SnackbarService,
+    private router: Router,
+    private loginService: LoginService) { }
 
   ngOnInit() {
+    this.isAuthenticated$ = this.loginService.getIsAuthenticated;
+    this.email$ = this.loginService.getEmail;
   }
 
-  confirmDialog(){
+  logoutDialog(){
     let dialogRef = this.dialog.open(LogoutComponent);
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.logoutService.Logout().subscribe(
           (response) => {
+            this.snackbarService.notifications$.next({
+              message: "You have been logged out!",
+              action: 'Success!',
+              config: this.snackbarService.configSuccess
+            });
             localStorage.removeItem('token');
             localStorage.removeItem('email');
             window.location.href = '/login';
@@ -32,10 +47,9 @@ export class NavMenuComponent implements OnInit {
           },
           (error) => {
             this.snackbarService.notifications$.next({
-              message: error.error
-              ? error.error 
-              : error.message,
-              action: 'Error!'
+              message: HtmlHelpers.getHtmlErrorMessage(error),
+              action: 'Error!',
+              config: this.snackbarService.configError
             });
           }
         )
@@ -43,4 +57,11 @@ export class NavMenuComponent implements OnInit {
     });
   }
 
+  login(){
+    this.router.navigate(['/login'])
+  }
+
+  homePage(){
+    this.router.navigate(['/home-page'])
+  }
 }

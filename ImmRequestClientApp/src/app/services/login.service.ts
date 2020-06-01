@@ -10,6 +10,7 @@ import { environment } from './../../environments/environment.prod';
 export class LoginService {
 
   private isAuthenticated = new BehaviorSubject<boolean>(false);
+  private email = new BehaviorSubject<string>("");
   public url: string = environment.apiUrl;
   private readonly loginEndpoint = this.url +'api/Session';
   private session: Session;
@@ -28,10 +29,15 @@ export class LoginService {
     localStorage.setItem("token", this.session.token);
     localStorage.setItem("email", this.session.email);
     this.isAuthenticated.next(true);
+    this.email.next(this.session.email);
   }
 
   get getIsAuthenticated(){
     return this.isAuthenticated; 
+  }
+
+  get getEmail(){
+    return this.email; 
   }
 
 }

@@ -3,6 +3,8 @@ import { Component, OnInit,} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Session } from 'src/app/models/models';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { HtmlHelpers } from '../../helpers/html.helper';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,8 @@ import { Session } from 'src/app/models/models';
 export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
-    private loginService: LoginService) { }
+    private loginService: LoginService,
+    private snackbarService : SnackbarService) { }
 
   public credentials: Session = {
     email: '',
@@ -33,11 +36,18 @@ export class LoginComponent implements OnInit {
     .subscribe(
       (response) => {
         this.loginService.authenticateUser(response);
+        this.snackbarService.notifications$.next({
+          message: "You are now logged in!",
+          action: 'Success!',
+          config: this.snackbarService.configSuccess
+        });
       },
       (error) => {
-        this.authenticationError = error.error
-          ? error.error 
-          : error.message;
+        this.snackbarService.notifications$.next({
+          message: HtmlHelpers.getHtmlErrorMessage(error),
+          action: 'Error!',
+          config: this.snackbarService.configError
+        });
       },
       () => {
         this.router.navigate(['/home-page']);
