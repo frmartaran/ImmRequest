@@ -2,7 +2,7 @@ import { LoginService } from './../../services/login.service';
 import { SnackbarService } from './../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { LogoutComponent } from 'src/app/modals/logout/logout.component';
+import { ConfirmationComponent } from 'src/app/modals/confirmation/confirmation.component';
 import { LogoutService } from 'src/app/services/logout.service';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -30,7 +30,9 @@ export class NavMenuComponent implements OnInit {
   }
 
   logoutDialog(){
-    let dialogRef = this.dialog.open(LogoutComponent);
+    let dialogRef = this.dialog.open(ConfirmationComponent, {
+      data: {elementDialogText : "Are you sure you want to log out?", elementDialogTitle: "Logout"}
+    });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.logoutService.Logout().subscribe(

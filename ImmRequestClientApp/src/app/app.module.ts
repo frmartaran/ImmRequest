@@ -12,7 +12,7 @@ import { AdminLoggedIn } from './guards/admin-logged-in.guard';
 import { AdminNotLoggedIn } from './guards/admin-not-logged-in.guard';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LogoutComponent } from './modals/logout/logout.component';
+import { ConfirmationComponent } from './modals/confirmation/confirmation.component';
 
 declare var require: any;
 
@@ -22,7 +22,7 @@ declare var require: any;
     NavMenuComponent,
     LoginComponent,
     RequestManagementComponent,
-    LogoutComponent
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +38,6 @@ declare var require: any;
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn ],
   bootstrap: [AppComponent],
-  entryComponents: [LogoutComponent]
+  entryComponents: [ConfirmationComponent]
 })
 export class AppModule { }
