@@ -142,6 +142,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fields.
+        /// </summary>
+        public static string Entity_Field {
+            get {
+                return ResourceManager.GetString("Entity_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Citizen Request.
         /// </summary>
         public static string Entity_Request {
@@ -192,6 +201,15 @@ namespace ImmRequest.BusinessLogic.Resources {
         public static string LogicAction_NotFound {
             get {
                 return ResourceManager.GetString("LogicAction_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or More values.
+        /// </summary>
+        public static string OneOrMore_Value {
+            get {
+                return ResourceManager.GetString("OneOrMore_Value", resourceCulture);
             }
         }
         

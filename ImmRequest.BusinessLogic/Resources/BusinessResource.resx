@@ -144,6 +144,9 @@
   <data name="Entity_Area" xml:space="preserve">
     <value>Area</value>
   </data>
+  <data name="Entity_Field" xml:space="preserve">
+    <value>Fields</value>
+  </data>
   <data name="Entity_Request" xml:space="preserve">
     <value>Citizen Request</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="LogicAction_NotFound" xml:space="preserve">
     <value>There has been an Error while {0} {1}. Please make sure that the {1} exists</value>
+  </data>
+  <data name="OneOrMore_Value" xml:space="preserve">
+    <value>One or More values</value>
   </data>
   <data name="ValidationError_AddExistingTopicsToNewArea" xml:space="preserve">
     <value>Adding existing topics to a new area is not allowed. Please reference the area the topic belongs to if you want to add types to it</value>
