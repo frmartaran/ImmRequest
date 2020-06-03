@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using ImmRequest.Domain.Enums;
+using System;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -459,6 +460,19 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             CitizenRequestRepository = mockRepository.Object;
 
             IsRequestStatusValid(secondCitizenRequest);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void NotAllFieldsOfTypeHaveRequestValues()
+        {
+            CreateContextFor(Guid.NewGuid().ToString());
+            var fieldRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            fieldRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(topicType);
+
+            TopicTypeRepository = fieldRepository.Object;
+            var isValid = AllFieldsHaveValues(firstCitizenRequest.TopicTypeId, firstCitizenRequest.Values);
         }
     }
 }

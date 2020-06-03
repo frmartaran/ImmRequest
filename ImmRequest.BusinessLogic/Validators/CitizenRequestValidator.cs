@@ -47,7 +47,8 @@ namespace ImmRequest.BusinessLogic.Validators
             IsAreaValid(objectToValidate.AreaId);
             IsTopicValid(objectToValidate.AreaId, objectToValidate.TopicId);
             IsTopicTypeValid(objectToValidate.AreaId, objectToValidate.TopicId, objectToValidate.TopicTypeId);
-            AreBaseFieldValuesValid(objectToValidate.Values);            
+            AreBaseFieldValuesValid(objectToValidate.Values);
+            AllFieldsHaveValues(objectToValidate.TopicTypeId, objectToValidate.Values);
             return true;
         }
 
@@ -214,6 +215,11 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             if (topicType == null)
                 throw new ValidationException(BusinessResource.ValidationError_TopicTypeIsInvalid);
+        }
+
+        protected bool AllFieldsHaveValues(long typeId, List<RequestFieldValues> values)
+        {
+            throw new NotImplementedException();
         }
     }
 }
