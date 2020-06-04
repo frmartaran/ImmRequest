@@ -18,3 +18,15 @@ export interface Admin {
   email: string;
   password: string;
 }
+
+export interface Button {
+  buttonTooltip: string;
+  iconName: string;
+  callback: (element:any) => void;
+}
+
+export interface Column {
+  columnClass: string;
+  columnName: string;
+  hasButtons: boolean;
+}
