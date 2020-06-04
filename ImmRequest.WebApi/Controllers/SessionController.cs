@@ -71,6 +71,7 @@ namespace ImmRequest.WebApi.Controllers
                 var token = Inputs.ContextHelper.GetAuthorizationHeader(HttpContext);
                 var sessionToDelete = Inputs.Logic.Get(token);
                 Inputs.Logic.Delete(sessionToDelete.Id);
+                Inputs.Logic.Save();
                 return Ok();
             }
             catch (BusinessLogicException exception)

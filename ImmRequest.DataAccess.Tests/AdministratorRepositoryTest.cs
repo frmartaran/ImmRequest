@@ -42,6 +42,8 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepostory("InsertTest");
             repository.Insert(administrator);
+            repository.Save();
+
             var amountOfAdministrators = context.Administrators.Count();
             Assert.AreEqual(1, amountOfAdministrators);
 
@@ -67,6 +69,7 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             repository.Delete(administrator.Id);
+            repository.Save();
             var deletedAdministrator = context.Administrators.FirstOrDefault();
             var administratorCount = context.Administrators.Count();
             Assert.IsNull(deletedAdministrator);

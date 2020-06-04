@@ -17,7 +17,8 @@ namespace ImmRequest.BusinessLogic.Logic
 
         private IValidator<CitizenRequest> citizenRequestValidator;
 
-        public CitizenRequestLogic(IRepository<CitizenRequest> citizenRequestRepository, IValidator<CitizenRequest> citizenRequestValidator)
+        public CitizenRequestLogic(IRepository<CitizenRequest> citizenRequestRepository, 
+            IValidator<CitizenRequest> citizenRequestValidator)
         {
             this.citizenRequestRepository = citizenRequestRepository;
             this.citizenRequestValidator = citizenRequestValidator;
@@ -27,6 +28,7 @@ namespace ImmRequest.BusinessLogic.Logic
         {
             if (citizenRequestValidator.IsValid(objectToCreate))
             {
+                objectToCreate.CreatedDate = DateTime.Now;
                 citizenRequestRepository.Insert(objectToCreate);
             }
         }
@@ -72,6 +74,11 @@ namespace ImmRequest.BusinessLogic.Logic
                     BusinessResource.Entity_Request);
             }
 
+        }
+
+        public void Save()
+        {
+            citizenRequestRepository.Save();
         }
     }
 }

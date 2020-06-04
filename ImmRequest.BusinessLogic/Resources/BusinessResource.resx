@@ -129,8 +129,23 @@
   <data name="Action_Update" xml:space="preserve">
     <value>Updating</value>
   </data>
+  <data name="DeveloperException_ImporterNotFound" xml:space="preserve">
+    <value>Importer not found. Please select another importer</value>
+  </data>
+  <data name="DeveloperException_ImporterWrongParameters" xml:space="preserve">
+    <value>Wrong parameters or missing Construsctor. Please use another importer</value>
+  </data>
+  <data name="DeveloperException_UnknownIssue" xml:space="preserve">
+    <value>There was an error importing the entities. Please try again later</value>
+  </data>
+  <data name="Developer_Exception" xml:space="preserve">
+    <value>There is no finder for this entity. Contact support.</value>
+  </data>
   <data name="Entity_Area" xml:space="preserve">
     <value>Area</value>
+  </data>
+  <data name="Entity_Field" xml:space="preserve">
+    <value>Fields</value>
   </data>
   <data name="Entity_Request" xml:space="preserve">
     <value>Citizen Request</value>
@@ -144,8 +159,17 @@
   <data name="Field_Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Importer_FileNotFound" xml:space="preserve">
+    <value>The specified file could not be found. Please verify the name and the extention of the file are correct.</value>
+  </data>
   <data name="LogicAction_NotFound" xml:space="preserve">
     <value>There has been an Error while {0} {1}. Please make sure that the {1} exists</value>
+  </data>
+  <data name="OneOrMore_Value" xml:space="preserve">
+    <value>One or More values</value>
+  </data>
+  <data name="ValidationError_AddExistingTopicsToNewArea" xml:space="preserve">
+    <value>Adding existing topics to a new area is not allowed. Please reference the area the topic belongs to if you want to add types to it</value>
   </data>
   <data name="ValidationError_AlreadyInSession" xml:space="preserve">
     <value>You are alredy logged in. Try logging out before trying to sign in again.</value>

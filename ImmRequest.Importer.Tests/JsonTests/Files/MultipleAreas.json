@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Area 1",
+    "topics": [
+      {
+        "name": "Topic A",
+        "types": []
+      },
+      {
+        "name": "Topic B",
+        "id": 1,
+        "types": [
+          {
+            "name": "Type A1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Area 2",
+    "id": 2,
+    "topics": [
+      {
+        "name": "Topic C",
+        "types": []
+      },
+      {
+        "name": "Topic D",
+        "types": []
+      }
+    ]
+  }
+]

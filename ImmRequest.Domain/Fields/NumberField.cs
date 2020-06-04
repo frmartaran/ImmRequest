@@ -58,12 +58,19 @@ namespace ImmRequest.Domain.Fields
             base.UpdateValues(valuesToUpdate);
         }
 
-        public override bool Validate(string value)
+        public override bool Validate(List<string> values)
         {
-            int numberValue;
+            if (!IsMultipleSelectEnabled && values.Count > 1)
+                ExceptionThrowerHelper.ThrowMultipleSelectionDisable(Name);
+
             try
             {
-                numberValue = Convert.ToInt32(value);
+                foreach (var value in values)
+                {
+                    var numberValue = Convert.ToInt32(value);
+                    IsOutOfRange(numberValue);
+
+                }
             }
             catch (FormatException exception)
             {
@@ -75,7 +82,6 @@ namespace ImmRequest.Domain.Fields
                 var message = string.Format(DomainResource.Field_InvalidFormat, Name);
                 throw new InvalidArgumentException(message, exception);
             }
-            IsOutOfRange(numberValue);
             return true;
         }
 

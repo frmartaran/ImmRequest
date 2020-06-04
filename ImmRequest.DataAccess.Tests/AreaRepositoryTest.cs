@@ -43,7 +43,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("InsertTest");
             repository.Insert(area);
-
+            repository.Save();
             var areaInDb = context.Areas.FirstOrDefault();
             Assert.IsNotNull(areaInDb);
         }
@@ -98,6 +98,7 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             repository.Delete(1);
+            repository.Save();
             var areaInDb = context.Areas.FirstOrDefault();
             Assert.IsNull(areaInDb);
 
@@ -137,10 +138,15 @@ namespace ImmRequest.DataAccess.Tests
         public void ExistsTest()
         {
             CreateRepository("ExistsTest");
+            var otherArea = new Area
+            {
+                Name = area.Name
+            };
+
             context.Areas.Add(area);
             context.SaveChanges();
 
-            var exists = repository.Exists(area);
+            var exists = repository.Exists(otherArea);
             Assert.IsTrue(exists);
         }
 

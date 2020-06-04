@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using ImmRequest.Domain.Enums;
 using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Resources;
@@ -26,10 +27,17 @@ namespace ImmRequest.Domain.Fields
             base.UpdateValues(valuesToUpdate);
         }
 
-        public override bool Validate(string value)
+        public override bool Validate(List<string> values)
         {
-            if (!RangeValues.Contains(value))
-                throw new DomainValidationException(DomainResource.TextFieldNotInRangeException);
+            if (!IsMultipleSelectEnabled && values.Count > 1)
+                ExceptionThrowerHelper.ThrowMultipleSelectionDisable(Name);
+
+            foreach(var value in values)
+            {
+                if (!RangeValues.Contains(value))
+                    throw new DomainValidationException(DomainResource.TextFieldNotInRangeException);
+
+            }
             return true;
         }
 

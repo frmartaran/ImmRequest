@@ -76,6 +76,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
         {
             var logic = GetLogicWithMemoryDb("ValidSession");
             logic.Create(session);
+            logic.Save();
 
             var sessionCreated = context.Sessions.FirstOrDefault();
             Assert.IsNotNull(sessionCreated);
@@ -167,6 +168,7 @@ namespace ImmRequest.BusinessLogic.Tests.LogicTests
             context.SaveChanges();
 
             logic.Delete(1);
+            logic.Save();
 
             var sessionInDb = context.Sessions.FirstOrDefault();
             Assert.IsNull(sessionInDb);

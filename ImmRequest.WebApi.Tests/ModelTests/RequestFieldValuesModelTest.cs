@@ -19,7 +19,7 @@ namespace ImmRequest.WebApi.Tests.ModelTests
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Values = new List<string> { "Credencial" }
             };
         }
 
@@ -32,7 +32,7 @@ namespace ImmRequest.WebApi.Tests.ModelTests
             Assert.AreEqual(requestFieldValues.Id, requestFieldValuesModel.Id);
             Assert.AreEqual(requestFieldValues.FieldId, requestFieldValuesModel.FieldId);
             Assert.AreEqual(requestFieldValues.ParentCitizenRequestId, requestFieldValuesModel.ParentCitizenRequestId);
-            Assert.AreEqual(requestFieldValues.Value, requestFieldValuesModel.Value);
+            Assert.AreEqual(requestFieldValues.Values, requestFieldValuesModel.Value);
         }
 
         [TestMethod]
@@ -42,13 +42,13 @@ namespace ImmRequest.WebApi.Tests.ModelTests
             {
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Value = new List<string> { "Credencial" }
             };
             var requestFieldValues = requestFieldValuesModel.ToDomain();
 
             Assert.AreEqual(requestFieldValuesModel.FieldId, requestFieldValues.FieldId);
             Assert.AreEqual(requestFieldValuesModel.ParentCitizenRequestId, requestFieldValues.ParentCitizenRequestId);
-            Assert.AreEqual(requestFieldValuesModel.Value, requestFieldValues.Value);
+            Assert.AreEqual(requestFieldValuesModel.Value, requestFieldValues.Values);
         }
     }
 }

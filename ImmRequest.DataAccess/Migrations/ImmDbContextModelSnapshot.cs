@@ -47,6 +47,9 @@ namespace ImmRequest.DataAccess.Migrations
                     b.Property<string>("CitizenName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -93,6 +96,9 @@ namespace ImmRequest.DataAccess.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsMultipleSelectEnabled")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -121,7 +127,7 @@ namespace ImmRequest.DataAccess.Migrations
                     b.Property<long>("ParentCitizenRequestId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Value")
+                    b.Property<string>("Values")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -159,6 +165,9 @@ namespace ImmRequest.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DeletedDate")
                         .HasColumnType("datetime2");

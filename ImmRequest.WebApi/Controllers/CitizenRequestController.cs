@@ -17,7 +17,7 @@ namespace ImmRequest.WebApi.Controllers
     [EnableCors("CorsPolicy")]
     public class CitizenRequestController : ControllerBase
     {
-        private ILogic<CitizenRequest> CitizenRequestLogic { get; set; }
+        private ILogic<CitizenRequest> Logic { get; set; }
 
         private IFinder<Topic> TopicFinder { get; set; }
 
@@ -25,7 +25,7 @@ namespace ImmRequest.WebApi.Controllers
 
         public CitizenRequestController(ILogic<CitizenRequest> CitizenRequestLogic, IFinder<Topic> TopicFinder, IFinder<Area> AreaFinder)
         {
-            this.CitizenRequestLogic = CitizenRequestLogic;
+            this.Logic = CitizenRequestLogic;
             this.TopicFinder = TopicFinder;
             this.AreaFinder = AreaFinder;
         }
@@ -46,7 +46,9 @@ namespace ImmRequest.WebApi.Controllers
                     return BadRequest(WebApiResource.EmptyRequestMessage);
                 }
                 var request = requestModel.ToDomain();
-                CitizenRequestLogic.Create(request);
+                Logic.Create(request);
+                Logic.Save();
+
                 return Ok(WebApiResource.CitizenRequest_CreatedMessage);
             }
             catch (ValidationException exception)
@@ -67,7 +69,7 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var request = CitizenRequestLogic.Get(requestId);
+                var request = Logic.Get(requestId);
                 var requestModel = new CitizenRequestModel();
                 requestModel.SetModel(request);
                 return Ok(requestModel);
@@ -89,7 +91,7 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var request = CitizenRequestLogic.Get(requestId);
+                var request = Logic.Get(requestId);
                 var statusRequestMessage = string.Format(WebApiResource.CitizenRequest_GetStatusMessage,
                     request.CitizenName, request.Description, request.Status.ToString());
                 return Ok(statusRequestMessage);
@@ -134,7 +136,7 @@ namespace ImmRequest.WebApi.Controllers
         [AuthorizationFilter]
         public IActionResult GetCitizenRequests()
         {
-            var requests = CitizenRequestLogic.GetAll();
+            var requests = Logic.GetAll();
             var requestsModels = CitizenRequestModel.ToModel(requests);
             return Ok(requestsModels);
         }
@@ -152,12 +154,14 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var request = CitizenRequestLogic.Get(requestId);
+                var request = Logic.Get(requestId);
                 var untrackedRequest = CitizenRequestModel
                     .ToModel(request)
                     .ToDomain();
                 untrackedRequest.Status = model.Status;
-                CitizenRequestLogic.Update(untrackedRequest);
+                Logic.Update(untrackedRequest);
+                Logic.Save();
+
                 var statusUpdatedMessage = string.Format(WebApiResource.CitizenRequest_StatusUpdatedMessage,
                     request.Id);
                 return Ok(statusUpdatedMessage);

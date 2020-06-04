@@ -10,6 +10,8 @@
                 <ModulePath>.*\\ImmRequest\.BusinessLogic\.Tests\.dll$</ModulePath>
                 <ModulePath>.*\\ImmRequest\.DataAccess\.Tests\.dll$</ModulePath>
                 <ModulePath>.*\\ImmRequest\.WebApi\.Tests\.dll$</ModulePath>
+                <ModulePath>.*\\ImmRequest\.Importer\.Tests\.dll$</ModulePath>
+                <ModulePath>.*\\Tests\.dll$</ModulePath>
               </Exclude>
             </ModulePaths>
             <Functions>

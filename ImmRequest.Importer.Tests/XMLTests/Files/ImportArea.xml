@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<List>
+  <Area name="Area 1">
+    <Topic name="Topic A"></Topic>
+    <Topic name="Topic B">
+      <Type name="Type B1"></Type>
+      <Type name="Type B2"></Type>
+    </Topic>
+  </Area>
+</List>
+

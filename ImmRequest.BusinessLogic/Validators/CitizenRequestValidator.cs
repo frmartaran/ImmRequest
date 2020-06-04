@@ -10,6 +10,7 @@ using System.Net.Mail;
 using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Enums;
 using ImmRequest.BusinessLogic.Helpers;
+using System.Linq;
 
 namespace ImmRequest.BusinessLogic.Validators
 {
@@ -47,14 +48,15 @@ namespace ImmRequest.BusinessLogic.Validators
             IsAreaValid(objectToValidate.AreaId);
             IsTopicValid(objectToValidate.AreaId, objectToValidate.TopicId);
             IsTopicTypeValid(objectToValidate.AreaId, objectToValidate.TopicId, objectToValidate.TopicTypeId);
-            AreBaseFieldValuesValid(objectToValidate.Values);            
+            AreBaseFieldValuesValid(objectToValidate.Values);
+            AllFieldsHaveValues(objectToValidate.TopicTypeId, objectToValidate.Values);
             return true;
         }
 
         protected bool IsRequestStatusValid(CitizenRequest objectToValidate)
         {
             var existingRequest = CitizenRequestRepository.Get(objectToValidate.Id);
-            if(existingRequest != null)
+            if (existingRequest != null)
             {
                 if (!StatusUpdatedIsValid(existingRequest.Status, objectToValidate.Status))
                 {
@@ -65,7 +67,7 @@ namespace ImmRequest.BusinessLogic.Validators
             }
             else
             {
-                if(objectToValidate.Status != RequestStatus.Created)
+                if (objectToValidate.Status != RequestStatus.Created)
                 {
                     throw new ValidationException(BusinessResource.ValidationError_CreateRequestStatusIsInvalid);
                 }
@@ -75,8 +77,8 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool StatusUpdatedIsValid(RequestStatus oldStatus, RequestStatus newStatus)
         {
-            return oldStatus == newStatus 
-                || StatusHelper.NextStatuses(oldStatus).Contains(newStatus) 
+            return oldStatus == newStatus
+                || StatusHelper.NextStatuses(oldStatus).Contains(newStatus)
                 || StatusHelper.PreviousStatuses(oldStatus).Contains(newStatus);
         }
 
@@ -97,7 +99,7 @@ namespace ImmRequest.BusinessLogic.Validators
                     bool isValid;
                     try
                     {
-                        isValid = field.Validate(requestField.Value);
+                        isValid = field.Validate(requestField.Values);
                     }
                     catch (DomainValidationException exception)
                     {
@@ -214,6 +216,24 @@ namespace ImmRequest.BusinessLogic.Validators
         {
             if (topicType == null)
                 throw new ValidationException(BusinessResource.ValidationError_TopicTypeIsInvalid);
+        }
+
+        protected bool AllFieldsHaveValues(long typeId, List<RequestFieldValues> values)
+        {
+            var type = TopicTypeRepository.Get(typeId);
+            var fieldsIds = type.AllFields.Select(f => f.Id).ToList();
+            var valuesFieldsIds = values.Select(rfv => rfv.FieldId).ToList();
+            var intersection = fieldsIds.Intersect(valuesFieldsIds).Count();
+            if (intersection != fieldsIds.Count)
+            {
+                var message = string.Format(BusinessResource.ValidationError_MustContainField,
+                    BusinessResource.Entity_Field, BusinessResource.OneOrMore_Value);
+                throw new ValidationException(message);
+
+            }
+
+            return true;
+
         }
     }
 }

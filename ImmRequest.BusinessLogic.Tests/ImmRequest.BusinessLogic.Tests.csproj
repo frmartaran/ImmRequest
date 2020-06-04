@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Importers\**" />
+    <EmbeddedResource Remove="Importers\**" />
+    <None Remove="Importers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="moq" Version="4.13.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
@@ -23,5 +29,9 @@
     <ProjectReference Include="..\ImmRequest.DataAccess.Interfaces\ImmRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.Domain\ImmRequest.Domain.csproj" />
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="copy &quot;$(ProjectDir)..\ImmRequest.Importer\bin\$(Configuration)\netstandard2.0\ImmRequest.Importer.dll&quot; &quot;$(OutDir)&quot;" />
+  </Target>
 
 </Project>

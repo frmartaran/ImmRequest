@@ -97,11 +97,56 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no finder for this entity. Contact support..
+        /// </summary>
+        public static string Developer_Exception {
+            get {
+                return ResourceManager.GetString("Developer_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importer not found. Please select another importer.
+        /// </summary>
+        public static string DeveloperException_ImporterNotFound {
+            get {
+                return ResourceManager.GetString("DeveloperException_ImporterNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong parameters or missing Construsctor. Please use another importer.
+        /// </summary>
+        public static string DeveloperException_ImporterWrongParameters {
+            get {
+                return ResourceManager.GetString("DeveloperException_ImporterWrongParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error importing the entities. Please try again later.
+        /// </summary>
+        public static string DeveloperException_UnknownIssue {
+            get {
+                return ResourceManager.GetString("DeveloperException_UnknownIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
         public static string Entity_Area {
             get {
                 return ResourceManager.GetString("Entity_Area", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fields.
+        /// </summary>
+        public static string Entity_Field {
+            get {
+                return ResourceManager.GetString("Entity_Field", resourceCulture);
             }
         }
         
@@ -142,11 +187,38 @@ namespace ImmRequest.BusinessLogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The specified file could not be found. Please verify the name and the extention of the file are correct..
+        /// </summary>
+        public static string Importer_FileNotFound {
+            get {
+                return ResourceManager.GetString("Importer_FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There has been an Error while {0} {1}. Please make sure that the {1} exists.
         /// </summary>
         public static string LogicAction_NotFound {
             get {
                 return ResourceManager.GetString("LogicAction_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or More values.
+        /// </summary>
+        public static string OneOrMore_Value {
+            get {
+                return ResourceManager.GetString("OneOrMore_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding existing topics to a new area is not allowed. Please reference the area the topic belongs to if you want to add types to it.
+        /// </summary>
+        public static string ValidationError_AddExistingTopicsToNewArea {
+            get {
+                return ResourceManager.GetString("ValidationError_AddExistingTopicsToNewArea", resourceCulture);
             }
         }
         

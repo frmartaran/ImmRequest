@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using ImmRequest.Domain.Enums;
+using System;
 
 namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
 {
@@ -84,7 +85,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             {
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Values = new List<string> { "Credencial" }
             };
 
             firstCitizenRequest = new CitizenRequest
@@ -134,6 +135,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             TopicTypeRepository.Insert(topicType);
             TopicRepository.Insert(topic);
             AreaRepository.Insert(area);
+            AreaRepository.Save();
         }
 
         [TestMethod]
@@ -189,7 +191,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void BaseFieldsAreInvalid()
         {
             CreateContextFor("BaseFieldsAreInvalid");
-            requestFieldValue.Value = "Panaderia";
+            requestFieldValue.Values = new List<string> { "Panaderia" };
             AreBaseFieldValuesValid(firstCitizenRequest.Values);
         }
 
@@ -198,7 +200,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         public void BaseFieldHaveInvalidFormat()
         {
             CreateContextFor("BaseFieldsAreInvalid");
-            requestFieldValue.Value = "Panaderia";
+            requestFieldValue.Values = new List<string> { "Panaderia" };
             requestFieldValue.FieldId = 2;
             AreBaseFieldValuesValid(firstCitizenRequest.Values);
         }
@@ -458,6 +460,19 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             CitizenRequestRepository = mockRepository.Object;
 
             IsRequestStatusValid(secondCitizenRequest);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void NotAllFieldsOfTypeHaveRequestValues()
+        {
+            CreateContextFor(Guid.NewGuid().ToString());
+            var fieldRepository = new Mock<IRepository<TopicType>>(MockBehavior.Strict);
+            fieldRepository.Setup(m => m.Get(It.IsAny<long>()))
+                .Returns(topicType);
+
+            TopicTypeRepository = fieldRepository.Object;
+            var isValid = AllFieldsHaveValues(firstCitizenRequest.TopicTypeId, firstCitizenRequest.Values);
         }
     }
 }

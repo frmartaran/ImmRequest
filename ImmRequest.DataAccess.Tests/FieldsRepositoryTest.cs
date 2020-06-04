@@ -75,6 +75,8 @@ namespace ImmRequest.DataAccess.Tests
             repository.Insert(numberField);
             repository.Insert(textField);
             repository.Insert(dateTimeField);
+            repository.Save();
+
 
             var numberFieldInDb = context.Fields
                 .ToList()
@@ -154,6 +156,8 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             repository.Delete(1);
+            repository.Save();
+
             var numberFieldInDb = context.Fields.FirstOrDefault();
             Assert.IsNull(numberFieldInDb);
         }

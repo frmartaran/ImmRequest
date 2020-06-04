@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ImmRequest.Domain.Fields;
 using ImmRequest.Domain.Interfaces;
 
@@ -16,6 +17,6 @@ namespace ImmRequest.Domain
 
         public BaseField Field { get; set; }
 
-        public string Value { get; set; }
+        public List<string> Values { get; set; }
     }
 }
