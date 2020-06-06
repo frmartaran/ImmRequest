@@ -17,6 +17,7 @@ import { ModifyAdminComponent } from './components/modify-admin/modify-admin.com
 import { ManagementComponent } from './components/management/management.component';
 import { ButtonComponent } from './components/button/button.component';
 import { DummyComponent } from './components/dummy/dummy.component';
+import { TypeEditorComponent } from './components/type-editor/type-editor.component';
 
 declare var require: any;
 
@@ -30,7 +31,8 @@ declare var require: any;
     ModifyAdminComponent,
     ManagementComponent,
     ButtonComponent,
-    DummyComponent
+    DummyComponent,
+    TypeEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,7 @@ declare var require: any;
       { path: 'home-page', component: RequestManagementComponent},
       { path: 'modify-admin', component: ModifyAdminComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'dummy', component: DummyComponent},
+      { path: 'type-editor', component: TypeEditorComponent}
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn ],
