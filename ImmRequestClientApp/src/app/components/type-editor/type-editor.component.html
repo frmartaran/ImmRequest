@@ -17,6 +17,14 @@
                         <mat-label class="label">Fields</mat-label>
                         <button class="add-button" mat-mini-fab color="warn" aria-label="Add">+</button>
                     </div>
+                    <div>
+                        <ng-container *ngFor="let field of fields">
+                            <app-label-displayer
+                                [name]="field.Name"
+                                [buttons]="buttons">
+                            </app-label-displayer>
+                        </ng-container>
+                    </div>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-raised-button>Save</button>

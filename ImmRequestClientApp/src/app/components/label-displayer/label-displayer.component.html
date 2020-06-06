@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-title>{{name}}</mat-card-title>
+    <div>
+        <ng-container *ngFor="let button of buttons">
+            <app-button (elementAction)="button.callback($event)" 
+                [buttonTooltip]="button.buttonTooltip"
+                [iconName]="button.iconName" 
+                [element]="element">
+            </app-button>
+        </ng-container>
+    </div>
+</mat-card>

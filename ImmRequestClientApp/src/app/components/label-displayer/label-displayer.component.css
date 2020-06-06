@@ -1,0 +1,14 @@
+.main-card{
+    display: flex;
+    justify-content: space-between;
+}
+
+.title{
+    float: left;
+    position: relative;
+}
+
+.buttons-container{
+    display: inline-block;
+    justify-items: right;
+}
