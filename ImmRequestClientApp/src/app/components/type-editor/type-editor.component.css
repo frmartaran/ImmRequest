@@ -29,3 +29,22 @@ mat-form-field{
 .container > * {
     width: 100%;
 }
+
+.field-title-container{
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    padding-left: 5px;
+}
+
+.label{
+    padding-right: 10%;
+    font-size: large;
+}
+
+.add-button{
+    font-size: x-large;
+    font-weight: 400;
+    position: relative;
+    float: right;
+}
