@@ -10,3 +10,23 @@ export interface SnackbarInput{
   action: string;
   config: {}
 }
+
+export interface BaseField{
+  id?: number,
+  name: string,
+  range: Range,
+  dataType: DataType
+
+}
+
+export enum DataType{
+  Number, 
+  Text,
+  DateTime, 
+  Bool
+}
+
+export interface Range{
+  
+}
+
