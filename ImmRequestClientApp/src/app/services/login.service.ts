@@ -10,7 +10,7 @@ import { environment } from './../../environments/environment.prod';
 export class LoginService {
 
   private isAuthenticated = new BehaviorSubject<boolean>(false);
-  private email = new BehaviorSubject<string>("");
+  private adminUsername = new BehaviorSubject<string>("");
   public url: string = environment.apiUrl;
   private readonly loginEndpoint = this.url +'api/Session';
   private session: Session;
@@ -26,18 +26,24 @@ export class LoginService {
 
   authenticateUser(response : string){
     this.session = JSON.parse(response);
+    localStorage.setItem('username', this.session.username);
+    localStorage.setItem("id", this.session.id.toString());
     localStorage.setItem("token", this.session.token);
     localStorage.setItem("email", this.session.email);
     this.isAuthenticated.next(true);
-    this.email.next(this.session.email);
+    this.adminUsername.next(this.session.username);
   }
 
   get getIsAuthenticated(){
     return this.isAuthenticated; 
   }
 
-  get getEmail(){
-    return this.email; 
+  get getAdminUsername(){
+    return this.adminUsername; 
+  }
+
+  setAdminUsername(username:string){
+    this.adminUsername.next(username);
   }
 
 }

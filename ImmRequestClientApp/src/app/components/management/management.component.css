@@ -1,0 +1,55 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.search-class {
+    display: block;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 99%;
+}
+
+.mat-elevation-z8{
+  text-align: center;
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#search-input{
+  margin-bottom: 5px
+}
+
+#action{
+  text-align: right;
+}
+
+mat-card-title{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 20px;
+  padding-bottom: 0px;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+mat-card{
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding:0px;
+}

@@ -15,7 +15,7 @@ import { HtmlHelpers } from 'src/app/helpers/html.helper';
 })
 export class NavMenuComponent implements OnInit {
   public imageUrl = "assets/images/logoIM-home.png";
-  public email$ = new Observable<string>();
+  public adminUsername$ = new Observable<string>();
   public isAuthenticated$: Observable<boolean>;
 
   constructor(private logoutService: LogoutService,
@@ -26,12 +26,14 @@ export class NavMenuComponent implements OnInit {
 
   ngOnInit() {
     this.isAuthenticated$ = this.loginService.getIsAuthenticated;
-    this.email$ = this.loginService.getEmail;
+    this.adminUsername$ = this.loginService.getAdminUsername;
   }
 
   logoutDialog(){
     let dialogRef = this.dialog.open(ConfirmationComponent, {
-      data: {elementDialogText : "Are you sure you want to log out?", elementDialogTitle: "Logout"}
+      data: {
+        elementDialogText : "Are you sure you want to log out?", 
+        elementDialogTitle: "Logout"}
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
@@ -42,8 +44,10 @@ export class NavMenuComponent implements OnInit {
               action: 'Success!',
               config: this.snackbarService.configSuccess
             });
+            localStorage.removeItem('username');
             localStorage.removeItem('token');
             localStorage.removeItem('email');
+            localStorage.removeItem('id');
             window.location.href = '/login';
             window.location.reload();
           },
@@ -65,5 +69,25 @@ export class NavMenuComponent implements OnInit {
 
   homePage(){
     this.router.navigate(['/home-page'])
+  }
+
+  createAdmin(){
+    this.router.navigateByUrl('/', {skipLocationChange: true})
+    .then(()=> this.router.navigate(['/modify-admin'], {state: {action: 'Create'}}));
+  }
+
+  editAdmin(){
+    let idToSend = localStorage.getItem('id');
+    let emailToSend = localStorage.getItem('email');
+    let usernameToSend = localStorage.getItem('username');
+    this.router.navigateByUrl('/', {skipLocationChange: true})
+    .then(()=> this.router.navigate(['/modify-admin'], {state: 
+      {
+        action: 'Edit', 
+        id: idToSend, 
+        email: emailToSend, 
+        username: usernameToSend, 
+        isLoggedIn: true}
+      }));
   }
 }

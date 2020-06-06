@@ -13,6 +13,10 @@ import { AdminNotLoggedIn } from './guards/admin-not-logged-in.guard';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationComponent } from './modals/confirmation/confirmation.component';
+import { ModifyAdminComponent } from './components/modify-admin/modify-admin.component';
+import { ManagementComponent } from './components/management/management.component';
+import { ButtonComponent } from './components/button/button.component';
+import { DummyComponent } from './components/dummy/dummy.component';
 
 declare var require: any;
 
@@ -22,7 +26,11 @@ declare var require: any;
     NavMenuComponent,
     LoginComponent,
     RequestManagementComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    ModifyAdminComponent,
+    ManagementComponent,
+    ButtonComponent,
+    DummyComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +42,8 @@ declare var require: any;
       { path: 'login', component: LoginComponent },
       { path: '', redirectTo: 'home-page', pathMatch: 'full' },
       { path: 'home-page', component: RequestManagementComponent},
+      { path: 'modify-admin', component: ModifyAdminComponent, canActivate: [AdminNotLoggedIn]},
+      { path: 'dummy', component: DummyComponent},
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn ],
