@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { BaseField, Button } from 'src/app/models/models';
+import { BaseField, Button, DataType } from 'src/app/models/models';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-type-editor',
@@ -24,6 +25,17 @@ export class TypeEditorComponent implements OnInit {
 
   ngOnInit() {
     this.initializeButtons();
+    let field: BaseField = {
+      name: "Test",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    this.fields = [field]
+  }
+
+  Send(typeEditorForm: NgForm){
+
   }
 
   initializeButtons(){
@@ -41,10 +53,21 @@ export class TypeEditorComponent implements OnInit {
   }
 
   deleteField(field: BaseField){
+    
+    this.snackBarService.notifications$.next({
+      message: "Delete button click",
+      action: 'Success!',
+      config: this.snackBarService.configSuccess
+    });
   }
 
   openFieldDetails(field: BaseField){
 
+    this.snackBarService.notifications$.next({
+      message: "Edit button click",
+      action: 'Success!',
+      config: this.snackBarService.configSuccess
+    });
   }
 
 }

@@ -1,14 +1,19 @@
 .main-card{
     display: flex;
     justify-content: space-between;
+    flex-flow: row;
 }
 
 .title{
     float: left;
     position: relative;
+    font-size: medium;
+    justify-content: center;
+    align-content: center;
 }
 
 .buttons-container{
-    display: inline-block;
-    justify-items: right;
+    position: relative;
+    float: right;
+    width: 30%;
 }
