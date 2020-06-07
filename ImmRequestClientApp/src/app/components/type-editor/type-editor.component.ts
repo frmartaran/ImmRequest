@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { BaseField, Button, DataType } from 'src/app/models/models';
+import { BaseField, Button, DataType, Column } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-type-editor',
@@ -23,19 +25,99 @@ export class TypeEditorComponent implements OnInit {
 
   public buttons: Button[];
 
+  public columns: Column[];
+
+  public datasource: BehaviorSubject<MatTableDataSource<BaseField>>;
+  
   ngOnInit() {
-    this.initializeButtons();
     let field: BaseField = {
-      name: "Test",
+      name: "Test 1",
       dataType: DataType.Number,
       rangeValues: [],
       range: null
     }
-    this.fields = [field]
+    let field2: BaseField = {
+      name: "Test 2",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field3: BaseField = {
+      name: "Test 3",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field4: BaseField = {
+      name: "Test 4",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field5: BaseField = {
+      name: "Test 5",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field6: BaseField = {
+      name: "Test 6",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field7: BaseField = {
+      name: "Test 7",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field8: BaseField = {
+      name: "Test 8",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field9: BaseField = {
+      name: "Test 9",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    let field10: BaseField = {
+      name: "Test 10",
+      dataType: DataType.Number,
+      rangeValues: [],
+      range: null
+    }
+    this.fields = [field, field2, field3, field4, field5, field6, field7, field8, field9, field10];
+    let source = new MatTableDataSource<BaseField>();
+    source.data = this.fields;
+    this.datasource = new BehaviorSubject(source);
+
+    this.initializeButtons();
+    this.initializeColumns();
   }
+
 
   Send(typeEditorForm: NgForm){
 
+  }
+
+  initializeColumns(){
+    this.columns = []
+    let headerName: Column = {
+      columnClass: "Field",
+      columnName: "Fields",
+      hasButtons: false
+    }
+    let headerButtons: Column = {
+      columnClass: "buttons",
+      columnName: "Actions",
+      hasButtons: true
+    }
+    this.columns.push(headerName);
+    this.columns.push(headerButtons);
   }
 
   initializeButtons(){

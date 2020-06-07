@@ -1,5 +1,6 @@
 body{
     background-color:rgba(128,128,128,0.1);
+    overflow: auto;
 }
 
 ::ng-deep .style-success button {

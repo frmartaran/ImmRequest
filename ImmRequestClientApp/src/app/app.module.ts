@@ -18,7 +18,6 @@ import { ManagementComponent } from './components/management/management.componen
 import { ButtonComponent } from './components/button/button.component';
 import { DummyComponent } from './components/dummy/dummy.component';
 import { TypeEditorComponent } from './components/type-editor/type-editor.component';
-import { LabelDisplayerComponent } from './components/label-displayer/label-displayer.component';
 
 declare var require: any;
 
@@ -34,7 +33,6 @@ declare var require: any;
     ButtonComponent,
     DummyComponent,
     TypeEditorComponent,
-    LabelDisplayerComponent
   ],
   imports: [
     BrowserModule,
