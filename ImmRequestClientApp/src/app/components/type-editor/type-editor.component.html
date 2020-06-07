@@ -21,8 +21,13 @@
                         <button class="add-button" mat-mini-fab color="warn" aria-label="Add">+</button>
                     </div>
                     <div>
-                        <app-management [buttons]="buttons" [columns]="columns" [title]="Fields" [pageSize]="3"
-                            [pageSizeOptions]="[3]" [dataSource]="datasource|async">
+                        <app-management [buttons]="buttons" 
+                            [columns]="columns" 
+                            [title]="Fields" 
+                            [pageSize]="3"
+                            [pageSizeOptions]="[3]" 
+                            [dataSource]="datasource|async"
+                            [allData]= "allFields|async">
                         </app-management>
                     </div>
                 </mat-card-content>

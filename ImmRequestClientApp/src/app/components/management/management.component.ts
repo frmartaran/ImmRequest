@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
 import { Button, Column } from 'src/app/models/models';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-management',
@@ -19,16 +20,12 @@ export class ManagementComponent implements OnInit {
   @Input() pageSize: number;
   @Input() pageSizeOptions: number[];
   @Input() dataSource: MatTableDataSource<any>
-
+  @Input() allData: any[];
+  
   public displayedColumns: string[];
-
-  public resultsLength: number;
-
-  private allData: any[];
 
   ngOnInit() {
     this.displayedColumns = this.columns.map(column => column.columnClass);
-    this.resultsLength = this.dataSource.data.length;
     this.allData = this.dataSource.data;
     this.TrimDataToPageSize(0);
   }

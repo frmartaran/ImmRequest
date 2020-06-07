@@ -21,11 +21,11 @@ export class TypeEditorComponent implements OnInit {
 
   public name: string;
 
-  public fields: BaseField[];
-
   public buttons: Button[];
 
   public columns: Column[];
+
+  public allFields: BehaviorSubject<BaseField[]>;
 
   public datasource: BehaviorSubject<MatTableDataSource<BaseField>>;
   
@@ -90,10 +90,11 @@ export class TypeEditorComponent implements OnInit {
       rangeValues: [],
       range: null
     }
-    this.fields = [field, field2, field3, field4, field5, field6, field7, field8, field9, field10];
+    let fields = [field, field2, field3, field4, field5, field6, field7, field8, field9, field10];
     let source = new MatTableDataSource<BaseField>();
-    source.data = this.fields;
+    source.data = fields;
     this.datasource = new BehaviorSubject(source);
+    this.allFields = new BehaviorSubject(fields);
 
     this.initializeButtons();
     this.initializeColumns();
@@ -135,12 +136,26 @@ export class TypeEditorComponent implements OnInit {
   }
 
   deleteField(field: BaseField){
-    
-    this.snackBarService.notifications$.next({
-      message: "Delete button click",
-      action: 'Success!',
-      config: this.snackBarService.configSuccess
+    this.updateTableSource(field);
+    let updatedFields = [];
+    this.allFields.subscribe((fields) => {
+      updatedFields = fields
     });
+    updatedFields = updatedFields.filter(f => f.name != field.name);
+    this.allFields.next(updatedFields);
+  }
+
+  private updateTableSource(field: BaseField) {
+    let source = new MatTableDataSource<any>();
+    this.datasource.subscribe((dataSource) => {
+      source = dataSource;
+    });
+    let sourceData = [...source.data];
+    let index = sourceData.findIndex(data => data.name == field.name);
+    let arrayLength = sourceData.length;
+    sourceData = [...sourceData.slice(0, index), ...sourceData.slice(index + 1, arrayLength)];
+    source.data = sourceData;
+    this.datasource.next(source);
   }
 
   openFieldDetails(field: BaseField){
