@@ -18,7 +18,7 @@
                     </div>
                     <div class="field-title-container">
                         <mat-label class="label">Fields</mat-label>
-                        <button class="add-button" mat-mini-fab color="warn" aria-label="Add">+</button>
+                        <button (click)="createField()" type="button" class="add-button" mat-mini-fab color="warn" aria-label="Add">+</button>
                     </div>
                     <div>
                         <app-management [buttons]="buttons" 
@@ -32,7 +32,7 @@
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-raised-button>Save</button>
+                    <button type="submit" mat-raised-button>Save</button>
                 </mat-card-actions>
             </form>
         </div>

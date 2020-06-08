@@ -18,6 +18,7 @@ import { ManagementComponent } from './components/management/management.componen
 import { ButtonComponent } from './components/button/button.component';
 import { DummyComponent } from './components/dummy/dummy.component';
 import { TypeEditorComponent } from './components/type-editor/type-editor.component';
+import { FieldEditorDialogComponent } from './modals/field-editor-dialog/field-editor-dialog.component';
 
 declare var require: any;
 
@@ -33,6 +34,7 @@ declare var require: any;
     ButtonComponent,
     DummyComponent,
     TypeEditorComponent,
+    FieldEditorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,6 @@ declare var require: any;
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn ],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmationComponent]
+  entryComponents: [ConfirmationComponent, FieldEditorDialogComponent]
 })
 export class AppModule { }

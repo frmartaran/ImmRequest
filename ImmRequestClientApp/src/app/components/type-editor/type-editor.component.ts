@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { BaseField, Button, DataType, Column } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
+import { FieldEditorDialogComponent } from 'src/app/modals/field-editor-dialog/field-editor-dialog.component';
 
 @Component({
   selector: 'app-type-editor',
@@ -13,7 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export class TypeEditorComponent implements OnInit {
 
-  constructor(private snackBarService: SnackbarService) { }
+  constructor(public dialog: MatDialog, private snackBarService: SnackbarService) { }
 
   public action: string;
 
@@ -125,7 +126,7 @@ export class TypeEditorComponent implements OnInit {
     let editButton: Button = {
       buttonTooltip: "edit",
       iconName: "edit",
-      callback: (element) => {this.openFieldDetails(element)}
+      callback: (element) => {this.editField(element)}
     }
     let deleteButton: Button = {
       buttonTooltip: "delete",
@@ -158,12 +159,34 @@ export class TypeEditorComponent implements OnInit {
     this.datasource.next(source);
   }
 
-  openFieldDetails(field: BaseField){
+  editField(field: BaseField){
+    let action = "Edit";
+    let editDialog = this.dialog.open(FieldEditorDialogComponent, {
+      data: {
+        action: action,
+        field: field
+      }
+    });
+    editDialog.afterClosed().subscribe((res) => {
+      if(res){
+        console.log("closed edit dialog with OK");
+      }
+      console.log("clicked cancel");
+    });
+  }
 
-    this.snackBarService.notifications$.next({
-      message: "Edit button click",
-      action: 'Success!',
-      config: this.snackBarService.configSuccess
+  createField(){
+    let action = "Create"
+    let createDialog = this.dialog.open(FieldEditorDialogComponent, {
+      data: {
+        action: action,
+      }
+    });
+    createDialog.afterClosed().subscribe((res) => {
+      if(res){
+        console.log("closed create dialog with OK");
+      }
+      console.log("clicked cancel");
     });
   }
 
