@@ -5,6 +5,7 @@ import { SelectionChange } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs';
 import { R3FactoryDelegateType } from '@angular/compiler/src/render3/r3_factory';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-field-editor-dialog',
@@ -43,11 +44,11 @@ export class FieldEditorDialogComponent implements OnInit {
     this.action = this.data.action;
     this.field = this.data.field;
 
-    if(this.field != null){
+    if (this.field != null) {
       this.dataTypeSelected = new BehaviorSubject(this.field.dataType);
       this.ShouldDisableMultipleValues(this.field.dataType);
       this.populateValues(this.field);
-    }else{
+    } else {
       this.dataTypeSelected = new BehaviorSubject(DataType.Number);
       this.ShouldDisableMultipleValues(DataType.Number);
     }
@@ -67,7 +68,7 @@ export class FieldEditorDialogComponent implements OnInit {
     }
   }
 
-  addToList(value: string){
+  addToList(value: string) {
     let currentList = [];
     this.textFieldList.subscribe((values) => {
       currentList = values;
@@ -76,7 +77,7 @@ export class FieldEditorDialogComponent implements OnInit {
     this.textFieldList.next(currentList);
   }
 
-  removeFromList(value: string){
+  removeFromList(value: string) {
     let currentList = [];
     this.textFieldList.subscribe((values) => {
       currentList = values;
@@ -85,10 +86,10 @@ export class FieldEditorDialogComponent implements OnInit {
     this.textFieldList.next(currentList);
   }
 
-  populateValues(field: BaseField){
+  populateValues(field: BaseField) {
     this.name = field.name;
     this.acceptsMultpleValues = field.multipleValues;
-    switch(field.dataType){
+    switch (field.dataType) {
       case DataType.Number:
         this.start = Number.parseInt(field.rangeValues[0]);
         this.end = Number.parseInt(field.rangeValues[1]);
@@ -98,13 +99,9 @@ export class FieldEditorDialogComponent implements OnInit {
         break;
       case DataType.DateTime:
         let start = new Date(field.rangeValues[0]).toLocaleDateString();
-        console.log(start);
         this.startDate = new Date(start);
-        console.log(this.startDate);
         let end = new Date(field.rangeValues[1]).toLocaleDateString();
-        console.log(end);
         this.endDate = new Date(end);
-        console.log(this.endDate);
         break;
       case DataType.Bool:
         break;
@@ -116,6 +113,54 @@ export class FieldEditorDialogComponent implements OnInit {
         });
         break;
     }
+  }
+
+  submit(fieldForm: NgForm) {
+    console.log("submited");
+    let newName = fieldForm.value.name;
+    let newDataType = null;
+    this.dataTypeSelected.subscribe((dataType) => {
+      newDataType = dataType;
+    });
+    let newMultipleValues = fieldForm.value.acceptsMultpleValues;
+    let newRangeValues = [];
+
+    switch (newDataType) {
+      case DataType.Number:
+        newRangeValues = [fieldForm.value.start.toString(), fieldForm.value.end.toString()];
+        break;
+      case DataType.Text:
+        this.textFieldList.subscribe((values) => {
+          newRangeValues = values;
+        });
+        break;
+      case DataType.DateTime:
+        let start = fieldForm.value.startDate.toString();
+        console.log(start);
+        let end = fieldForm.value.endDate.toString();
+        console.log(end);
+        newRangeValues = [start, end];
+        break;
+      case DataType.Bool:
+        break;
+      default:
+        this.snackbarService.notifications$.next({
+          message: "Unsupported field type!",
+          action: 'Error!',
+          config: this.snackbarService.configError
+        });
+        break;
+    }
+
+    let newField: BaseField = {
+      name: newName,
+      dataType: newDataType,
+      multipleValues: newMultipleValues,
+      rangeValues: newRangeValues
+    };
+
+    this.field = newField;
+    this.dialogRef.close(this.field);
   }
 
 }

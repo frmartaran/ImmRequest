@@ -29,7 +29,7 @@ export class TypeEditorComponent implements OnInit {
   public allFields: BehaviorSubject<BaseField[]>;
 
   public datasource: BehaviorSubject<MatTableDataSource<BaseField>>;
-  
+
   ngOnInit() {
     let field: BaseField = {
       name: "Basic number range",
@@ -102,11 +102,11 @@ export class TypeEditorComponent implements OnInit {
   }
 
 
-  Send(typeEditorForm: NgForm){
+  Send(typeEditorForm: NgForm) {
 
   }
 
-  initializeColumns(){
+  initializeColumns() {
     this.columns = []
     let headerName: Column = {
       columnClass: "Field",
@@ -122,21 +122,21 @@ export class TypeEditorComponent implements OnInit {
     this.columns.push(headerButtons);
   }
 
-  initializeButtons(){
+  initializeButtons() {
     let editButton: Button = {
       buttonTooltip: "edit",
       iconName: "edit",
-      callback: (element) => {this.editField(element)}
+      callback: (element) => { this.editField(element) }
     }
     let deleteButton: Button = {
       buttonTooltip: "delete",
       iconName: "delete",
-      callback: (element) => {this.deleteField(element)}
+      callback: (element) => { this.deleteField(element) }
     }
     this.buttons = [editButton, deleteButton];
   }
 
-  deleteField(field: BaseField){
+  deleteField(field: BaseField) {
     this.updateTableSource(field);
     let updatedFields = [];
     this.allFields.subscribe((fields) => {
@@ -159,7 +159,7 @@ export class TypeEditorComponent implements OnInit {
     this.datasource.next(source);
   }
 
-  editField(field: BaseField){
+  editField(field: BaseField) {
     let action = "Edit";
     let editDialog = this.dialog.open(FieldEditorDialogComponent, {
       data: {
@@ -169,14 +169,28 @@ export class TypeEditorComponent implements OnInit {
       autoFocus: false
     });
     editDialog.afterClosed().subscribe((res) => {
-      if(res){
-        console.log("closed edit dialog with OK");
+      if (res) {
+        let newField = res as BaseField;
+        let currentFields = [];
+        this.allFields.subscribe((fields) => {
+          currentFields = fields;
+        });
+        let index = currentFields.findIndex(f => f.name == field.name);
+        currentFields[index] = newField;
+        this.allFields.next(currentFields);
+
+        let currentDisplay = new MatTableDataSource<BaseField>();
+        this.datasource.subscribe((display) => {
+          currentDisplay = display
+        });
+        let displayIndex = currentDisplay.data.findIndex(f => f.name == field.name);
+        currentDisplay.data[displayIndex] = newField;
+        this.datasource.next(currentDisplay);
       }
-      console.log("clicked cancel");
     });
   }
 
-  createField(){
+  createField() {
     let action = "Create"
     let createDialog = this.dialog.open(FieldEditorDialogComponent, {
       data: {
@@ -185,10 +199,15 @@ export class TypeEditorComponent implements OnInit {
       autoFocus: false
     });
     createDialog.afterClosed().subscribe((res) => {
-      if(res){
-        console.log("closed create dialog with OK");
+      if (res) {
+        let newField = res as BaseField;
+        let currentFields = [];
+        this.allFields.subscribe((fields) => {
+          currentFields = fields;
+        });
+        currentFields.push(newField);
+        this.allFields.next(currentFields);
       }
-      console.log("clicked cancel");
     });
   }
 

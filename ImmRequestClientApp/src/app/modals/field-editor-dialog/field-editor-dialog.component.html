@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>{{action}} Field</h1>
 
-<mat-dialog-content>
-    <form #fieldForm="ngForm" (sumbit)="sumbit">
+<form #fieldForm="ngForm" (ngSubmit)="submit(fieldForm)" autocomplete="none">
+    <mat-dialog-content>
         <div class="form-container">
             <mat-form-field>
                 <mat-label>Name</mat-label>
@@ -12,15 +12,16 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Data Type</mat-label>
-                <mat-select value="{{dataTypeSelected|async}}" (selectionChange)="setDatatypeSelected($event.value)" required>
+                <mat-select value="{{dataTypeSelected|async}}" (selectionChange)="setDatatypeSelected($event.value)"
+                    required>
                     <mat-option value="0">Number</mat-option>
                     <mat-option value="1">Text</mat-option>
                     <mat-option value="2">Datetime</mat-option>
                     <mat-option value="3">Bool</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-checkbox [(ngModel)]="acceptsMultpleValues" name="multipleValues" [(indeterminate)]="indeterminate" [labelPosition]="labelPosition"
-                [disabled]="disabled">
+            <mat-checkbox [(ngModel)]="acceptsMultpleValues" name="multipleValues" [(indeterminate)]="indeterminate"
+                [labelPosition]="labelPosition" [disabled]="disabled">
                 Accepts multiple values
             </mat-checkbox>
             <div [ngSwitch]="dataTypeSelected|async">
@@ -58,7 +59,7 @@
                         </button>
                     </mat-list-item>
                 </mat-list>
-                <mat-form-field *ngSwitchCase="'2'" color="accent" >
+                <mat-form-field *ngSwitchCase="'2'" color="accent">
                     <mat-label>Start Date</mat-label>
                     <input name="startDate" required matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
                     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
@@ -68,14 +69,14 @@
                     <mat-label>End Date</mat-label>
                     <input name="endDate" required matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
                     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-                    <mat-datepicker  #endPicker></mat-datepicker>
+                    <mat-datepicker #endPicker></mat-datepicker>
                 </mat-form-field>
             </div>
         </div>
-    </form>
-</mat-dialog-content>
+    </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button [mat-dialog-close]="field" color="primary">Save</button>
-</mat-dialog-actions>
+    <mat-dialog-actions>
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <button type="submit" mat-raised-button color="primary">Save</button>
+    </mat-dialog-actions>
+</form>
