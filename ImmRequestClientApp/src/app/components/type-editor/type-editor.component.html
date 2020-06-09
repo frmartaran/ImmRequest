@@ -4,7 +4,7 @@
             <mat-card-header class="center">
                 <mat-card-title>Create/Edit Type</mat-card-title>
             </mat-card-header>
-            <form #typeEditorForm="ngForm" (ngSubmit)="Send">
+            <form #typeEditorForm="ngForm" (ngSubmit)="Send(typeEditorForm)" autocomplete="off">
                 <mat-card-content>
                     <div class="center">
                         <mat-form-field>

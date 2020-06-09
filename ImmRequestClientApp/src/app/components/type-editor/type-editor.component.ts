@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { BaseField, Button, DataType, Column } from 'src/app/models/models';
+import { BaseField, Button, DataType, Column, TopicType } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
 import { FieldEditorDialogComponent } from 'src/app/modals/field-editor-dialog/field-editor-dialog.component';
+import { TypeService } from 'src/app/services/type.service';
+import { HtmlHelpers } from 'src/app/helpers/html.helper';
 
 @Component({
   selector: 'app-type-editor',
@@ -14,11 +16,11 @@ import { FieldEditorDialogComponent } from 'src/app/modals/field-editor-dialog/f
 
 export class TypeEditorComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private snackBarService: SnackbarService) { }
+  constructor(public dialog: MatDialog,
+    private snackBarService: SnackbarService,
+    private typeService: TypeService) { }
 
   public action: string;
-
-  public id: number;
 
   public name: string;
 
@@ -30,72 +32,24 @@ export class TypeEditorComponent implements OnInit {
 
   public datasource: BehaviorSubject<MatTableDataSource<BaseField>>;
 
+  @Input() type: TopicType;
+
+  @Input() parentTopicId: number;
+
   ngOnInit() {
-    let field: BaseField = {
-      name: "Basic number range",
-      dataType: DataType.Number,
-      rangeValues: ["1", "10"],
-      multipleValues: true,
+    this.action = "Create"
+    if(this.type == null){
+      let emptyType: TopicType = {
+        name: "",
+        Fields: []
+      };
+      this.type = emptyType;
     }
-    let field2: BaseField = {
-      name: "Yes or Yes (Twice)",
-      dataType: DataType.Bool,
-      rangeValues: [],
-      multipleValues: false,
-    }
-    let field3: BaseField = {
-      name: "Word",
-      dataType: DataType.Text,
-      rangeValues: ["Word 1", "Another", "Word"],
-      multipleValues: true,
-    }
-    let field4: BaseField = {
-      name: "Between My Birthday (?",
-      dataType: DataType.DateTime,
-      rangeValues: ["2020-03-23 15:00:00", "2021-03-23 15:00:00"],
-      multipleValues: false,
-    }
-    let field5: BaseField = {
-      name: "Boring Number Range",
-      dataType: DataType.Number,
-      rangeValues: ["-10", "10"],
-      multipleValues: true,
-    }
-    let field6: BaseField = {
-      name: "Just Three Words",
-      dataType: DataType.Text,
-      rangeValues: ["Just", "Three", "Words"],
-      multipleValues: false,
-    }
-    let field7: BaseField = {
-      name: "Decade",
-      dataType: DataType.DateTime,
-      rangeValues: ["2010-01-01", "2020-01-01"],
-      multipleValues: true,
-    }
-    let field8: BaseField = {
-      name: "Are you tired?",
-      dataType: DataType.Bool,
-      rangeValues: [],
-      multipleValues: false,
-    }
-    let field9: BaseField = {
-      name: "Your favourite number must be inside this range",
-      dataType: DataType.Number,
-      rangeValues: ["-100", "100"],
-      multipleValues: true,
-    }
-    let field10: BaseField = {
-      name: "90 Kids only",
-      dataType: DataType.DateTime,
-      rangeValues: ["1990-01-01", "2000-01-01"],
-      multipleValues: false,
-    }
-    let fields = [field, field2, field3, field4, field5, field6, field7, field8, field9, field10];
+    this.parentTopicId = 1;
     let source = new MatTableDataSource<BaseField>();
-    source.data = fields;
+    source.data = this.type.Fields;
     this.datasource = new BehaviorSubject(source);
-    this.allFields = new BehaviorSubject(fields);
+    this.allFields = new BehaviorSubject(this.type.Fields);
 
     this.initializeButtons();
     this.initializeColumns();
@@ -103,7 +57,51 @@ export class TypeEditorComponent implements OnInit {
 
 
   Send(typeEditorForm: NgForm) {
+    this.type.name = typeEditorForm.value.name;
+    let fields = [];
+    this.allFields.subscribe((currentFields) => {
+      fields = currentFields
+    });
+    this.type.Fields = fields;
+    if (this.action == "Create") {
+      this.Create();
+    }else{
+      this.Edit();
+    }
+  }
 
+  private Create() {
+    this.typeService.createType(1, this.type)
+      .subscribe((res) => {
+        this.snackBarService.notifications$.next({
+          message: res,
+          action: 'Success!',
+          config: this.snackBarService.configSuccess
+        });
+      }, (error) => {
+        this.snackBarService.notifications$.next({
+          message: HtmlHelpers.getHtmlErrorMessage(error),
+          action: 'Error!',
+          config: this.snackBarService.configError
+        });
+      });
+  }
+
+  private Edit() {
+    this.typeService.updateType(this.type)
+      .subscribe((res) => {
+        this.snackBarService.notifications$.next({
+          message: res,
+          action: 'Success!',
+          config: this.snackBarService.configSuccess
+        });
+      }, (error) => {
+        this.snackBarService.notifications$.next({
+          message: HtmlHelpers.getHtmlErrorMessage(error),
+          action: 'Error!',
+          config: this.snackBarService.configError
+        });
+      });
   }
 
   initializeColumns() {

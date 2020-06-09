@@ -48,6 +48,7 @@ namespace ImmRequest.WebApi.Controllers
                 var session = model.ToDomain();
                 session.AdministratorInSessionId = administrator.Id;
                 var token = Inputs.Logic.Create(session);
+                Inputs.Logic.Save();
                 model.Id = session.AdministratorInSessionId;
                 model.Token = token;
                 model.Username = administrator.UserName;

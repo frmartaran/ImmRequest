@@ -31,6 +31,12 @@ export interface Column {
   hasButtons: boolean;
 }
 
+export interface TopicType{
+  id?: number,
+  name: string, 
+  Fields: BaseField[]
+}
+
 export interface BaseField{
   id?: number,
   name: string,

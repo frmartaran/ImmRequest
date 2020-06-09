@@ -27,7 +27,8 @@ namespace ImmRequest.WebApi.Models
             var field = new DateTimeField
             {
                 Name = Name,
-                ParentTypeId = ParentTypeId
+                ParentTypeId = ParentTypeId,
+                IsMultipleSelectEnabled = MultipleValues
             };
             field.SetRange(RangeValues);
 

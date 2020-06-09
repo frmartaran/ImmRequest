@@ -28,7 +28,8 @@ namespace ImmRequest.WebApi.Models
             var field = new NumberField
             {
                 Name = Name,
-                ParentTypeId = ParentTypeId
+                ParentTypeId = ParentTypeId,
+                IsMultipleSelectEnabled = MultipleValues
             };
 
             field.SetRange(RangeValues);

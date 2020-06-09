@@ -19,6 +19,8 @@ namespace ImmRequest.WebApi.Models
 
         public long ParentTypeId { get; set; }
 
+        public bool MultipleValues { get; set; }
+
         public List<string> RangeValues { get; set; }
 
         public DataType DataType { get; set; }
@@ -28,6 +30,7 @@ namespace ImmRequest.WebApi.Models
             Id = entity.Id;
             Name = entity.Name;
             ParentTypeId = entity.ParentTypeId;
+            MultipleValues = entity.IsMultipleSelectEnabled;
             return this;
         }
 
