@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BaseField, DataType } from 'src/app/models/models';
 import { SelectionChange } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs';
+import { R3FactoryDelegateType } from '@angular/compiler/src/render3/r3_factory';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-field-editor-dialog',
@@ -12,7 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FieldEditorDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<FieldEditorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private snackbarService: SnackbarService) { }
 
   public action: string;
 
@@ -20,28 +22,44 @@ export class FieldEditorDialogComponent implements OnInit {
 
   public disabled: boolean;
 
+  public acceptsMultpleValues: boolean;
+
   public dataTypeSelected: BehaviorSubject<DataType>;
 
   public textFieldList: BehaviorSubject<string[]>;
 
+  public start: number;
+
+  public end: number;
+
+  public startDate: Date;
+
+  public endDate: Date;
+
+  public name: string;
+
   ngOnInit() {
-    this.dataTypeSelected = new BehaviorSubject(DataType.Number);
     this.textFieldList = new BehaviorSubject([]);
     this.action = this.data.action;
     this.field = this.data.field;
-    this.disabled = false;
-    let holi: BaseField = {
-      name: "Test 1",
-      dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+
+    if(this.field != null){
+      this.dataTypeSelected = new BehaviorSubject(this.field.dataType);
+      this.ShouldDisableMultipleValues(this.field.dataType);
+      this.populateValues(this.field);
+    }else{
+      this.dataTypeSelected = new BehaviorSubject(DataType.Number);
+      this.ShouldDisableMultipleValues(DataType.Number);
     }
-    this.field = holi;
   }
 
   setDatatypeSelected(newValue) {
     this.dataTypeSelected.next(newValue);
-    if (newValue == 3) {
+    this.ShouldDisableMultipleValues(newValue);
+  }
+
+  private ShouldDisableMultipleValues(type: DataType) {
+    if (type == 3) {
       this.disabled = true;
     }
     else {
@@ -65,6 +83,39 @@ export class FieldEditorDialogComponent implements OnInit {
     });
     currentList = currentList.filter(v => v != value);
     this.textFieldList.next(currentList);
+  }
+
+  populateValues(field: BaseField){
+    this.name = field.name;
+    this.acceptsMultpleValues = field.multipleValues;
+    switch(field.dataType){
+      case DataType.Number:
+        this.start = Number.parseInt(field.rangeValues[0]);
+        this.end = Number.parseInt(field.rangeValues[1]);
+        break;
+      case DataType.Text:
+        this.textFieldList.next(field.rangeValues);
+        break;
+      case DataType.DateTime:
+        let start = new Date(field.rangeValues[0]).toLocaleDateString();
+        console.log(start);
+        this.startDate = new Date(start);
+        console.log(this.startDate);
+        let end = new Date(field.rangeValues[1]).toLocaleDateString();
+        console.log(end);
+        this.endDate = new Date(end);
+        console.log(this.endDate);
+        break;
+      case DataType.Bool:
+        break;
+      default:
+        this.snackbarService.notifications$.next({
+          message: "Unsupported field type!",
+          action: 'Error!',
+          config: this.snackbarService.configError
+        });
+        break;
+    }
   }
 
 }

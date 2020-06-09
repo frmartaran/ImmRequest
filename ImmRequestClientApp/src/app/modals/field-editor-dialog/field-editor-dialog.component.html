@@ -12,28 +12,28 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Data Type</mat-label>
-                <mat-select (selectionChange)="setDatatypeSelected($event.value)" required>
+                <mat-select value="{{dataTypeSelected|async}}" (selectionChange)="setDatatypeSelected($event.value)" required>
                     <mat-option value="0">Number</mat-option>
                     <mat-option value="1">Text</mat-option>
                     <mat-option value="2">Datetime</mat-option>
                     <mat-option value="3">Bool</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-checkbox name="multipleValues" [(indeterminate)]="indeterminate" [labelPosition]="labelPosition"
+            <mat-checkbox [(ngModel)]="acceptsMultpleValues" name="multipleValues" [(indeterminate)]="indeterminate" [labelPosition]="labelPosition"
                 [disabled]="disabled">
                 Accepts multiple values
             </mat-checkbox>
             <div [ngSwitch]="dataTypeSelected|async">
                 <mat-form-field *ngSwitchCase="'0'">
                     <mat-label>Start</mat-label>
-                    <input matInput type="number" name="start" required [(ngModel)]="start">
+                    <input value="{{start}}" matInput type="number" name="start" required [(ngModel)]="start">
                     <button mat-button *ngIf="start" matSuffix mat-icon-button aria-label="Clear" (click)="start=''">
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-form-field>
                 <mat-form-field *ngSwitchCase="'0'">
                     <mat-label>End</mat-label>
-                    <input matInput type="number" name="end" required [(ngModel)]="end">
+                    <input value="{{end}}" matInput type="number" name="end" required [(ngModel)]="end">
                     <button mat-button *ngIf="end" matSuffix mat-icon-button aria-label="Clear" (click)="end=''">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -60,15 +60,15 @@
                 </mat-list>
                 <mat-form-field *ngSwitchCase="'2'" color="accent" >
                     <mat-label>Start Date</mat-label>
-                    <input required matInput [matDatepicker]="startPicker">
+                    <input name="startDate" required matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
                     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                     <mat-datepicker #startPicker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field *ngSwitchCase="'2'" color="accent" required>
                     <mat-label>End Date</mat-label>
-                    <input required matInput [matDatepicker]="endPicker">
+                    <input name="endDate" required matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
                     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #endPicker></mat-datepicker>
+                    <mat-datepicker  #endPicker></mat-datepicker>
                 </mat-form-field>
             </div>
         </div>

@@ -34,8 +34,8 @@ export interface Column {
 export interface BaseField{
   id?: number,
   name: string,
-  range: Range,
   dataType: DataType,
+  multipleValues: boolean,
   rangeValues: string[]
 
 }
@@ -45,8 +45,4 @@ export enum DataType{
   Text,
   DateTime, 
   Bool
-}
-
-export interface Range{
-  
 }

@@ -32,64 +32,64 @@ export class TypeEditorComponent implements OnInit {
   
   ngOnInit() {
     let field: BaseField = {
-      name: "Test 1",
+      name: "Basic number range",
       dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      rangeValues: ["1", "10"],
+      multipleValues: true,
     }
     let field2: BaseField = {
-      name: "Test 2",
-      dataType: DataType.Number,
+      name: "Yes or Yes (Twice)",
+      dataType: DataType.Bool,
       rangeValues: [],
-      range: null
+      multipleValues: false,
     }
     let field3: BaseField = {
-      name: "Test 3",
-      dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      name: "Word",
+      dataType: DataType.Text,
+      rangeValues: ["Word 1", "Another", "Word"],
+      multipleValues: true,
     }
     let field4: BaseField = {
-      name: "Test 4",
-      dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      name: "Between My Birthday (?",
+      dataType: DataType.DateTime,
+      rangeValues: ["2020-03-23 15:00:00", "2021-03-23 15:00:00"],
+      multipleValues: false,
     }
     let field5: BaseField = {
-      name: "Test 5",
+      name: "Boring Number Range",
       dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      rangeValues: ["-10", "10"],
+      multipleValues: true,
     }
     let field6: BaseField = {
-      name: "Test 6",
-      dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      name: "Just Three Words",
+      dataType: DataType.Text,
+      rangeValues: ["Just", "Three", "Words"],
+      multipleValues: false,
     }
     let field7: BaseField = {
-      name: "Test 7",
-      dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      name: "Decade",
+      dataType: DataType.DateTime,
+      rangeValues: ["2010-01-01", "2020-01-01"],
+      multipleValues: true,
     }
     let field8: BaseField = {
-      name: "Test 8",
-      dataType: DataType.Number,
+      name: "Are you tired?",
+      dataType: DataType.Bool,
       rangeValues: [],
-      range: null
+      multipleValues: false,
     }
     let field9: BaseField = {
-      name: "Test 9",
+      name: "Your favourite number must be inside this range",
       dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      rangeValues: ["-100", "100"],
+      multipleValues: true,
     }
     let field10: BaseField = {
-      name: "Test 10",
-      dataType: DataType.Number,
-      rangeValues: [],
-      range: null
+      name: "90 Kids only",
+      dataType: DataType.DateTime,
+      rangeValues: ["1990-01-01", "2000-01-01"],
+      multipleValues: false,
     }
     let fields = [field, field2, field3, field4, field5, field6, field7, field8, field9, field10];
     let source = new MatTableDataSource<BaseField>();
@@ -165,7 +165,8 @@ export class TypeEditorComponent implements OnInit {
       data: {
         action: action,
         field: field
-      }
+      },
+      autoFocus: false
     });
     editDialog.afterClosed().subscribe((res) => {
       if(res){
@@ -180,7 +181,8 @@ export class TypeEditorComponent implements OnInit {
     let createDialog = this.dialog.open(FieldEditorDialogComponent, {
       data: {
         action: action,
-      }
+      },
+      autoFocus: false
     });
     createDialog.afterClosed().subscribe((res) => {
       if(res){
