@@ -53,7 +53,7 @@ namespace ImmRequest.WebApi.Controllers
 
                 var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Type,
                     WebApiResource.Action_Created);
-                return Ok(responseMessage);
+                return Ok(new SuccessfulCreateModel(type.Id, responseMessage));
             }
             catch (ValidationException exception)
             {

@@ -1,12 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { BaseField, Button, DataType, Column, TopicType } from 'src/app/models/models';
+import { BaseField, Button, DataType, Column, TopicType, SuccessfulCreate } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
 import { FieldEditorDialogComponent } from 'src/app/modals/field-editor-dialog/field-editor-dialog.component';
 import { TypeService } from 'src/app/services/type.service';
 import { HtmlHelpers } from 'src/app/helpers/html.helper';
+import { ManagementComponent } from '../management/management.component';
 
 @Component({
   selector: 'app-type-editor',
@@ -20,7 +21,9 @@ export class TypeEditorComponent implements OnInit {
     private snackBarService: SnackbarService,
     private typeService: TypeService) { }
 
-  public action: string;
+  @ViewChild(ManagementComponent, { static: true }) managementeComponent: ManagementComponent;
+
+  public action: BehaviorSubject<string>;
 
   public name: string;
 
@@ -37,8 +40,8 @@ export class TypeEditorComponent implements OnInit {
   @Input() parentTopicId: number;
 
   ngOnInit() {
-    this.action = "Create"
-    if(this.type == null){
+    this.action = new BehaviorSubject("Create");
+    if (this.type == null) {
       let emptyType: TopicType = {
         name: "",
         Fields: []
@@ -63,9 +66,13 @@ export class TypeEditorComponent implements OnInit {
       fields = currentFields
     });
     this.type.Fields = fields;
-    if (this.action == "Create") {
+    let action = "";
+    this.action.subscribe((intention) => {
+      action = intention;
+    })
+    if (action == "Create") {
       this.Create();
-    }else{
+    } else {
       this.Edit();
     }
   }
@@ -73,8 +80,11 @@ export class TypeEditorComponent implements OnInit {
   private Create() {
     this.typeService.createType(1, this.type)
       .subscribe((res) => {
+        var successObject = JSON.parse(res);
+        this.type.id = successObject.id;
+        this.action.next("Edit");
         this.snackBarService.notifications$.next({
-          message: res,
+          message: successObject.message,
           action: 'Success!',
           config: this.snackBarService.configSuccess
         });
@@ -135,27 +145,16 @@ export class TypeEditorComponent implements OnInit {
   }
 
   deleteField(field: BaseField) {
-    this.updateTableSource(field);
     let updatedFields = [];
     this.allFields.subscribe((fields) => {
       updatedFields = fields
     });
-    updatedFields = updatedFields.filter(f => f.name != field.name);
+    let foundIndex = updatedFields.findIndex(f => f.name == field.name);
+    updatedFields = updatedFields.filter((_, index) => index !== foundIndex);
     this.allFields.next(updatedFields);
+    this.UpdateDatasource(updatedFields);
   }
 
-  private updateTableSource(field: BaseField) {
-    let source = new MatTableDataSource<any>();
-    this.datasource.subscribe((dataSource) => {
-      source = dataSource;
-    });
-    let sourceData = [...source.data];
-    let index = sourceData.findIndex(data => data.name == field.name);
-    let arrayLength = sourceData.length;
-    sourceData = [...sourceData.slice(0, index), ...sourceData.slice(index + 1, arrayLength)];
-    source.data = sourceData;
-    this.datasource.next(source);
-  }
 
   editField(field: BaseField) {
     let action = "Edit";
@@ -176,14 +175,7 @@ export class TypeEditorComponent implements OnInit {
         let index = currentFields.findIndex(f => f.name == field.name);
         currentFields[index] = newField;
         this.allFields.next(currentFields);
-
-        let currentDisplay = new MatTableDataSource<BaseField>();
-        this.datasource.subscribe((display) => {
-          currentDisplay = display
-        });
-        let displayIndex = currentDisplay.data.findIndex(f => f.name == field.name);
-        currentDisplay.data[displayIndex] = newField;
-        this.datasource.next(currentDisplay);
+        this.UpdateDatasource(currentFields);
       }
     });
   }
@@ -205,8 +197,16 @@ export class TypeEditorComponent implements OnInit {
         });
         currentFields.push(newField);
         this.allFields.next(currentFields);
+        this.UpdateDatasource(currentFields);
       }
     });
   }
 
+  private UpdateDatasource(currentFields: any[]) {
+    let paginator = this.managementeComponent.paginator;
+    let offset = paginator.pageIndex * paginator.pageSize;
+    let data = currentFields.slice(offset).slice(0, paginator.pageSize);
+    let currentDisplay = new MatTableDataSource<BaseField>(data);
+    this.datasource.next(currentDisplay);
+  }
 }

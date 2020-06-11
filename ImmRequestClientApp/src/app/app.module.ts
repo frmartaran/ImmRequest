@@ -19,6 +19,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { DummyComponent } from './components/dummy/dummy.component';
 import { TypeEditorComponent } from './components/type-editor/type-editor.component';
 import { FieldEditorDialogComponent } from './modals/field-editor-dialog/field-editor-dialog.component';
+import { DatePipe } from '@angular/common';
 
 declare var require: any;
 
@@ -51,7 +52,7 @@ declare var require: any;
       { path: 'type-editor', component: TypeEditorComponent}
     ])
   ],
-  providers: [ AdminLoggedIn, AdminNotLoggedIn ],
+  providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],
   bootstrap: [AppComponent],
   entryComponents: [ConfirmationComponent, FieldEditorDialogComponent]
 })

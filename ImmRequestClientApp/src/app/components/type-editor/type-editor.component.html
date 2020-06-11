@@ -2,7 +2,7 @@
     <mat-card class="center">
         <div class="container">
             <mat-card-header class="center">
-                <mat-card-title>Create/Edit Type</mat-card-title>
+                <mat-card-title>{{action|async}} Type</mat-card-title>
             </mat-card-header>
             <form #typeEditorForm="ngForm" (ngSubmit)="Send(typeEditorForm)" autocomplete="off">
                 <mat-card-content>
@@ -27,7 +27,7 @@
                             [pageSize]="3"
                             [pageSizeOptions]="[3]" 
                             [dataSource]="datasource|async"
-                            [allData]= "allFields|async">
+                            [allData]="allFields|async">
                         </app-management>
                     </div>
                 </mat-card-content>

@@ -42,7 +42,7 @@
                 <mat-form-field *ngSwitchCase="'1'">
                     <mat-label>Add Word</mat-label>
                     <input matInput type="text" name="rangeValue" required [(ngModel)]="rangeValue">
-                    <button mat-button *ngIf="rangeValue" matSuffix mat-icon-button aria-label="Add"
+                    <button  type="button" mat-button *ngIf="rangeValue" matSuffix mat-icon-button aria-label="Add"
                         (click)="addToList(rangeValue)">
                         <mat-icon>add</mat-icon>
                     </button>

@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { R3FactoryDelegateType } from '@angular/compiler/src/render3/r3_factory';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-field-editor-dialog',
@@ -15,7 +16,8 @@ import { NgForm } from '@angular/forms';
 export class FieldEditorDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<FieldEditorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private snackbarService: SnackbarService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private snackbarService: SnackbarService,
+    public datePipe: DatePipe) { }
 
   public action: string;
 
@@ -89,7 +91,7 @@ export class FieldEditorDialogComponent implements OnInit {
   populateValues(field: BaseField) {
     this.name = field.name;
     this.acceptsMultpleValues = field.multipleValues;
-    switch (field.dataType) {
+    switch (+field.dataType) {
       case DataType.Number:
         this.start = Number.parseInt(field.rangeValues[0]);
         this.end = Number.parseInt(field.rangeValues[1]);
@@ -116,16 +118,15 @@ export class FieldEditorDialogComponent implements OnInit {
   }
 
   submit(fieldForm: NgForm) {
-    console.log("submited");
     let newName = fieldForm.value.name;
-    let newDataType = null;
+    let newDataType = DataType.Number;
     this.dataTypeSelected.subscribe((dataType) => {
       newDataType = dataType;
     });
     let newMultipleValues = fieldForm.value.acceptsMultpleValues;
     let newRangeValues = [];
 
-    switch (newDataType) {
+    switch (+newDataType) {
       case DataType.Number:
         newRangeValues = [fieldForm.value.start.toString(), fieldForm.value.end.toString()];
         break;
@@ -135,10 +136,8 @@ export class FieldEditorDialogComponent implements OnInit {
         });
         break;
       case DataType.DateTime:
-        let start = fieldForm.value.startDate.toString();
-        console.log(start);
-        let end = fieldForm.value.endDate.toString();
-        console.log(end);
+        let start = this.datePipe.transform(fieldForm.value.startDate, "yyyy-MM-dd");
+        let end = this.datePipe.transform(fieldForm.value.endDate, "yyyy-MM-dd");
         newRangeValues = [start, end];
         break;
       case DataType.Bool:
