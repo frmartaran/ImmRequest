@@ -46,6 +46,19 @@ export interface BaseField{
 
 }
 
+export interface Area{
+  id: number,
+  name: string,
+  topics: Topic[]
+}
+
+export interface Topic{
+  id: number,
+  areaId: number,
+  name: string,
+  types: TopicType[]
+}
+
 export enum DataType{
   Number, 
   Text,

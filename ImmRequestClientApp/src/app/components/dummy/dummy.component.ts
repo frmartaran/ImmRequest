@@ -1,9 +1,10 @@
 import { Router } from '@angular/router';
 import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
-import { Button, Column } from 'src/app/models/models';
+import { Button, Column, Area, Topic } from 'src/app/models/models';
 import { MatTableDataSource } from '@angular/material';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { ManagementService } from 'src/app/services/management.service';
 
 @Component({
   selector: 'app-dummy',
@@ -20,11 +21,21 @@ export class DummyComponent implements OnInit {
 
   public title: string;
 
+  public areas: Area[];
+
   public dataSource: BehaviorSubject<MatTableDataSource<any>>;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private managementService: ManagementService) { }
 
   ngOnInit() {
+    this.managementService.getAllAreas().subscribe((allAreas) => {
+      this.areas = allAreas;
+    });
+    console.log(this.areas);
+    this.managementService.getAllTopicsFromArea(1).subscribe((Alltopics) => {
+      console.log(Alltopics);
+    });
+    
     let button1: Button = {
       buttonTooltip: "button1",
       iconName: "edit",
