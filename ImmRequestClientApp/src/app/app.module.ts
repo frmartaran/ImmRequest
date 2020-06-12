@@ -17,11 +17,12 @@ import { ModifyAdminComponent } from './components/modify-admin/modify-admin.com
 import { ManagementComponent } from './components/management/management.component';
 import { ButtonComponent } from './components/button/button.component';
 import { DummyComponent } from './components/dummy/dummy.component';
-import { TypeEditorComponent } from './components/type-editor/type-editor.component';
+// import { TypeEditorComponent } from './components/type-editor/type-editor.component';
 import { FieldEditorDialogComponent } from './modals/field-editor-dialog/field-editor-dialog.component';
 import { DatePipe } from '@angular/common';
-import { AreasDisplayerComponent } from './components/areas-displayer/areas-displayer.component';
-import { AreasTableComponent } from './components/areas-table/areas-table.component';
+// import { AreasDisplayerComponent } from './components/areas-displayer/areas-displayer.component';
+// import { AreasTableComponent } from './components/areas-table/areas-table.component';
+import { AdminManagementComponent } from './components/admin-management/admin-management.component';
 
 declare var require: any;
 
@@ -36,10 +37,11 @@ declare var require: any;
     ManagementComponent,
     ButtonComponent,
     DummyComponent,
-    TypeEditorComponent,
+    // TypeEditorComponent,
     FieldEditorDialogComponent,
-    AreasDisplayerComponent,
-    AreasTableComponent,
+    // AreasDisplayerComponent,
+    // AreasTableComponent,
+    AdminManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,9 +55,10 @@ declare var require: any;
       { path: 'home-page', component: RequestManagementComponent},
       { path: 'modify-admin', component: ModifyAdminComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'dummy', component: DummyComponent},
-      { path: 'type-editor', component: TypeEditorComponent},
-      { path: 'Area', component: AreasDisplayerComponent},
-      { path: 'Areas', component: AreasTableComponent},
+      // // { path: 'type-editor', component: TypeEditorComponent},
+      // { path: 'Area', component: AreasDisplayerComponent},
+      // { path: 'Areas', component: AreasTableComponent},
+      { path: 'manage-admin', component: AdminManagementComponent},
 
     ])
   ],

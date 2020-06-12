@@ -90,4 +90,8 @@ export class NavMenuComponent implements OnInit {
         isLoggedIn: true}
       }));
   }
+
+  manageAdmins(){
+    this.router.navigate(['/manage-admin'])
+  }
 }

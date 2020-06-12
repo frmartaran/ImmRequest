@@ -15,6 +15,8 @@ export class DummyComponent implements OnInit {
 
   private random:string;
 
+  public iterator:number;
+
   public buttons: Button[];
 
   public columns: Column[];
@@ -28,18 +30,11 @@ export class DummyComponent implements OnInit {
   constructor(private router: Router, private managementService: ManagementService) { }
 
   ngOnInit() {
-    this.managementService.getAllAreas().subscribe((allAreas) => {
-      this.areas = allAreas;
-      console.log(allAreas);
-    });
-    this.managementService.getAllTopicsFromArea(1).subscribe((Alltopics) => {
-      console.log(Alltopics);
-    });
-    
+    this.iterator = 0;
     let button1: Button = {
       buttonTooltip: "button1",
-      iconName: "edit",
-      callback: (element) => {this.redirectElement(element)}
+      iconName: "add",
+      callback: () => {this.addElement()}
     }
     let button2: Button = {
       buttonTooltip: "button2",
@@ -49,7 +44,7 @@ export class DummyComponent implements OnInit {
     this.buttons = [button1, button2];
 
     let column1: Column = {
-      columnClass: "column1",
+      columnClass: "name1",
       columnName: "column1",
       hasButtons: false
     }
@@ -61,19 +56,26 @@ export class DummyComponent implements OnInit {
     this.columns = [column1, column2];
     this.title = "prueba";
 
-    let element1 = {name:"element1"};
-    let element2 = {name:"element2"};
-    let element3 = {name:"element3"};
-    let element4 = {name:"element4"};
-    let element5 = {name:"element5"};
+    let element1 = {name1:"element1"};
+    let element2 = {name1:"element2"};
+    let element3 = {name1:"element3"};
+    let element4 = {name1:"element4"};
+    let element5 = {name1:"element5"};
 
     let source = new MatTableDataSource<any>();
     source.data = [element1, element2, element3, element4, element5];
     this.dataSource = new BehaviorSubject(source);
   }
 
-  redirectElement(element:any){
-    this.router.navigate(['/home-page']);
+  addElement(){
+    let source = new MatTableDataSource<any>();
+    this.dataSource.subscribe((dataSource) => {
+      source = dataSource
+    })
+    let sourceData = [...source.data];
+    sourceData = [...sourceData, {name1:"element" + this.iterator}];
+    source.data = sourceData;
+    this.dataSource.next(source);
   }
 
   deleteElement(element:any){

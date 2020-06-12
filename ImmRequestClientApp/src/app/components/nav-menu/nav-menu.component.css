@@ -38,3 +38,7 @@ mat-toolbar{
   margin-right: 16px;
   vertical-align: middle;
 }
+
+.mat-button{
+  font-weight: bold;
+}

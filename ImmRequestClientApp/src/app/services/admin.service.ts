@@ -38,4 +38,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
           responseType: 'text'
         });
     }
+
+    public GetAll() {
+      var adminToken = localStorage.getItem('token');
+      let headers = new HttpHeaders();
+      headers = headers
+        .set('Content-Type', 'application/json')
+        .set('Authorization', adminToken);
+  
+      return this.http.get(this.endpoint, {
+        headers: headers,
+      });
+    }
+
+    public DeleteAdmin(admin: Admin) {
+      var adminToken = localStorage.getItem('token');
+      let headers = new HttpHeaders();
+      headers = headers
+      .set('Content-Type', 'application/json')
+      .set('Authorization', adminToken);
+  
+      return this.http.delete(this.endpoint + '/' + admin.id , {
+        headers: headers,
+        responseType: 'text'
+      });
+  }
  }

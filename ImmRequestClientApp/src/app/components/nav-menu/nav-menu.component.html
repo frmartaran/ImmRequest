@@ -4,7 +4,21 @@
         <a (click)="homePage()" target="_blank">
             <img id="logo" [src] = "imageUrl" />
         </a>
-    </button>    
+    </button>
+    <!-- <button *ngIf="isAuthenticated$|async" mat-button [matMenuTriggerFor]="administrators">Admin</button> -->
+    <button mat-button [matMenuTriggerFor]="administrators">Admin</button>
+    <mat-menu #administrators = "matMenu">
+        <button mat-menu-item>
+          <div (click)="createAdmin()">
+            <mat-icon>add_circle</mat-icon>Create
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div (click)="manageAdmins()">
+            <mat-icon>people</mat-icon>Manage Admins
+          </div>
+        </button>
+    </mat-menu>
     <div class="flex-spacer"></div>
     <a mat-button [matMenuTriggerFor] = "loggedInUser">
         <svg class="avatar original-poster-avatar" viewBox="2 2 20 20">
@@ -15,11 +29,6 @@
           <div *ngIf="isAuthenticated$|async; else isNotAuthenticated">
             <h4 class="loginMessage">You are logged in as:</h4>
             <div class="loggedEmail">{{adminUsername$|async}}</div>
-            <button mat-menu-item>
-              <div (click)="createAdmin()">
-                <mat-icon>add_circle</mat-icon>Create Admin 
-              </div>
-            </button>
             <button mat-menu-item>
               <div (click)="editAdmin()">
                 <mat-icon>edit</mat-icon>Edit Admin 

@@ -68,6 +68,7 @@ namespace ImmRequest.DataAccess.Repositories
                 var administratorToModify = Get(objectToUpdate.Id);
                 administratorToModify.UserName = objectToUpdate.UserName;
                 administratorToModify.Password = objectToUpdate.Password;
+                administratorToModify.Email = objectToUpdate.Email;
                 return administratorToModify;
             }
             catch (NullReferenceException)
