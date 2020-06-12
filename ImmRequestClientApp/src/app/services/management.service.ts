@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Area, Topic } from '../models/models';
 import { environment } from 'src/environments/environment.prod';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +13,7 @@ export class ManagementService {
   
   constructor(private http: HttpClient) { }
 
-  getAllAreas(): Observable<Area[]>{
+  getAllAreas(){
     let headers = new HttpHeaders();
     headers = headers
       .set('Content-Type', 'application/json');
@@ -25,7 +23,7 @@ export class ManagementService {
     });
   }
 
-  getAllTopicsFromArea(areaId: number) : Observable<Topic[]>{
+  getAllTopicsFromArea(areaId: number){
     return this.http.get<Topic[]>(`${this.endpoint}/Topics/${areaId}/`);
   }
 

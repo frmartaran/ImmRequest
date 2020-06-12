@@ -30,8 +30,8 @@ export class DummyComponent implements OnInit {
   ngOnInit() {
     this.managementService.getAllAreas().subscribe((allAreas) => {
       this.areas = allAreas;
+      console.log(allAreas);
     });
-    console.log(this.areas);
     this.managementService.getAllTopicsFromArea(1).subscribe((Alltopics) => {
       console.log(Alltopics);
     });

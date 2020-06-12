@@ -20,6 +20,8 @@ import { DummyComponent } from './components/dummy/dummy.component';
 import { TypeEditorComponent } from './components/type-editor/type-editor.component';
 import { FieldEditorDialogComponent } from './modals/field-editor-dialog/field-editor-dialog.component';
 import { DatePipe } from '@angular/common';
+import { AreasDisplayerComponent } from './components/areas-displayer/areas-displayer.component';
+import { AreasTableComponent } from './components/areas-table/areas-table.component';
 
 declare var require: any;
 
@@ -36,6 +38,8 @@ declare var require: any;
     DummyComponent,
     TypeEditorComponent,
     FieldEditorDialogComponent,
+    AreasDisplayerComponent,
+    AreasTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,10 @@ declare var require: any;
       { path: 'home-page', component: RequestManagementComponent},
       { path: 'modify-admin', component: ModifyAdminComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'dummy', component: DummyComponent},
-      { path: 'type-editor', component: TypeEditorComponent}
+      { path: 'type-editor', component: TypeEditorComponent},
+      { path: 'Area', component: AreasDisplayerComponent},
+      { path: 'Areas', component: AreasTableComponent},
+
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],
