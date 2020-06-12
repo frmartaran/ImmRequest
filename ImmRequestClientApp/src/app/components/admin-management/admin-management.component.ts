@@ -75,17 +75,17 @@ export class AdminManagementComponent implements OnInit {
       columnName: "Username",
       hasButtons: false
     }
-    // let emailColumn: Column = {
-    //   columnClass: "email",
-    //   columnName: "Email",
-    //   hasButtons: false
-    // }
+    let emailColumn: Column = {
+      columnClass: "email",
+      columnName: "Email",
+      hasButtons: false
+    }
     let actionsColumn: Column = {
       columnClass: "actions",
       columnName: "Actions",
       hasButtons: true
     }
-    return [usernameColumn,  actionsColumn];
+    return [usernameColumn, emailColumn, actionsColumn];
   }
 
   getAllAdmins(){
