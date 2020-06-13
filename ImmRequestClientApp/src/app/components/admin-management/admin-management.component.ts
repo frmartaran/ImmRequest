@@ -27,10 +27,8 @@ export class AdminManagementComponent implements OnInit {
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private router: Router) { }
-
+    
   ngOnInit() {
-    let source = new MatTableDataSource<any>();
-    this.dataSource = new BehaviorSubject(source);
     this.getAllAdmins();
     this.title = "Manage Admins";
     this.columns = this.setManageAdminsColumns();
@@ -93,7 +91,9 @@ export class AdminManagementComponent implements OnInit {
     .subscribe(
       (response) => {
         var responseString = JSON.stringify(response);
-        this.dataSource.next(JSON.parse(responseString));
+        let source = new MatTableDataSource<any>();
+        source.data = JSON.parse(responseString);
+        this.dataSource = new BehaviorSubject(source)
       },
       (error) => {
         this.snackbarService.notifications$.next({

@@ -5,8 +5,7 @@
             <img id="logo" [src] = "imageUrl" />
         </a>
     </button>
-    <!-- <button *ngIf="isAuthenticated$|async" mat-button [matMenuTriggerFor]="administrators">Admin</button> -->
-    <button mat-button [matMenuTriggerFor]="administrators">Admin</button>
+    <button *ngIf="isAuthenticated$|async" mat-button [matMenuTriggerFor]="administrators">Admin</button>
     <mat-menu #administrators = "matMenu">
         <button mat-menu-item>
           <div (click)="createAdmin()">

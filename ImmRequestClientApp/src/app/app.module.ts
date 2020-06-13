@@ -58,7 +58,7 @@ declare var require: any;
       // // { path: 'type-editor', component: TypeEditorComponent},
       // { path: 'Area', component: AreasDisplayerComponent},
       // { path: 'Areas', component: AreasTableComponent},
-      { path: 'manage-admin', component: AdminManagementComponent},
+      { path: 'manage-admin', component: AdminManagementComponent, canActivate: [AdminNotLoggedIn]},
 
     ])
   ],
