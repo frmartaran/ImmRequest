@@ -21,6 +21,8 @@ export class AdminManagementComponent implements OnInit {
 
   public title: string;
 
+  public loggedInId: number;
+
   public dataSource: BehaviorSubject<MatTableDataSource<any>>;
 
   constructor(private adminService: AdminService, 
@@ -33,6 +35,7 @@ export class AdminManagementComponent implements OnInit {
     this.title = "Manage Admins";
     this.columns = this.setManageAdminsColumns();
     this.buttons = this.setManageAdminsButtons();
+    this.loggedInId = +localStorage.getItem('id');
   }
 
   setManageAdminsButtons(): Button[] {
@@ -93,6 +96,7 @@ export class AdminManagementComponent implements OnInit {
         var responseString = JSON.stringify(response);
         let source = new MatTableDataSource<any>();
         source.data = JSON.parse(responseString);
+        source.data = source.data.filter(admin => admin.id != this.loggedInId);
         this.dataSource = new BehaviorSubject(source)
       },
       (error) => {
