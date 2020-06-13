@@ -22,6 +22,7 @@ export class ManagementComponent implements OnInit {
   public displayedColumns: string[];
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
     this.displayedColumns = this.columns.map(column => column.columnClass);
   }
 
