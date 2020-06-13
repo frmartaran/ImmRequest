@@ -43,10 +43,19 @@ export class TypeEditorComponent implements OnInit {
 
     ngOnInit() {
         this.InitializeDataContainers();
+        try {
+            let typeInfo = JSON.parse(history.state.data);
+            this.parentTopicId = typeInfo.topicId;
+            this.type = typeInfo.type;
 
-        let typeInfo = JSON.parse(history.state.data);
-        this.parentTopicId = typeInfo.topicId;
-        this.type = typeInfo.type;
+        } catch (exception) {
+            this.snackBarService.notifications$.next({
+                message: 'Please Select an Area and Topic First',
+                action: 'Error !',
+                config: this.snackBarService.configError
+            });
+        }
+
 
         if (this.type != null) {
             this.InitializeType();

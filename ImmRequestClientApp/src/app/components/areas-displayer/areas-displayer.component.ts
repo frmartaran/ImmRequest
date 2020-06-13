@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Button, Column, Area, Topic } from 'src/app/models/models';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
     selector: 'app-areas-displayer',
@@ -10,7 +11,8 @@ import { Router } from '@angular/router';
 })
 export class AreasDisplayerComponent implements OnInit {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router,
+        private snackbarService: SnackbarService) { }
     public area: Area;
 
     public buttons: Button[];
@@ -20,8 +22,16 @@ export class AreasDisplayerComponent implements OnInit {
     ngOnInit() {
         this.initializeButtons();
         this.initializeColumns();
-        this.area = JSON.parse(history.state.data);
-        this.datasource = new MatTableDataSource<Topic>(this.area.topics);
+        try {
+            this.area = JSON.parse(history.state.data);
+            this.datasource = new MatTableDataSource<Topic>(this.area.topics);
+        } catch (exception) {
+            this.snackbarService.notifications$.next({
+                message: "Please select an Area first",
+                action: "Error !",
+                config: this.snackbarService.configError
+            });
+        }
     }
 
     initializeColumns() {

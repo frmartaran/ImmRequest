@@ -3,6 +3,8 @@ import { Area, Column, Button } from 'src/app/models/models';
 import { MatTableDataSource } from '@angular/material';
 import { ManagementService } from 'src/app/services/management.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { HtmlHelpers } from 'src/app/helpers/html.helper';
 
 @Component({
     selector: 'app-areas-table',
@@ -12,7 +14,7 @@ import { Router } from '@angular/router';
 export class AreasTableComponent implements OnInit {
 
     constructor(private managementService: ManagementService,
-        private router: Router) { }
+        private router: Router, private snackbarService: SnackbarService) { }
 
     public areas: Area[];
     public datasource: MatTableDataSource<Area>;
@@ -25,13 +27,19 @@ export class AreasTableComponent implements OnInit {
     ngOnInit() {
         this.initializeButtons();
         this.initializeColumns();
+        this.title = "Areas"
         this.datasource = new MatTableDataSource<Area>();
         this.managementService.getAllAreas()
             .subscribe((areas) => {
                 this.areas = areas
                 this.datasource = new MatTableDataSource<Area>(areas);
+            }, (error) => {
+                this.snackbarService.notifications$.next({
+                    message: HtmlHelpers.getHtmlErrorMessage(error),
+                    action: "Error !",
+                    config: this.snackbarService.configError
+                });
             });
-        this.title = "Areas"
     }
 
     initializeColumns() {

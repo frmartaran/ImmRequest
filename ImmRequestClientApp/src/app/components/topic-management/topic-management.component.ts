@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { ManagementComponent } from '../management/management.component';
 import { BehaviorSubject } from 'rxjs';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { HtmlHelpers } from 'src/app/helpers/html.helper';
 
 @Component({
   selector: 'app-topic-management',
@@ -15,7 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 export class TopicManagementComponent implements OnInit {
 
   constructor(private managementService: ManagementService,
-    private router: Router) { }
+    private router: Router, private snackbarService: SnackbarService) { }
 
   @ViewChild(ManagementComponent, { static: true }) managementeComponent: ManagementComponent;
 
@@ -32,18 +34,36 @@ export class TopicManagementComponent implements OnInit {
   ngOnInit() {
     this.initializeButtons();
     this.initializeColumns();
-    this.name = new BehaviorSubject("");
+    this.InitializeDataContainers();
 
+    try {
+      let ids = JSON.parse(history.state.data);
+      this.managementService.getAllTopicsFromArea(ids.areaId)
+        .subscribe((topics) => {
+          let thisTopic = topics.find(t => t.id == ids.topicId);
+          this.topic = thisTopic;
+          this.name.next(this.topic.name);
+          this.datasource = new MatTableDataSource<TopicType>(this.topic.types);
+          this.datasource.paginator = this.managementeComponent.paginator;
+        }, (error) => {
+          this.ShowError(HtmlHelpers.getHtmlErrorMessage(error))
+        })
+    } catch (exception) {
+      this.ShowError("Please select an Area first");
+    }
+  }
+
+  private ShowError(message: string) {
+    this.snackbarService.notifications$.next({
+      message: message,
+      action: "Error !",
+      config: this.snackbarService.configError
+    });
+  }
+
+  private InitializeDataContainers() {
+    this.name = new BehaviorSubject("");
     this.datasource = new MatTableDataSource<TopicType>([]);
-    let ids = JSON.parse(history.state.data);
-    this.managementService.getAllTopicsFromArea(ids.areaId)
-      .subscribe((topics) => {
-        let thisTopic = topics.find(t => t.id == ids.topicId);
-        this.topic = thisTopic;
-        this.name.next(this.topic.name);
-        this.datasource = new MatTableDataSource<TopicType>(this.topic.types);
-        this.datasource.paginator = this.managementeComponent.paginator;
-      })
   }
 
   initializeColumns() {

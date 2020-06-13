@@ -18,13 +18,19 @@
                     </div>
                     <div class="field-title-container">
                         <mat-label class="label">Fields</mat-label>
-                        <button (click)="createField()" type="button" class="add-button" mat-mini-fab color="warn" aria-label="Add">+</button>
+                        <button mat-icon-button color="primary" 
+                            #tooltip="matTooltip" 
+                            matTooltip="Add Field"
+                            matTooltipPosition="after" 
+                            aria-label="Add Field" 
+                            class="add-button"
+                            (click)="createField()"
+                            type="button">
+                            <mat-icon [inline]="true">add</mat-icon>
+                        </button>
                     </div>
                     <div>
-                        <app-management [buttons]="buttons" 
-                            [columns]="columns" 
-                            [title]="fieldsTitle" 
-                            [pageSize]="3"
+                        <app-management [buttons]="buttons" [columns]="columns" [title]="fieldsTitle" [pageSize]="3"
                             [dataSource]="datasource|async">
                         </app-management>
                     </div>
