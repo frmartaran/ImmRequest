@@ -27,7 +27,7 @@ export class AreasDisplayerComponent implements OnInit {
     initializeColumns() {
         this.columns = []
         let headerName: Column = {
-            columnClass: "Topics",
+            columnClass: "name",
             columnName: "Topics",
             hasButtons: false
         }

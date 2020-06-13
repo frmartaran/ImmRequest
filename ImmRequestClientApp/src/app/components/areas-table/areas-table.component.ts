@@ -37,7 +37,7 @@ export class AreasTableComponent implements OnInit {
     initializeColumns() {
         this.columns = []
         let headerName: Column = {
-            columnClass: "Areas",
+            columnClass: "name",
             columnName: "Areas",
             hasButtons: false
         }

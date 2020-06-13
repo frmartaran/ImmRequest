@@ -120,7 +120,7 @@ export class TypeEditorComponent implements OnInit {
     initializeColumns() {
         this.columns = []
         let headerName: Column = {
-            columnClass: "Field",
+            columnClass: "name",
             columnName: "Fields",
             hasButtons: false
         }
