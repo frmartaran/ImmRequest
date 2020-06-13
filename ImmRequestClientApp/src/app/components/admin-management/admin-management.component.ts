@@ -1,12 +1,13 @@
 import { SnackbarService } from './../../services/snackbar.service';
 import { AdminService } from './../../services/admin.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Button, Column, Admin } from 'src/app/models/models';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { HtmlHelpers } from 'src/app/helpers/html.helper';
 import { ConfirmationComponent } from 'src/app/modals/confirmation/confirmation.component';
 import { Router } from '@angular/router';
+import { ManagementComponent } from '../management/management.component';
 
 @Component({
   selector: 'app-admin-management',
@@ -29,8 +30,13 @@ export class AdminManagementComponent implements OnInit {
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private router: Router) { }
+
+    @ViewChild(ManagementComponent, { static: true }) managementeComponent: ManagementComponent;
     
   ngOnInit() {
+    let source = new MatTableDataSource<any>();
+    this.dataSource = new BehaviorSubject(source);
+
     this.getAllAdmins();
     this.title = "Manage Admins";
     this.columns = this.setManageAdminsColumns();
@@ -94,10 +100,12 @@ export class AdminManagementComponent implements OnInit {
     .subscribe(
       (response) => {
         var responseString = JSON.stringify(response);
+        console.log(responseString);
         let source = new MatTableDataSource<any>();
         source.data = JSON.parse(responseString);
         source.data = source.data.filter(admin => admin.id != this.loggedInId);
-        this.dataSource = new BehaviorSubject(source)
+        source.paginator = this.managementeComponent.paginator;
+        this.dataSource.next(source);
       },
       (error) => {
         this.snackbarService.notifications$.next({
