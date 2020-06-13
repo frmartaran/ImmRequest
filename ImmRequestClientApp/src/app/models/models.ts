@@ -34,7 +34,7 @@ export interface Column {
 export interface TopicType{
   id?: number,
   name: string, 
-  Fields: BaseField[]
+  fields: BaseField[]
 }
 
 export interface BaseField{

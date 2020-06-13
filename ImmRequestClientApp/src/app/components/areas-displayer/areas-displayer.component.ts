@@ -44,12 +44,13 @@ export class AreasDisplayerComponent implements OnInit {
         let editButton: Button = {
             buttonTooltip: "edit",
             iconName: "edit",
-            callback: (element) => { }
+            callback: (element) => { this.redirect(element) }
         }
         this.buttons = [editButton];
     }
 
     redirect(element: Topic) {
-
+        var ids = { areaId: this.area.id, topicId: element.id };
+        this.router.navigate(['/Topic'], { state: { data: JSON.stringify(ids) } });
     }
 }

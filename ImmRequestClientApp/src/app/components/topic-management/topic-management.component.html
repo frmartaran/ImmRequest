@@ -1,0 +1,22 @@
+<div class="main-div">
+    <mat-card class="center">
+        <mat-card-header class="center title">
+            <mat-card-title>{{name | async}}</mat-card-title>
+        </mat-card-header>
+        <div class="button-container">
+            <button mat-icon-button 
+                color="primary"
+                #tooltip="matTooltip"
+                matTooltip="Add type" 
+                matTooltipPosition="above" 
+                aria-label="Add Type" class="icon-button"
+                (click)="redirectToCreate()">
+                <mat-icon [inline]="true">add</mat-icon>
+            </button>
+        </div>
+        <app-management [buttons]="buttons" [columns]="columns" [title]="Types" [pageSize]="5"
+            [dataSource]="datasource">
+
+        </app-management>
+    </mat-card>
+</div>

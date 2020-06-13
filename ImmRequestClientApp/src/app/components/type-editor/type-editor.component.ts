@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { BaseField, Button,Column, TopicType } from 'src/app/models/models';
+import { BaseField, Button, Column, TopicType } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
 import { MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
@@ -42,25 +42,37 @@ export class TypeEditorComponent implements OnInit {
     @Input() parentTopicId: number;
 
     ngOnInit() {
-        this.action = new BehaviorSubject("Create");
-        if (this.type == null) {
-            let emptyType: TopicType = {
-                name: "",
-                Fields: []
-            };
-            this.type = emptyType;
+        this.InitializeDataContainers();
+
+        let typeInfo = JSON.parse(history.state.data);
+        this.parentTopicId = typeInfo.topicId;
+        this.type = typeInfo.type;
+
+        if (this.type != null) {
+            this.InitializeType();
         }
-        this.parentTopicId = 1;
-        let source = new MatTableDataSource<BaseField>();
-        source.data = this.type.Fields;
-        this.datasource = new BehaviorSubject(source);
-        this.allFields = new BehaviorSubject(this.type.Fields);
-        this.fieldsTitle = "Fields";
 
         this.initializeButtons();
         this.initializeColumns();
     }
 
+
+    private InitializeType() {
+        this.action.next("Edit");
+        this.name = this.type.name;
+        let source = new MatTableDataSource<BaseField>(this.type.fields);
+        source.paginator = this.managementeComponent.paginator;
+        this.datasource.next(source);
+        this.allFields.next(this.type.fields);
+    }
+
+    private InitializeDataContainers() {
+        this.fieldsTitle = "Fields";
+        this.action = new BehaviorSubject("Create");
+        let source = new MatTableDataSource<BaseField>();
+        this.datasource = new BehaviorSubject(source);
+        this.allFields = new BehaviorSubject([]);
+    }
 
     Send(typeEditorForm: NgForm) {
         this.type.name = typeEditorForm.value.name;
@@ -68,7 +80,7 @@ export class TypeEditorComponent implements OnInit {
         this.allFields.subscribe((currentFields) => {
             fields = currentFields
         });
-        this.type.Fields = fields;
+        this.type.fields = fields;
         let action = "";
         this.action.subscribe((intention) => {
             action = intention;
@@ -81,7 +93,7 @@ export class TypeEditorComponent implements OnInit {
     }
 
     private Create() {
-        this.typeService.createType(1, this.type)
+        this.typeService.createType(this.parentTopicId, this.type)
             .subscribe((res) => {
                 var successObject = JSON.parse(res);
                 this.type.id = successObject.id;
