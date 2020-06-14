@@ -63,4 +63,8 @@ export class AreasDisplayerComponent implements OnInit {
         var ids = { areaId: this.area.id, topicId: element.id };
         this.router.navigate(['/Topic'], { state: { data: JSON.stringify(ids) } });
     }
+
+    goBack(){
+        this.router.navigate(['/Areas']);
+    }
 }
