@@ -19,6 +19,8 @@ export class ImporterComponent implements OnInit {
 
   private file: File;
 
+  private importer: string;
+
   ngOnInit() {
     this.importers = new BehaviorSubject([]);
     this.importerService.getImporters().subscribe((allImporters)=>{
@@ -26,10 +28,8 @@ export class ImporterComponent implements OnInit {
     })
   }
 
-  submit(importForm: NgForm){
-    let importer = importForm.value.importer;
-    this.file = importForm.value.file;
-    this.importerService.import(importer, this.file)
+  import(){
+    this.importerService.import(this.importer, this.file)
       .subscribe((res) => {
         this.snackbarService.notifications$.next({
           message: res,
@@ -43,6 +43,20 @@ export class ImporterComponent implements OnInit {
           config: this.snackbarService.configError
         })
       });
+  }
+
+  setImporter(importerName){
+    this.importer = importerName;
+    console.log(this.importer);
+  }
+
+  setFile(eventTarget){
+    this.file = eventTarget.files[0];
+    let reader = new FileReader();
+    reader.onload = (e) =>{
+      console.log(e.target.result)
+    }
+    reader.readAsText(this.file);
   }
 
 }

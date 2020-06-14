@@ -3,23 +3,21 @@
         <mat-card-header class="center">
             <mat-card-title>Import</mat-card-title>
         </mat-card-header>
-        <form #importForm="ngForm" (submit)="submit(importForm)" autocomplete="off">
             <div class="center">
                 <mat-card-content>
                     <mat-form-field class="block">
                         <mat-label>Importer</mat-label>
-                        <mat-select name="importer" required>
-                            <mat-option *ngFor="let importer of importers | async" value="importer">
+                        <mat-select name="importer" (selectionChange)="setImporter($event.value)" required>
+                            <mat-option *ngFor="let importer of importers | async" [value]="importer">
                                 {{importer}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <input class="block" name="file" mat-input type="file" />
+                    <input class="block" name="file" mat-input type="file" (change)="setFile($event.target)" />
                 </mat-card-content>
             </div>
             <mat-card-actions>
-                <button mat-raised-button type="submit" color="primary">Import</button>
+                <button mat-raised-button type="button" color="primary" (click)="import()">Import</button>
             </mat-card-actions>
-        </form>
     </mat-card>
 </div>

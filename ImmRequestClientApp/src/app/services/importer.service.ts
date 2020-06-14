@@ -29,11 +29,11 @@ export class ImporterService {
     var token = localStorage.getItem('token');
     let headers = new HttpHeaders();
     headers = headers
-      .set('Authorization', token);
+      .set('Authorization', token)
 
     let form = new FormData();
     form.append('importer', importer);
-    form.append('importer', file);
+    form.append('file', file);
     return this.http.post(this.endpoint, form, {
       headers: headers,
       responseType: "text"
