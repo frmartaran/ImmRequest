@@ -14,7 +14,6 @@ export class TypeService {
   constructor(private http: HttpClient) { }
 
   createType(parentTopicId: number, type: TopicType) {
-    console.log(parentTopicId);
     var token = localStorage.getItem('token');
     let headers = new HttpHeaders();
     headers = headers
