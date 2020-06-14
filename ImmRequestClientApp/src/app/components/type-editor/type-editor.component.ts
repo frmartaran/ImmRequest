@@ -8,6 +8,7 @@ import { FieldEditorDialogComponent } from 'src/app/modals/field-editor-dialog/f
 import { TypeService } from 'src/app/services/type.service';
 import { HtmlHelpers } from 'src/app/helpers/html.helper';
 import { ManagementComponent } from '../management/management.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-type-editor',
@@ -19,7 +20,8 @@ export class TypeEditorComponent implements OnInit {
 
     constructor(public dialog: MatDialog,
         private snackBarService: SnackbarService,
-        private typeService: TypeService) { }
+        private typeService: TypeService,
+        private router: Router) { }
 
     @ViewChild(ManagementComponent, { static: true }) managementeComponent: ManagementComponent;
 
@@ -37,18 +39,24 @@ export class TypeEditorComponent implements OnInit {
 
     public datasource: BehaviorSubject<MatTableDataSource<BaseField>>;
 
-    @Input() type: TopicType;
+    public type: TopicType;
 
-    @Input() parentTopicId: number;
+    private parentTopicId: number;
+
+    private areaId: number;
+
+    public shouldDisable: boolean;
 
     ngOnInit() {
         this.InitializeDataContainers();
         try {
             let typeInfo = JSON.parse(history.state.data);
             this.parentTopicId = typeInfo.topicId;
+            this.areaId = typeInfo.areaId;
             this.type = typeInfo.type;
-
+            this.shouldDisable = false;
         } catch (exception) {
+            this.shouldDisable = true;
             this.snackBarService.notifications$.next({
                 message: 'Please Select an Area and Topic First',
                 action: 'Error !',
@@ -230,5 +238,10 @@ export class TypeEditorComponent implements OnInit {
         let currentDisplay = new MatTableDataSource<BaseField>(currentFields);
         currentDisplay.paginator = this.managementeComponent.paginator;
         this.datasource.next(currentDisplay);
+    }
+
+    goBack() {
+        let topic = { areaId: this.areaId, topicId: this.parentTopicId };
+        this.router.navigate(['/Topic'], { state: { data: JSON.stringify(topic) } });
     }
 }

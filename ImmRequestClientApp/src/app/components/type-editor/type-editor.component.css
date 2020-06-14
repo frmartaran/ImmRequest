@@ -1,5 +1,4 @@
 #main-div{
-    padding-top: 2%;
     padding-bottom: 2%;
     height: 60%;
     display: flex;
@@ -60,4 +59,14 @@ mat-card-header{
     float: right;
 }
 
+.back{
+    display: flex;
+    padding-left: 2%;
+}
+
+.container{
+    display: inline;
+    padding-top: 2%;
+    position: relative;
+}
 

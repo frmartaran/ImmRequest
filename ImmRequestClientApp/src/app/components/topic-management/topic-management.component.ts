@@ -42,6 +42,7 @@ export class TopicManagementComponent implements OnInit {
         .subscribe((topics) => {
           let thisTopic = topics.find(t => t.id == ids.topicId);
           this.topic = thisTopic;
+          this.topic.areaId = ids.areaId;
           this.name.next(this.topic.name);
           this.datasource = new MatTableDataSource<TopicType>(this.topic.types);
           this.datasource.paginator = this.managementeComponent.paginator;
@@ -92,12 +93,12 @@ export class TopicManagementComponent implements OnInit {
   }
 
   redirectToCreate() {
-    let typeInfo = { topicId: this.topic.id, type: null };
+    let typeInfo = { areaId: this.topic.areaId, topicId: this.topic.id, type: null };
     this.router.navigate(['/Type'], { state: { data: JSON.stringify(typeInfo) } });
   }
 
   redirectToEdit(element: TopicType) {
-    let typeInfo = { topicId: this.topic.id, type: element };
+    let typeInfo = { areaId: this.topic.areaId, topicId: this.topic.id, type: element };
     this.router.navigate(['/Type'], { state: { data: JSON.stringify(typeInfo) } });
   }
 
