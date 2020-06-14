@@ -31,6 +31,8 @@ export class TopicManagementComponent implements OnInit {
 
   public datasource: MatTableDataSource<TopicType>;
 
+  public shouldDisable: boolean;
+
   ngOnInit() {
     this.initializeButtons();
     this.initializeColumns();
@@ -46,10 +48,12 @@ export class TopicManagementComponent implements OnInit {
           this.name.next(this.topic.name);
           this.datasource = new MatTableDataSource<TopicType>(this.topic.types);
           this.datasource.paginator = this.managementeComponent.paginator;
+          this.shouldDisable = false;
         }, (error) => {
           this.ShowError(HtmlHelpers.getHtmlErrorMessage(error))
         })
     } catch (exception) {
+      this.shouldDisable = true;
       this.ShowError("Please select an Area first");
     }
   }
@@ -100,6 +104,13 @@ export class TopicManagementComponent implements OnInit {
   redirectToEdit(element: TopicType) {
     let typeInfo = { areaId: this.topic.areaId, topicId: this.topic.id, type: element };
     this.router.navigate(['/Type'], { state: { data: JSON.stringify(typeInfo) } });
+  }
+
+  goBack(){
+    this.managementService.getAllAreas().subscribe((areas) => {
+      let area = areas.find(a => a.id == this.topic.areaId);
+      this.router.navigate(['/Area'], { state: { data: JSON.stringify(area) } });
+    });
   }
 
 }

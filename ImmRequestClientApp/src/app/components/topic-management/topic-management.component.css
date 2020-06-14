@@ -24,7 +24,7 @@ mat-card{
     font-size: 30px;
 }
 
-mat-icon{
+.bigger-mat-icon{
     height:45px !important;
     width:45px !important;
     font-size:45px !important;
@@ -42,4 +42,15 @@ mat-icon{
     width: 80%;
     padding-left: 10%;
     padding-bottom: 2%;
+}
+
+.back{
+    display: flex;
+    padding-left: 2%;
+}
+
+.container{
+    display: inline;
+    padding-top: 2%;
+    position: relative;
 }
