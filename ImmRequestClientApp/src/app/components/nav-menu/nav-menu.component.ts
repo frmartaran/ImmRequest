@@ -94,4 +94,12 @@ export class NavMenuComponent implements OnInit {
   manageAdmins(){
     this.router.navigate(['/manage-admin'])
   }
+
+  manageAreas(){
+    this.router.navigate(['/Areas'])
+  }
+
+  import(){
+    this.router.navigate(['/Import'])
+  }
 }
