@@ -47,15 +47,11 @@ export class ImporterComponent implements OnInit {
 
   setImporter(importerName){
     this.importer = importerName;
-    console.log(this.importer);
   }
 
   setFile(eventTarget){
     this.file = eventTarget.files[0];
     let reader = new FileReader();
-    reader.onload = (e) =>{
-      console.log(e.target.result)
-    }
     reader.readAsText(this.file);
   }
 
