@@ -27,7 +27,7 @@ namespace ImmRequest.WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Import([FromForm] string importer, [FromForm] IFormFile file)
+        public ActionResult Import([FromForm] string importer, [FromForm(Name ="file")] IFormFile file)
         {
             try
             {

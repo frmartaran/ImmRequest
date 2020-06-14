@@ -25,13 +25,15 @@ export class ImporterService {
   }
 
   import(importer: string, file: File) {
+    console.log(file);
     var token = localStorage.getItem('token');
     let headers = new HttpHeaders();
     headers = headers
-      .set('Content-Type', 'multipart/form-data')
       .set('Authorization', token);
 
-    let form = { importer: importer, file: file };
+    let form = new FormData();
+    form.append('importer', importer);
+    form.append('importer', file);
     return this.http.post(this.endpoint, form, {
       headers: headers,
       responseType: "text"

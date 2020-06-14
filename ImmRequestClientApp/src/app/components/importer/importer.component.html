@@ -8,8 +8,9 @@
                 <mat-card-content>
                     <mat-form-field class="block">
                         <mat-label>Importer</mat-label>
-                        <mat-select name="importerName">
-                            <mat-option>Test
+                        <mat-select name="importer" required>
+                            <mat-option *ngFor="let importer of importers | async" value="importer">
+                                {{importer}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

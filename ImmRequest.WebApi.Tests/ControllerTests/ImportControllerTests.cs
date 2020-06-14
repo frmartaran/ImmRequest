@@ -143,5 +143,18 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         }
 
 
+
+        [TestMethod]
+        public void FileIsNull()
+        {
+            var mockLogic = new Mock<IImporterLogic>(MockBehavior.Strict);
+            var controller = new ImporterController(mockLogic.Object);
+            var response = controller.Import("Json Area Importer", null);
+
+            Assert.IsInstanceOfType(response, typeof(BadRequestResult));
+
+        }
+
+
     }
 }
