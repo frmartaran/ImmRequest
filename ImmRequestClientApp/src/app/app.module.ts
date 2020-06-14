@@ -64,7 +64,7 @@ declare var require: any;
       { path: 'Areas', component: AreasTableComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'manage-admin', component: AdminManagementComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'Topic', component: TopicManagementComponent, canActivate: [AdminNotLoggedIn]},
-      { path: 'Import', component: ImporterComponent}
+      { path: 'Import', component: ImporterComponent, canActivate: [AdminNotLoggedIn]}
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],
