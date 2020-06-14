@@ -24,6 +24,7 @@ import { AreasDisplayerComponent } from './components/areas-displayer/areas-disp
 import { AreasTableComponent } from './components/areas-table/areas-table.component';
 import { AdminManagementComponent } from './components/admin-management/admin-management.component';
 import { TopicManagementComponent } from './components/topic-management/topic-management.component';
+import { ImporterComponent } from './components/importer/importer.component';
 
 declare var require: any;
 
@@ -44,6 +45,7 @@ declare var require: any;
     AreasTableComponent,
     AdminManagementComponent,
     TopicManagementComponent,
+    ImporterComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ declare var require: any;
       { path: 'Areas', component: AreasTableComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'manage-admin', component: AdminManagementComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'Topic', component: TopicManagementComponent, canActivate: [AdminNotLoggedIn]},
+      { path: 'Import', component: ImporterComponent}
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],

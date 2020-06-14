@@ -1,0 +1,24 @@
+<div class="main-div">
+    <mat-card class="center">
+        <mat-card-header class="center">
+            <mat-card-title>Import</mat-card-title>
+        </mat-card-header>
+        <form #importForm="ngForm" (submit)="submit(importForm)" autocomplete="off">
+            <div class="center">
+                <mat-card-content>
+                    <mat-form-field class="block">
+                        <mat-label>Importer</mat-label>
+                        <mat-select name="importerName">
+                            <mat-option>Test
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <input class="block" name="file" mat-input type="file" />
+                </mat-card-content>
+            </div>
+            <mat-card-actions>
+                <button mat-raised-button type="submit" color="primary">Import</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>
