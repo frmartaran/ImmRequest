@@ -187,6 +187,15 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please make sure to select a file to import from.
+        /// </summary>
+        public static string Importer_FileNull {
+            get {
+                return ResourceManager.GetString("Importer_FileNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no request created between {0} and {1}.
         /// </summary>
         public static string Report_NoRequest {

@@ -29,6 +29,9 @@ namespace ImmRequest.WebApi.Controllers
         [HttpPost]
         public ActionResult Import([FromForm] string importer, [FromForm(Name ="file")] IFormFile file)
         {
+            if (file == null)
+                return BadRequest(WebApiResource.Importer_FileNull);
+
             try
             {
                 var mainPath = AppDomain.CurrentDomain.BaseDirectory;

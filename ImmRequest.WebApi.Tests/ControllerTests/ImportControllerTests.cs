@@ -151,7 +151,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var controller = new ImporterController(mockLogic.Object);
             var response = controller.Import("Json Area Importer", null);
 
-            Assert.IsInstanceOfType(response, typeof(BadRequestResult));
+            Assert.IsInstanceOfType(response, typeof(BadRequestObjectResult));
 
         }
 

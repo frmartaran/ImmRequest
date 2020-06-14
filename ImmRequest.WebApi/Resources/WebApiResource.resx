@@ -156,6 +156,9 @@
   <data name="Entities_Type" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="Importer_FileNull" xml:space="preserve">
+    <value>Please make sure to select a file to import from</value>
+  </data>
   <data name="Import_Successful" xml:space="preserve">
     <value>Import was successful</value>
   </data>
