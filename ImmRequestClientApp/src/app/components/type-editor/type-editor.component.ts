@@ -47,13 +47,18 @@ export class TypeEditorComponent implements OnInit {
 
     public shouldDisable: boolean;
 
+    private id: number;
+
     ngOnInit() {
+        
         this.InitializeDataContainers();
         try {
             let typeInfo = JSON.parse(history.state.data);
             this.parentTopicId = typeInfo.topicId;
             this.areaId = typeInfo.areaId;
             this.type = typeInfo.type;
+            this.id = typeInfo.type.id;
+            this.type.id = this.id;
             this.shouldDisable = false;
         } catch (exception) {
             this.shouldDisable = true;
@@ -92,12 +97,16 @@ export class TypeEditorComponent implements OnInit {
     }
 
     Send(typeEditorForm: NgForm) {
-        this.type.name = typeEditorForm.value.name;
+        let type: TopicType = {
+            name: typeEditorForm.value.name,
+            fields: []
+        }
         let fields = [];
         this.allFields.subscribe((currentFields) => {
             fields = currentFields
         });
-        this.type.fields = fields;
+        type.fields = fields;
+        this.type = type;
         let action = "";
         this.action.subscribe((intention) => {
             action = intention;
@@ -130,6 +139,7 @@ export class TypeEditorComponent implements OnInit {
     }
 
     private Edit() {
+        this.type.id = this.id;
         this.typeService.updateType(this.type)
             .subscribe((res) => {
                 this.snackBarService.notifications$.next({
