@@ -123,7 +123,7 @@ export class FieldEditorDialogComponent implements OnInit {
     this.dataTypeSelected.subscribe((dataType) => {
       newDataType = dataType;
     });
-    let newMultipleValues = fieldForm.value.acceptsMultpleValues;
+    let newMultipleValues = this.acceptsMultpleValues;
     let newRangeValues = [];
 
     switch (+newDataType) {
