@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BaseField, DataType } from 'src/app/models/models';
-import { SelectionChange } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs';
-import { R3FactoryDelegateType } from '@angular/compiler/src/render3/r3_factory';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
