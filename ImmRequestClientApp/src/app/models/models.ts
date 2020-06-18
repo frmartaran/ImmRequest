@@ -85,3 +85,9 @@ export interface TypeSummary{
   name: string,
   TypeCreatedAt: Date
 }
+
+export interface ReportRequest{
+  email: string,
+  start: Date,
+  end: Date
+}
