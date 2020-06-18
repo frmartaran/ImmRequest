@@ -25,6 +25,8 @@ import { AreasTableComponent } from './components/areas-table/areas-table.compon
 import { AdminManagementComponent } from './components/admin-management/admin-management.component';
 import { TopicManagementComponent } from './components/topic-management/topic-management.component';
 import { ImporterComponent } from './components/importer/importer.component';
+import { RequestSummaryReportComponent } from './components/request-summary-report/request-summary-report.component';
+import { TypeSummaryReportComponent } from './components/type-summary-report/type-summary-report.component';
 
 declare var require: any;
 
@@ -46,6 +48,8 @@ declare var require: any;
     AdminManagementComponent,
     TopicManagementComponent,
     ImporterComponent,
+    RequestSummaryReportComponent,
+    TypeSummaryReportComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,9 @@ declare var require: any;
       { path: 'Areas', component: AreasTableComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'manage-admin', component: AdminManagementComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'Topic', component: TopicManagementComponent, canActivate: [AdminNotLoggedIn]},
-      { path: 'Import', component: ImporterComponent, canActivate: [AdminNotLoggedIn]}
+      { path: 'Import', component: ImporterComponent, canActivate: [AdminNotLoggedIn]},
+      { path: 'RequestReport', component: RequestSummaryReportComponent, canActivate: [AdminNotLoggedIn]},
+      { path: 'TypeReport', component: TypeSummaryReportComponent, canActivate: [AdminNotLoggedIn]}
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],
