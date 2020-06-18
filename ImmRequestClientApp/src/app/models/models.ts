@@ -66,18 +66,10 @@ export enum DataType {
   Bool
 }
 
-export enum RequestStatus {
-  Created,
-  OnRevision,
-  Acepted,
-  Declined,
-  Ended
-}
-
 export interface RequestSummary {
   count: number,
-  status: RequestStatus,
-  RequestNumbers: number[]
+  status: string,
+  requestNumbers: number[]
 }
 
 export interface TypeSummary{

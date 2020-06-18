@@ -28,7 +28,7 @@ namespace ImmRequest.WebApi.Controllers
             Logic = logic;
         }
 
-        [HttpGet("RequestSummary")]
+        [HttpPost("RequestSummary")]
         public ActionResult RequestSummaryReportGet([FromBody] ReportRequestBodyModel model)
         {
             var requests = Logic.GetAll()
@@ -48,7 +48,7 @@ namespace ImmRequest.WebApi.Controllers
                 .GroupBy(cr => cr.Status)
                 .Select(g => new RequestSummary
                 {
-                    Status = g.Key,
+                    Status = g.Key.ToString(),
                     Count = g.Count(),
                     RequestNumbers = g.Select(cr => cr.Id).ToList()
                 })
@@ -58,7 +58,7 @@ namespace ImmRequest.WebApi.Controllers
 
         }
 
-        [HttpGet("TypesSummary")]
+        [HttpPost("TypesSummary")]
         public ActionResult TypeSummaryReportGet([FromBody] ReportRequestBodyModel model)
         {
             var requests = Logic.GetAll()

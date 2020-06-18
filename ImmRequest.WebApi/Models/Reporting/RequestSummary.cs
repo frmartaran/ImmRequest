@@ -10,7 +10,7 @@ namespace ImmRequest.WebApi.Models.Reporting
     {
         public int Count { get; set; }
 
-        public RequestStatus Status { get; set; }
+        public string Status { get; set; }
 
         public List<long> RequestNumbers { get; set; }
     }

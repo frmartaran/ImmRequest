@@ -9,7 +9,7 @@ import { ReportRequest, TypeSummary, RequestSummary } from '../models/models';
 export class ReportsService {
 
   public url: string = environment.apiUrl;
-  private readonly endpoint = this.url + 'api/Administrator';
+  private readonly endpoint = this.url + 'api/Reports';
   
   constructor(private http: HttpClient) { }
 
@@ -20,14 +20,11 @@ export class ReportsService {
       .set('Content-Type', 'application/json')
       .set('Authorization', token);
 
-    let params = new HttpParams();
-    params.append("body", JSON.stringify(request));
-
-    return this.http.get<TypeSummary[]>(`${this.endpoint}/TypesSummary/`, {
+    return this.http.post<TypeSummary[]>(`${this.endpoint}/TypesSummary/`, request, {
       headers: headers,
-      params: params
     });
   }
+
   getRequestReport(request: ReportRequest){
     var token = localStorage.getItem('token');
     let headers = new HttpHeaders();
@@ -35,12 +32,8 @@ export class ReportsService {
       .set('Content-Type', 'application/json')
       .set('Authorization', token);
 
-    let params = new HttpParams();
-    params.append("body", JSON.stringify(request));
-
-    return this.http.get<RequestSummary[]>(`${this.endpoint}/RequestSummary/`, {
+    return this.http.post<RequestSummary[]>(`${this.endpoint}/RequestSummary/`, request, {
       headers: headers,
-      params: params
     });
   }
 }
