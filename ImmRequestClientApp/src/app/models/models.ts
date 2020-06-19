@@ -75,7 +75,7 @@ export interface RequestSummary {
 export interface TypeSummary{
   count: number,
   name: string,
-  TypeCreatedAt: Date
+  typeCreatedAt: Date
 }
 
 export interface ReportRequest{

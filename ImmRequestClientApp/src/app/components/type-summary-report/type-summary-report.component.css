@@ -1,0 +1,48 @@
+.main-div{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    height: 60%;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    overflow: auto;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+form{
+    padding: 2%;
+}
+
+mat-card{
+    width: 60%
+}
+
+.block{
+    padding-left: 8%;
+    display: block;
+}
+
+.pull-right{
+    float: right;
+}
+
+.small{
+    width: 35%
+}
+
+.date-range-input{
+    justify-content: space-between;
+}
+
+.middle{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+

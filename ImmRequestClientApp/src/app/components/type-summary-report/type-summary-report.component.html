@@ -1,1 +1,30 @@
-<p>type-summary-report works!</p>
+<div class="main-div">
+    <mat-card class="center">
+        <mat-card-header class="center">
+            <mat-card-title>Request Summary Report</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form #ReportForm="ngForm" (submit)="submit(ReportForm)" autocomplete="off">
+                <div class="date-range-input center"> 
+                    <mat-form-field color="accent" class="small" required>
+                        <mat-label>Start</mat-label>
+                        <input name="startDate" required matInput [matDatepicker]="startPicker" [(ngModel)]="start">
+                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field>
+                    <span class="middle"> to </span>
+                    <mat-form-field class="small" color="accent" required>
+                        <mat-label>End</mat-label>
+                        <input name="endDate" required matInput [matDatepicker]="endPicker" [(ngModel)]="end">
+                        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endPicker></mat-datepicker>
+                    </mat-form-field>
+                    <button color="primary" class="pull-right" type="submit" mat-raised-button>Load</button>
+                </div>
+            </form>
+            <app-management [buttons]="buttons" [columns]="columns" [title]="title" [pageSize]="3"
+                [dataSource]="datasource|async">
+            </app-management>
+        </mat-card-content>
+    </mat-card>
+</div>
