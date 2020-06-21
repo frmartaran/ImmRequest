@@ -38,6 +38,7 @@ namespace ImmRequest.WebApi.Extentions
 
         public static void AddBusinessLogicScope(this IServiceCollection services)
         {
+            services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
             services.AddScoped<IValidator<Session>, SessionValidator>();
             services.AddScoped<IValidator<Administrator>, AdministratorValidator>();
             services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
