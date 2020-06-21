@@ -1,14 +1,13 @@
-import { NavMenuComponent } from './../nav-menu/nav-menu.component';
 import { CitizenRequest, RequestValue, BaseField, Button, Column } from './../../models/models';
 import { TypeService } from 'src/app/services/type.service';
 import { RadioButton } from 'src/app/models/models';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,  ViewChild } from '@angular/core';
 import { ManagementService } from 'src/app/services/management.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { HtmlHelpers } from 'src/app/helpers/html.helper';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatStepper } from '@angular/material';
 import { FieldValuesComponent } from 'src/app/modals/field-values/field-values.component';
 
 @Component({
@@ -16,7 +15,9 @@ import { FieldValuesComponent } from 'src/app/modals/field-values/field-values.c
   templateUrl: './create-citizen-request.component.html',
   styleUrls: ['./create-citizen-request.component.css']
 })
-export class CreateCitizenRequestComponent implements OnInit {
+export class CreateCitizenRequestComponent implements OnInit {  
+
+  @ViewChild('stepper', {static: false}) stepper: MatStepper;
 
   public areaRadioButtons$: Subject<RadioButton[]>
 
@@ -52,7 +53,7 @@ export class CreateCitizenRequestComponent implements OnInit {
 
   public valuesTitle:string;
 
-  constructor(private managementService: ManagementService,
+   constructor(private managementService: ManagementService,
     private typeService: TypeService,
     private snackbarService: SnackbarService,
     private _formBuilder: FormBuilder,
@@ -271,6 +272,7 @@ export class CreateCitizenRequestComponent implements OnInit {
           config: this.snackbarService.configSuccess
         });
         this.initializeStepper();
+        this.stepper.reset();
       },
       (error) => {
         this.snackbarService.notifications$.next({
@@ -278,7 +280,6 @@ export class CreateCitizenRequestComponent implements OnInit {
           action: 'Error!',
           config: this.snackbarService.configError
         });
-        this.initializeStepper();
       }
     )
   }
