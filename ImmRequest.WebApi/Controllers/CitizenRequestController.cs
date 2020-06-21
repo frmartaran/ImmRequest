@@ -49,7 +49,9 @@ namespace ImmRequest.WebApi.Controllers
                 Logic.Create(request);
                 Logic.Save();
 
-                return Ok(WebApiResource.CitizenRequest_CreatedMessage);
+                var returnMessage = string.Format(WebApiResource.CitizenRequest_CreatedMessage, request.Id);
+
+                return Ok(returnMessage);
             }
             catch (ValidationException exception)
             {

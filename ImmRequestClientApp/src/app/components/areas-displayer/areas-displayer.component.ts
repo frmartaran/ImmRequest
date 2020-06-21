@@ -34,7 +34,7 @@ export class AreasDisplayerComponent implements OnInit {
             this.snackbarService.notifications$.next({
                 message: "Please select an Area first",
                 action: "Error !",
-                config: this.snackbarService.configError
+                config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
             });
         }
     }

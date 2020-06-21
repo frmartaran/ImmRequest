@@ -106,7 +106,7 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your request has been recieved!.
+        ///   Looks up a localized string similar to Your request has been recieved! Please write down your request number: {0}.
         /// </summary>
         public static string CitizenRequest_CreatedMessage {
             get {

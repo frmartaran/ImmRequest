@@ -109,7 +109,7 @@ export class FieldEditorDialogComponent implements OnInit {
         this.snackbarService.notifications$.next({
           message: "Unsupported field type!",
           action: 'Error!',
-          config: this.snackbarService.configError
+          config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
         });
         break;
     }
@@ -144,7 +144,7 @@ export class FieldEditorDialogComponent implements OnInit {
         this.snackbarService.notifications$.next({
           message: "Unsupported field type!",
           action: 'Error!',
-          config: this.snackbarService.configError
+          config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
         });
         break;
     }

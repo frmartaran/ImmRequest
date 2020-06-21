@@ -133,7 +133,7 @@
     <value>The authorization token is empty. Please provide a valid token</value>
   </data>
   <data name="CitizenRequest_CreatedMessage" xml:space="preserve">
-    <value>Your request has been recieved!</value>
+    <value>Your request has been recieved! Please write down your request number: {0}</value>
   </data>
   <data name="CitizenRequest_EmptyStatusMessage" xml:space="preserve">
     <value>Status can't be empty!</value>

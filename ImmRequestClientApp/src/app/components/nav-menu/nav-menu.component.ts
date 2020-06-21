@@ -42,7 +42,7 @@ export class NavMenuComponent implements OnInit {
             this.snackbarService.notifications$.next({
               message: "You have been logged out!",
               action: 'Success!',
-              config: this.snackbarService.configSuccess
+              config: Object.assign({}, {duration:3000}, this.snackbarService.configSuccess)
             });
             localStorage.removeItem('username');
             localStorage.removeItem('token');
@@ -55,7 +55,7 @@ export class NavMenuComponent implements OnInit {
             this.snackbarService.notifications$.next({
               message: HtmlHelpers.getHtmlErrorMessage(error),
               action: 'Error!',
-              config: this.snackbarService.configError
+              config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
             });
           }
         )

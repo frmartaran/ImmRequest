@@ -60,7 +60,7 @@ export class FieldValuesComponent implements OnInit {
     this.snackbarService.notifications$.next({
       message: "Number value added!",
       action: 'Success!',
-      config: this.snackbarService.configSuccess
+      config: Object.assign({}, {duration:3000}, this.snackbarService.configSuccess)
     });
     if(!this.isMultipleSelectEnabled){
       this.showAddButton$.next(false);
@@ -72,7 +72,7 @@ export class FieldValuesComponent implements OnInit {
     this.snackbarService.notifications$.next({
       message: "Text value added!",
       action: 'Success!',
-      config: this.snackbarService.configSuccess
+      config: Object.assign({}, {duration:3000}, this.snackbarService.configSuccess)
     });
     if(!this.isMultipleSelectEnabled){
       this.showAddButton$.next(false);
@@ -84,7 +84,7 @@ export class FieldValuesComponent implements OnInit {
     this.snackbarService.notifications$.next({
       message: "Date time value added!",
       action: 'Success!',
-      config: this.snackbarService.configSuccess
+      config: Object.assign({}, {duration:3000}, this.snackbarService.configSuccess)
     });
     if(!this.isMultipleSelectEnabled){
       this.showAddButton$.next(false);
@@ -125,7 +125,7 @@ export class FieldValuesComponent implements OnInit {
         this.snackbarService.notifications$.next({
           message: "Unsupported field type!",
           action: 'Error!',
-          config: this.snackbarService.configError
+          config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
         });
         break;
     }
@@ -136,7 +136,7 @@ export class FieldValuesComponent implements OnInit {
     this.snackbarService.notifications$.next({
       message: "Value is empty!",
       action: 'Error!',
-      config: this.snackbarService.configError
+      config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
     });
   }
 

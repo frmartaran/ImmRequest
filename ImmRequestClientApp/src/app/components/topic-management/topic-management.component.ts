@@ -62,7 +62,7 @@ export class TopicManagementComponent implements OnInit {
     this.snackbarService.notifications$.next({
       message: message,
       action: "Error !",
-      config: this.snackbarService.configError
+      config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
     });
   }
 
