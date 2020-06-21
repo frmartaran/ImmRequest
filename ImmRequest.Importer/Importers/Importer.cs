@@ -8,13 +8,13 @@ using System.Text;
 
 namespace ImmRequest.Importer.Importers
 {
-    public abstract class Importer<FileType, Entity> : IEntityImporter<FileType, Entity>
+    public abstract class Importer<Source, Entity> : IEntityImporter<Source, Entity>
     {
         public abstract ICollection<Entity> Import();
 
-        public abstract FileType LoadFile(string file);
+        public abstract Source LoadFile(string file);
 
-        public FileType ReadFile(string path)
+        public Source ReadFile(string path)
         {
             try
             {

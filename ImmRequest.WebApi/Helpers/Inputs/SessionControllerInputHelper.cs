@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImmRequest.WebApi.Helpers
+namespace ImmRequest.WebApi.Helpers.Inputs
 {
     public class SessionControllerInputHelper
     {

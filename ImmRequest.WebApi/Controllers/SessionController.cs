@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ImmRequest.BusinessLogic.Exceptions;
-using ImmRequest.BusinessLogic.Interfaces;
-using ImmRequest.Domain.UserManagement;
+﻿using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.WebApi.Exceptions;
-using ImmRequest.WebApi.Helpers;
-using ImmRequest.WebApi.Interfaces;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Models.UserManagement;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImmRequest.WebApi.Controllers

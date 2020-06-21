@@ -4,6 +4,7 @@ using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Models;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
@@ -23,11 +24,11 @@ namespace ImmRequest.WebApi.Controllers
 
         private IFinder<Area> AreaFinder { get; set; }
 
-        public CitizenRequestController(ILogic<CitizenRequest> CitizenRequestLogic, IFinder<Topic> TopicFinder, IFinder<Area> AreaFinder)
+        public CitizenRequestController(CitizenRequestControllerInput input)
         {
-            this.Logic = CitizenRequestLogic;
-            this.TopicFinder = TopicFinder;
-            this.AreaFinder = AreaFinder;
+            Logic = input.Logic;
+            TopicFinder = input.TopicFinder;
+            AreaFinder = input.AreaFinder;
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Exceptions;
-using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
 {
