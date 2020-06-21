@@ -28,6 +28,12 @@ namespace ImmRequest.WebApi.Controllers
             Logic = logic;
         }
 
+        /// <summary>
+        /// Retorna la cantidad de solicitudes por estado realizadas por un mismo usuario en un rango de 
+        /// fechas.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("RequestSummary")]
         public ActionResult RequestSummaryReportGet([FromBody] ReportRequestBodyModel model)
         {
@@ -58,6 +64,11 @@ namespace ImmRequest.WebApi.Controllers
 
         }
 
+        /// <summary>
+        /// Retorna los tipos más usados en las solicitudes en un rango de fechas.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("TypesSummary")]
         public ActionResult TypeSummaryReportGet([FromBody] ReportRequestBodyModel model)
         {

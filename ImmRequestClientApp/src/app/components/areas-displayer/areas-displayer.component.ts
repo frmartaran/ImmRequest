@@ -41,6 +41,11 @@ export class AreasDisplayerComponent implements OnInit {
 
     initializeColumns() {
         this.columns = []
+        let idColumn: Column = {
+            columnClass: "id",
+            columnName: "#",
+            hasButtons: false
+        }
         let headerName: Column = {
             columnClass: "name",
             columnName: "Topics",
@@ -51,6 +56,7 @@ export class AreasDisplayerComponent implements OnInit {
             columnName: "Actions",
             hasButtons: true
         }
+        this.columns.push(idColumn);
         this.columns.push(headerName);
         this.columns.push(headerButtons);
     }

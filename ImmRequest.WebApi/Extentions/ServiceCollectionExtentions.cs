@@ -70,7 +70,7 @@ namespace ImmRequest.WebApi.Extentions
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "ImmRequest", Version = "v1" });
+                options.SwaggerDoc("v2", new OpenApiInfo { Title = "ImmRequest", Version = "v2" });
                 options.IncludeXmlComments(xmlPath);
                 options.OperationFilter<AuthorizationFilterOperationFilter>();
             });
