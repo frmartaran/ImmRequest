@@ -1,12 +1,12 @@
 export interface Session {
-    id?: number;
-    username?: string;
-    email: string;
-    password: string;
-    token?: string;
+  id?: number;
+  username?: string;
+  email: string;
+  password: string;
+  token?: string;
 }
 
-export interface SnackbarInput{
+export interface SnackbarInput {
   message: string;
   action: string;
   config: {}
@@ -22,7 +22,7 @@ export interface Admin {
 export interface Button {
   buttonTooltip: string;
   iconName: string;
-  callback: (element:any) => void;
+  callback: (element: any) => void;
 }
 
 export interface RadioButton {
@@ -37,13 +37,13 @@ export interface Column {
   hasButtons: boolean;
 }
 
-export interface TopicType{
+export interface TopicType {
   id?: number,
-  name: string, 
+  name: string,
   fields: BaseField[]
 }
 
-export interface BaseField{
+export interface BaseField {
   id?: number,
   parentTypeId:number,
   name: string,
@@ -53,13 +53,13 @@ export interface BaseField{
 
 }
 
-export interface Area{
+export interface Area {
   id: number,
   name: string,
   topics: Topic[]
 }
 
-export interface Topic{
+export interface Topic {
   id: number,
   areaId: number,
   name: string,
@@ -86,6 +86,24 @@ export interface CitizenRequest{
 export enum DataType{
   Number, 
   Text,
-  DateTime, 
+  DateTime,
   Bool
+}
+
+export interface RequestSummary {
+  count: number,
+  status: string,
+  requestNumbers: number[]
+}
+
+export interface TypeSummary{
+  count: number,
+  name: string,
+  typeCreatedAt: Date
+}
+
+export interface ReportRequest{
+  email: string,
+  start: Date,
+  end: Date
 }

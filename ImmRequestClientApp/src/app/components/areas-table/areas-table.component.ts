@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Area, Column, Button } from 'src/app/models/models';
 import { MatTableDataSource } from '@angular/material';
 import { ManagementService } from 'src/app/services/management.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { HtmlHelpers } from 'src/app/helpers/html.helper';
+import { ManagementComponent } from '../management/management.component';
 
 @Component({
     selector: 'app-areas-table',
@@ -15,6 +16,8 @@ export class AreasTableComponent implements OnInit {
 
     constructor(private managementService: ManagementService,
         private router: Router, private snackbarService: SnackbarService) { }
+
+    @ViewChild(ManagementComponent, { static: true }) managementeComponent: ManagementComponent;
 
     public areas: Area[];
     public datasource: MatTableDataSource<Area>;
@@ -33,6 +36,7 @@ export class AreasTableComponent implements OnInit {
             .subscribe((areas) => {
                 this.areas = areas
                 this.datasource = new MatTableDataSource<Area>(areas);
+                this.datasource.paginator = this.managementeComponent.paginator;
             }, (error) => {
                 this.snackbarService.notifications$.next({
                     message: HtmlHelpers.getHtmlErrorMessage(error),

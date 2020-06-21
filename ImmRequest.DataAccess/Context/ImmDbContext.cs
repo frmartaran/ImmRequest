@@ -55,6 +55,7 @@ namespace ImmRequest.DataAccess.Context
             builder.Entity<DateTimeField>()
             .Property(nf => nf.End);
 
+            builder.Entity<BoolField>();
 
             builder.Entity<CitizenRequest>()
                 .HasOne(cr => cr.Area)

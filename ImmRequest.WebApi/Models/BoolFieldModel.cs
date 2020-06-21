@@ -1,4 +1,5 @@
 ﻿using ImmRequest.Domain.Fields;
+using ImmRequest.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,11 @@ namespace ImmRequest.WebApi.Models
 {
     public class BoolFieldModel : BaseFieldModel
     {
+        public override BaseFieldModel SetModel(BaseField entity)
+        {
+            DataType = DataType.Bool;
+            return base.SetModel(entity);
+        }
         public override BaseField ToDomain()
         {
             var field = new BoolField

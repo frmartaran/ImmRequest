@@ -119,7 +119,7 @@ export class FieldValuesComponent implements OnInit {
         }
         break;
       case DataType.Bool:
-        this.fields = [...this.booleanValue.toString()]
+        this.fields = [this.booleanValue.toString()]
         break;
       default:
         this.snackbarService.notifications$.next({

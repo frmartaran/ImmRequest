@@ -3,7 +3,7 @@ import { CitizenRequest, RequestValue, BaseField, Button, Column } from './../..
 import { TypeService } from 'src/app/services/type.service';
 import { RadioButton } from 'src/app/models/models';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ManagementService } from 'src/app/services/management.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { HtmlHelpers } from 'src/app/helpers/html.helper';
@@ -25,6 +25,12 @@ export class CreateCitizenRequestComponent implements OnInit {
   public typeRadioButtons$: Subject<RadioButton[]>
 
   public typeFields$: Subject<BaseField[]>;
+
+  public canAreaAdvanceToNextStep$: Subject<boolean>
+
+  public canTopicAdvanceToNextStep$: Subject<boolean>
+
+  public canTypeAdvanceToNextStep$: Subject<boolean>
 
   public selectedField: BaseField;
 
@@ -50,15 +56,22 @@ export class CreateCitizenRequestComponent implements OnInit {
     private typeService: TypeService,
     private snackbarService: SnackbarService,
     private _formBuilder: FormBuilder,
-    public dialog: MatDialog,) { }
+    public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.initializeStepper()
+    this.canAreaAdvanceToNextStep$ = new Subject<boolean>();
+    this.canTopicAdvanceToNextStep$ = new Subject<boolean>();
+    this.canTypeAdvanceToNextStep$ = new Subject<boolean>();
+    this.initializeStepper();
+  }
+
+  initializeStepper(){
+    this.initializeFields();
     this.getAllAreas();
     this.initializeFieldsTable();
   }
 
-  initializeStepper(){
+  initializeFields(){
     let source = new MatTableDataSource<any>();
     this.fieldsTableDataSource$ = new BehaviorSubject<MatTableDataSource<any>>(source);
     this.descriptionFormGroup = this._formBuilder.group({
@@ -70,6 +83,9 @@ export class CreateCitizenRequestComponent implements OnInit {
     this.areaRadioButtons$ = new Subject<RadioButton[]>();
     this.topicRadioButtons$ = new Subject<RadioButton[]>();
     this.typeRadioButtons$ = new Subject<RadioButton[]>();
+    this.canAreaAdvanceToNextStep$.next(false);
+    this.canTopicAdvanceToNextStep$.next(false);
+    this.canTypeAdvanceToNextStep$.next(false);
     this.typeFields$ = new Subject<BaseField[]>();
     this.topicTypesFields = [];
     this.requestFields$ = new Subject<BaseField[]>();
@@ -116,7 +132,8 @@ export class CreateCitizenRequestComponent implements OnInit {
           checked: false,
           name: topic.name
         });
-        this.topicRadioButtons$.next(radioButtons)
+        this.topicRadioButtons$.next(radioButtons);
+        this.canAreaAdvanceToNextStep$.next(true);
       },
       (error) => {
         this.snackbarService.notifications$.next({
@@ -139,6 +156,7 @@ export class CreateCitizenRequestComponent implements OnInit {
         });
         response.forEach(type => Array.prototype.push.apply(this.topicTypesFields, type.fields));
         this.typeRadioButtons$.next(radioButtons);
+        this.canTopicAdvanceToNextStep$.next(true);
       },
       (error) => {
         this.snackbarService.notifications$.next({
@@ -155,17 +173,27 @@ export class CreateCitizenRequestComponent implements OnInit {
     this.requestToSend.areaId = id;
     this.requestToSend.topicId = 0;
     this.requestToSend.topicTypeId = 0;
+    let source = new MatTableDataSource<any>();
+    this.fieldsTableDataSource$ = new BehaviorSubject<MatTableDataSource<any>>(source);
+    this.requestToSend.values = [];
   }
 
   setTopicTypes(id:number){
     this.getAllTypesFromTopic(id);
     this.requestToSend.topicId = id;
     this.requestToSend.topicTypeId = 0;
+    let source = new MatTableDataSource<any>();
+    this.fieldsTableDataSource$ = new BehaviorSubject<MatTableDataSource<any>>(source);
+    this.requestToSend.values = [];
   }
 
   setType(id:number){
     this.requestToSend.topicTypeId = id;
     this.typeFields$.next(this.topicTypesFields.filter(field => field.parentTypeId == id))
+    let source = new MatTableDataSource<any>();
+    this.fieldsTableDataSource$ = new BehaviorSubject<MatTableDataSource<any>>(source);
+    this.requestToSend.values = [];
+    this.canTypeAdvanceToNextStep$.next(true);
   }
 
   addField(field:BaseField){
@@ -250,6 +278,7 @@ export class CreateCitizenRequestComponent implements OnInit {
           action: 'Error!',
           config: this.snackbarService.configError
         });
+        this.initializeStepper();
       }
     )
   }

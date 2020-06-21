@@ -102,4 +102,12 @@ export class NavMenuComponent implements OnInit {
   import(){
     this.router.navigate(['/Import'])
   }
+
+  goToTypeSummaryReport(){
+    this.router.navigate(['/TypeReport']);
+  }
+
+  goToRequestSummaryReport(){
+    this.router.navigate(['/RequestReport']);
+  }
 }

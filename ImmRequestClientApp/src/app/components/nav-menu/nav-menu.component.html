@@ -40,6 +40,19 @@
           </div>
         </button>
       </mat-menu>
+      <button mat-button [matMenuTriggerFor]="reports">Reports</button>
+      <mat-menu #reports>
+        <button mat-menu-item>
+          <div (click)="goToTypeSummaryReport()">
+            <mat-icon>assessment</mat-icon>Type Use Report
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div (click)="goToRequestSummaryReport()">
+            <mat-icon>assessment</mat-icon>Request Status Report
+          </div>
+        </button>
+      </mat-menu>
     </div>
     <div class="flex-spacer"></div>
     <a mat-button [matMenuTriggerFor]="loggedInUser">

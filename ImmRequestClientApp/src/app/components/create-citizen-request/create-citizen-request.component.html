@@ -2,7 +2,7 @@
 <mat-card>
   <mat-card-title class="class-title">Make a request!</mat-card-title>
   <mat-vertical-stepper #stepper linear>
-    <mat-step label="Select an area:" [completed]="requestToSend.areaId != 0">
+    <mat-step label="Select an area:" [completed]="canAreaAdvanceToNextStep$|async">
       <app-radio-buttons-step
         (selectButton)="setAreaTopics($event)"
         [(bindingProp)]="requestToSend.areaId"
@@ -11,7 +11,7 @@
       >
       </app-radio-buttons-step>
     </mat-step>
-    <mat-step label="Select a topic:" [completed]="requestToSend.topicId != 0">
+    <mat-step label="Select a topic:" [completed]="canTopicAdvanceToNextStep$|async">
       <app-radio-buttons-step
         (selectButton)="setTopicTypes($event)"
         [(bindingProp)]="requestToSend.topicId"
@@ -20,7 +20,7 @@
       >
       </app-radio-buttons-step>
     </mat-step>
-    <mat-step label="Select topic's type:" [completed]="requestToSend.topicTypeId != 0">
+    <mat-step label="Select topic's type:" [completed]="canTypeAdvanceToNextStep$|async">
       <app-radio-buttons-step
         (selectButton)="setType($event)"
         [(bindingProp)]="requestToSend.topicTypeId"
