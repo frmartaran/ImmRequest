@@ -1,3 +1,4 @@
+import { CitizenRequest } from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Area, Topic } from '../models/models';
@@ -25,6 +26,12 @@ export class ManagementService {
 
   getAllTopicsFromArea(areaId: number){
     return this.http.get<Topic[]>(`${this.endpoint}/Topics/${areaId}/`);
+  }
+
+  createCitizenRequest(request: CitizenRequest){
+    return this.http.post(this.endpoint, request, {
+      responseType: 'text'
+    });
   }
 
 }

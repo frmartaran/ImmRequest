@@ -57,7 +57,7 @@ export class TypeService {
     headers = headers
       .set('Content-Type', 'application/json');
 
-    return this.http.get(this.endpoint + "/" + parentTopicId + '/', {
+    return this.http.get<TopicType[]>(this.endpoint + "/All/" + parentTopicId, {
       headers: headers,
       responseType: 'json'
     });

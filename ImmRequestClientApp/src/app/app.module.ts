@@ -7,10 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { RouterModule } from '@angular/router';
-import { RequestManagementComponent } from './components/request-management/request-management.component';
 import { AdminLoggedIn } from './guards/admin-logged-in.guard';
 import { AdminNotLoggedIn } from './guards/admin-not-logged-in.guard';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationComponent } from './modals/confirmation/confirmation.component';
 import { ModifyAdminComponent } from './components/modify-admin/modify-admin.component';
@@ -25,6 +24,9 @@ import { AreasTableComponent } from './components/areas-table/areas-table.compon
 import { AdminManagementComponent } from './components/admin-management/admin-management.component';
 import { TopicManagementComponent } from './components/topic-management/topic-management.component';
 import { ImporterComponent } from './components/importer/importer.component';
+import { CreateCitizenRequestComponent } from './components/create-citizen-request/create-citizen-request.component';
+import { RadioButtonsStepComponent } from './components/radio-buttons-step/radio-buttons-step.component';
+import { FieldValuesComponent } from './modals/field-values/field-values.component';
 
 declare var require: any;
 
@@ -33,7 +35,6 @@ declare var require: any;
     AppComponent,
     NavMenuComponent,
     LoginComponent,
-    RequestManagementComponent,
     ConfirmationComponent,
     ModifyAdminComponent,
     ManagementComponent,
@@ -46,6 +47,9 @@ declare var require: any;
     AdminManagementComponent,
     TopicManagementComponent,
     ImporterComponent,
+    CreateCitizenRequestComponent,
+    RadioButtonsStepComponent,
+    FieldValuesComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,10 +57,11 @@ declare var require: any;
     MaterialModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
       { path: '', redirectTo: 'home-page', pathMatch: 'full' },
-      { path: 'home-page', component: RequestManagementComponent},
+      { path: 'home-page', component: CreateCitizenRequestComponent},
       { path: 'modify-admin', component: ModifyAdminComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'dummy', component: DummyComponent},
       { path: 'Type', component: TypeEditorComponent, canActivate: [AdminNotLoggedIn]},
@@ -69,6 +74,6 @@ declare var require: any;
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmationComponent, FieldEditorDialogComponent]
+  entryComponents: [ConfirmationComponent, FieldEditorDialogComponent, FieldValuesComponent]
 })
 export class AppModule { }

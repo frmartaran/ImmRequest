@@ -1,0 +1,94 @@
+<br><br>
+<mat-card>
+  <mat-card-title class="class-title">Make a request!</mat-card-title>
+  <mat-vertical-stepper #stepper linear>
+    <mat-step label="Select an area:" [completed]="requestToSend.areaId != 0">
+      <app-radio-buttons-step
+        (selectButton)="setAreaTopics($event)"
+        [(bindingProp)]="requestToSend.areaId"
+        [hasPrevious]="false"
+        [radioButtons]="areaRadioButtons$|async"
+      >
+      </app-radio-buttons-step>
+    </mat-step>
+    <mat-step label="Select a topic:" [completed]="requestToSend.topicId != 0">
+      <app-radio-buttons-step
+        (selectButton)="setTopicTypes($event)"
+        [(bindingProp)]="requestToSend.topicId"
+        [hasPrevious]="true"
+        [radioButtons]="topicRadioButtons$|async"
+      >
+      </app-radio-buttons-step>
+    </mat-step>
+    <mat-step label="Select topic's type:" [completed]="requestToSend.topicTypeId != 0">
+      <app-radio-buttons-step
+        (selectButton)="setType($event)"
+        [(bindingProp)]="requestToSend.topicTypeId"
+        [hasPrevious]="true"
+        [radioButtons]="typeRadioButtons$|async"
+      >
+      </app-radio-buttons-step>
+    </mat-step>
+    <mat-step [stepControl]="descriptionFormGroup" label="Describe your issue:">
+      <form [formGroup]="descriptionFormGroup">
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea formControlName="firstCtrl" matInput name="description" placeholder="Description" [(ngModel)]="requestToSend.description" required>
+          </textarea>
+        </mat-form-field>
+
+        <div class="button-row">
+          <button mat-raised-button matStepperPrevious>Back</button>
+          <button mat-raised-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="userInfoFormGroup" label="Tell us about yourself:">
+      <form [formGroup]="userInfoFormGroup">
+        <mat-form-field>
+          <mat-label>Citizen Name</mat-label>
+          <input type="text" formControlName="secondCtrl" matInput name="citizenName" placeholder="Your Name" [(ngModel)]="requestToSend.citizenName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="secondCtrl" matInput name="email" placeholder="Email" [(ngModel)]="requestToSend.email" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone</mat-label>
+          <input type="text" formControlName="secondCtrl" matInput name="phone" placeholder="Phone" [(ngModel)]="requestToSend.phone" required>
+        </mat-form-field>
+
+        <div class="button-row">
+          <button mat-raised-button matStepperPrevious>Back</button>
+          <button mat-raised-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Add any additional fields you need:">
+      <div class="additionalFields">
+        <button mat-icon-button color="primary" #tooltip="matTooltip" matTooltip="Add Field"
+          matTooltipPosition="after" aria-label="Add Field" class="add-button"
+          (click)="addField(selectedField)" type="button">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-form-field>
+          <mat-label>Select Additional Field</mat-label>
+          <mat-select placeholder="--" required [(value)]="selectedField">
+            <mat-option *ngFor='let field of typeFields$ | async' [value]="field">
+              {{field.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <app-management [buttons]="buttons" [columns]="columns" [title]="valuesTitle" [pageSize]="3"
+            [dataSource]="fieldsTableDataSource$|async">
+        </app-management>
+     </div>
+     <br>
+     <mat-card-actions>
+      <button type="submit" mat-raised-button (click)="submitCitizenRequest();stepper.reset()">Submit Request</button>
+     </mat-card-actions>
+    </mat-step>
+  </mat-vertical-stepper>
+</mat-card>
