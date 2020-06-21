@@ -153,7 +153,8 @@ export class FieldEditorDialogComponent implements OnInit {
       name: newName,
       dataType: newDataType,
       multipleValues: newMultipleValues,
-      rangeValues: newRangeValues
+      rangeValues: newRangeValues,
+      parentTypeId: 0
     };
 
     this.field = newField;

@@ -25,6 +25,12 @@ export interface Button {
   callback: (element: any) => void;
 }
 
+export interface RadioButton {
+  id: number;
+  checked: boolean;
+  name: string;
+}
+
 export interface Column {
   columnClass: string;
   columnName: string;
@@ -39,6 +45,7 @@ export interface TopicType {
 
 export interface BaseField {
   id?: number,
+  parentTypeId:number,
   name: string,
   dataType: DataType,
   multipleValues: boolean,
@@ -59,8 +66,25 @@ export interface Topic {
   types: TopicType[]
 }
 
-export enum DataType {
-  Number,
+export interface RequestValue{
+  fieldId:number;
+  name: string;
+  value:string[];
+}
+
+export interface CitizenRequest{
+  description: string,
+  citizenName: string,
+  email: string,
+  phone: string,
+  areaId: number,
+  topicId: number,
+  topicTypeId: number
+  values: RequestValue[]
+}
+
+export enum DataType{
+  Number, 
   Text,
   DateTime,
   Bool

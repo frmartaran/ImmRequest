@@ -1,0 +1,43 @@
+mat-card{
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding:0px;
+}
+
+mat-vertical-stepper{
+    width: 100%;
+}
+
+mat-card-title{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 20px;
+  padding-bottom: 0px;
+}
+
+.button-row {
+  display: table-cell;
+}
+
+::ng-deep .button-row button {
+  display: table-cell;
+  margin-right: 8px;
+}
+
+.mat-form-field{
+  display: block;
+}
+
+.additionalFields{
+  display: inline-flex;
+}
+
+.mat-card-actions{
+  text-align: center;
+}

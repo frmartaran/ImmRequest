@@ -1,0 +1,11 @@
+ <div class="radio-group">
+   <mat-radio-group  class="radio-vertical">
+       <ng-container *ngFor="let radioButton of radioButtons">
+            <mat-radio-button value="{{radioButton.id}}" [checked]="radioButton.checked" (click)="onPropChange(radioButton.id)">{{radioButton.name}}</mat-radio-button>
+       </ng-container>
+   </mat-radio-group>
+ </div>
+ <div class="button-row">
+   <button *ngIf="hasPrevious" mat-raised-button matStepperPrevious>Back</button>
+   <button mat-raised-button matStepperNext>Next</button>
+</div>
