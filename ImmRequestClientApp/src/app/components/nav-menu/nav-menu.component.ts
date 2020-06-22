@@ -110,4 +110,8 @@ export class NavMenuComponent implements OnInit {
   goToRequestSummaryReport(){
     this.router.navigate(['/RequestReport']);
   }
+
+  getRequestStatus(){
+    this.router.navigate(['/RequestStatus']);
+  }
 }

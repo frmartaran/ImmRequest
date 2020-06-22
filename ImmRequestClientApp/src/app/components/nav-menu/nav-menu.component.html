@@ -5,6 +5,24 @@
         <img id="logo" [src]="imageUrl" />
       </a>
     </button>
+    <button mat-button [matMenuTriggerFor]="requests">Requests Management</button>
+    <mat-menu #requests>
+      <button mat-menu-item>
+        <div (click)="homePage()">
+          <mat-icon>add_circle</mat-icon>Create
+        </div>
+      </button>
+      <button mat-menu-item>
+        <div (click)="getRequestStatus()">
+          <mat-icon>visibility</mat-icon>Get Status
+        </div>
+      </button>
+      <button *ngIf="isAuthenticated$|async" mat-menu-item>
+        <div>
+          <mat-icon>rate_review</mat-icon>Manage
+        </div>
+      </button>      
+    </mat-menu>
     <div *ngIf="isAuthenticated$|async">
       <button mat-button [matMenuTriggerFor]="administrators">Admin</button>
       <mat-menu #administrators="matMenu">
@@ -29,14 +47,6 @@
         <button mat-menu-item>
           <div (click)="import()">
             <mat-icon>add_circle</mat-icon>Import
-          </div>
-        </button>
-      </mat-menu>
-      <button mat-button [matMenuTriggerFor]="requests">Requests Management</button>
-      <mat-menu #requests>
-        <button mat-menu-item>
-          <div>
-            <mat-icon>rate_review</mat-icon>Manage
           </div>
         </button>
       </mat-menu>

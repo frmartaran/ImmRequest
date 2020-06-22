@@ -94,8 +94,7 @@ namespace ImmRequest.WebApi.Controllers
             try
             {
                 var request = Logic.Get(requestId);
-                var statusRequestMessage = string.Format(WebApiResource.CitizenRequest_GetStatusMessage,
-                    request.CitizenName, request.Description, request.Status.ToString());
+                var statusRequestMessage = request.Status.ToString();
                 return Ok(statusRequestMessage);
             }
             catch (BusinessLogicException exception)

@@ -29,6 +29,7 @@ import { TypeSummaryReportComponent } from './components/type-summary-report/typ
 import { CreateCitizenRequestComponent } from './components/create-citizen-request/create-citizen-request.component';
 import { RadioButtonsStepComponent } from './components/radio-buttons-step/radio-buttons-step.component';
 import { FieldValuesComponent } from './modals/field-values/field-values.component';
+import { GetRequestStatusComponent } from './components/get-request-status/get-request-status.component';
 
 declare var require: any;
 
@@ -53,7 +54,8 @@ declare var require: any;
     RadioButtonsStepComponent,
     FieldValuesComponent,
     RequestSummaryReportComponent,
-    TypeSummaryReportComponent
+    TypeSummaryReportComponent,
+    GetRequestStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ declare var require: any;
       { path: 'Topic', component: TopicManagementComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'Import', component: ImporterComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'RequestReport', component: RequestSummaryReportComponent, canActivate: [AdminNotLoggedIn]},
-      { path: 'TypeReport', component: TypeSummaryReportComponent, canActivate: [AdminNotLoggedIn]}
+      { path: 'TypeReport', component: TypeSummaryReportComponent, canActivate: [AdminNotLoggedIn]},
+      { path: 'RequestStatus', component: GetRequestStatusComponent }
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],

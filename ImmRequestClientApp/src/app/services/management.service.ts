@@ -34,4 +34,10 @@ export class ManagementService {
     });
   }
 
+  getCitizenRequestStatus(requestNumber:number){
+    return this.http.get(this.endpoint + '/Status/' + requestNumber,{
+      responseType: 'text'
+    });
+  }
+
 }
