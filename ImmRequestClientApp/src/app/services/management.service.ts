@@ -34,4 +34,35 @@ export class ManagementService {
     });
   }
 
+  getCitizenRequestStatus(requestNumber:number){
+    return this.http.get(this.endpoint + '/Status/' + requestNumber,{
+      responseType: 'text'
+    });
+  }
+
+  getCitizenRequests(){
+    var token = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    headers = headers
+      .set('Content-Type', 'application/json')
+      .set('Authorization', token);
+
+    return this.http.get<CitizenRequest[]>(this.endpoint, {
+      headers: headers
+    });
+  }
+
+  updateCitizenRequestStatus(id:number, status:number){
+    var adminToken = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    headers = headers
+    .set('Content-Type', 'application/json')
+    .set('Authorization', adminToken);
+
+    return this.http.put(this.endpoint + '/' + id, {'Status':status} , {
+      headers: headers,
+      responseType: 'text'
+    });
+  }
+
 }

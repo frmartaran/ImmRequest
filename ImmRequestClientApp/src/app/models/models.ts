@@ -75,6 +75,8 @@ export interface RequestValue{
 export interface CitizenRequest{
   description: string,
   citizenName: string,
+  id?:number,
+  status?:number,
   email: string,
   phone: string,
   areaId: number,

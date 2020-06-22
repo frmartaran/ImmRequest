@@ -22,9 +22,7 @@ export class AppComponent {
 
   initializeSnackbar(){
     this.snackbarService.notifications$.subscribe(input => {
-      this.snackBar.open(input.message, input.action, 
-        Object.assign({}, {duration:3000}, input.config)
-      );
+      this.snackBar.open(input.message, input.action, input.config)
     });
   }  
 }

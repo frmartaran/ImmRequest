@@ -50,7 +50,9 @@ namespace ImmRequest.WebApi.Controllers
                 Logic.Create(request);
                 Logic.Save();
 
-                return Ok(WebApiResource.CitizenRequest_CreatedMessage);
+                var returnMessage = string.Format(WebApiResource.CitizenRequest_CreatedMessage, request.Id);
+
+                return Ok(returnMessage);
             }
             catch (ValidationException exception)
             {
@@ -93,8 +95,7 @@ namespace ImmRequest.WebApi.Controllers
             try
             {
                 var request = Logic.Get(requestId);
-                var statusRequestMessage = string.Format(WebApiResource.CitizenRequest_GetStatusMessage,
-                    request.CitizenName, request.Description, request.Status.ToString());
+                var statusRequestMessage = request.Status.ToString();
                 return Ok(statusRequestMessage);
             }
             catch (BusinessLogicException exception)
@@ -156,11 +157,11 @@ namespace ImmRequest.WebApi.Controllers
             try
             {
                 var request = Logic.Get(requestId);
-                var untrackedRequest = CitizenRequestModel
-                    .ToModel(request)
+                var untrackedRequest = new CitizenRequestModel()
+                    .SetModel(request)
                     .ToDomain();
-                untrackedRequest.Status = model.Status;
-                Logic.Update(untrackedRequest);
+                request.Status = model.Status;
+                Logic.Update(request);
                 Logic.Save();
 
                 var statusUpdatedMessage = string.Format(WebApiResource.CitizenRequest_StatusUpdatedMessage,

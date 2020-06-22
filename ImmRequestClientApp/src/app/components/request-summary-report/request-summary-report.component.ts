@@ -76,7 +76,7 @@ export class RequestSummaryReportComponent implements OnInit {
       this.snackbarService.notifications$.next({
         message: HtmlHelpers.getHtmlErrorMessage(error),
         action: "Error !",
-        config: this.snackbarService.configError
+        config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
       });
     })
   }

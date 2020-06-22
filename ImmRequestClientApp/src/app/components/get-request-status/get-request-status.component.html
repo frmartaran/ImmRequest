@@ -1,0 +1,19 @@
+<div class="main-div">
+    <mat-card class="center">
+        <mat-card-header class="center">
+            <mat-card-title>Request Status</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="date-range-input center"> 
+                <mat-form-field color="accent" class="small" required>
+                    <mat-label>Enter your request number:</mat-label>
+                    <input matInput type="text" name="numberValue" required [(ngModel)]="numberValue">
+                </mat-form-field>
+                <button color="primary" class="pull-right" type="submit" mat-raised-button (click)="getRequestByNumber()">Load</button>
+            </div>
+            <app-management [buttons]="null" [columns]="columns" [title]="title" [pageSize]="3"
+                [dataSource]="requestDataSource$|async">
+            </app-management>
+        </mat-card-content>
+    </mat-card>
+</div>

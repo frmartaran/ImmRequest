@@ -65,7 +65,7 @@ export class TypeEditorComponent implements OnInit {
             this.snackBarService.notifications$.next({
                 message: 'Please Select an Area and Topic First',
                 action: 'Error !',
-                config: this.snackBarService.configError
+                config: Object.assign({}, {duration:3000}, this.snackBarService.configError)
             });
         }
 
@@ -127,13 +127,13 @@ export class TypeEditorComponent implements OnInit {
                 this.snackBarService.notifications$.next({
                     message: successObject.message,
                     action: 'Success!',
-                    config: this.snackBarService.configSuccess
+                    config: Object.assign({}, {duration:3000}, this.snackBarService.configSuccess)
                 });
             }, (error) => {
                 this.snackBarService.notifications$.next({
                     message: HtmlHelpers.getHtmlErrorMessage(error),
                     action: 'Error!',
-                    config: this.snackBarService.configError
+                    config: Object.assign({}, {duration:3000}, this.snackBarService.configError)
                 });
             });
     }
@@ -145,13 +145,13 @@ export class TypeEditorComponent implements OnInit {
                 this.snackBarService.notifications$.next({
                     message: res,
                     action: 'Success!',
-                    config: this.snackBarService.configSuccess
+                    config: Object.assign({}, {duration:3000}, this.snackBarService.configSuccess)
                 });
             }, (error) => {
                 this.snackBarService.notifications$.next({
                     message: HtmlHelpers.getHtmlErrorMessage(error),
                     action: 'Error!',
-                    config: this.snackBarService.configError
+                    config: Object.assign({}, {duration:3000}, this.snackBarService.configError)
                 });
             });
     }

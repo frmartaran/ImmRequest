@@ -118,7 +118,7 @@ export class CreateCitizenRequestComponent implements OnInit {
         this.snackbarService.notifications$.next({
           message: HtmlHelpers.getHtmlErrorMessage(error),
           action: 'Error!',
-          config: this.snackbarService.configError
+          config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
         });
       }
     )
@@ -140,7 +140,7 @@ export class CreateCitizenRequestComponent implements OnInit {
         this.snackbarService.notifications$.next({
           message: HtmlHelpers.getHtmlErrorMessage(error),
           action: 'Error!',
-          config: this.snackbarService.configError
+          config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
         });
       }
     )
@@ -163,7 +163,7 @@ export class CreateCitizenRequestComponent implements OnInit {
         this.snackbarService.notifications$.next({
           message: HtmlHelpers.getHtmlErrorMessage(error),
           action: 'Error!',
-          config: this.snackbarService.configError
+          config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
         });
       }
     )
@@ -269,16 +269,17 @@ export class CreateCitizenRequestComponent implements OnInit {
         this.snackbarService.notifications$.next({
           message: response,
           action: 'Success!',
-          config: this.snackbarService.configSuccess
+          config: Object.assign({}, {duration:6000}, this.snackbarService.configSuccess)
         });
         this.initializeStepper();
+        this.requestToSend.areaId = 0;
         this.stepper.reset();
       },
       (error) => {
         this.snackbarService.notifications$.next({
           message: HtmlHelpers.getHtmlErrorMessage(error),
           action: 'Error!',
-          config: this.snackbarService.configError
+          config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
         });
       }
     )
