@@ -156,6 +156,9 @@ namespace ImmRequest.WebApi.Controllers
             try
             {
                 var request = Logic.Get(requestId);
+                var untrackedRequest = new CitizenRequestModel()
+                    .SetModel(request)
+                    .ToDomain();
                 request.Status = model.Status;
                 Logic.Update(request);
                 Logic.Save();

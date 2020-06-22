@@ -41,6 +41,7 @@ namespace ImmRequest.DataAccess.Repositories
         public BaseField Get(long id)
         {
             return Context.Fields
+                .IgnoreQueryFilters()
                 .Include(f => f.ParentType)
                 .FirstOrDefault(f => f.Id == id);
         }
