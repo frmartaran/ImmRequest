@@ -114,4 +114,8 @@ export class NavMenuComponent implements OnInit {
   getRequestStatus(){
     this.router.navigate(['/RequestStatus']);
   }
+
+  manageRequests(){
+    this.router.navigate(['/ManageRequestsStatus']);
+  }
 }

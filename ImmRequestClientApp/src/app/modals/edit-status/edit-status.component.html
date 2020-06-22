@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Edit Request Status</h1>
+
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Enter the new status:</mat-label>
+        <input matInput type="text" name="textValue" required [(ngModel)]="textValue">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear"
+            (click)="textValue=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)='setStatusValue()'>Save</button>
+</mat-dialog-actions>

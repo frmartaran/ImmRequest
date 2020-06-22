@@ -18,7 +18,7 @@
         </div>
       </button>
       <button *ngIf="isAuthenticated$|async" mat-menu-item>
-        <div>
+        <div (click)="manageRequests()">
           <mat-icon>rate_review</mat-icon>Manage
         </div>
       </button>      

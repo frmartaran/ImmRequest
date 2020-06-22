@@ -30,6 +30,8 @@ import { CreateCitizenRequestComponent } from './components/create-citizen-reque
 import { RadioButtonsStepComponent } from './components/radio-buttons-step/radio-buttons-step.component';
 import { FieldValuesComponent } from './modals/field-values/field-values.component';
 import { GetRequestStatusComponent } from './components/get-request-status/get-request-status.component';
+import { ManageRequestStatusComponent } from './components/manage-request-status/manage-request-status.component';
+import { EditStatusComponent } from './modals/edit-status/edit-status.component';
 
 declare var require: any;
 
@@ -55,7 +57,9 @@ declare var require: any;
     FieldValuesComponent,
     RequestSummaryReportComponent,
     TypeSummaryReportComponent,
-    GetRequestStatusComponent
+    GetRequestStatusComponent,
+    ManageRequestStatusComponent,
+    EditStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -78,11 +82,12 @@ declare var require: any;
       { path: 'Import', component: ImporterComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'RequestReport', component: RequestSummaryReportComponent, canActivate: [AdminNotLoggedIn]},
       { path: 'TypeReport', component: TypeSummaryReportComponent, canActivate: [AdminNotLoggedIn]},
-      { path: 'RequestStatus', component: GetRequestStatusComponent }
+      { path: 'RequestStatus', component: GetRequestStatusComponent },
+      { path: 'ManageRequestsStatus', component: ManageRequestStatusComponent, canActivate: [AdminNotLoggedIn]},
     ])
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmationComponent, FieldEditorDialogComponent, FieldValuesComponent]
+  entryComponents: [ConfirmationComponent, FieldEditorDialogComponent, FieldValuesComponent, EditStatusComponent]
 })
 export class AppModule { }
