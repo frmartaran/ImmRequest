@@ -44,6 +44,7 @@ namespace ImmRequest.DataAccess.Repositories
                 .Include(cr => cr.Topic)
                 .Include(cr => cr.TopicType)
                 .Include(cr => cr.Values)
+                    .ThenInclude(v => v.Field)
                 .FirstOrDefault(cr => cr.Id == id);
         }
 
@@ -55,6 +56,7 @@ namespace ImmRequest.DataAccess.Repositories
                 .Include(cr => cr.Topic)
                 .Include(cr => cr.TopicType)
                 .Include(cr => cr.Values)
+                    .ThenInclude(v => v.Field)
                 .ToList();
         }
 

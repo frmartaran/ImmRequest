@@ -99,6 +99,9 @@ export class CreateCitizenRequestComponent implements OnInit {
       areaId: 0,
       topicId: 0,
       topicTypeId: 0,
+      areaName: '',
+      topicName: '',
+      topicTypeName: '',
       values: []
     }
   }
@@ -208,7 +211,7 @@ export class CreateCitizenRequestComponent implements OnInit {
         if (res) {
             let value:RequestValue = {
               fieldId: field.id,
-              name: field.name,
+              fieldName: field.name,
               value: res
             }
             let source = new MatTableDataSource<any>();
@@ -227,7 +230,7 @@ export class CreateCitizenRequestComponent implements OnInit {
   initializeColumns() {
       this.columns = []
       let fieldsName: Column = {
-          columnClass: "name",
+          columnClass: "fieldName",
           columnName: "Fields",
           hasButtons: false
       }

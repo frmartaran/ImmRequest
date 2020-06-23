@@ -18,6 +18,12 @@ namespace ImmRequest.WebApi.Models
 
         public string Phone { get; set; }
 
+        public string AreaName { get; set; }
+
+        public string TopicName { get; set; }
+
+        public string TopicTypeName { get; set; }
+
         public long AreaId { get; set; }
 
         public long TopicId { get; set; }
@@ -36,8 +42,11 @@ namespace ImmRequest.WebApi.Models
             Email = entity.Email;
             Phone = entity.Phone;
             AreaId = entity.AreaId;
+            AreaName = entity.Area.Name;
             TopicId = entity.TopicId;
+            TopicName = entity.Topic.Name;
             TopicTypeId = entity.TopicTypeId;
+            TopicTypeName = entity.TopicType.Name;
             Status = entity.Status;
             Values = RequestFieldValuesModel
                 .ToModel(entity.Values)

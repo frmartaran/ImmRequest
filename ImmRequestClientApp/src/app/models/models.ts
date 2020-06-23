@@ -68,8 +68,14 @@ export interface Topic {
 
 export interface RequestValue{
   fieldId:number;
-  name: string;
+  fieldName: string;
   value:string[];
+}
+
+export interface FlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
 }
 
 export interface CitizenRequest{
@@ -80,8 +86,11 @@ export interface CitizenRequest{
   email: string,
   phone: string,
   areaId: number,
+  areaName: string,
   topicId: number,
-  topicTypeId: number
+  topicName: string,
+  topicTypeId: number,
+  topicTypeName: string,
   values: RequestValue[]
 }
 

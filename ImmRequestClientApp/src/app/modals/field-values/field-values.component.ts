@@ -20,6 +20,8 @@ export class FieldValuesComponent implements OnInit {
 
   public numberValues: number[];
 
+  public numberValuesSubject$: BehaviorSubject<number[]>;
+
   public dataTypeSelected$: BehaviorSubject<DataType>;
 
   public currentDataType: DataType;
@@ -30,9 +32,13 @@ export class FieldValuesComponent implements OnInit {
 
   public dateTimeValues: Date[];
 
+  public dateTimeValuesSubject$: BehaviorSubject<Date[]>;
+
   public textValue: string;
 
   public textValues: string[];
+
+  public textValuesSubject$: BehaviorSubject<string[]>;
 
   public booleanValue: Boolean
 
@@ -53,10 +59,14 @@ export class FieldValuesComponent implements OnInit {
     this.dateTimeValues = [];
     this.dataTypeSelected$ = new BehaviorSubject(this.currentDataType);
     this.showAddButton$ = new BehaviorSubject(true);
+    this.numberValuesSubject$ = new BehaviorSubject([]);
+    this.dateTimeValuesSubject$ = new BehaviorSubject([]);
+    this.textValuesSubject$ = new BehaviorSubject([]);
   }
 
   addNumberValue(){
     this.numberValues.push(this.numberValue);
+    this.numberValuesSubject$.next(this.numberValues);
     this.snackbarService.notifications$.next({
       message: "Number value added!",
       action: 'Success!',
@@ -69,6 +79,7 @@ export class FieldValuesComponent implements OnInit {
 
   addTextValue(){
     this.textValues.push(this.textValue);
+    this.textValuesSubject$.next(this.textValues);
     this.snackbarService.notifications$.next({
       message: "Text value added!",
       action: 'Success!',
@@ -81,6 +92,7 @@ export class FieldValuesComponent implements OnInit {
 
   addDateTimeValue(){
     this.dateTimeValues.push(this.dateTimeValue);
+    this.dateTimeValuesSubject$.next(this.dateTimeValues);
     this.snackbarService.notifications$.next({
       message: "Date time value added!",
       action: 'Success!',
@@ -138,6 +150,24 @@ export class FieldValuesComponent implements OnInit {
       action: 'Error!',
       config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
     });
+  }
+
+  removeFromNumberValues(index: number){
+    let arrayLength = this.numberValues.length;
+    this.numberValues = [...this.numberValues.slice(0, index), ...this.numberValues.slice(index+1, arrayLength)];
+    this.numberValuesSubject$.next(this.numberValues);
+  }
+
+  removeFromTextValues(index: number){
+    let arrayLength = this.textValues.length;
+    this.textValues = [...this.textValues.slice(0, index), ...this.textValues.slice(index+1, arrayLength)];
+    this.textValuesSubject$.next(this.textValues);
+  }
+
+  removeFromDateValues(index: number){
+    let arrayLength = this.dateTimeValues.length;
+    this.dateTimeValues = [...this.dateTimeValues.slice(0, index), ...this.dateTimeValues.slice(index+1, arrayLength)];
+    this.dateTimeValuesSubject$.next(this.dateTimeValues);
   }
 
 }

@@ -32,6 +32,7 @@ import { FieldValuesComponent } from './modals/field-values/field-values.compone
 import { GetRequestStatusComponent } from './components/get-request-status/get-request-status.component';
 import { ManageRequestStatusComponent } from './components/manage-request-status/manage-request-status.component';
 import { EditStatusComponent } from './modals/edit-status/edit-status.component';
+import { ShowRequestValuesComponent } from './modals/show-request-values/show-request-values.component';
 
 declare var require: any;
 
@@ -59,7 +60,8 @@ declare var require: any;
     TypeSummaryReportComponent,
     GetRequestStatusComponent,
     ManageRequestStatusComponent,
-    EditStatusComponent
+    EditStatusComponent,
+    ShowRequestValuesComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +90,6 @@ declare var require: any;
   ],
   providers: [ AdminLoggedIn, AdminNotLoggedIn, DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmationComponent, FieldEditorDialogComponent, FieldValuesComponent, EditStatusComponent]
+  entryComponents: [ConfirmationComponent, FieldEditorDialogComponent, FieldValuesComponent, EditStatusComponent, ShowRequestValuesComponent]
 })
 export class AppModule { }

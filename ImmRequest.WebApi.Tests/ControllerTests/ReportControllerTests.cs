@@ -179,15 +179,15 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             var asOkReponse = response as OkObjectResult;
             var content = asOkReponse.Value as List<RequestSummary>;
             var createdRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Created);
+                .FirstOrDefault(x => x.Status == RequestStatus.Created.ToString());
             var onRevisionRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.OnRevision);
+                .FirstOrDefault(x => x.Status == RequestStatus.OnRevision.ToString());
             var acceptedRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Acepted);
+                .FirstOrDefault(x => x.Status == RequestStatus.Acepted.ToString());
             var declinedRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Declined);
+                .FirstOrDefault(x => x.Status == RequestStatus.Declined.ToString());
             var finishedRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Ended);
+                .FirstOrDefault(x => x.Status == RequestStatus.Ended.ToString());
 
             Assert.AreEqual(2, createdRequests.Count);
             Assert.AreEqual(2, onRevisionRequests.Count);
@@ -221,15 +221,15 @@ namespace ImmRequest.WebApi.Tests.ControllerTests.ReportsTest
             var asOkReponse = response as OkObjectResult;
             var content = asOkReponse.Value as List<RequestSummary>;
             var createdRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Created);
+                .FirstOrDefault(x => x.Status == RequestStatus.Created.ToString());
             var onRevisionRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.OnRevision);
+                .FirstOrDefault(x => x.Status == RequestStatus.OnRevision.ToString());
             var acceptedRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Acepted);
+                .FirstOrDefault(x => x.Status == RequestStatus.Acepted.ToString());
             var declinedRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Declined);
+                .FirstOrDefault(x => x.Status == RequestStatus.Declined.ToString());
             var finishedRequests = content
-                .FirstOrDefault(x => x.Status == RequestStatus.Ended);
+                .FirstOrDefault(x => x.Status == RequestStatus.Ended.ToString());
 
             Assert.AreEqual(2, createdRequests.Count);
             Assert.AreEqual(2, onRevisionRequests.Count);
