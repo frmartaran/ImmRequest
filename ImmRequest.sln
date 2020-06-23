@@ -30,11 +30,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		testSettings.runsettings = testSettings.runsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.Importer.Interfaces", "ImmRequest.Importer.Interfaces\ImmRequest.Importer.Interfaces.csproj", "{4AF2600E-9846-4FDD-A9D0-3C0E1C34B9B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.Importer.Interfaces", "ImmRequest.Importer.Interfaces\ImmRequest.Importer.Interfaces.csproj", "{4AF2600E-9846-4FDD-A9D0-3C0E1C34B9B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.Importer", "ImmRequest.Importer\ImmRequest.Importer.csproj", "{395BD387-F1FB-4A19-B75A-3E968E44ECA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.Importer", "ImmRequest.Importer\ImmRequest.Importer.csproj", "{395BD387-F1FB-4A19-B75A-3E968E44ECA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmRequest.Importer.Tests", "ImmRequest.Importer.Tests\ImmRequest.Importer.Tests.csproj", "{F3782908-0212-44D0-AA1E-B25E125BD0C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmRequest.Importer.Tests", "ImmRequest.Importer.Tests\ImmRequest.Importer.Tests.csproj", "{F3782908-0212-44D0-AA1E-B25E125BD0C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
