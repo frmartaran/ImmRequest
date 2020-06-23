@@ -219,6 +219,9 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected bool AllFieldsHaveValues(long typeId, List<RequestFieldValues> values)
         {
+            if (values.FirstOrDefault()?.ParentCitizenRequestId != 0)
+                return true;
+
             var type = TopicTypeRepository.Get(typeId);
             var fieldsIds = type.AllFields.Select(f => f.Id).ToList();
             var valuesFieldsIds = values.Select(rfv => rfv.FieldId).ToList();

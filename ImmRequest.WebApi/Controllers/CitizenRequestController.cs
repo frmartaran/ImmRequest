@@ -160,8 +160,11 @@ namespace ImmRequest.WebApi.Controllers
                 var untrackedRequest = new CitizenRequestModel()
                     .SetModel(request)
                     .ToDomain();
-                request.Status = model.Status;
-                Logic.Update(request);
+                untrackedRequest.Area = request.Area;
+                untrackedRequest.Topic = request.Topic;
+                untrackedRequest.TopicType = request.TopicType;
+                untrackedRequest.Status = model.Status;
+                Logic.Update(untrackedRequest);
                 Logic.Save();
 
                 var statusUpdatedMessage = string.Format(WebApiResource.CitizenRequest_StatusUpdatedMessage,

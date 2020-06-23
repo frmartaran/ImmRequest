@@ -472,6 +472,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 .Returns(topicType);
 
             TopicTypeRepository = fieldRepository.Object;
+            firstCitizenRequest.Values.ForEach(v => v.ParentCitizenRequestId = 0);
             var isValid = AllFieldsHaveValues(firstCitizenRequest.TopicTypeId, firstCitizenRequest.Values);
         }
     }
