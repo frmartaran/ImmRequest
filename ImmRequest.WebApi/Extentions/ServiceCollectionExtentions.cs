@@ -10,16 +10,13 @@ using ImmRequest.Domain;
 using ImmRequest.Domain.Fields;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Interfaces;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace ImmRequest.WebApi.Extentions
 {
@@ -38,6 +35,7 @@ namespace ImmRequest.WebApi.Extentions
 
         public static void AddBusinessLogicScope(this IServiceCollection services)
         {
+            services.AddScoped<CitizenRequestValidatorInput, CitizenRequestValidatorInput>();
             services.AddScoped<IValidator<Session>, SessionValidator>();
             services.AddScoped<IValidator<Administrator>, AdministratorValidator>();
             services.AddScoped<IValidator<CitizenRequest>, CitizenRequestValidator>();
@@ -59,6 +57,7 @@ namespace ImmRequest.WebApi.Extentions
 
         public static void AddWebApiScope(this IServiceCollection services)
         {
+            services.AddScoped<CitizenRequestControllerInput, CitizenRequestControllerInput>();
             services.AddScoped<SessionControllerInputHelper, SessionControllerInputHelper>();
             services.AddScoped<IContextHelper, CurrentSessionInfo>();
         }
@@ -70,7 +69,7 @@ namespace ImmRequest.WebApi.Extentions
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "ImmRequest", Version = "v1" });
+                options.SwaggerDoc("v2", new OpenApiInfo { Title = "ImmRequest", Version = "v2" });
                 options.IncludeXmlComments(xmlPath);
                 options.OperationFilter<AuthorizationFilterOperationFilter>();
             });

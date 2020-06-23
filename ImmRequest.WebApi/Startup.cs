@@ -84,7 +84,7 @@ namespace ImmRequest.WebApi
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Imm Request");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "Imm Request");
             });
         }
     }

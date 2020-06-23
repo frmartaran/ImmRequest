@@ -25,7 +25,12 @@ namespace ImmRequest.WebApi.Controllers
             Logic = logic;
 
         }
-
+        /// <summary>
+        /// Permite a un administrardor realizar ingresar nuevas areas usando un importador dado.
+        /// </summary>
+        /// <param name="importer"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Import([FromForm] string importer, [FromForm] IFormFile file)
         {
@@ -64,6 +69,10 @@ namespace ImmRequest.WebApi.Controllers
 
         }
 
+        /// <summary>
+        /// Retorna la lista de importadores en el sistema.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Get()
         {

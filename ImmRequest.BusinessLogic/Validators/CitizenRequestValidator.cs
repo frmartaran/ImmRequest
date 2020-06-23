@@ -11,6 +11,7 @@ using ImmRequest.Domain.Exceptions;
 using ImmRequest.Domain.Enums;
 using ImmRequest.BusinessLogic.Helpers;
 using System.Linq;
+using ImmRequest.BusinessLogic.Helpers.Inputs;
 
 namespace ImmRequest.BusinessLogic.Validators
 {
@@ -28,15 +29,13 @@ namespace ImmRequest.BusinessLogic.Validators
 
         protected CitizenRequestValidator() { }
 
-        public CitizenRequestValidator(IRepository<Area> AreaRepository, IRepository<Topic> TopicRepository,
-            IRepository<TopicType> TopicTypeRepository, IRepository<BaseField> FieldRepository,
-            IRepository<CitizenRequest> CitizenRequestRepository)
+        public CitizenRequestValidator(CitizenRequestValidatorInput input)
         {
-            this.AreaRepository = AreaRepository;
-            this.TopicRepository = TopicRepository;
-            this.TopicTypeRepository = TopicTypeRepository;
-            this.FieldRepository = FieldRepository;
-            this.CitizenRequestRepository = CitizenRequestRepository;
+            AreaRepository = input.AreaRepository;
+            TopicRepository = input.TopicRepository;
+            TopicTypeRepository = input.TopicTypeRepository;
+            FieldRepository = input.FieldRepository;
+            CitizenRequestRepository = input.CitizenRequestRepository;
         }
 
         public bool IsValid(CitizenRequest objectToValidate)
