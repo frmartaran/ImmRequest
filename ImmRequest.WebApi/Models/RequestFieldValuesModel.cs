@@ -14,6 +14,8 @@ namespace ImmRequest.WebApi.Models
 
         public long FieldId { get; set; }
 
+        public string FieldName { get; set; }
+
         public List<string> Value { get; set; }
 
         public override RequestFieldValuesModel SetModel(RequestFieldValues entity)
@@ -22,6 +24,7 @@ namespace ImmRequest.WebApi.Models
             ParentCitizenRequestId = entity.ParentCitizenRequestId;
             FieldId = entity.FieldId;
             Value = entity.Values;
+            FieldName = entity.Field.Name;
             return this;
         }
 
