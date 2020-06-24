@@ -39,12 +39,17 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
+                Field = new TextField
+                {
+                    Name = "Documentos"
+                },
                 Values = new List<string> { "Credencial" }
             };
             requestFieldValuesModel = new RequestFieldValuesModel
             {
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
+                FieldName = "Documentos",
                 Value = new List<string> { "Credencial" }
             };
             request = new CitizenRequest
@@ -54,7 +59,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 Description = "Quiero mi credencial!",
                 Email = "immrequest@gmail.com",
                 Phone = "21233457",
-                Status = Domain.Enums.RequestStatus.Created,
+                Status = RequestStatus.Created,
+                Area = new Area { Name = "Area" },
+                Topic = new Topic { Name = "Topic" },
+                TopicType = new TopicType { Name = "Type" },
                 AreaId = 1,
                 TopicId = 1,
                 TopicTypeId = 1,
@@ -69,7 +77,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 Description = "Quiero mi credencial!",
                 Email = "immrequest@gmail.com",
                 Phone = "21233457",
-                Status = Domain.Enums.RequestStatus.Created,
+                Status = RequestStatus.Created,
+                AreaName = "Area",
+                TopicName = "Topic",
+                TopicTypeName = "Type",
                 AreaId = 1,
                 TopicId = 1,
                 TopicTypeId = 1,

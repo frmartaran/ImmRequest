@@ -1,4 +1,5 @@
 ﻿using ImmRequest.Domain;
+using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -19,6 +20,10 @@ namespace ImmRequest.WebApi.Tests.ModelTests
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
+                Field= new TextField
+                {
+                    Name = "Documentos"
+                },
                 Values = new List<string> { "Credencial" }
             };
         }
