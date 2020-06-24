@@ -76,6 +76,7 @@ namespace ImmRequest.WebApi.Controllers
                 .Where(cr => cr.CreatedDate >= model.Start)
                 .Where(cr => cr.CreatedDate < model.End)
                 .GroupBy(cr => cr.TopicTypeId)
+                .Where(g => !g.FirstOrDefault().TopicType.IsDeleted)
                 .Select(g => new TypeSummary
                 {
                     Count = g.Count(),

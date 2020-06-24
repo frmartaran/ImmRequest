@@ -16,7 +16,7 @@
                 </button>
             </div>
             <app-management [buttons]="buttons" [columns]="columns" [title]="Types" [pageSize]="5"
-                [dataSource]="datasource">
+                [dataSource]="datasource | async">
 
             </app-management>
         </mat-card>

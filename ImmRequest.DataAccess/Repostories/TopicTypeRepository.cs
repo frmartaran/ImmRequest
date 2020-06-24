@@ -40,6 +40,7 @@ namespace ImmRequest.DataAccess.Repositories
         public TopicType Get(long id)
         {
             return Context.TopicTypes
+                .IgnoreQueryFilters()
                 .Include(ty => ty.ParentTopic)
                 .Include(ty => ty.AllFields)
                 .FirstOrDefault(ty => ty.Id == id);

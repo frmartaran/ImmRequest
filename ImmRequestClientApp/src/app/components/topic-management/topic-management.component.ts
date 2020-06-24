@@ -8,6 +8,7 @@ import { ManagementComponent } from '../management/management.component';
 import { BehaviorSubject } from 'rxjs';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { HtmlHelpers } from 'src/app/helpers/html.helper';
+import { TypeService } from 'src/app/services/type.service';
 
 @Component({
   selector: 'app-topic-management',
@@ -17,7 +18,8 @@ import { HtmlHelpers } from 'src/app/helpers/html.helper';
 export class TopicManagementComponent implements OnInit {
 
   constructor(private managementService: ManagementService,
-    private router: Router, private snackbarService: SnackbarService) { }
+    private router: Router, private snackbarService: SnackbarService,
+    private typeService: TypeService) { }
 
   @ViewChild(ManagementComponent, { static: true }) managementeComponent: ManagementComponent;
 
@@ -29,11 +31,12 @@ export class TopicManagementComponent implements OnInit {
 
   public topic: Topic;
 
-  public datasource: MatTableDataSource<TopicType>;
+  public datasource: BehaviorSubject<MatTableDataSource<TopicType>>;
 
   public shouldDisable: boolean;
 
   ngOnInit() {
+
     this.initializeButtons();
     this.initializeColumns();
     this.InitializeDataContainers();
@@ -46,8 +49,9 @@ export class TopicManagementComponent implements OnInit {
           this.topic = thisTopic;
           this.topic.areaId = ids.areaId;
           this.name.next(this.topic.name);
-          this.datasource = new MatTableDataSource<TopicType>(this.topic.types);
-          this.datasource.paginator = this.managementeComponent.paginator;
+          let newSource = new MatTableDataSource<TopicType>(this.topic.types);
+          newSource.paginator = this.managementeComponent.paginator;
+          this.datasource.next(newSource);
           this.shouldDisable = false;
         }, (error) => {
           this.ShowError(HtmlHelpers.getHtmlErrorMessage(error))
@@ -62,13 +66,15 @@ export class TopicManagementComponent implements OnInit {
     this.snackbarService.notifications$.next({
       message: message,
       action: "Error !",
-      config: Object.assign({}, {duration:3000}, this.snackbarService.configError)
+      config: Object.assign({}, { duration: 3000 }, this.snackbarService.configError)
     });
   }
 
   private InitializeDataContainers() {
     this.name = new BehaviorSubject("");
-    this.datasource = new MatTableDataSource<TopicType>([]);
+    let source = new MatTableDataSource<TopicType>();
+    source.paginator = this.managementeComponent.paginator;
+    this.datasource = new BehaviorSubject(source);
   }
 
   initializeColumns() {
@@ -93,7 +99,33 @@ export class TopicManagementComponent implements OnInit {
       iconName: "edit",
       callback: (element) => { this.redirectToEdit(element) }
     }
-    this.buttons = [editButton];
+    let deleteButton: Button = {
+      buttonTooltip: "delete",
+      iconName: "delete",
+      callback: (element) => { this.deleteType(element) }
+    }
+    this.buttons = [editButton, deleteButton];
+  }
+
+  deleteType(element) {
+    this.typeService.deleteType(element.id).subscribe(
+      (res) => {
+        this.topic.types = this.topic.types.filter(t => t.id != element.id);
+        let source = new MatTableDataSource(this.topic.types);
+        source.paginator = this.managementeComponent.paginator;
+        this.datasource.next(source);
+        this.snackbarService.notifications$.next({
+          message: res,
+          action: "Success!",
+          config: this.snackbarService.configSuccess
+        });
+      }, (error) => {
+        this.snackbarService.notifications$.next({
+          message: HtmlHelpers.getHtmlErrorMessage(error),
+          action: "Error!",
+          config: this.snackbarService.configError
+        });
+      });
   }
 
   redirectToCreate() {
@@ -106,7 +138,7 @@ export class TopicManagementComponent implements OnInit {
     this.router.navigate(['/Type'], { state: { data: JSON.stringify(typeInfo) } });
   }
 
-  goBack(){
+  goBack() {
     this.managementService.getAllAreas().subscribe((areas) => {
       let area = areas.find(a => a.id == this.topic.areaId);
       this.router.navigate(['/Area'], { state: { data: JSON.stringify(area) } });
