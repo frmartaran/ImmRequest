@@ -146,6 +146,7 @@ namespace ImmRequest.BusinessLogic.Logic.ImporterLogic
             foreach (var type in topic.Types)
             {
                 type.ParentTopic = topic;
+                type.CreatedAt = DateTime.Now;
                 type.AllFields = new List<BaseField>();
                 TopicTypeValidator.IsValid(type);
             }
