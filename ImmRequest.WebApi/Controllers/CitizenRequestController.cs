@@ -4,6 +4,7 @@ using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
 using ImmRequest.WebApi.Filters;
 using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Models;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
@@ -17,17 +18,17 @@ namespace ImmRequest.WebApi.Controllers
     [EnableCors("CorsPolicy")]
     public class CitizenRequestController : ControllerBase
     {
-        private ILogic<CitizenRequest> CitizenRequestLogic { get; set; }
+        private ILogic<CitizenRequest> Logic { get; set; }
 
         private IFinder<Topic> TopicFinder { get; set; }
 
         private IFinder<Area> AreaFinder { get; set; }
 
-        public CitizenRequestController(ILogic<CitizenRequest> CitizenRequestLogic, IFinder<Topic> TopicFinder, IFinder<Area> AreaFinder)
+        public CitizenRequestController(CitizenRequestControllerInput input)
         {
-            this.CitizenRequestLogic = CitizenRequestLogic;
-            this.TopicFinder = TopicFinder;
-            this.AreaFinder = AreaFinder;
+            Logic = input.Logic;
+            TopicFinder = input.TopicFinder;
+            AreaFinder = input.AreaFinder;
         }
 
         /// <summary>
@@ -46,8 +47,12 @@ namespace ImmRequest.WebApi.Controllers
                     return BadRequest(WebApiResource.EmptyRequestMessage);
                 }
                 var request = requestModel.ToDomain();
-                CitizenRequestLogic.Create(request);
-                return Ok(WebApiResource.CitizenRequest_CreatedMessage);
+                Logic.Create(request);
+                Logic.Save();
+
+                var returnMessage = string.Format(WebApiResource.CitizenRequest_CreatedMessage, request.Id);
+
+                return Ok(returnMessage);
             }
             catch (ValidationException exception)
             {
@@ -67,7 +72,7 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var request = CitizenRequestLogic.Get(requestId);
+                var request = Logic.Get(requestId);
                 var requestModel = new CitizenRequestModel();
                 requestModel.SetModel(request);
                 return Ok(requestModel);
@@ -89,9 +94,8 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var request = CitizenRequestLogic.Get(requestId);
-                var statusRequestMessage = string.Format(WebApiResource.CitizenRequest_GetStatusMessage,
-                    request.CitizenName, request.Description, request.Status.ToString());
+                var request = Logic.Get(requestId);
+                var statusRequestMessage = request.Status.ToString();
                 return Ok(statusRequestMessage);
             }
             catch (BusinessLogicException exception)
@@ -134,7 +138,7 @@ namespace ImmRequest.WebApi.Controllers
         [AuthorizationFilter]
         public IActionResult GetCitizenRequests()
         {
-            var requests = CitizenRequestLogic.GetAll();
+            var requests = Logic.GetAll();
             var requestsModels = CitizenRequestModel.ToModel(requests);
             return Ok(requestsModels);
         }
@@ -152,12 +156,17 @@ namespace ImmRequest.WebApi.Controllers
         {
             try
             {
-                var request = CitizenRequestLogic.Get(requestId);
-                var untrackedRequest = CitizenRequestModel
-                    .ToModel(request)
+                var request = Logic.Get(requestId);
+                var untrackedRequest = new CitizenRequestModel()
+                    .SetModel(request)
                     .ToDomain();
+                untrackedRequest.Area = request.Area;
+                untrackedRequest.Topic = request.Topic;
+                untrackedRequest.TopicType = request.TopicType;
                 untrackedRequest.Status = model.Status;
-                CitizenRequestLogic.Update(untrackedRequest);
+                Logic.Update(untrackedRequest);
+                Logic.Save();
+
                 var statusUpdatedMessage = string.Format(WebApiResource.CitizenRequest_StatusUpdatedMessage,
                     request.Id);
                 return Ok(statusUpdatedMessage);

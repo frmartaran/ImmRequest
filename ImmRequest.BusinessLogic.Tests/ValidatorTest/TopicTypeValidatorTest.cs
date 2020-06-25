@@ -17,6 +17,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
         private Topic topic;
         private TopicType type;
         private NumberField field;
+        private BoolField field2;
 
         [TestInitialize]
         public void Setup()
@@ -45,7 +46,13 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
                 RangeEnd = 10,
                 Name = "Name"
             };
+
+            field2 = new BoolField { 
+                Name = "Name"
+            };
             type.AllFields.Add(field);
+            type.AllFields.Add(field2);
+
 
         }
 

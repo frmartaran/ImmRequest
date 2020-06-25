@@ -133,7 +133,7 @@
     <value>The authorization token is empty. Please provide a valid token</value>
   </data>
   <data name="CitizenRequest_CreatedMessage" xml:space="preserve">
-    <value>Your request has been recieved!</value>
+    <value>Your request has been recieved! Please write down your request number: {0}</value>
   </data>
   <data name="CitizenRequest_EmptyStatusMessage" xml:space="preserve">
     <value>Status can't be empty!</value>
@@ -155,6 +155,18 @@
   </data>
   <data name="Entities_Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="Importer_FileNull" xml:space="preserve">
+    <value>Please make sure to select a file to import from</value>
+  </data>
+  <data name="Import_Successful" xml:space="preserve">
+    <value>Import was successful</value>
+  </data>
+  <data name="Reports_NoRequestsForUser" xml:space="preserve">
+    <value>There are no requests for the user {0} between the dates {1} and {2}</value>
+  </data>
+  <data name="Report_NoRequest" xml:space="preserve">
+    <value>There are no request created between {0} and {1}</value>
   </data>
   <data name="SessionController_UserNotFound" xml:space="preserve">
     <value>There was an error login in. Please check your credentials.</value>

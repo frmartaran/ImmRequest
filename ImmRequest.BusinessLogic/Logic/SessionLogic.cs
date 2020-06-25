@@ -60,6 +60,9 @@ namespace ImmRequest.BusinessLogic.Logic
         {
             return Repository.GetAll().Any(s => s.Token == token);
         }
-
+        public void Save()
+        {
+            Repository.Save();
+        }
     }
 }

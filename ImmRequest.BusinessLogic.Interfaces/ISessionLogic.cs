@@ -15,5 +15,7 @@ namespace ImmRequest.BusinessLogic.Interfaces
 
         void Delete(long id);
 
+        void Save();
+
     }
 }

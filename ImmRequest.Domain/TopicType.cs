@@ -12,6 +12,7 @@ namespace ImmRequest.Domain
         public Topic ParentTopic { get; set; }
         public string Name { get; set; }
         public ICollection<BaseField> AllFields { get; set; }
+        public DateTime CreatedAt { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime DeletedDate { get; set; }
     }

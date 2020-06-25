@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="back">
+        <button mat-icon-button color="primary" aria-label="Go Back" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>All Areas
+        </button>
+    </div>
+    <div>
+        <app-management [buttons]="buttons" [columns]="columns" [title]="area.name" [pageSize]="5"
+            [dataSource]="datasource">
+        </app-management>
+    </div>
+</div>

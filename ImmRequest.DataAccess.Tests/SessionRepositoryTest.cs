@@ -58,6 +58,8 @@ namespace ImmRequest.DataAccess.Tests
 
             session.AdministratorInSessionId = administrator.Id;
             repository.Insert(session);
+            repository.Save();
+
 
             var sessionCount = context.Sessions.Count();
             Assert.AreEqual(1, sessionCount);
@@ -91,6 +93,8 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             repository.Delete(session.Id);
+            repository.Save();
+
             var sessionCount = context.Sessions.Count();
             Assert.AreEqual(0, sessionCount);
 

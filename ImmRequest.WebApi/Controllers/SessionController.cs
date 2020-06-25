@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ImmRequest.BusinessLogic.Exceptions;
-using ImmRequest.BusinessLogic.Interfaces;
+﻿using ImmRequest.BusinessLogic.Exceptions;
 using ImmRequest.WebApi.Exceptions;
-using ImmRequest.WebApi.Helpers;
-using ImmRequest.WebApi.Interfaces;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Models.UserManagement;
 using ImmRequest.WebApi.Resources;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImmRequest.WebApi.Controllers
@@ -47,7 +40,12 @@ namespace ImmRequest.WebApi.Controllers
                 var session = model.ToDomain();
                 session.AdministratorInSessionId = administrator.Id;
                 var token = Inputs.Logic.Create(session);
-                return Ok(token);
+                Inputs.Logic.Save();
+                model.Id = session.AdministratorInSessionId;
+                model.Token = token;
+                model.Username = administrator.UserName;
+                model.Password = "";
+                return Ok(model);
             }
             catch (ValidationException exception)
             {
@@ -69,6 +67,7 @@ namespace ImmRequest.WebApi.Controllers
                 var token = Inputs.ContextHelper.GetAuthorizationHeader(HttpContext);
                 var sessionToDelete = Inputs.Logic.Get(token);
                 Inputs.Logic.Delete(sessionToDelete.Id);
+                Inputs.Logic.Save();
                 return Ok();
             }
             catch (BusinessLogicException exception)

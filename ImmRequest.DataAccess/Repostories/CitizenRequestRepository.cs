@@ -23,7 +23,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var toDelete = Get(id);
                 Context.CitizenRequests.Remove(toDelete);
-                Save();
             }
             catch (ArgumentNullException)
             {
@@ -45,6 +44,7 @@ namespace ImmRequest.DataAccess.Repositories
                 .Include(cr => cr.Topic)
                 .Include(cr => cr.TopicType)
                 .Include(cr => cr.Values)
+                    .ThenInclude(v => v.Field)
                 .FirstOrDefault(cr => cr.Id == id);
         }
 
@@ -56,13 +56,13 @@ namespace ImmRequest.DataAccess.Repositories
                 .Include(cr => cr.Topic)
                 .Include(cr => cr.TopicType)
                 .Include(cr => cr.Values)
+                    .ThenInclude(v => v.Field)
                 .ToList();
         }
 
         public void Insert(CitizenRequest objectToAdd)
         {
             Context.CitizenRequests.Add(objectToAdd);
-            Save();
         }
 
         public void Save()
@@ -84,7 +84,6 @@ namespace ImmRequest.DataAccess.Repositories
                 requestToModify.Topic = objectToUpdate.Topic;
                 requestToModify.TopicType = objectToUpdate.TopicType;
                 requestToModify.Values = objectToUpdate.Values;
-                Save();
                 return requestToModify;
             }
             catch (NullReferenceException)

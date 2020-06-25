@@ -28,6 +28,7 @@ namespace ImmRequest.WebApi.Models
             {
                 Name = Name,
                 ParentTypeId = ParentTypeId,
+                IsMultipleSelectEnabled = MultipleValues
             };
 
             field.SetRange(RangeValues);

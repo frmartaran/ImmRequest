@@ -5,6 +5,7 @@ using ImmRequest.Domain;
 using ImmRequest.Domain.Enums;
 using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Controllers;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -38,13 +39,18 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Field = new TextField
+                {
+                    Name = "Documentos"
+                },
+                Values = new List<string> { "Credencial" }
             };
             requestFieldValuesModel = new RequestFieldValuesModel
             {
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                FieldName = "Documentos",
+                Value = new List<string> { "Credencial" }
             };
             request = new CitizenRequest
             {
@@ -53,7 +59,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 Description = "Quiero mi credencial!",
                 Email = "immrequest@gmail.com",
                 Phone = "21233457",
-                Status = Domain.Enums.RequestStatus.Created,
+                Status = RequestStatus.Created,
+                Area = new Area { Name = "Area" },
+                Topic = new Topic { Name = "Topic" },
+                TopicType = new TopicType { Name = "Type" },
                 AreaId = 1,
                 TopicId = 1,
                 TopicTypeId = 1,
@@ -68,7 +77,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 Description = "Quiero mi credencial!",
                 Email = "immrequest@gmail.com",
                 Phone = "21233457",
-                Status = Domain.Enums.RequestStatus.Created,
+                Status = RequestStatus.Created,
+                AreaName = "Area",
+                TopicName = "Topic",
+                TopicTypeName = "Type",
                 AreaId = 1,
                 TopicId = 1,
                 TopicTypeId = 1,
@@ -109,16 +121,17 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void CreateCitizenRequest()
         {
-            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            var mockLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
             var mockTopicFinder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var mockAreaFinder = new Mock<IFinder<Area>>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Save());
+            mockLogic.Setup(m => m.Create(It.IsAny<CitizenRequest>()));
 
-            mockCitizenRequestLogic.Setup(m => m.Create(It.IsAny<CitizenRequest>()));
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.CreateCitizenRequest(requestModel);
 
-            mockCitizenRequestLogic.VerifyAll();
+            mockLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         }
 
@@ -128,8 +141,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
             var mockTopicFinder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var mockAreaFinder = new Mock<IFinder<Area>>(MockBehavior.Strict);
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.CreateCitizenRequest(null);
 
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
@@ -144,10 +157,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockCitizenRequestLogic.Setup(m => m.Create(It.IsAny<CitizenRequest>()))
                 .Throws(new ValidationException(""));
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
 
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.CreateCitizenRequest(requestModel);
-
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
@@ -161,10 +174,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
                 .Returns(request);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
 
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.GetCitizenRequest(1);
-
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         }
@@ -178,10 +191,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
                 .Throws(new BusinessLogicException(""));
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
 
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.GetCitizenRequest(5);
-
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
@@ -195,10 +208,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
                 .Returns(request);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
 
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.GetCitizenRequestStatus(1);
-
             mockCitizenRequestLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         }
@@ -212,8 +225,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
                 .Throws(new BusinessLogicException(""));
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.GetCitizenRequestStatus(5);
 
             mockCitizenRequestLogic.VerifyAll();
@@ -232,8 +245,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 {
                     request
                 });
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.GetCitizenRequests();
 
             mockCitizenRequestLogic.VerifyAll();
@@ -243,21 +256,22 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void UpdateCitizenRequestStatus()
         {
-            var mockCitizenRequestLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
+            var mockLogic = new Mock<ILogic<CitizenRequest>>(MockBehavior.Strict);
             var mockTopicFinder = new Mock<IFinder<Topic>>(MockBehavior.Strict);
             var mockAreaFinder = new Mock<IFinder<Area>>(MockBehavior.Strict);
 
-            mockCitizenRequestLogic.Setup(m => m.Get(It.IsAny<long>()))
+            mockLogic.Setup(m => m.Get(It.IsAny<long>()))
                 .Returns(request);
+            mockLogic.Setup(m => m.Save());
 
-            mockCitizenRequestLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()));
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            mockLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()));
+            var input = new CitizenRequestControllerInput(mockLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var model = new StatusModel();
             model.Status = RequestStatus.Created;
             var result = controller.UpdateCitizenRequestStatus(1, model);
 
-            mockCitizenRequestLogic.VerifyAll();
+            mockLogic.VerifyAll();
             Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         }
 
@@ -273,8 +287,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockCitizenRequestLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()))
                 .Throws(new BusinessLogicException(""));
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var model = new StatusModel();
             model.Status = RequestStatus.Created;
             var result = controller.UpdateCitizenRequestStatus(1, model);
@@ -294,8 +308,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockCitizenRequestLogic.Setup(m => m.Update(It.IsAny<CitizenRequest>()))
                 .Throws(new ValidationException(""));
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var model = new StatusModel();
             model.Status = RequestStatus.Created;
             var result = controller.UpdateCitizenRequestStatus(1, model);
@@ -312,8 +326,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockAreaFinder.Setup(m => m.FindAll())
                 .Returns(new List<Area> { area });
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.GetAllAreas();
 
             mockCitizenRequestLogic.VerifyAll();
@@ -329,8 +343,8 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             mockTopicFinder.Setup(m => m.FindAll(It.IsAny<Predicate<Topic>>()))
                 .Returns(new List<Topic> { topic });
-
-            var controller = new CitizenRequestController(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var input = new CitizenRequestControllerInput(mockCitizenRequestLogic.Object, mockTopicFinder.Object, mockAreaFinder.Object);
+            var controller = new CitizenRequestController(input);
             var result = controller.GetAllTopicsFromArea(1);
 
             mockCitizenRequestLogic.VerifyAll();

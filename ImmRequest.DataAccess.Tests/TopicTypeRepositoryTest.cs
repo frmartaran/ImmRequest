@@ -58,6 +58,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("Type Insert Test");
             repository.Insert(type);
+            repository.Save();
 
             var typeInDb = context.TopicTypes.FirstOrDefault();
             Assert.IsNotNull(typeInDb);
@@ -124,6 +125,8 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             repository.Delete(1);
+            repository.Save();
+
             var typeInDb = context.TopicTypes.FirstOrDefault();
             Assert.IsNull(typeInDb);
         }

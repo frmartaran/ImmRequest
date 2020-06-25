@@ -106,7 +106,7 @@ namespace ImmRequest.WebApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your request has been recieved!.
+        ///   Looks up a localized string similar to Your request has been recieved! Please write down your request number: {0}.
         /// </summary>
         public static string CitizenRequest_CreatedMessage {
             get {
@@ -174,6 +174,42 @@ namespace ImmRequest.WebApi.Resources {
         public static string Entities_Type {
             get {
                 return ResourceManager.GetString("Entities_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import was successful.
+        /// </summary>
+        public static string Import_Successful {
+            get {
+                return ResourceManager.GetString("Import_Successful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please make sure to select a file to import from.
+        /// </summary>
+        public static string Importer_FileNull {
+            get {
+                return ResourceManager.GetString("Importer_FileNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no request created between {0} and {1}.
+        /// </summary>
+        public static string Report_NoRequest {
+            get {
+                return ResourceManager.GetString("Report_NoRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no requests for the user {0} between the dates {1} and {2}.
+        /// </summary>
+        public static string Reports_NoRequestsForUser {
+            get {
+                return ResourceManager.GetString("Reports_NoRequestsForUser", resourceCulture);
             }
         }
         

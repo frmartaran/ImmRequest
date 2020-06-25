@@ -74,6 +74,7 @@ namespace ImmRequest.WebApi.Controllers
             {
                 var administratorToCreate = model.ToDomain();
                 Logic.Create(administratorToCreate);
+                Logic.Save();
                 var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Administrator,
                     WebApiResource.Action_Created);
                 return Ok(responseMessage);
@@ -103,6 +104,8 @@ namespace ImmRequest.WebApi.Controllers
                 var modifiedAdministrator = model.ToDomain();
                 modifiedAdministrator.Id = id;
                 Logic.Update(modifiedAdministrator);
+                Logic.Save();
+
                 var message = string.Format("{0}: {1} {2}", WebApiResource.Entities_Administrator,
                     modifiedAdministrator.UserName, WebApiResource.Action_Updated);
                 return Ok(message);
@@ -130,6 +133,8 @@ namespace ImmRequest.WebApi.Controllers
             try
             {
                 Logic.Delete(id);
+                Logic.Save();
+
                 var responseMessage = string.Format("{0} {1}", WebApiResource.Entities_Administrator,
                         WebApiResource.Action_Deleted);
                 return Ok(responseMessage);

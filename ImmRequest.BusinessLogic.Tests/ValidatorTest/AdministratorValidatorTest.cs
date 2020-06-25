@@ -80,6 +80,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var context = ContextFactory.GetMemoryContext("Repeated Email");
             var repository = new AdministratorRepository(context);
             repository.Insert(administrator);
+            repository.Save();
             var validator = new AdministratorValidator(repository);
             var newAdmin = new Administrator
             {

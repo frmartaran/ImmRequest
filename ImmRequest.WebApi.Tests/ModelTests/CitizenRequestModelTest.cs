@@ -1,4 +1,5 @@
 ﻿using ImmRequest.Domain;
+using ImmRequest.Domain.Fields;
 using ImmRequest.WebApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -22,7 +23,11 @@ namespace ImmRequest.WebApi.Tests.ModelTests
                 Id = 1,
                 ParentCitizenRequestId = 1,
                 FieldId = 1,
-                Value = "Credencial"
+                Field = new TextField
+                {
+                    Name = "Documentos"
+                },
+                Values = new List<string> { "Credencial" }
             };
             request = new CitizenRequest
             {
@@ -33,6 +38,9 @@ namespace ImmRequest.WebApi.Tests.ModelTests
                 Phone = "21233457",
                 Status = Domain.Enums.RequestStatus.Created,
                 AreaId = 1,
+                Area = new Area { Name = "Area" },
+                Topic = new Topic { Name = "Topic" },
+                TopicType = new TopicType { Name = "Type" },
                 TopicId = 1,
                 TopicTypeId = 1,
                 Values = new List<RequestFieldValues>

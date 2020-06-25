@@ -13,13 +13,14 @@ namespace ImmRequest.WebApi.Helpers
 
         public static BaseFieldModel GetFieldModel(BaseField field)
         {
-            if (field.InputType == DataType.Number)
-                return new NumberFieldModel().SetModel(field);
-            else if (field.InputType == DataType.DateTime)
-                return new DateTimeFieldModel().SetModel(field);
-            else if (field.InputType == DataType.Text)
-                return new TextFieldModel().SetModel(field);
-            else return null;
+            return field.InputType switch
+            {
+                DataType.Number => new NumberFieldModel().SetModel(field),
+                DataType.Text => new TextFieldModel().SetModel(field),
+                DataType.DateTime => new DateTimeFieldModel().SetModel(field),
+                DataType.Bool => new BoolFieldModel().SetModel(field),
+                _ => null,
+            };
         }
     }
 }

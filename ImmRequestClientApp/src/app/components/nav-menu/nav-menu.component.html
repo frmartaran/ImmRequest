@@ -1,0 +1,105 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button mat-button matTooltip="To Home Page">
+      <a (click)="homePage()" target="_blank">
+        <img id="logo" [src]="imageUrl" />
+      </a>
+    </button>
+    <button mat-button [matMenuTriggerFor]="requests">Requests Management</button>
+    <mat-menu #requests>
+      <button mat-menu-item>
+        <div (click)="homePage()">
+          <mat-icon>add_circle</mat-icon>Create
+        </div>
+      </button>
+      <button mat-menu-item>
+        <div (click)="getRequestStatus()">
+          <mat-icon>visibility</mat-icon>Get Status
+        </div>
+      </button>
+      <button *ngIf="isAuthenticated$|async" mat-menu-item>
+        <div (click)="manageRequests()">
+          <mat-icon>rate_review</mat-icon>Manage
+        </div>
+      </button>      
+    </mat-menu>
+    <div *ngIf="isAuthenticated$|async">
+      <button mat-button [matMenuTriggerFor]="administrators">Admin</button>
+      <mat-menu #administrators="matMenu">
+        <button mat-menu-item>
+          <div (click)="createAdmin()">
+            <mat-icon>add_circle</mat-icon>Create
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div (click)="manageAdmins()">
+            <mat-icon>people</mat-icon>Manage Admins
+          </div>
+        </button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="areas">Areas Management</button>
+      <mat-menu #areas>
+        <button mat-menu-item>
+          <div (click)="manageAreas()">
+            <mat-icon>visibility</mat-icon>Manage Areas
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div (click)="import()">
+            <mat-icon>add_circle</mat-icon>Import
+          </div>
+        </button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="reports">Reports</button>
+      <mat-menu #reports>
+        <button mat-menu-item>
+          <div (click)="goToTypeSummaryReport()">
+            <mat-icon>assessment</mat-icon>Type Use Report
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div (click)="goToRequestSummaryReport()">
+            <mat-icon>assessment</mat-icon>Request Status Report
+          </div>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="flex-spacer"></div>
+    <a mat-button [matMenuTriggerFor]="loggedInUser">
+      <svg class="avatar original-poster-avatar" viewBox="2 2 20 20">
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.36 14.83c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6z">
+        </path>
+        <path d="M0 0h24v24H0V0z" fill="none">
+        </path>
+      </svg>
+      <mat-menu #loggedInUser="matMenu">
+        <div *ngIf="isAuthenticated$|async; else isNotAuthenticated">
+          <h4 class="loginMessage">You are logged in as:</h4>
+          <div class="loggedEmail">{{adminUsername$|async}}</div>
+          <button mat-menu-item>
+            <div (click)="editAdmin()">
+              <mat-icon>edit</mat-icon>Edit Admin
+            </div>
+          </button>
+          <button mat-menu-item>
+            <div class="logout" (click)="logoutDialog()">
+              <mat-icon>exit_to_app</mat-icon>Logout
+            </div>
+          </button>
+        </div>
+        <ng-template #isNotAuthenticated>
+          <button mat-menu-item>
+            <div (click)="login()">
+              <svg class="login" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24">
+                <path
+                  d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z">
+                </path>
+              </svg>Admin Login
+            </div>
+          </button>
+        </ng-template>
+      </mat-menu>
+    </a>
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,72 @@
+#main-div{
+    padding-bottom: 2%;
+    height: 60%;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    overflow: auto;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+mat-card{
+    display: flex;
+    width: 50%;
+}
+
+mat-form-field{
+    display: block;
+    padding-left: 10%;
+    padding-right: 5px;
+    width: 80%; 
+}
+
+mat-card-header{
+    padding-bottom: 2%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 100%;
+}
+
+.container > * {
+    width: 100%;
+}
+
+.field-title-container{
+    display: inline-block;
+    text-align: left;
+    width: 80%;
+}
+
+.label{
+    font-size: large;
+}
+
+.add-button{
+    font-size: x-large;
+    font-weight: 400;
+    position: relative;
+    float: right;
+}
+
+.back{
+    display: flex;
+    padding-left: 2%;
+}
+
+.container{
+    display: inline;
+    padding-top: 2%;
+    position: relative;
+}
+

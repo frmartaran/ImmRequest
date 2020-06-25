@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="back">
+        <button mat-icon-button color="primary" aria-label="Go Back" (click)="goBack()"
+        [disabled]="shouldDisable">
+            <mat-icon>arrow_back_ios</mat-icon>Topic
+        </button>
+    </div>
+    <div id="main-div">
+        <mat-card class="center">
+            <div class="container">
+                <mat-card-header class="center">
+                    <mat-card-title>{{action|async}} Type</mat-card-title>
+                </mat-card-header>
+                <form #typeEditorForm="ngForm" (ngSubmit)="Send(typeEditorForm)" autocomplete="off">
+                    <mat-card-content>
+                        <div class="center">
+                            <mat-form-field>
+                                <mat-label>Name</mat-label>
+                                <input matInput type="text" name="name" required [(ngModel)]="name">
+                                <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear"
+                                    (click)="name=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="field-title-container">
+                            <mat-label class="label">Fields</mat-label>
+                            <button mat-icon-button color="primary" #tooltip="matTooltip" matTooltip="Add Field"
+                                matTooltipPosition="after" aria-label="Add Field" class="add-button"
+                                (click)="createField()" type="button">
+                                <mat-icon [inline]="true">add</mat-icon>
+                            </button>
+                        </div>
+                        <div>
+                            <app-management [buttons]="buttons" [columns]="columns" [title]="fieldsTitle" [pageSize]="3"
+                                [dataSource]="datasource|async">
+                            </app-management>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button type="submit" mat-raised-button>Save</button>
+                    </mat-card-actions>
+                </form>
+            </div>
+        </mat-card>
+    </div>
+</div>

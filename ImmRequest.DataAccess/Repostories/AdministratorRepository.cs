@@ -23,7 +23,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var toRemove = Get(id);
                 Context.Administrators.Remove(toRemove);
-                Save();
 
             }
             catch (ArgumentNullException)
@@ -55,7 +54,6 @@ namespace ImmRequest.DataAccess.Repositories
         public void Insert(Administrator objectToAdd)
         {
             Context.Administrators.Add(objectToAdd);
-            Save();
         }
 
         public void Save()
@@ -70,7 +68,7 @@ namespace ImmRequest.DataAccess.Repositories
                 var administratorToModify = Get(objectToUpdate.Id);
                 administratorToModify.UserName = objectToUpdate.UserName;
                 administratorToModify.Password = objectToUpdate.Password;
-                Save();
+                administratorToModify.Email = objectToUpdate.Email;
                 return administratorToModify;
             }
             catch (NullReferenceException)

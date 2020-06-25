@@ -16,13 +16,15 @@ namespace ImmRequest.WebApi.Helpers.Binders
             if (jObject == null)
                 throw new ArgumentNullException("");
 
-            var type = jObject["dataType"].ToString().ToUpper();
-            if (type == DataType.Number.ToString().ToUpper())
+            var type = (DataType) Convert.ToInt32(jObject["dataType"].ToString());
+            if (DataType.Number.CompareTo(type) == 0)
                 return new NumberFieldModel();
-            if (type == DataType.Text.ToString().ToUpper())
+            if (DataType.Text.CompareTo(type) == 0)
                 return new TextFieldModel();
-            if (type == DataType.DateTime.ToString().ToUpper())
+            if (DataType.DateTime.CompareTo(type) == 0)
                 return new DateTimeFieldModel();
+            if (DataType.Bool.CompareTo(type) == 0)
+                return new BoolFieldModel();
             return null;
 
         }

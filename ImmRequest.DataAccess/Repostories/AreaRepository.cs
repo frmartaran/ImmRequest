@@ -24,7 +24,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var areaToDelete = Get(id);
                 Context.Areas.Remove(areaToDelete);
-                Save();
             }
             catch (ArgumentNullException)
             {
@@ -36,7 +35,9 @@ namespace ImmRequest.DataAccess.Repositories
 
         public bool Exists(Area area)
         {
-            return Context.Areas.Any(a => a.Id == area.Id);
+            return Context.Areas
+                .Where(a => a.Id != area.Id)
+                .Any(a => a.Name == area.Name);
         }
 
         public Area Get(long id)
@@ -60,7 +61,6 @@ namespace ImmRequest.DataAccess.Repositories
         public void Insert(Area objectToAdd)
         {
             Context.Areas.Add(objectToAdd);
-            Save();
         }
 
         public void Save()
@@ -75,7 +75,6 @@ namespace ImmRequest.DataAccess.Repositories
                 var areaToUpdate = Get(objectToUpdate.Id);
                 areaToUpdate.Name = objectToUpdate.Name;
                 areaToUpdate.Topics = objectToUpdate.Topics;
-                Save();
                 return areaToUpdate;
             }
             catch (NullReferenceException)

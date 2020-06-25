@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <EmbeddedResource Remove="Resource.resx" />
@@ -8,10 +8,15 @@
     <ProjectReference Include="..\ImmRequest.BusinessLogic.Interfaces\ImmRequest.BusinessLogic.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.DataAccess.Interfaces\ImmRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\ImmRequest.Domain\ImmRequest.Domain.csproj" />
+    <ProjectReference Include="..\ImmRequest.Importer.Interfaces\ImmRequest.Importer.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Resources\BusinessResource.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

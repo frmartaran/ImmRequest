@@ -1,0 +1,78 @@
+<h1 mat-dialog-title>Add values</h1>
+
+<mat-dialog-content>
+    <div [ngSwitch]="dataTypeSelected$|async">
+        <mat-form-field *ngSwitchCase="'0'">
+            <mat-label>Enter a number value:</mat-label>
+            <input value="{{numberValue}}" matInput type="number" min="0" name="numberValue" required [(ngModel)]="numberValue">
+            <button  type="button" mat-button matSuffix mat-icon-button aria-label="Add" *ngIf="showAddButton$|async" (click)="addNumberValue()">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                (click)="numberValue=0">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-list *ngSwitchCase="'0'">
+            <mat-list-item *ngFor="let value of numberValuesSubject$|async; let indexOfElement=index">
+                {{value}}
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeFromNumberValues(indexOfElement)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-list-item>
+        </mat-list>
+        <mat-form-field *ngSwitchCase="'1'">
+            <mat-label>Enter a text value:</mat-label>
+            <input matInput type="text" name="textValue" required [(ngModel)]="textValue">
+            <button  type="button" mat-button matSuffix mat-icon-button aria-label="Add" *ngIf="showAddButton$|async" (click)="addTextValue()">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                (click)="textValue=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-list *ngSwitchCase="'1'">
+            <mat-list-item *ngFor="let value of textValuesSubject$|async; let indexOfElement=index">
+                {{value}}
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeFromTextValues(indexOfElement)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-list-item>
+        </mat-list>
+        <mat-form-field *ngSwitchCase="'2'" color="accent">
+            <mat-label>Enter a date time value:</mat-label>
+            <input name="dateTimeValue" required matInput [matDatepicker]="dateTimePicker" [(ngModel)]="dateTimeValue">
+            <mat-datepicker-toggle matSuffix [for]="dateTimePicker"></mat-datepicker-toggle>
+            <mat-datepicker #dateTimePicker></mat-datepicker>
+            <button  type="button" mat-button matSuffix mat-icon-button aria-label="Add" *ngIf="showAddButton$|async" (click)="addDateTimeValue()">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                (click)="dateTimeValue=null">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-list *ngSwitchCase="'2'">
+            <mat-list-item *ngFor="let value of dateTimeValuesSubject$|async; let indexOfElement=index">
+                {{value|date:'fullDate'}}
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeFromDateValues(indexOfElement)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-list-item>
+        </mat-list>
+        <mat-form-field *ngSwitchCase="'3'" color="accent">
+            <mat-label>Enter a boolean value:</mat-label>
+            <input name="booleanValue" required matInput [(ngModel)]="booleanValue">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                (click)="booleanValue=false">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)='setFieldValue()'>Save</button>
+</mat-dialog-actions>

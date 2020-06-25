@@ -70,6 +70,7 @@ namespace ImmRequest.BusinessLogic.Tests.ValidatorTest
             var context = ContextFactory.GetMemoryContext("Session is not Valid");
             var repository = new SessionRepository(context);
             repository.Insert(session);
+            repository.Save();
             var validator = new SessionValidator(repository);
             var newSession = new Session
             {

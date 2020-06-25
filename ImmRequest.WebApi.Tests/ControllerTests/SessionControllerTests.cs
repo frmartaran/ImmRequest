@@ -3,7 +3,7 @@ using ImmRequest.BusinessLogic.Interfaces;
 using ImmRequest.Domain.UserManagement;
 using ImmRequest.WebApi.Controllers;
 using ImmRequest.WebApi.Exceptions;
-using ImmRequest.WebApi.Helpers;
+using ImmRequest.WebApi.Helpers.Inputs;
 using ImmRequest.WebApi.Interfaces;
 using ImmRequest.WebApi.Models.UserManagement;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ImmRequest.WebApi.Tests.ControllerTests
 {
@@ -72,9 +70,10 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void Login()
         {
-            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
-            mockSessionLogic.Setup(m => m.Create(It.IsAny<Session>()))
+            var mockLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Create(It.IsAny<Session>()))
                 .Returns(session.Token);
+            mockLogic.Setup(m => m.Save());
 
             var mockAdministratorLogic = new Mock<IAdministratorLogic>(MockBehavior.Strict);
             mockAdministratorLogic.Setup(m => m.FindAdministratorByCredentials(
@@ -83,7 +82,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
 
             var mockHelper = new Mock<IContextHelper>();
             var inputs = new SessionControllerInputHelper(
-                mockSessionLogic.Object,
+                mockLogic.Object,
                 mockAdministratorLogic.Object,
                 mockHelper.Object
                 );
@@ -92,7 +91,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Login(model);
 
             Assert.IsInstanceOfType(response, typeof(OkObjectResult));
-            mockSessionLogic.VerifyAll();
+            mockLogic.VerifyAll();
             mockAdministratorLogic.VerifyAll();
         }
 
@@ -172,10 +171,11 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
         [TestMethod]
         public void LogOutTest()
         {
-            var mockSessionLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
-            mockSessionLogic.Setup(m => m.Get(It.IsAny<Guid>()))
+            var mockLogic = new Mock<ISessionLogic>(MockBehavior.Strict);
+            mockLogic.Setup(m => m.Get(It.IsAny<Guid>()))
                 .Returns(session);
-            mockSessionLogic.Setup(m => m.Delete(It.IsAny<long>()));
+            mockLogic.Setup(m => m.Delete(It.IsAny<long>()));
+            mockLogic.Setup(m => m.Save());
 
             var mockAdministratorLogic = new Mock<IAdministratorLogic>().Object;
 
@@ -184,7 +184,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
                 .Returns(session.Token);
 
             var inputs = new SessionControllerInputHelper(
-                mockSessionLogic.Object,
+                mockLogic.Object,
                 mockAdministratorLogic,
                 mockHelper.Object
                 );
@@ -193,7 +193,7 @@ namespace ImmRequest.WebApi.Tests.ControllerTests
             var response = controller.Logout();
 
             Assert.IsInstanceOfType(response, typeof(OkResult));
-            mockSessionLogic.VerifyAll();
+            mockLogic.VerifyAll();
             mockHelper.VerifyAll();
 
         }

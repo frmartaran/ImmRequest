@@ -9,6 +9,7 @@ namespace ImmRequest.Domain.Enums
     {
         Number,
         Text,
-        DateTime
+        DateTime,
+        Bool
     }
 }

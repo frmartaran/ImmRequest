@@ -37,6 +37,12 @@ namespace ImmRequest.DataAccess.Context
                         .HasConversion(
                             v => JsonConvert.SerializeObject(v),
                             v => JsonConvert.DeserializeObject<List<string>>(v));
+            builder.Entity<RequestFieldValues>()
+                        .Property(e => e.Values)
+                        .HasConversion(
+                            v => JsonConvert.SerializeObject(v),
+                            v => JsonConvert.DeserializeObject<List<string>>(v));
+
             builder.Entity<NumberField>()
             .Property(nf => nf.RangeStart);
 
@@ -49,6 +55,7 @@ namespace ImmRequest.DataAccess.Context
             builder.Entity<DateTimeField>()
             .Property(nf => nf.End);
 
+            builder.Entity<BoolField>();
 
             builder.Entity<CitizenRequest>()
                 .HasOne(cr => cr.Area)

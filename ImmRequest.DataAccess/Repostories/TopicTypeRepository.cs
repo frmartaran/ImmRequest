@@ -24,7 +24,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var typeToDelete = Get(id);
                 Context.TopicTypes.Remove(typeToDelete);
-                Save();
             }
             catch (ArgumentNullException)
             {
@@ -41,6 +40,7 @@ namespace ImmRequest.DataAccess.Repositories
         public TopicType Get(long id)
         {
             return Context.TopicTypes
+                .IgnoreQueryFilters()
                 .Include(ty => ty.ParentTopic)
                 .Include(ty => ty.AllFields)
                 .FirstOrDefault(ty => ty.Id == id);
@@ -57,7 +57,6 @@ namespace ImmRequest.DataAccess.Repositories
         public void Insert(TopicType objectToAdd)
         {
             Context.TopicTypes.Add(objectToAdd);
-            Save();
         }
 
         public void Save()
@@ -73,7 +72,6 @@ namespace ImmRequest.DataAccess.Repositories
                 typeToModify.Name = objectToUpdate.Name;
                 typeToModify.ParentTopic = objectToUpdate.ParentTopic;
                 typeToModify.AllFields = objectToUpdate.AllFields;
-                Save();
                 return typeToModify;
             }
             catch (NullReferenceException)

@@ -1,0 +1,10 @@
+.back{
+    display: flex;
+    padding-left: 2%;
+}
+
+.container{
+    display: inline;
+    padding-top: 2%;
+    position: relative;
+}

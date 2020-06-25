@@ -52,6 +52,7 @@ namespace ImmRequest.DataAccess.Tests
         {
             CreateRepository("InsertTest");
             repository.Insert(request);
+            repository.Save();
 
             var requestInDb = context.CitizenRequests.FirstOrDefault();
             Assert.IsNotNull(requestInDb);
@@ -76,6 +77,8 @@ namespace ImmRequest.DataAccess.Tests
             context.SaveChanges();
 
             repository.Delete(1);
+            repository.Save();
+
             var requestInDb = context.CitizenRequests.FirstOrDefault();
             Assert.IsNull(requestInDb);
         }

@@ -24,7 +24,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var fieldToDelete = Get(1);
                 Context.Fields.Remove(fieldToDelete);
-                Save();
 
             }
             catch (ArgumentNullException)
@@ -42,6 +41,7 @@ namespace ImmRequest.DataAccess.Repositories
         public BaseField Get(long id)
         {
             return Context.Fields
+                .IgnoreQueryFilters()
                 .Include(f => f.ParentType)
                 .FirstOrDefault(f => f.Id == id);
         }
@@ -56,7 +56,6 @@ namespace ImmRequest.DataAccess.Repositories
         public void Insert(BaseField objectToAdd)
         {
             Context.Fields.Add(objectToAdd);
-            Save();
         }
 
         public void Save()
@@ -70,7 +69,6 @@ namespace ImmRequest.DataAccess.Repositories
             {
                 var fieldToModify = Get(objectToUpdate.Id);
                 fieldToModify.UpdateValues(objectToUpdate);
-                Save();
                 return fieldToModify;
 
             }
