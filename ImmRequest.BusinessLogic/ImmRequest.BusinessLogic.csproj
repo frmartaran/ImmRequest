@@ -38,8 +38,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="copy &quot;$(ProjectDir)..\ImmRequest.Importer\$(OutDir)\ImmRequest.Importer.dll&quot; &quot;$(OutDir)&quot;" />
-  </Target>
-
 </Project>
