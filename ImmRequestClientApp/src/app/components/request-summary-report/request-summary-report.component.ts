@@ -24,6 +24,8 @@ export class RequestSummaryReportComponent implements OnInit {
   public columns: Column[];
   public buttons: Button[];
 
+  public title: string = '';
+
   constructor(private snackbarService: SnackbarService,
     private reportService: ReportsService, public datePipe: DatePipe) { }
 

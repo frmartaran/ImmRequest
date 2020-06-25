@@ -22,6 +22,8 @@ export class TypeSummaryReportComponent implements OnInit {
   public columns: Column[];
   public buttons: Button[];
 
+  public title: string = '';
+
   public datasource: BehaviorSubject<MatTableDataSource<TypeSummary>>;
 
   constructor(private snackbarService: SnackbarService,

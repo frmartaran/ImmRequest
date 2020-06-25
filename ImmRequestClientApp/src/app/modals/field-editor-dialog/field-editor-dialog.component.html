@@ -20,8 +20,7 @@
                     <mat-option value="3">Bool</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-checkbox [(ngModel)]="acceptsMultpleValues" name="multipleValues" [(indeterminate)]="indeterminate"
-                [labelPosition]="labelPosition" [disabled]="disabled">
+            <mat-checkbox [(ngModel)]="acceptsMultpleValues" name="multipleValues" [disabled]="disabled">
                 Accepts multiple values
             </mat-checkbox>
             <div [ngSwitch]="dataTypeSelected|async">

@@ -15,9 +15,8 @@
                     <mat-icon class="bigger-mat-icon" [inline]="true">add</mat-icon>
                 </button>
             </div>
-            <app-management [buttons]="buttons" [columns]="columns" [title]="Types" [pageSize]="5"
+            <app-management [buttons]="buttons" [columns]="columns" [title]="'Types'" [pageSize]="5"
                 [dataSource]="datasource | async">
-
             </app-management>
         </mat-card>
     </div>

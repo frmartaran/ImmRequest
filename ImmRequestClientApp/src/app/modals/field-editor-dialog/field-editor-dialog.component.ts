@@ -39,6 +39,8 @@ export class FieldEditorDialogComponent implements OnInit {
 
   public name: string;
 
+  public rangeValue: string;
+
   ngOnInit() {
     this.textFieldList = new BehaviorSubject([]);
     this.action = this.data.action;
