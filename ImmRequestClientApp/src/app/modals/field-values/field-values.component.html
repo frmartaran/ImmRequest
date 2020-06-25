@@ -9,7 +9,7 @@
                 <mat-icon>add</mat-icon>
             </button>
             <button mat-button matSuffix mat-icon-button aria-label="Clear"
-                (click)="numberValue=''">
+                (click)="numberValue=0">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
@@ -49,7 +49,7 @@
                 <mat-icon>add</mat-icon>
             </button>
             <button mat-button matSuffix mat-icon-button aria-label="Clear"
-                (click)="dateTimeValue=''">
+                (click)="dateTimeValue=null">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
@@ -65,7 +65,7 @@
             <mat-label>Enter a boolean value:</mat-label>
             <input name="booleanValue" required matInput [(ngModel)]="booleanValue">
             <button mat-button matSuffix mat-icon-button aria-label="Clear"
-                (click)="booleanValue=''">
+                (click)="booleanValue=false">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>

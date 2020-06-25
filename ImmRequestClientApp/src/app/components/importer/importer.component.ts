@@ -37,6 +37,7 @@ export class ImporterComponent implements OnInit {
           config: Object.assign({}, {duration:3000}, this.snackbarService.configSuccess)
         })
       }, (error) => {
+        console.log(error);
         this.snackbarService.notifications$.next({
           message: HtmlHelpers.getHtmlErrorMessage(error),
           action: "Error !",
